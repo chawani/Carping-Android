@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.tourkakao.carping"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -36,4 +36,7 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    //Kakao login api
+    implementation "com.kakao.sdk:v2-user:2.4.2"
 }
