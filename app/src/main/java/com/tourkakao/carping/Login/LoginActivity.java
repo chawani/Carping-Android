@@ -56,18 +56,4 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    /*private void getHashKey(){
-        PackageInfo packageInfo=null;
-        try{
-            packageInfo=getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
-        }catch(PackageManager.NameNotFoundException e){}
-        for(Signature signature:packageInfo.signatures){
-            try{
-                MessageDigest md=MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KeyHash", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }catch(NoSuchAlgorithmException e){}
-        }
-    }*/
-
 }

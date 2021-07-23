@@ -12,6 +12,6 @@ public class KaKaoInitApplication extends Application {
         super.onCreate();
         instance=this;
 
-        KakaoSdk.init(this, "kakao app key");
+        KakaoSdk.init(this, "KAKAO_API_KEY");
     }
 }

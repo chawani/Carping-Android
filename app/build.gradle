@@ -38,5 +38,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     //Kakao login api
-    implementation "com.kakao.sdk:v2-user:2.4.2"
+    implementation 'com.kakao.sdk:v2-user:2.4.2'
+    //retrofit2
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 }

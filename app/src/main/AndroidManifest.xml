@@ -29,7 +29,7 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <!--인가 코드 받기 위한 Redirect URI 설정-->
                 <data android:host="oauth"
-                    android:scheme="kakao{kakao app key}"/>
+                    android:scheme="kakao{KAKAO API KEY}"/>
             </intent-filter>
         </activity>
     </application>
