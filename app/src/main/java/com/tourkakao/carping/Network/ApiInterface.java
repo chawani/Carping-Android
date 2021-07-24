@@ -10,6 +10,6 @@ import retrofit2.http.POST;
 public interface ApiInterface {
 
     @FormUrlEncoded
-    @POST("accounts/kakao/login/")
+    @POST("accounts/login/kakao")
     Call<Kakao_Token_and_User_Info> kakao_signin(@Field("access_token")String access_token);
 }
