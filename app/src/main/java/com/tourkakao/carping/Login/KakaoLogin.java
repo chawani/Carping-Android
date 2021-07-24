@@ -39,18 +39,25 @@ public class KakaoLogin implements LoginContract.Kakaologin{
             @Override
             public Unit invoke(OAuthToken oAuthToken, Throwable throwable) {
                 if(oAuthToken!=null){
-                    Call<Kakao_User_Info> kakao_login=apiInterface.kakao_signin(oAuthToken.getAccessToken());
-                    kakao_login.enqueue(new Callback<Kakao_User_Info>() {
+                    Call<Kakao_Token_and_User_Info> kakao_login=apiInterface.kakao_signin(oAuthToken.getAccessToken());
+                    kakao_login.enqueue(new Callback<Kakao_Token_and_User_Info>() {
                         @Override
-                        public void onResponse(Call<Kakao_User_Info> call, Response<Kakao_User_Info> response) {
+                        public void onResponse(Call<Kakao_Token_and_User_Info> call, Response<Kakao_Token_and_User_Info> response) {
                             if(response.isSuccessful()){
-
+                                System.out.println(response.body().access_token);
+                                System.out.println(response.body().refresh_token);
+                                System.out.println(response.body().user.email);
+                                System.out.println(response.body().user.pk);
+                                System.out.println(response.body().user.first_name);
+                                System.out.println(response.body().user.last_name);
                             }else{
-                                System.out.println("user matching fail");
+                                System.out.println("response fail");
+                                System.out.println(response);
                             }
                         }
+
                         @Override
-                        public void onFailure(Call<Kakao_User_Info> call, Throwable t) {
+                        public void onFailure(Call<Kakao_Token_and_User_Info> call, Throwable t) {
                             System.out.println(t);
                         }
                     });

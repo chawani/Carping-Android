@@ -1,6 +1,6 @@
 package com.tourkakao.carping.Network;
 
-import com.tourkakao.carping.Login.Kakao_User_Info;
+import com.tourkakao.carping.Login.Kakao_Token_and_User_Info;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -11,5 +11,5 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("accounts/kakao/login/")
-    Call<Kakao_User_Info> kakao_signin(@Field("access_token")String access_token);
+    Call<Kakao_Token_and_User_Info> kakao_signin(@Field("access_token")String access_token);
 }
