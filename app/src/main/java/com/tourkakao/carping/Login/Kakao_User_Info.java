@@ -1,11 +1,34 @@
 package com.tourkakao.carping.Login;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Kakao_User_Info {
+    @SerializedName("pk")
+    int pk;
+    @SerializedName("username")
+    String username;
+    @SerializedName("email")
     String email;
-    String nickname;
-    String profile_image;
+    @SerializedName("profile")
+    Kakao_User_Profile profile;
 
     public Kakao_User_Info() {
+    }
+
+    public int getPk() {
+        return pk;
+    }
+
+    public void setPk(int pk) {
+        this.pk = pk;
+    }
+
+    public String getUserkname() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -16,19 +39,11 @@ public class Kakao_User_Info {
         this.email = email;
     }
 
-    public String getNickname() {
-        return nickname;
+    public Kakao_User_Profile getProfile() {
+        return profile;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public String getProfile_image() {
-        return profile_image;
-    }
-
-    public void setProfile_image(String profile_image) {
-        this.profile_image = profile_image;
+    public void setProfile(Kakao_User_Profile profile) {
+        this.profile = profile;
     }
 }

@@ -1,8 +1,13 @@
 package com.tourkakao.carping.Login;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Kakao_Token_and_User_Info {
+    @SerializedName("access_token")
     String access_token;
+    @SerializedName("refresh_token")
     String refresh_token;
+    @SerializedName("user")
     Kakao_User_Info user;
 
     public Kakao_Token_and_User_Info() {

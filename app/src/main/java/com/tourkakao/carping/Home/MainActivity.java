@@ -1,8 +1,10 @@
-package com.tourkakao.carping;
+package com.tourkakao.carping.Home;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.tourkakao.carping.R;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //KakoLogin class로
-                kakaoLogin=new KakaoLogin(LoginActivity.this);
+                kakaoLogin=new KakaoLogin(LoginActivity.this, LoginActivity.this);
                 kakaoLogin.Login();
             }
         });

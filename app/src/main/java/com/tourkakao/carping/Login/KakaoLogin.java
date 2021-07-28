@@ -1,11 +1,13 @@
 package com.tourkakao.carping.Login;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.user.UserApiClient;
+import com.tourkakao.carping.Home.MainActivity;
 import com.tourkakao.carping.Network.ApiClient;
 import com.tourkakao.carping.Network.ApiInterface;
 
@@ -20,9 +22,11 @@ public class KakaoLogin implements LoginContract.Kakaologin{
     Function2<OAuthToken, Throwable, Unit> kakaologin_Callback;
     Function2<OAuthToken, Throwable, Unit> kakaologout_Callback;
     ApiInterface apiInterface;
+    LoginActivity loginActivity;
 
-    public KakaoLogin(Context context) {
+    public KakaoLogin(Context context, LoginActivity loginActivity) {
         this.context = context;
+        this.loginActivity=loginActivity;
         apiInterface=ApiClient.getApiService();
         setting_kakaologin_callback();
     }
@@ -49,10 +53,14 @@ public class KakaoLogin implements LoginContract.Kakaologin{
                             if(response.isSuccessful()){
                                 //서버 액세스 토큰, 리프레쉬 토큰은 받았으니
                                 //그걸 사용하고 카카오 api 서버는 로그아웃 되도록 하는 방법 고민 필요
-                                Toast.makeText(context, "access_token: "+response.body().access_token +
-                                        "refresh_token: "+response.body().refresh_token+
-                                        "email: "+response.body().user.email+
-                                        "nickname: "+response.body().user.nickname, Toast.LENGTH_SHORT).show();
+                                System.out.println(response.body().access_token);
+                                System.out.println(response.body().refresh_token);
+                                System.out.println(response.body().user.pk);
+                                System.out.println(response.body().user.username);
+                                System.out.println(response.body().user.email);
+                                System.out.println(response.body().user.profile.image);
+                                loginActivity.finish();
+                                context.startActivity(new Intent(context, MainActivity.class));
                             }else{
                                 Log.e("login error", response.message());
                                 //Toast.makeText(context, "로그인에 실패하였습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
