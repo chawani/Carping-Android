@@ -11,6 +11,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.tourkakao.carping.BuildConfig;
+import com.tourkakao.carping.Home.MainActivity;
 import com.tourkakao.carping.Network.ApiClient;
 import com.tourkakao.carping.Network.ApiInterface;
 
@@ -24,6 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GoogleLogin implements LoginContract.GoogleLogin{
     private Context context;
+    private LoginActivity loginActivity;
     private GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 9001;
     private static final String TAG = "GoogleActivity";
@@ -33,7 +35,7 @@ public class GoogleLogin implements LoginContract.GoogleLogin{
     private ApiInterface retrofitAPI;
     private ApiInterface retrofitAPI2;
 
-    public  GoogleLogin(Context context){
+    public  GoogleLogin(Context context, LoginActivity loginActivity){
         CLIENT_ID = BuildConfig.GOOGLE_CLIENT_ID;
         CLIENT_SECRET=BuildConfig.GOOGLE_CLIENT_SECRET;
         // 앱에 필요한 사용자 데이터를 요청하도록 로그인 옵션을 설정한다.
@@ -46,6 +48,7 @@ public class GoogleLogin implements LoginContract.GoogleLogin{
         // 위에서 만든 GoogleSignInOptions을 사용해 GoogleSignInClient 객체를 만듦
         mGoogleSignInClient = GoogleSignIn.getClient(context, gso);
         this.context = context;
+        this.loginActivity=loginActivity;
     }
 
     @Override
@@ -106,6 +109,8 @@ public class GoogleLogin implements LoginContract.GoogleLogin{
                 }
                 else if(response.isSuccessful()){
                     Google_Token_and_User_Info token=response.body();
+                    loginActivity.finish();
+                    context.startActivity(new Intent(context, MainActivity.class));
                     System.out.println("성공:"+token.toString());
                 }else{
                     System.out.println("응답 코드:"+response.code());

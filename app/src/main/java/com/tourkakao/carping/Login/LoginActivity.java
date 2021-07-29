@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //GoogleLogin class로
-                googleLogin=new GoogleLogin(LoginActivity.this);
+                googleLogin=new GoogleLogin(LoginActivity.this, LoginActivity.this);
                 googleLogin.signIn();
             }
         });
