@@ -2,24 +2,33 @@ package com.tourkakao.carping.Home;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.google.android.material.tabs.TabLayout;
+import com.tourkakao.carping.Home.Fragment.EchoFragment;
+import com.tourkakao.carping.Home.Fragment.EchoTopFragment;
+import com.tourkakao.carping.Home.Fragment.ThemeFragment;
+import com.tourkakao.carping.Home.Fragment.ThemeTopFragment;
 import com.tourkakao.carping.R;
-
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements HomeContract, HomeContract.MainActivity_Contract{
     Location_setting location_setting;
     SharedPreferences main_prefs;
     SharedPreferences.Editor main_editor;
+    TabLayout tabs;
+    EchoTopFragment echo_top_fragment;
+    EchoFragment echo_fragment;
+    ThemeTopFragment theme_top_fragment;
+    ThemeFragment theme_fragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +36,9 @@ public class MainActivity extends AppCompatActivity implements HomeContract, Hom
 
         initialize_sharedpreferences();
         initialize_location_setting_class();
+
+        init_view();
+        switch_main_tap();
     }
 
     @Override
@@ -71,5 +83,49 @@ public class MainActivity extends AppCompatActivity implements HomeContract, Hom
                 }
             }
         }
+    }
+
+    public void init_view(){
+        echo_top_fragment=new EchoTopFragment();
+        echo_fragment = new EchoFragment();
+        theme_top_fragment=new ThemeTopFragment();
+        theme_fragment = new ThemeFragment();
+    }
+
+    public void switch_main_tap(){
+        getSupportFragmentManager().beginTransaction().add(R.id.top_container, theme_top_fragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.container, theme_fragment).commit();
+
+        tabs = findViewById(R.id.tabs);
+        tabs.addTab(tabs.newTab().setText("테마카핑"));
+        tabs.addTab(tabs.newTab().setText("에코카핑"));
+        tabs.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+                Fragment top_selected=null;
+                Fragment selected = null;
+                if(position == 0) {
+                    top_selected = theme_top_fragment;
+                    selected = theme_fragment;
+                }
+                else if(position == 1) {
+                    top_selected = echo_top_fragment;
+                    selected = echo_fragment;
+                }
+                getSupportFragmentManager().beginTransaction().replace(R.id.top_container, top_selected).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, selected).commit();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 }

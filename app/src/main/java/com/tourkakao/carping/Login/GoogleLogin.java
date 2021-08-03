@@ -82,6 +82,7 @@ public class GoogleLogin implements LoginContract.GoogleLogin{
                     public void onResponse(Call<Google_Access_Token> call, Response<Google_Access_Token> response) {
                         if(response.isSuccessful()){
                             Google_Access_Token data=response.body();
+                            System.out.println(data.getAccess_token());
                             setting_googlelogin_callback(data.getAccess_token());
                         }else{
                             System.out.println("응답 코드:"+response.code());
@@ -105,12 +106,10 @@ public class GoogleLogin implements LoginContract.GoogleLogin{
             @Override
             public void onResponse(Call<Google_Token_and_User_Info> call, Response<Google_Token_and_User_Info> response) {
                 if(response.body()==null){
-                    System.out.println("값 없음");
+                    System.out.println("값 없음:"+response.code());
                 }
                 else if(response.isSuccessful()){
                     Google_Token_and_User_Info token=response.body();
-                    loginActivity.finish();
-                    context.startActivity(new Intent(context, MainActivity.class));
                     System.out.println("성공:"+token.toString());
                 }else{
                     System.out.println("응답 코드:"+response.code());

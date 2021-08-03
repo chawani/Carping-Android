@@ -2,6 +2,7 @@ package com.tourkakao.carping.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -16,6 +17,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.Task;
 import com.kakao.sdk.common.KakaoSdk;
+import com.tourkakao.carping.Home.MainActivity;
 import com.tourkakao.carping.R;
 
 import java.security.MessageDigest;
@@ -72,6 +74,8 @@ public class LoginActivity extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             googleLogin.handleSignInResult(task);
+            finish();
+            startActivity(new Intent(LoginActivity.this,MainActivity.class));
         }
     }
 }
