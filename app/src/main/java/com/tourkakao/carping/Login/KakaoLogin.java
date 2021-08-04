@@ -8,8 +8,8 @@ import android.widget.Toast;
 import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.user.UserApiClient;
 import com.tourkakao.carping.Home.MainActivity;
-import com.tourkakao.carping.Network.ApiClient;
-import com.tourkakao.carping.Network.ApiInterface;
+import com.tourkakao.carping.LoginNetwork.ApiClient;
+import com.tourkakao.carping.LoginNetwork.ApiInterface;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;

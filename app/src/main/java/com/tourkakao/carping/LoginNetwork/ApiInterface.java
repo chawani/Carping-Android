@@ -1,4 +1,4 @@
-package com.tourkakao.carping.Network;
+package com.tourkakao.carping.LoginNetwork;
 
 import com.tourkakao.carping.Login.Google_Access_Token;
 import com.tourkakao.carping.Login.Google_Token_and_User_Info;

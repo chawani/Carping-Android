@@ -11,9 +11,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.tourkakao.carping.BuildConfig;
-import com.tourkakao.carping.Home.MainActivity;
-import com.tourkakao.carping.Network.ApiClient;
-import com.tourkakao.carping.Network.ApiInterface;
+import com.tourkakao.carping.LoginNetwork.ApiClient;
+import com.tourkakao.carping.LoginNetwork.ApiInterface;
 
 import java.util.HashMap;
 

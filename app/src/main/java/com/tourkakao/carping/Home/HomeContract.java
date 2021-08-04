@@ -10,7 +10,8 @@ public interface HomeContract {
     interface MainActivity_Contract{
         void initialize_sharedpreferences();
         void initialize_location_setting_class();
-
+        void init_main_fragment();
+        void switch_main_tap();
     }
 
     interface Location_setting_Contract{

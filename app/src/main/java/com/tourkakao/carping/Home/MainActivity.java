@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements HomeContract, Hom
         initialize_sharedpreferences();
         initialize_location_setting_class();
 
-        init_view();
+        init_main_fragment();
         switch_main_tap();
     }
 
@@ -85,13 +85,15 @@ public class MainActivity extends AppCompatActivity implements HomeContract, Hom
         }
     }
 
-    public void init_view(){
+    @Override
+    public void init_main_fragment(){
         echo_top_fragment=new EchoTopFragment();
         echo_fragment = new EchoFragment();
         theme_top_fragment=new ThemeTopFragment();
         theme_fragment = new ThemeFragment();
     }
 
+    @Override
     public void switch_main_tap(){
         getSupportFragmentManager().beginTransaction().add(R.id.top_container, theme_top_fragment).commit();
         getSupportFragmentManager().beginTransaction().add(R.id.container, theme_fragment).commit();

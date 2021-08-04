@@ -1,16 +1,21 @@
-package com.tourkakao.carping.Network;
+package com.tourkakao.carping.Home.HomeNetwork;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ApiClient {
+public class HomeApiClient {
     private static final String BASE_URL="http://chanjongp.co.kr/";
 
-    public static ApiInterface getApiService(){
-        return getInstance().create(ApiInterface.class);
+    public static EchoInterface getEchoApiService(){
+        return getInstance().create(EchoInterface.class);
+    }
+
+    public static ThemeInterface getThemeApiService(){
+        return getInstance().create(ThemeInterface.class);
     }
 
     private static Retrofit getInstance(){
@@ -18,6 +23,8 @@ public class ApiClient {
         return new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .build();
     }
+
 }
