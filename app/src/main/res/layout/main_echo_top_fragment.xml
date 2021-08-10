@@ -27,11 +27,11 @@
         android:textSize="12sp" />
 
     <ImageView
-        android:layout_width="12dp"
-        android:layout_height="12dp"
-        android:layout_marginLeft="103dp"
-        android:layout_marginTop="86dp"
-        android:src="@drawable/main_date_right_arrow"></ImageView>
+        android:layout_width="13dp"
+        android:layout_height="13dp"
+        android:layout_marginLeft="105dp"
+        android:layout_marginTop="85dp"
+        android:src="@drawable/main_echo_car_image"></ImageView>
 
     <TextView
         android:id="@+id/title_massage"
@@ -40,41 +40,48 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="115dp"
         android:fontFamily="@font/spoqa_han_sans_neo"
-        android:text="현재 서울에서 인기있는"
+        android:text="현재 User_02님의"
         android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="normal" />
 
-    <ImageView
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginLeft="216dp"
-        android:layout_marginTop="104dp"
-        android:src="@drawable/main_house_image"></ImageView>
-
     <TextView
-        android:id="@+id/change_title_massage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
+        android:layout_marginTop="153dp"
+        android:fontFamily="@font/spoqa_han_sans_neo"
+        android:textStyle="normal"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:text="에코지수는"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="112dp"
         android:layout_marginTop="144dp"
         android:fontFamily="@font/spoqa_han_sans_neo"
-        android:lineSpacingExtra="10sp"
-        android:text="인기순위 서비스"
+        android:textStyle="bold"
+        android:textSize="30sp"
         android:textColor="#5f51ef"
-        android:textSize="25sp"
-        android:textStyle="bold" />
+        android:lineSpacingExtra="12sp"
+        android:text="84%"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="179dp"
+        android:layout_marginTop="153dp"
+        android:fontFamily="@font/spoqa_han_sans_neo"
+        android:textStyle="normal"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:text="예요"/>
 
     <ImageView
-        android:layout_width="9dp"
-        android:layout_height="5.000000476837158dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="161dp"
-        android:layout_marginRight="81.8dp"
-        android:src="@drawable/main_down_arrow"></ImageView>
-
-    <ImageView
-        android:layout_width="54dp"
+        android:id="@+id/purple_box"
+        android:layout_width="45dp"
         android:layout_height="23dp"
         android:layout_alignParentRight="true"
         android:layout_marginTop="152dp"
@@ -82,24 +89,17 @@
         android:src="@drawable/main_rectangle"></ImageView>
 
     <TextView
-        android:id="@+id/search_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginTop="156dp"
-        android:layout_marginRight="45dp"
+        android:layout_marginRight="26dp"
         android:fontFamily="@font/spoqa_han_sans_neo_medium"
         android:gravity="center_horizontal"
-        android:text="0"
+        android:text="LV. 3"
         android:textColor="#ffffff"
         android:textSize="12sp"
         android:textStyle="normal" />
 
-    <ImageView
-        android:layout_width="6.799935817718506dp"
-        android:layout_height="7.570357799530029dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="159.7dp"
-        android:layout_marginRight="33.2dp"
-        android:src="@drawable/main_reading_glasses"></ImageView>
+
 </RelativeLayout>
