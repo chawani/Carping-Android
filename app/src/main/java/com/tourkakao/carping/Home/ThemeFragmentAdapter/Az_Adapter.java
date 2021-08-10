@@ -16,9 +16,9 @@ public class Az_Adapter extends RecyclerView.Adapter {
     public interface OnSelectItemClickListener{
         void OnSelectItemClick(View v, int pos);
     }
-    private ThisWeekend_Adapter.OnSelectItemClickListener mListener=null;
+    private OnSelectItemClickListener mListener=null;
 
-    public void setOnSelectItemCLickListener(ThisWeekend_Adapter.OnSelectItemClickListener listener){
+    public void setOnSelectItemCLickListener(OnSelectItemClickListener listener){
         this.mListener=listener;
     }
     public class Az_ViewHolder extends RecyclerView.ViewHolder{

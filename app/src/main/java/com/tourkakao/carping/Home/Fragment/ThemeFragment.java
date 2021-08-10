@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.tourkakao.carping.Home.HomeContract;
@@ -33,6 +34,7 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         themebinding=MainThemeFragmentBinding.inflate(inflater, container, false);
+        context=getActivity().getApplicationContext();
 
         initialize_img();
         initialize_new_carping_place_recyclerview();
@@ -67,36 +69,61 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
         Glide.with(this).load(R.drawable.theme_reports_img).into(themebinding.themeReports);
         Glide.with(this).load(R.drawable.theme_nature_img).into(themebinding.themeNature);
         Glide.with(this).load(R.drawable.theme_exp_img).into(themebinding.themeExp);
+        Glide.with(this).load(R.drawable.empty_new_carping_place_img).into(themebinding.noNewImg);
+        Glide.with(this).load(R.drawable.empty_data_img).into(themebinding.noWeekendImg);
+        Glide.with(this).load(R.drawable.empty_az_img).into(themebinding.noAzImg);
+        Glide.with(this).load(R.drawable.empty_data_img).into(themebinding.noPopularImg);
     }
 
     @Override
     public void initialize_new_carping_place_recyclerview() {
         newCarpingPlace_adapter=new NewCarpingPlace_Adapter(context);
-        themebinding.newCarpingPlaceRecyclerview.setLayoutManager();
+        LinearLayoutManager layoutManager=new LinearLayoutManager(context);
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        themebinding.newCarpingPlaceRecyclerview.setLayoutManager(layoutManager);
         themebinding.newCarpingPlaceRecyclerview.setAdapter(newCarpingPlace_adapter);
-        newCarpingPlace_adapter.setOnSelectItemCLickListener();
+        newCarpingPlace_adapter.setOnSelectItemCLickListener(new NewCarpingPlace_Adapter.OnSelectItemClickListener() {
+            @Override
+            public void OnSelectItemClick(View v, int pos) {
+
+            }
+        });
     }
 
     @Override
     public void initialize_this_weekend_recyclerview() {
         thisWeekend_adapter=new ThisWeekend_Adapter(context);
-        themebinding.thisWeekendRecyclerview.setLayoutManager();
+        LinearLayoutManager layoutManager=new LinearLayoutManager(context);
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        themebinding.thisWeekendRecyclerview.setLayoutManager(layoutManager);
         themebinding.thisWeekendRecyclerview.setAdapter(thisWeekend_adapter);
-        thisWeekend_adapter.setOnSelectItemCLickListener();
+        thisWeekend_adapter.setOnSelectItemCLickListener(new ThisWeekend_Adapter.OnSelectItemClickListener() {
+            @Override
+            public void OnSelectItemClick(View v, int pos) {
+
+            }
+        });
     }
 
     @Override
     public void initialize_az_recyclerview() {
         az_adapter=new Az_Adapter(context);
-        themebinding.azRecyclerview.setLayoutManager();
+        LinearLayoutManager layoutManager=new LinearLayoutManager(context);
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        themebinding.azRecyclerview.setLayoutManager(layoutManager);
         themebinding.azRecyclerview.setAdapter(az_adapter);
-        az_adapter.setOnSelectItemCLickListener();
+        az_adapter.setOnSelectItemCLickListener(new Az_Adapter.OnSelectItemClickListener() {
+            @Override
+            public void OnSelectItemClick(View v, int pos) {
+
+            }
+        });
     }
 
     @Override
     public void initialize_popular_carping_place_recyclerview() {
         popularCarpingPlace_adapter=new PopularCarpingPlace_Adapter(context);
-        themebinding.popularCarpingRecyclerview.setLayoutManager();
+        themebinding.popularCarpingRecyclerview.setLayoutManager(new LinearLayoutManager(context));
         themebinding.popularCarpingRecyclerview.setAdapter(popularCarpingPlace_adapter);
     }
 
