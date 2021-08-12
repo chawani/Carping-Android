@@ -59,8 +59,6 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
         Glide.with(this).load(R.drawable.this_weekend_title_img).into(themebinding.thisWeekendTitleImg);
         Glide.with(this).load(R.drawable.az_title_img).into(themebinding.azImg);
         Glide.with(this).load(R.drawable.popular_carping_title_img).into(themebinding.popularCarpingImg);
-        Glide.with(this).load(R.drawable.total_img).into(themebinding.weekendTotalImg);
-        Glide.with(this).load(R.drawable.total_img).into(themebinding.azTotalImg);
         Glide.with(this).load(R.drawable.theme_culture_img).into(themebinding.themeCulture);
         Glide.with(this).load(R.drawable.theme_fire_img).into(themebinding.themeFire);
         Glide.with(this).load(R.drawable.theme_pet_img).into(themebinding.themePet);

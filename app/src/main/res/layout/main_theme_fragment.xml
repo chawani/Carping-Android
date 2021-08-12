@@ -136,13 +136,17 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="0.445"/>
-        <ImageView
-            android:id="@+id/weekend_total_img"
+        <TextView
+            android:id="@+id/this_weekend_total_textview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.11"
             android:baselineAlignBottom="true"
             android:layout_marginRight="5dp"
+            android:textSize="10sp"
+            android:textColor="#848484"
+            android:fontFamily="@font/spoqa_han_sans_neo"
+            android:text="전체보기"
             android:clickable="true"/>
     </LinearLayout>
     <RelativeLayout
@@ -188,13 +192,17 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="0.49"/>
-            <ImageView
-                android:id="@+id/az_total_img"
+            <TextView
+                android:id="@+id/az_total_textview"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.11"
                 android:baselineAlignBottom="true"
                 android:layout_marginRight="5dp"
+                android:textSize="10sp"
+                android:textColor="#848484"
+                android:fontFamily="@font/spoqa_han_sans_neo"
+                android:text="전체보기"
                 android:clickable="true"/>
         </LinearLayout>
     </RelativeLayout>

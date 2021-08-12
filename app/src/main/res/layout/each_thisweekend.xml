@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <androidx.cardview.widget.CardView
+        android:layout_width="280dp"
+        android:layout_height="200dp"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="20dp">
+        <ImageView
+            android:id="@+id/thisweekend_background_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/thisweekend_tags"
+        android:layout_width="280dp"
+        android:layout_height="20dp"
+        android:text="#불멍 #힐링 #자연"
+        android:textStyle="bold"
+        android:textColor="#9F81F7"/>
+    <TextView
+        android:id="@+id/thisweekend_title"
+        android:layout_width="280dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="10dp"
+        android:text="퇴근 후 불멍때리고 싶은 곳"
+        android:textSize="17sp"
+        android:textColor="#000000"
+        android:textStyle="bold"/>
+</LinearLayout>
