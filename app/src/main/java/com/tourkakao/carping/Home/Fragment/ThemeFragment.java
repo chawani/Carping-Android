@@ -14,8 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.tourkakao.carping.Home.HomeContract;
-import com.tourkakao.carping.Home.HomeNetwork.ThemeInterface;
-import com.tourkakao.carping.Home.MainActivity;
 import com.tourkakao.carping.Home.ThemeFragmentAdapter.Az_Adapter;
 import com.tourkakao.carping.Home.ThemeFragmentAdapter.NewCarpingPlace_Adapter;
 import com.tourkakao.carping.Home.ThemeFragmentAdapter.PopularCarpingPlace_Adapter;

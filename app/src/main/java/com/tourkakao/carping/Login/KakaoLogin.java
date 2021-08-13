@@ -63,15 +63,15 @@ public class KakaoLogin implements LoginContract.Kakaologin{
                                 context.startActivity(new Intent(context, MainActivity.class));
                             }else{
                                 Log.e("login error", response.message());
-                                //Toast.makeText(context, "로그인에 실패하였습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
-                                Toast.makeText(context, "login error"+response.message(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "로그인에 실패하였습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(context, "login error"+response.message(), Toast.LENGTH_SHORT).show();
                             }
                         }
                         @Override
                         public void onFailure(Call<Kakao_Token_and_User_Info> call, Throwable t) {
                             Log.getStackTraceString(t);
-                            //Toast.makeText(context, "서버 통신이 불안정합니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
-                            Toast.makeText(context, "server error"+t.toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "서버 통신이 불안정합니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(context, "server error"+t.toString(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }else{
