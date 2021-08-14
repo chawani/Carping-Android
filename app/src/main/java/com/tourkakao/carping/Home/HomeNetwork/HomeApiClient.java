@@ -14,9 +14,6 @@ public class HomeApiClient {
         return getInstance().create(EchoInterface.class);
     }
 
-    public static ThemeInterface getThemeApiService(){
-        return getInstance().create(ThemeInterface.class);
-    }
 
     private static Retrofit getInstance(){
         Gson gson=new GsonBuilder().setLenient().create();

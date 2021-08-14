@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 public class Thisweekend {
-    @SerializedName("")
+    @SerializedName("id")
     int pk;
-    @SerializedName("")
+    @SerializedName("thumbnail")
     String image;
-    @SerializedName("")
+    @SerializedName("title")
     String title;
-    @SerializedName("")
+    @SerializedName("tags")
     ArrayList<String> tags;
 
     public Thisweekend(int pk, String image, String title, ArrayList<String> tags) {

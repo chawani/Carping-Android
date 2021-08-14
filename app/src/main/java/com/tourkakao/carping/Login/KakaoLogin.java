@@ -10,6 +10,7 @@ import com.kakao.sdk.user.UserApiClient;
 import com.tourkakao.carping.Home.MainActivity;
 import com.tourkakao.carping.LoginNetwork.ApiClient;
 import com.tourkakao.carping.LoginNetwork.ApiInterface;
+import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function2;
@@ -53,12 +54,8 @@ public class KakaoLogin implements LoginContract.Kakaologin{
                             if(response.isSuccessful()){
                                 //서버 액세스 토큰, 리프레쉬 토큰은 받았으니
                                 //그걸 사용하고 카카오 api 서버는 로그아웃 되도록 하는 방법 고민 필요
-                                System.out.println(response.body().access_token);
-                                System.out.println(response.body().refresh_token);
-                                System.out.println(response.body().user.pk);
-                                System.out.println(response.body().user.username);
-                                System.out.println(response.body().user.email);
-                                System.out.println(response.body().user.profile.image);
+                                SharedPreferenceManager.getInstance(context).setString("access_token", response.body().access_token);
+                                SharedPreferenceManager.getInstance(context).setString("refresh_token", response.body().refresh_token);
                                 loginActivity.finish();
                                 context.startActivity(new Intent(context, MainActivity.class));
                             }else{

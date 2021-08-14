@@ -3,11 +3,13 @@
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginRight="5dp">
     <androidx.cardview.widget.CardView
         android:layout_width="280dp"
         android:layout_height="200dp"
-        app:cardElevation="10dp"
         app:cardCornerRadius="20dp">
         <ImageView
             android:id="@+id/thisweekend_background_img"
@@ -25,7 +27,7 @@
         android:id="@+id/thisweekend_title"
         android:layout_width="280dp"
         android:layout_height="25dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:text="퇴근 후 불멍때리고 싶은 곳"
         android:textSize="17sp"
         android:textColor="#000000"
