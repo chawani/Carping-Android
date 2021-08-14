@@ -8,14 +8,12 @@ public interface HomeContract {
     int PERMISSION_LOCATION_REQUESTCODE=1001;
 
     interface MainActivity_Contract{
-        void initialize_sharedpreferences();
         void initialize_location_setting_class();
         void init_main_fragment();
         void switch_main_tap();
     }
 
     interface Location_setting_Contract{
-        void setting_sharedpreferences(SharedPreferences prefs, SharedPreferences.Editor editor);
         void check_locate_permission();
     }
     interface ThemeFragment_Contract{

@@ -29,8 +29,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class TotalApiClient {
     private static final String BASE_URL="http://chanjongp.co.kr/";
 
-    public static ApiInterface getApiService(Context context){
-        return getInstance(context).create(ApiInterface.class);
+    public static ThemeInterface getApiService(Context context){
+        return getInstance(context).create(ThemeInterface.class);
     }
 
     private static Retrofit getInstance(Context context){
@@ -63,17 +63,15 @@ class ResponseCodeCheckInterceptor implements Interceptor{
         Request request=chain.request();
         Request authenticatedRequest=request.newBuilder()
                 .header("Authorization", "Bearer "+SharedPreferenceManager.getInstance(context).getString("access_token", null)).build();
-        System.out.println(request+"-----------------");
+        System.out.println(request);
         Response response=chain.proceed(authenticatedRequest);
-        System.out.println(response+"=====================");
+        System.out.println(response);
         if(response.code()== HttpStatus.SC_UNAUTHORIZED){
             response.close();
             getNewToken();
             Request modifiedRequest=request.newBuilder()
                     .header("Authorization", "Bearer "+SharedPreferenceManager.getInstance(context).getString("access_token", null)).build();
             response=chain.proceed(modifiedRequest);
-        }else if(response.code()==HttpStatus.SC_FORBIDDEN){
-            context.startActivity(new Intent(context, LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }
         return response;
     }
@@ -84,10 +82,10 @@ class ResponseCodeCheckInterceptor implements Interceptor{
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         access_token -> {
+                            System.out.println("getnewtoken success");
                             SharedPreferenceManager.getInstance(context).setString("access_token", access_token.access_token);
                         },
                         error -> {
-                            System.out.println(error);
                         });
     }
 }

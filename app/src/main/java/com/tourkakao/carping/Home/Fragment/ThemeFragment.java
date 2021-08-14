@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.tourkakao.carping.Home.HomeContract;
 import com.tourkakao.carping.Home.ThemeDataClass.AZPost;
 import com.tourkakao.carping.Home.ThemeDataClass.Thisweekend;
@@ -20,10 +22,13 @@ import com.tourkakao.carping.Home.ThemeFragmentAdapter.Az_Adapter;
 import com.tourkakao.carping.Home.ThemeFragmentAdapter.NewCarpingPlace_Adapter;
 import com.tourkakao.carping.Home.ThemeFragmentAdapter.PopularCarpingPlace_Adapter;
 import com.tourkakao.carping.Home.ThemeFragmentAdapter.ThisWeekend_Adapter;
+import com.tourkakao.carping.NetworkwithToken.CommonClass;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.databinding.MainThemeFragmentBinding;
 
+import java.lang.reflect.Type;
+import java.net.Proxy;
 import java.util.ArrayList;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -107,7 +112,9 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         lists -> {
-                            thisweekends=lists;
+                            Type type=new TypeToken<ArrayList<Thisweekend>>(){}.getType();
+                            String jsonResult=new Gson().toJson(lists.getData());
+                            thisweekends=new Gson().fromJson(jsonResult, type);
                             initialize_this_weekend_recyclerview();
                             },
                         error -> {

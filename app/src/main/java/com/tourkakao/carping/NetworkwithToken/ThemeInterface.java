@@ -6,17 +6,15 @@ import com.tourkakao.carping.Home.ThemeDataClass.Thisweekend;
 import java.util.ArrayList;
 
 import io.reactivex.rxjava3.core.Single;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 
-public interface ApiInterface {
+public interface ThemeInterface {
     @FormUrlEncoded
     @POST("posts/autocamp/weekend-post")
-    Single<ArrayList<Thisweekend>> get_thisweekend_post(@Field("count")int count);
+    Single<CommonClass> get_thisweekend_post(@Field("count")int count);
 
     @FormUrlEncoded
     @POST("accounts/token/refresh")

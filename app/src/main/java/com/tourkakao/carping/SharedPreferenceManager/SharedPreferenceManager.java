@@ -32,4 +32,10 @@ public class SharedPreferenceManager {
     public int getInt(String key, int defValue){
         return prefs.getInt(key, defValue);
     }
+    public void setBoolean(String key, boolean value){
+        pref_editor.putBoolean(key, value).apply();
+    }
+    public boolean getBoolean(String key, boolean defValue){
+        return prefs.getBoolean(key, defValue);
+    }
 }
