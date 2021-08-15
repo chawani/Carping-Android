@@ -14,24 +14,18 @@ import android.provider.Settings;
 
 import androidx.core.app.ActivityCompat;
 
+import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
+
 public class Location_setting implements HomeContract, HomeContract.Location_setting_Contract{
     Context context;
     Activity used_Activity;
 
-    SharedPreferences main_prefs;
-    SharedPreferences.Editor main_editor;
     boolean isFirstPermissionCheck;
 
     public Location_setting(Context context, Activity used_Activity){
         this.context=context;
         this.used_Activity=used_Activity;
-    }
-
-    @Override
-    public void setting_sharedpreferences(SharedPreferences prefs, SharedPreferences.Editor editor) {
-        this.main_prefs=prefs;
-        this.main_editor=editor;
-        this.isFirstPermissionCheck=this.main_prefs.getBoolean("isFirstPermissionCheck", true);
+        this.isFirstPermissionCheck=SharedPreferenceManager.getInstance(context).getBoolean("isFirstPermissionCheck", true);
     }
 
     @Override
@@ -58,7 +52,7 @@ public class Location_setting implements HomeContract, HomeContract.Location_set
                     builder.create().show();
                 }else{
                     if(isFirstPermissionCheck){//사용자에게 처음 물어본 경우(처음 앱을 실행한 경우)
-                        main_editor.putBoolean("isFirstPermissionCheck", false).apply();
+                        SharedPreferenceManager.getInstance(context).setBoolean("isFirstPermissionCheck", false);
                         ActivityCompat.requestPermissions(used_Activity, REQUIRED_PERMISSIONS, PERMISSION_LOCATION_REQUESTCODE);
                     }else{//권한 설정 거부와 동시에 다시 묻지않음을 선택한 경우, 이번만 허용한 경우, 누적 두번 이상 거절한 경우
                         AlertDialog.Builder builder=new AlertDialog.Builder(context);

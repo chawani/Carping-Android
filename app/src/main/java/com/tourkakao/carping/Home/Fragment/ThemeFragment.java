@@ -9,45 +9,68 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.tourkakao.carping.Home.HomeContract;
-import com.tourkakao.carping.Home.HomeNetwork.ThemeInterface;
-import com.tourkakao.carping.Home.MainActivity;
+import com.tourkakao.carping.Home.HomeViewModel.ThemeViewModel;
+import com.tourkakao.carping.Home.ThemeDataClass.AZPost;
+import com.tourkakao.carping.Home.ThemeDataClass.Thisweekend;
 import com.tourkakao.carping.Home.ThemeFragmentAdapter.Az_Adapter;
 import com.tourkakao.carping.Home.ThemeFragmentAdapter.NewCarpingPlace_Adapter;
 import com.tourkakao.carping.Home.ThemeFragmentAdapter.PopularCarpingPlace_Adapter;
 import com.tourkakao.carping.Home.ThemeFragmentAdapter.ThisWeekend_Adapter;
+import com.tourkakao.carping.NetworkwithToken.CommonClass;
+import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.databinding.MainThemeFragmentBinding;
 
+import java.lang.reflect.Type;
+import java.net.Proxy;
+import java.util.ArrayList;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class ThemeFragment extends Fragment implements HomeContract.ThemeFragment_Contract, View.OnClickListener {
     private MainThemeFragmentBinding themebinding;
-    NewCarpingPlace_Adapter newCarpingPlace_adapter;
-    ThisWeekend_Adapter thisWeekend_adapter;
-    Az_Adapter az_adapter;
-    PopularCarpingPlace_Adapter popularCarpingPlace_adapter;
     Context context;
+    ThemeViewModel themeViewModel;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         themebinding=MainThemeFragmentBinding.inflate(inflater, container, false);
+        context=getActivity().getApplicationContext();
+        //setting view binding
+
+        themeViewModel=new ViewModelProvider(this).get(ThemeViewModel.class);
+        themeViewModel.setContext(context);
 
         initialize_img();
-        initialize_new_carping_place_recyclerview();
-        initialize_this_weekend_recyclerview();
-        initialize_az_recyclerview();
+
+        setting_thisweekend_posts();
+        starting_observe_this_weekends();
+
+        setting_az_posts();
+        starting_observe_az();
+
+        setting_newcarping_posts();
+        starting_observe_newcarping();
+
+        setting_popularcarping_posts();
+        starting_observe_popularcarping();
+
         setting_this_weekend_total_btn();
         setting_az_total_btn();
 
         return themebinding.getRoot();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        themebinding=null;
     }
 
     @Override
@@ -57,8 +80,6 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
         Glide.with(this).load(R.drawable.this_weekend_title_img).into(themebinding.thisWeekendTitleImg);
         Glide.with(this).load(R.drawable.az_title_img).into(themebinding.azImg);
         Glide.with(this).load(R.drawable.popular_carping_title_img).into(themebinding.popularCarpingImg);
-        Glide.with(this).load(R.drawable.total_img).into(themebinding.weekendTotalImg);
-        Glide.with(this).load(R.drawable.total_img).into(themebinding.azTotalImg);
         Glide.with(this).load(R.drawable.theme_culture_img).into(themebinding.themeCulture);
         Glide.with(this).load(R.drawable.theme_fire_img).into(themebinding.themeFire);
         Glide.with(this).load(R.drawable.theme_pet_img).into(themebinding.themePet);
@@ -67,39 +88,104 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
         Glide.with(this).load(R.drawable.theme_reports_img).into(themebinding.themeReports);
         Glide.with(this).load(R.drawable.theme_nature_img).into(themebinding.themeNature);
         Glide.with(this).load(R.drawable.theme_exp_img).into(themebinding.themeExp);
+        Glide.with(this).load(R.drawable.empty_new_carping_place_img).into(themebinding.noNewImg);
+        Glide.with(this).load(R.drawable.empty_data_img).into(themebinding.noWeekendImg);
+        Glide.with(this).load(R.drawable.empty_az_img).into(themebinding.noAzImg);
+        Glide.with(this).load(R.drawable.empty_data_img).into(themebinding.noPopularImg);
     }
 
-    @Override
-    public void initialize_new_carping_place_recyclerview() {
-        newCarpingPlace_adapter=new NewCarpingPlace_Adapter(context);
-        themebinding.newCarpingPlaceRecyclerview.setLayoutManager();
-        themebinding.newCarpingPlaceRecyclerview.setAdapter(newCarpingPlace_adapter);
-        newCarpingPlace_adapter.setOnSelectItemCLickListener();
+
+    public void setting_thisweekend_posts(){
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        themebinding.thisWeekendRecyclerview.setLayoutManager(layoutManager);
+        themebinding.thisWeekendRecyclerview.setAdapter(themeViewModel.setting_thisweekend_adapter());
+        themeViewModel.getMain_thisweekends();
     }
 
-    @Override
-    public void initialize_this_weekend_recyclerview() {
-        thisWeekend_adapter=new ThisWeekend_Adapter(context);
-        themebinding.thisWeekendRecyclerview.setLayoutManager();
-        themebinding.thisWeekendRecyclerview.setAdapter(thisWeekend_adapter);
-        thisWeekend_adapter.setOnSelectItemCLickListener();
+    public void starting_observe_this_weekends(){
+        themeViewModel.main_thisweekends_post_cnt.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if(integer==0){
+                    themebinding.noWeekendImg.setVisibility(View.VISIBLE);
+                    themebinding.thisWeekendRecyclerview.setVisibility(View.GONE);
+                }else{
+                    themebinding.noWeekendImg.setVisibility(View.GONE);
+                    themebinding.thisWeekendRecyclerview.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
-    @Override
-    public void initialize_az_recyclerview() {
-        az_adapter=new Az_Adapter(context);
-        themebinding.azRecyclerview.setLayoutManager();
-        themebinding.azRecyclerview.setAdapter(az_adapter);
-        az_adapter.setOnSelectItemCLickListener();
+    public void setting_az_posts(){
+        LinearLayoutManager layoutManager=new LinearLayoutManager(context);
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        themebinding.azRecyclerview.setLayoutManager(layoutManager);
+        themebinding.azRecyclerview.setAdapter(themeViewModel.setting_az_adapter());
+        themeViewModel.getAz();
     }
 
-    @Override
-    public void initialize_popular_carping_place_recyclerview() {
-        popularCarpingPlace_adapter=new PopularCarpingPlace_Adapter(context);
-        themebinding.popularCarpingRecyclerview.setLayoutManager();
-        themebinding.popularCarpingRecyclerview.setAdapter(popularCarpingPlace_adapter);
+    public void starting_observe_az(){
+        themeViewModel.main_az_post_cnt.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if(integer==0){
+                    themebinding.noAzImg.setVisibility(View.VISIBLE);
+                    themebinding.thisWeekendRecyclerview.setVisibility(View.GONE);
+                }else{
+                    themebinding.noAzImg.setVisibility(View.GONE);
+                    themebinding.thisWeekendRecyclerview.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
+    public void setting_newcarping_posts(){
+        LinearLayoutManager layoutManager=new LinearLayoutManager(context);
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        themebinding.newCarpingPlaceRecyclerview.setLayoutManager(layoutManager);
+        themebinding.newCarpingPlaceRecyclerview.setAdapter(themeViewModel.setting_newcarping_place_adapter());
+        themeViewModel.getNewCarpingPlace();
+    }
+
+    public void starting_observe_newcarping(){
+        themeViewModel.main_new_post_cnt.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if(integer==0){
+                    themebinding.noNewImg.setVisibility(View.VISIBLE);
+                    themebinding.newCarpingPlaceRecyclerview.setVisibility(View.GONE);
+                }else{
+                    themebinding.noNewImg.setVisibility(View.GONE);
+                    themebinding.newCarpingPlaceRecyclerview.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
+
+    public void setting_popularcarping_posts(){
+        LinearLayoutManager layoutManager=new LinearLayoutManager(context);
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        themebinding.popularCarpingRecyclerview.setLayoutManager(layoutManager);
+        themebinding.popularCarpingRecyclerview.setAdapter(themeViewModel.setting_newcarping_place_adapter());
+        themeViewModel.getPopularCarpingPlace();
+    }
+
+    public void starting_observe_popularcarping(){
+        themeViewModel.main_popular_cnt.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if(integer==0){
+                    themebinding.noPopularImg.setVisibility(View.VISIBLE);
+                    themebinding.popularCarpingRecyclerview.setVisibility(View.GONE);
+                }else{
+                    themebinding.noPopularImg.setVisibility(View.GONE);
+                    themebinding.popularCarpingRecyclerview.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
 
     @Override
     public void setting_this_weekend_total_btn() {
@@ -131,5 +217,12 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
             case R.id.theme_exp:
                 break;
         }
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        themebinding=null;
     }
 }

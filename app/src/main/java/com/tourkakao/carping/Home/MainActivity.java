@@ -21,8 +21,6 @@ import com.tourkakao.carping.R;
 
 public class MainActivity extends AppCompatActivity implements HomeContract, HomeContract.MainActivity_Contract{
     Location_setting location_setting;
-    SharedPreferences main_prefs;
-    SharedPreferences.Editor main_editor;
     TabLayout tabs;
     EchoTopFragment echo_top_fragment;
     EchoFragment echo_fragment;
@@ -34,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements HomeContract, Hom
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initialize_sharedpreferences();
         initialize_location_setting_class();
 
         init_main_fragment();
@@ -42,14 +39,8 @@ public class MainActivity extends AppCompatActivity implements HomeContract, Hom
     }
 
     @Override
-    public void initialize_sharedpreferences() {
-        main_prefs=getSharedPreferences("carping", Activity.MODE_PRIVATE);
-        main_editor=main_prefs.edit();
-    }
-    @Override
     public void initialize_location_setting_class() {
         location_setting=new Location_setting(this, MainActivity.this);
-        location_setting.setting_sharedpreferences(main_prefs, main_editor);
         location_setting.check_locate_permission();
     }
 
