@@ -168,7 +168,7 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
         LinearLayoutManager layoutManager=new LinearLayoutManager(context);
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         themebinding.popularCarpingRecyclerview.setLayoutManager(layoutManager);
-        themebinding.popularCarpingRecyclerview.setAdapter(themeViewModel.setting_newcarping_place_adapter());
+        themebinding.popularCarpingRecyclerview.setAdapter(themeViewModel.setting_popularcarping_place_adapter());
         themeViewModel.getPopularCarpingPlace();
     }
 
