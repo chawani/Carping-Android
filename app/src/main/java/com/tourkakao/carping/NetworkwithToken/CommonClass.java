@@ -12,6 +12,8 @@ public class CommonClass {
     @SerializedName("data")
     ArrayList data;
 
+    public CommonClass(){}
+
     public CommonClass(boolean success, String code, ArrayList data) {
         this.success = success;
         this.code = code;

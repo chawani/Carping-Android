@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -74,5 +76,13 @@ public class ThisWeekend_Adapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         return thisweekends==null?0:thisweekends.size();
+    }
+
+    public void update_Item(ArrayList<Thisweekend> items){
+        if(thisweekends!=null){
+            thisweekends=null;
+        }
+        thisweekends=items;
+        notifyDataSetChanged();
     }
 }

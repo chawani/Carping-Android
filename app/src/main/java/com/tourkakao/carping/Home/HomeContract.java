@@ -18,10 +18,6 @@ public interface HomeContract {
     }
     interface ThemeFragment_Contract{
         void initialize_img();
-        void initialize_new_carping_place_recyclerview();
-        void initialize_this_weekend_recyclerview();
-        void initialize_az_recyclerview();
-        void initialize_popular_carping_place_recyclerview();
         void setting_this_weekend_total_btn();
         void setting_az_total_btn();
     }
