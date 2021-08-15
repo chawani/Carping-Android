@@ -13,12 +13,15 @@ public class Thisweekend {
     String title;
     @SerializedName("tags")
     ArrayList<String> tags;
+    @SerializedName("views")
+    int views;
 
-    public Thisweekend(int pk, String image, String title, ArrayList<String> tags) {
+    public Thisweekend(int pk, String image, String title, ArrayList<String> tags, int views) {
         this.pk = pk;
         this.image = image;
         this.title = title;
         this.tags = tags;
+        this.views=views;
     }
 
     public int getPk() {
@@ -51,5 +54,13 @@ public class Thisweekend {
 
     public void setTags(ArrayList<String> tags) {
         this.tags = tags;
+    }
+
+    public int getViews() {
+        return views;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
     }
 }

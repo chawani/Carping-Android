@@ -1,6 +1,7 @@
 package com.tourkakao.carping.Home.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ import com.tourkakao.carping.Home.ThemeFragmentAdapter.ThisWeekend_Adapter;
 import com.tourkakao.carping.NetworkwithToken.CommonClass;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.R;
+import com.tourkakao.carping.Thisweekend.Activity.ThisWeekend_totalActivity;
 import com.tourkakao.carping.databinding.MainThemeFragmentBinding;
 
 import java.lang.reflect.Type;
@@ -189,7 +191,12 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
 
     @Override
     public void setting_this_weekend_total_btn() {
-
+        themebinding.thisWeekendTotalTextview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, ThisWeekend_totalActivity.class));
+            }
+        });
     }
 
     @Override

@@ -63,7 +63,7 @@ public class ThemeViewModel extends ViewModel {
         thisWeekend_adapter=new ThisWeekend_Adapter(context, thisweekends);
         thisWeekend_adapter.setOnSelectItemCLickListener(new ThisWeekend_Adapter.OnSelectItemClickListener() {
             @Override
-            public void OnSelectItemClick(View v, int pos) {
+            public void OnSelectItemClick(View v, int pos, int pk) {
 
             }
         });
