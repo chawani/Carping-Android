@@ -8,6 +8,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface ThemeInterface {
     @FormUrlEncoded
@@ -18,6 +19,6 @@ public interface ThemeInterface {
     @POST("accounts/token/refresh")
     Single<AccessToken> getNewtoken(@Field("refresh_token")String refresh_token);
 
-    @GET("")
-    Single<CommonClass> get_az_post();
+    @GET("posts/autocamp/{pk}")
+    Single<CommonClass> get_each_thisweekend_detail(@Path("pk")int pk);
 }

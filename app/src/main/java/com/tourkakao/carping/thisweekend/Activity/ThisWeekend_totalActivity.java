@@ -1,10 +1,9 @@
-package com.tourkakao.carping.Thisweekend.Activity;
+package com.tourkakao.carping.thisweekend.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,7 +11,7 @@ import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.tourkakao.carping.R;
-import com.tourkakao.carping.Thisweekend.ViewModel.Total_ThisWeekend_ViewModel;
+import com.tourkakao.carping.thisweekend.viewmodel.Total_ThisWeekend_ViewModel;
 import com.tourkakao.carping.databinding.ActivityThisWeekendTotalBinding;
 
 public class ThisWeekend_totalActivity extends AppCompatActivity {

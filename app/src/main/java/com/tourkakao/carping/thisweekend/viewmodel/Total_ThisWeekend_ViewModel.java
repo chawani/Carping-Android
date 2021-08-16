@@ -1,6 +1,7 @@
-package com.tourkakao.carping.Thisweekend.ViewModel;
+package com.tourkakao.carping.thisweekend.viewmodel;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 
 import androidx.lifecycle.MutableLiveData;
@@ -10,7 +11,9 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tourkakao.carping.Home.ThemeDataClass.Thisweekend;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
-import com.tourkakao.carping.Thisweekend.Adapter.Total_ThisWeekend_Adapter;
+import com.tourkakao.carping.thisweekend.Activity.Each_ThisWeekendActivity;
+import com.tourkakao.carping.thisweekend.Activity.ThisWeekend_totalActivity;
+import com.tourkakao.carping.thisweekend.Adapter.Total_ThisWeekend_Adapter;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -37,7 +40,10 @@ public class Total_ThisWeekend_ViewModel extends ViewModel {
         total_thisWeekend_adapter.setOnSelectItemClickListener(new Total_ThisWeekend_Adapter.OnSelectItemClickListener() {
             @Override
             public void OnSelectItemClick(View v, int pos, int pk) {
-
+                Intent intent=new Intent(context, Each_ThisWeekendActivity.class);
+                intent.putExtra("pk", pk);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             }
         });
         return total_thisWeekend_adapter;

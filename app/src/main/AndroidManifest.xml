@@ -15,8 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Thisweekend.Activity.Each_ThisWeekendActivity"></activity>
-        <activity android:name=".Thisweekend.Activity.ThisWeekend_totalActivity" />
+        <activity android:name=".thisweekend.Activity.Each_ThisWeekendActivity"></activity>
+        <activity android:name=".thisweekend.Activity.ThisWeekend_totalActivity" />
         <activity android:name=".Theme.Activity.ThemeActivity" />
         <activity android:name=".Home.MainActivity" />
         <activity android:name=".Login.LoginActivity">

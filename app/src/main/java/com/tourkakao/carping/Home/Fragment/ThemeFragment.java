@@ -10,36 +10,17 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.tourkakao.carping.Home.HomeContract;
 import com.tourkakao.carping.Home.HomeViewModel.ThemeViewModel;
-import com.tourkakao.carping.Home.ThemeDataClass.AZPost;
-import com.tourkakao.carping.Home.ThemeDataClass.Thisweekend;
-import com.tourkakao.carping.Home.ThemeFragmentAdapter.Az_Adapter;
-import com.tourkakao.carping.Home.ThemeFragmentAdapter.NewCarpingPlace_Adapter;
-import com.tourkakao.carping.Home.ThemeFragmentAdapter.PopularCarpingPlace_Adapter;
-import com.tourkakao.carping.Home.ThemeFragmentAdapter.ThisWeekend_Adapter;
-import com.tourkakao.carping.NetworkwithToken.CommonClass;
-import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.R;
-import com.tourkakao.carping.Thisweekend.Activity.ThisWeekend_totalActivity;
+import com.tourkakao.carping.thisweekend.Activity.ThisWeekend_totalActivity;
 import com.tourkakao.carping.databinding.MainThemeFragmentBinding;
-
-import java.lang.reflect.Type;
-import java.net.Proxy;
-import java.util.ArrayList;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Scheduler;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class ThemeFragment extends Fragment implements HomeContract.ThemeFragment_Contract, View.OnClickListener {
     private MainThemeFragmentBinding themebinding;

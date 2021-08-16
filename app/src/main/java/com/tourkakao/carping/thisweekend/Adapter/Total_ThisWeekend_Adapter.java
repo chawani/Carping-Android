@@ -1,4 +1,4 @@
-package com.tourkakao.carping.Thisweekend.Adapter;
+package com.tourkakao.carping.thisweekend.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.tourkakao.carping.Home.ThemeDataClass.Thisweekend;
 import com.tourkakao.carping.databinding.EachTotalThisweekendBinding;
 
