@@ -93,7 +93,7 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
                 if(integer==0){
                     themebinding.noWeekendImg.setVisibility(View.VISIBLE);
                     themebinding.thisWeekendRecyclerview.setVisibility(View.GONE);
-                }else{
+                }else if(integer>=1){
                     themebinding.noWeekendImg.setVisibility(View.GONE);
                     themebinding.thisWeekendRecyclerview.setVisibility(View.VISIBLE);
                 }
@@ -116,7 +116,7 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
                 if(integer==0){
                     themebinding.noAzImg.setVisibility(View.VISIBLE);
                     themebinding.thisWeekendRecyclerview.setVisibility(View.GONE);
-                }else{
+                }else if(integer>=1){
                     themebinding.noAzImg.setVisibility(View.GONE);
                     themebinding.thisWeekendRecyclerview.setVisibility(View.VISIBLE);
                 }
@@ -139,7 +139,7 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
                 if(integer==0){
                     themebinding.noNewImg.setVisibility(View.VISIBLE);
                     themebinding.newCarpingPlaceRecyclerview.setVisibility(View.GONE);
-                }else{
+                }else if(integer>=1){
                     themebinding.noNewImg.setVisibility(View.GONE);
                     themebinding.newCarpingPlaceRecyclerview.setVisibility(View.VISIBLE);
                 }
@@ -162,7 +162,7 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
                 if(integer==0){
                     themebinding.noPopularImg.setVisibility(View.VISIBLE);
                     themebinding.popularCarpingRecyclerview.setVisibility(View.GONE);
-                }else{
+                }else if(integer>=1){
                     themebinding.noPopularImg.setVisibility(View.GONE);
                     themebinding.popularCarpingRecyclerview.setVisibility(View.VISIBLE);
                 }

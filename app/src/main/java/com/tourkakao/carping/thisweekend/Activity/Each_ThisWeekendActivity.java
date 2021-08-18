@@ -8,6 +8,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
+import com.bumptech.glide.Glide;
 import com.tourkakao.carping.thisweekend.viewmodel.Each_ThisWeekend_ViewModel;
 import com.tourkakao.carping.databinding.ActivityEachThisWeekendBinding;
 
@@ -33,6 +34,7 @@ public class Each_ThisWeekendActivity extends AppCompatActivity {
         eachThisWeekendBinding.setEachThisWeekendViewModel(eachThisWeekendViewModel);
 
         starting_observe_detail_count();
+        starting_observe_images();
     }
 
     public void starting_observe_detail_count(){
@@ -52,6 +54,27 @@ public class Each_ThisWeekendActivity extends AppCompatActivity {
                     eachThisWeekendBinding.campsite2Layout.setVisibility(View.GONE);
                     eachThisWeekendBinding.campsite1Layout.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+    }
+
+    public void starting_observe_images(){
+        eachThisWeekendViewModel.image1.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Glide.with(context).load(s).into(eachThisWeekendBinding.image1);
+            }
+        });
+        eachThisWeekendViewModel.image2.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Glide.with(context).load(s).into(eachThisWeekendBinding.image2);
+            }
+        });
+        eachThisWeekendViewModel.image3.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Glide.with(context).load(s).into(eachThisWeekendBinding.image3);
             }
         });
     }

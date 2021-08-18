@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.tourkakao.carping.Home.ThemeDataClass.Thisweekend;
 import com.tourkakao.carping.databinding.EachTotalThisweekendBinding;
 
@@ -47,7 +48,7 @@ public class Total_ThisWeekend_Adapter extends RecyclerView.Adapter {
             });
         }
         public void setItem(Thisweekend post){
-            //Glide.with(context).load(post.getImage()).into(binding.thisweekendBackgroundImg);
+            Glide.with(context).load(post.getImage()).into(binding.thisweekendBackgroundImg);
             binding.thisweekendTitle.setText(post.getTitle());
             String tags="";
             for(int i=0; i<post.getTags().size(); i++){

@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".thisweekend.Activity.Each_ThisWeekendActivity"></activity>
+        <activity android:name=".newcarping.Activity.Each_NewCarpingActivity"></activity>
+        <activity android:name=".thisweekend.Activity.Each_ThisWeekendActivity" />
         <activity android:name=".thisweekend.Activity.ThisWeekend_totalActivity" />
         <activity android:name=".Theme.Activity.ThemeActivity" />
         <activity android:name=".Home.MainActivity" />

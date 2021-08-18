@@ -29,6 +29,7 @@ public class Each_ThisWeekend_ViewModel extends ViewModel {
     public MutableLiveData<Integer> count=new MutableLiveData<>();
     public MutableLiveData<String> title=new MutableLiveData<>();
     public MutableLiveData<String> name1=new MutableLiveData<>();
+    public MutableLiveData<String> image1=new MutableLiveData<>();
     public MutableLiveData<String> source1=new MutableLiveData<>();
     public MutableLiveData<String> title1=new MutableLiveData<>();
     public MutableLiveData<String> body1=new MutableLiveData<>();
@@ -39,6 +40,7 @@ public class Each_ThisWeekend_ViewModel extends ViewModel {
     public MutableLiveData<String> website1=new MutableLiveData<>();
     public MutableLiveData<String> facility1=new MutableLiveData<>();
     public MutableLiveData<String> name2=new MutableLiveData<>();
+    public MutableLiveData<String> image2=new MutableLiveData<>();
     public MutableLiveData<String> source2=new MutableLiveData<>();
     public MutableLiveData<String> title2=new MutableLiveData<>();
     public MutableLiveData<String> body2=new MutableLiveData<>();
@@ -49,6 +51,7 @@ public class Each_ThisWeekend_ViewModel extends ViewModel {
     public MutableLiveData<String> website2=new MutableLiveData<>();
     public MutableLiveData<String> facility2=new MutableLiveData<>();
     public MutableLiveData<String> name3=new MutableLiveData<>();
+    public MutableLiveData<String> image3=new MutableLiveData<>();
     public MutableLiveData<String> source3=new MutableLiveData<>();
     public MutableLiveData<String> title3=new MutableLiveData<>();
     public MutableLiveData<String> body3=new MutableLiveData<>();
@@ -84,6 +87,7 @@ public class Each_ThisWeekend_ViewModel extends ViewModel {
                             Each_campsite campsite2=new Gson().fromJson(String.valueOf(object.getJSONObject("campsite2")), type);
                             Each_campsite campsite3=new Gson().fromJson(String.valueOf(object.getJSONObject("campsite3")), type);
                             name1.setValue(campsite1.getCampsite_name());
+                            image1.setValue(campsite1.getImage());
                             source1.setValue(campsite1.getImage_source());
                             title1.setValue(campsite1.getTitle());
                             body1.setValue(campsite1.getBody());
@@ -94,6 +98,7 @@ public class Each_ThisWeekend_ViewModel extends ViewModel {
                             website1.setValue(campsite1.getWebsite());
                             facility1.setValue(campsite1.getSub_facility());
                             name2.setValue(campsite2.getCampsite_name());
+                            image2.setValue(campsite2.getImage());
                             source2.setValue(campsite2.getImage_source());
                             title2.setValue(campsite2.getTitle());
                             body2.setValue(campsite2.getBody());
@@ -104,6 +109,7 @@ public class Each_ThisWeekend_ViewModel extends ViewModel {
                             website2.setValue(campsite2.getWebsite());
                             facility2.setValue(campsite2.getSub_facility());
                             name3.setValue(campsite3.getCampsite_name());
+                            image3.setValue(campsite3.getImage());
                             source3.setValue(campsite3.getImage_source());
                             title3.setValue(campsite3.getTitle());
                             body3.setValue(campsite3.getBody());

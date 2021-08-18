@@ -21,4 +21,11 @@ public interface ThemeInterface {
 
     @GET("posts/autocamp/{pk}")
     Single<CommonClass> get_each_thisweekend_detail(@Path("pk")int pk);
+
+    @FormUrlEncoded
+    @POST("camps/auto-camp/partial")
+    Single<CommonClass> get_newcarping_place(@Field("count")int count);
+
+    @GET("camps/auto-camp/{pk}")
+    Single<CommonClass> get_each_newcarping_place_detail(@Path("pk")int pk);
 }
