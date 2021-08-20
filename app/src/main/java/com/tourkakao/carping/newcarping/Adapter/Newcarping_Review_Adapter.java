@@ -30,7 +30,7 @@ public class Newcarping_Review_Adapter extends RecyclerView.Adapter {
         }
         public void setItem(Newcarping_Review review){
             binding.date.setText(review.getCreated_at());
-            binding.like.setText(review.getLike_count());
+            binding.like.setText(Integer.toString(review.getLike_count()));
             binding.ratingstar.setRating(review.getTotal_star());
             binding.userId.setText(review.getUsername());
             binding.review.setText(review.getText());

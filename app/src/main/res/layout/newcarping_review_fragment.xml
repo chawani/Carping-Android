@@ -11,14 +11,18 @@
         android:orientation="vertical"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/newcarping_imagereview_recyclerview"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <ImageView
-            android:id="@+id/no_review_img"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"/>
+            android:layout_height="wrap_content">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/newcarping_imagereview_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/no_review_img"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+        </RelativeLayout>
         <ImageView
             android:id="@+id/newcarping_profile_img"
             android:layout_width="50dp"
@@ -27,9 +31,9 @@
         <RatingBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:isIndicator="false"
+            android:isIndicator="true"
             android:numStars="5"
-            android:rating="@{eachnewcarpingviewmodel.review_user_star}"
+            android:rating="@{eachnewcarpingviewmodel.total_star}"
             android:stepSize="0.1"
             style="@style/Widget.AppCompat.RatingBar.Indicator"
             android:layout_gravity="center"
@@ -76,18 +80,19 @@
                     android:id="@+id/newcarping_review_total_starnum"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{Float.toString(eachnewcarpingviewmodel.review_star_num)}"
+                    android:text="@{Float.toString(eachnewcarpingviewmodel.total_star)}"
                     android:textStyle="bold"
                     android:textSize="20sp"
+                    android:textColor="@color/purple_text"
                     android:gravity="center"
                     android:layout_marginBottom="5dp"/>
                 <RatingBar
                     android:id="@+id/newcarping_review_total_star"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:isIndicator="false"
+                    android:isIndicator="true"
                     android:numStars="5"
-                    android:rating="@{eachnewcarpingviewmodel.review_star}"
+                    android:rating="@{eachnewcarpingviewmodel.total_star}"
                     android:stepSize="0.1"
                     style="@style/Widget.AppCompat.RatingBar.Small"
                     android:layout_gravity="center"/>
@@ -109,24 +114,29 @@
                         android:textSize="12sp"
                         android:text="청결"
                         android:textColor="#000000"/>
-                    <RatingBar
-                        android:id="@+id/star1"
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.7"
-                        android:isIndicator="false"
-                        android:numStars="5"
-                        android:stepSize="0.1"
-                        android:rating="@{eachnewcarpingviewmodel.review_star1}"
-                        style="@style/Widget.AppCompat.RatingBar.Small"
-                        android:layout_gravity="center"/>
+                        android:layout_weight="0.7">
+                        <RatingBar
+                            android:id="@+id/star1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:isIndicator="true"
+                            android:numStars="5"
+                            android:stepSize="0.1"
+                            android:rating="@{eachnewcarpingviewmodel.star1}"
+                            style="@style/Widget.AppCompat.RatingBar.Small"
+                            android:layout_gravity="center"/>
+                    </LinearLayout>
                     <TextView
                         android:id="@+id/start1_text"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="16dp"
                         android:layout_weight="0.1"
-                        android:text="@{Float.toString(eachnewcarpingviewmodel.review_star1_num)"
-                        android:textSize="10sp"/>
+                        android:text="@{Float.toString(eachnewcarpingviewmodel.star1)}"
+                        android:textColor="@color/purple_text"
+                        android:textSize="10sp" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -140,24 +150,30 @@
                         android:textSize="12sp"
                         android:text="주차장"
                         android:textColor="#000000"/>
-                    <RatingBar
-                        android:id="@+id/star2"
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.7"
-                        android:isIndicator="false"
-                        android:numStars="5"
-                        android:stepSize="0.1"
-                        android:rating="@{eachnewcarpingviewmodel.review_star2}"
-                        style="@style/Widget.AppCompat.RatingBar.Small"
-                        android:layout_gravity="center"/>
+                        android:layout_weight="0.7">
+                        <RatingBar
+                            android:id="@+id/star2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:isIndicator="true"
+                            android:numStars="5"
+                            android:stepSize="0.1"
+                            android:rating="@{eachnewcarpingviewmodel.star2}"
+                            style="@style/Widget.AppCompat.RatingBar.Small"
+                            android:layout_gravity="center"/>
+                    </LinearLayout>
+
                     <TextView
                         android:id="@+id/start2_text"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="16dp"
                         android:layout_weight="0.1"
-                        android:text="@{Float.toString(eachnewcarpingviewmodel.review_star2_num)"
-                        android:textSize="10sp"/>
+                        android:text="@{Float.toString(eachnewcarpingviewmodel.star2)}"
+                        android:textColor="@color/purple_text"
+                        android:textSize="10sp" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -171,23 +187,28 @@
                         android:textSize="12sp"
                         android:text="편의"
                         android:textColor="#000000"/>
-                    <RatingBar
-                        android:id="@+id/star3"
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.7"
-                        android:isIndicator="false"
-                        android:numStars="5"
-                        android:stepSize="0.1"
-                        android:rating="@{eachnewcarpingviewmodel.review_star3}"
-                        style="@style/Widget.AppCompat.RatingBar.Small"
-                        android:layout_gravity="center"/>
+                        android:layout_weight="0.7">
+                        <RatingBar
+                            android:id="@+id/star3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:isIndicator="true"
+                            android:numStars="5"
+                            android:stepSize="0.1"
+                            android:rating="@{eachnewcarpingviewmodel.star3}"
+                            style="@style/Widget.AppCompat.RatingBar.Small"
+                            android:layout_gravity="center"/>
+                    </LinearLayout>
                     <TextView
                         android:id="@+id/start3_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.1"
-                        android:text="@{Float.toString(eachnewcarpingviewmodel.review_star3_num)"
+                        android:text="@{Float.toString(eachnewcarpingviewmodel.star3)}"
+                        android:textColor="@color/purple_text"
                         android:textSize="10sp"/>
                 </LinearLayout>
                 <LinearLayout
@@ -202,23 +223,28 @@
                         android:textSize="12sp"
                         android:text="위치"
                         android:textColor="#000000"/>
-                    <RatingBar
-                        android:id="@+id/star4"
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.7"
-                        android:isIndicator="false"
-                        android:numStars="5"
-                        android:stepSize="0.1"
-                        android:rating="@{eachnewcarpingviewmodel.review_star4}"
-                        style="@style/Widget.AppCompat.RatingBar.Small"
-                        android:layout_gravity="center"/>
+                        android:layout_weight="0.7">
+                        <RatingBar
+                            android:id="@+id/star4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:isIndicator="true"
+                            android:numStars="5"
+                            android:stepSize="0.1"
+                            android:rating="@{eachnewcarpingviewmodel.star4}"
+                            style="@style/Widget.AppCompat.RatingBar.Small"
+                            android:layout_gravity="center"/>
+                    </LinearLayout>
                     <TextView
                         android:id="@+id/start4_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.1"
-                        android:text="@{Float.toString(eachnewcarpingviewmodel.review_star4_num)"
+                        android:text="@{Float.toString(eachnewcarpingviewmodel.star4)}"
+                        android:textColor="@color/purple_text"
                         android:textSize="10sp"/>
                 </LinearLayout>
             </LinearLayout>

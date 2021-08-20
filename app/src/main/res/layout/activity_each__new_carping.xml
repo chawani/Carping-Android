@@ -6,7 +6,7 @@
             name="eachNewCarpingViewModel"
             type="com.tourkakao.carping.newcarping.viewmodel.EachNewCarpingViewModel" />
     </data>
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
@@ -38,9 +38,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="1"
-                android:orientation="horizontal"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp">
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
                 <TextView
                     android:id="@+id/newcarping_title"
                     android:layout_width="0dp"
@@ -60,14 +61,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginTop="5dp">
                 <RatingBar
                     android:id="@+id/newcarping_total_rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:isIndicator="false"
+                    android:isIndicator="true"
                     android:numStars="5"
                     android:rating="@{eachNewCarpingViewModel.total_star}"
                     android:stepSize="0.1"
@@ -78,6 +79,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="11sp"
                     android:text="@{eachNewCarpingViewModel.total_star_num}"
+                    android:textColor="@color/purple_text"
                     android:layout_toRightOf="@+id/newcarping_total_rating"
                     android:layout_marginLeft="3dp"/>
             </RelativeLayout>
@@ -96,9 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:tabIndicator="@color/black"
-                app:tabMode="scrollable"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp">
+                app:tabMode="scrollable">
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -111,9 +111,7 @@
             <FrameLayout
                 android:id="@+id/newcarping_frame"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
+                android:layout_height="wrap_content"/>
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </layout>

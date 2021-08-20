@@ -2,6 +2,7 @@ package com.tourkakao.carping.newcarping.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -27,14 +28,20 @@ public class Each_NewCarpingActivity extends AppCompatActivity {
         context=getApplicationContext();
 
         eachNewCarpingViewModel=new ViewModelProvider(this).get(EachNewCarpingViewModel.class);
+        eachNewCarpingViewModel.setContext(context);
+        eachNewCarpingViewModel.setPk(getIntent().getIntExtra("pk", 0));
         eachNewCarpingBinding.setLifecycleOwner(this);
         eachNewCarpingBinding.setEachNewCarpingViewModel(eachNewCarpingViewModel);
 
         infoFragment=new InfoFragment();
+        infoFragment.setting_viewmodel(eachNewCarpingViewModel);
         reviewFragment=new ReviewFragment();
+        reviewFragment.setting_viewmodel(eachNewCarpingViewModel);
         getSupportFragmentManager().beginTransaction().add(R.id.newcarping_frame, infoFragment).commit();
         getSupportFragmentManager().beginTransaction().add(R.id.newcarping_frame, reviewFragment).commit();
         getSupportFragmentManager().beginTransaction().hide(reviewFragment).commit();
+
+        eachNewCarpingViewModel.get_newcarping_detail();
 
         setting_tablayout();
     }
@@ -58,4 +65,5 @@ public class Each_NewCarpingActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) { }
         });
     }
+
 }

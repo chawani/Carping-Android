@@ -27,15 +27,15 @@ public class NewCarping {
     int review_count;
     @SerializedName("check_bookmark")
     int check_bookmark;
-    @SerializedName("")
+    @SerializedName("total_star_avg")
     float total_star;
-    @SerializedName("")
+    @SerializedName("star1_avg")
     float star1;
-    @SerializedName("")
+    @SerializedName("star2_avg")
     float star2;
-    @SerializedName("")
+    @SerializedName("star3_avg")
     float star3;
-    @SerializedName("")
+    @SerializedName("star4_avg")
     float star4;
     @SerializedName("review")
     ArrayList<Newcarping_Review> reviews;

@@ -7,7 +7,7 @@ public class Newcarping_Review {
     int id;
     @SerializedName("user")
     int user;
-    @SerializedName("")
+    @SerializedName("username")
     String username;
     @SerializedName("text")
     String text;
