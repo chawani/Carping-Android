@@ -18,15 +18,30 @@
                 android:id="@+id/newcarping_imagereview_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <ImageView
-                android:id="@+id/no_review_img"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"/>
+                android:layout_height="match_parent"
+                android:weightSum="3"
+                android:orientation="horizontal"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp">
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:id="@+id/no_review_img"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
         </RelativeLayout>
         <ImageView
             android:id="@+id/newcarping_profile_img"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
             android:layout_gravity="center"/>
         <RatingBar
             android:layout_width="wrap_content"
@@ -45,7 +60,8 @@
             android:layout_height="wrap_content"
             android:text="@{eachnewcarpingviewmodel.review_username}"
             android:textSize="12sp"
-            android:textColor="@color/black"
+            android:textColor="@color/purple_text"
+            android:textStyle="bold"
             android:gravity="center"
             android:layout_marginBottom="5dp"/>
         <TextView
@@ -54,6 +70,7 @@
             android:text="이 차박지를 평가해주세요!"
             android:textColor="#000000"
             android:textSize="12sp"
+            android:textStyle="bold"
             android:gravity="center"
             android:layout_marginBottom="30dp"/>
         <TextView
@@ -64,12 +81,14 @@
             android:textSize="20sp"
             android:textColor="#000000"
             android:textStyle="bold"
+            android:layout_marginLeft="10dp"
             android:layout_marginBottom="20dp"/>
         <LinearLayout
             android:id="@+id/review_star_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginBottom="30dp"
             android:weightSum="1">
             <LinearLayout
                 android:layout_width="0dp"
@@ -136,6 +155,7 @@
                         android:layout_weight="0.1"
                         android:text="@{Float.toString(eachnewcarpingviewmodel.star1)}"
                         android:textColor="@color/purple_text"
+                        android:textStyle="bold"
                         android:textSize="10sp" />
                 </LinearLayout>
                 <LinearLayout
@@ -165,7 +185,6 @@
                             style="@style/Widget.AppCompat.RatingBar.Small"
                             android:layout_gravity="center"/>
                     </LinearLayout>
-
                     <TextView
                         android:id="@+id/start2_text"
                         android:layout_width="0dp"
@@ -173,6 +192,7 @@
                         android:layout_weight="0.1"
                         android:text="@{Float.toString(eachnewcarpingviewmodel.star2)}"
                         android:textColor="@color/purple_text"
+                        android:textStyle="bold"
                         android:textSize="10sp" />
                 </LinearLayout>
                 <LinearLayout
@@ -209,6 +229,7 @@
                         android:layout_weight="0.1"
                         android:text="@{Float.toString(eachnewcarpingviewmodel.star3)}"
                         android:textColor="@color/purple_text"
+                        android:textStyle="bold"
                         android:textSize="10sp"/>
                 </LinearLayout>
                 <LinearLayout
@@ -245,6 +266,7 @@
                         android:layout_weight="0.1"
                         android:text="@{Float.toString(eachnewcarpingviewmodel.star4)}"
                         android:textColor="@color/purple_text"
+                        android:textStyle="bold"
                         android:textSize="10sp"/>
                 </LinearLayout>
             </LinearLayout>

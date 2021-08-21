@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.tourkakao.carping.databinding.EachNewcarpingReviewBinding;
 import com.tourkakao.carping.newcarping.DataClass.Newcarping_Review;
 
@@ -29,6 +30,7 @@ public class Newcarping_Review_Adapter extends RecyclerView.Adapter {
 
         }
         public void setItem(Newcarping_Review review){
+            Glide.with(context).load(review.getImage()).circleCrop().into(binding.image);
             binding.date.setText(review.getCreated_at());
             binding.like.setText(Integer.toString(review.getLike_count()));
             binding.ratingstar.setRating(review.getTotal_star());

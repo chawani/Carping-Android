@@ -36,9 +36,10 @@
                 <!-- 인가 코드 받기 위한 Redirect URI 설정 -->
                 <data
                     android:host="oauth"
-                    android:scheme="kakao{KAKAO_API_KEY}" />
+                    android:scheme="kakao{6519ca5db74649f8ddb56f7d2d9c611c}" />
             </intent-filter>
         </activity>
+        <meta-data android:name="com.kakao.sdk.AppKey" android:value="KAKAO_API_KEY"/>
     </application>
 
 </manifest>

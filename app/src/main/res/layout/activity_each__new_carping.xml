@@ -6,9 +6,10 @@
             name="eachNewCarpingViewModel"
             type="com.tourkakao.carping.newcarping.viewmodel.EachNewCarpingViewModel" />
     </data>
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -34,13 +35,23 @@
                     android:fontFamily="@font/spoqa_han_sans_neo"
                     android:textStyle="bold"/>
             </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/map_view"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:orientation="vertical"/>
+            <ImageView
+                android:id="@+id/newcarping_share_img"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="17dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:weightSum="1"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/newcarping_title"
@@ -55,7 +66,8 @@
                     android:id="@+id/bookmark_img"
                     android:layout_width="0dp"
                     android:layout_height="25dp"
-                    android:layout_weight="0.1"/>
+                    android:layout_weight="0.1"
+                    android:clickable="true"/>
             </LinearLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -83,16 +95,27 @@
                     android:layout_toRightOf="@+id/newcarping_total_rating"
                     android:layout_marginLeft="3dp"/>
             </RelativeLayout>
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:text="@{eachNewCarpingViewModel.address}"
-                android:textColor="#000000"
-                android:layout_marginTop="5dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginLeft="20dp"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="5dp">
+                <ImageView
+                    android:id="@+id/locate_img"
+                    android:layout_width="10dp"
+                    android:layout_height="20dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="@{eachNewCarpingViewModel.address}"
+                    android:textColor="#000000"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"/>
+            </LinearLayout>
+
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/newcarping_tabs"
                 android:layout_width="match_parent"
@@ -108,10 +131,14 @@
                     android:layout_height="wrap_content"
                     android:text="리뷰"/>
             </com.google.android.material.tabs.TabLayout>
-            <FrameLayout
-                android:id="@+id/newcarping_frame"
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content">
+                <FrameLayout
+                    android:id="@+id/newcarping_frame"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </androidx.core.widget.NestedScrollView>
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
 </layout>
