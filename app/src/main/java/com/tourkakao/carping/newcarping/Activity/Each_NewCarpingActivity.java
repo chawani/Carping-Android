@@ -102,6 +102,13 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
                 }
             }
         });
+        eachNewCarpingBinding.bookmarkImg.setOnClickListener(v -> {
+            if(eachNewCarpingViewModel.check_bookmark.getValue()==0) {
+                eachNewCarpingViewModel.setting_newcarping_bookmark();
+            }else if(eachNewCarpingViewModel.check_bookmark.getValue()==1){
+                eachNewCarpingViewModel.releasing_newcarping_bookmark();
+            }
+        });
     }
     public void starting_observe_map_and_address(){
         eachNewCarpingViewModel.carpingplace_lon.observe(this, new Observer<Double>() {

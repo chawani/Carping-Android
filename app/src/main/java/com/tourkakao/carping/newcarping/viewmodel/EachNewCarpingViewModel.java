@@ -123,4 +123,33 @@ public class EachNewCarpingViewModel extends ViewModel {
                 );
 
     }
+
+    public void setting_newcarping_bookmark(){
+        TotalApiClient.getApiService(context).set_bookmark(pk)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        result -> {
+                            check_bookmark.setValue(1);
+                            System.out.println(result.getData().get(0));
+                        },
+                        error -> {
+
+                        }
+                );
+    }
+    public void releasing_newcarping_bookmark(){
+        TotalApiClient.getApiService(context).release_bookmark(pk)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        result -> {
+                            check_bookmark.setValue(0);
+                            System.out.println(result.getData().get(0));
+                        },
+                        error -> {
+
+                        }
+                );
+    }
 }
