@@ -9,6 +9,8 @@ public class Newcarping_Review {
     int user;
     @SerializedName("username")
     String username;
+    @SerializedName("")
+    String review_profile;
     @SerializedName("text")
     String text;
     @SerializedName("image")
@@ -30,10 +32,11 @@ public class Newcarping_Review {
     @SerializedName("check_like")
     int check_like;
 
-    public Newcarping_Review(int id, int user, String username, String text, String image, float star1, float star2, float star3, float star4, float total_star, String created_at, int like_count, int check_like) {
+    public Newcarping_Review(int id, int user, String username, String review_profile, String text, String image, float star1, float star2, float star3, float star4, float total_star, String created_at, int like_count, int check_like) {
         this.id = id;
         this.user = user;
         this.username = username;
+        this.review_profile = review_profile;
         this.text = text;
         this.image = image;
         this.star1 = star1;
@@ -68,6 +71,14 @@ public class Newcarping_Review {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getReview_profile() {
+        return review_profile;
+    }
+
+    public void setReview_profile(String review_profile) {
+        this.review_profile = review_profile;
     }
 
     public String getText() {

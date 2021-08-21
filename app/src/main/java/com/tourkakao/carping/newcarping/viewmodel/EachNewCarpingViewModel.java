@@ -78,42 +78,44 @@ public class EachNewCarpingViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         detail -> {
-                            Type type=new TypeToken<NewCarping>(){}.getType();
-                            String result=new Gson().toJson(detail.getData().get(0));
-                            NewCarping newCarping=new Gson().fromJson(result, type);
+                            if(detail!=null){
+                                Type type=new TypeToken<NewCarping>(){}.getType();
+                                String result=new Gson().toJson(detail.getData().get(0));
+                                NewCarping newCarping=new Gson().fromJson(result, type);
 
-                            title.setValue(newCarping.getTitle());
-                            total_star.setValue(newCarping.getTotal_star());
-                            review_cnt_num.setValue(newCarping.getReview_count());
-                            check_bookmark.setValue(newCarping.getCheck_bookmark());
-                            total_star_num.setValue(total_star.getValue()+" ("+review_cnt_num.getValue()+")");
-                            //common data
-                            carpingplace_lat.setValue(newCarping.getLatitude());
-                            carpingplace_lon.setValue(newCarping.getLongitude());
-                            //map & address
-                            info_review.setValue(newCarping.getText());
-                            image.setValue(newCarping.getImage());
-                            String tags="";
-                            for(int i=0; i<newCarping.getTags().size(); i++){
-                                tags=tags+"#"+newCarping.getTags().get(i)+" ";
+                                title.setValue(newCarping.getTitle());
+                                total_star.setValue(newCarping.getTotal_star());
+                                review_cnt_num.setValue(newCarping.getReview_count());
+                                check_bookmark.setValue(newCarping.getCheck_bookmark());
+                                total_star_num.setValue(total_star.getValue()+" ("+review_cnt_num.getValue()+")");
+                                //common data
+                                carpingplace_lat.setValue(newCarping.getLatitude());
+                                carpingplace_lon.setValue(newCarping.getLongitude());
+                                //map & address
+                                info_review.setValue(newCarping.getText());
+                                image.setValue(newCarping.getImage());
+                                String tags="";
+                                for(int i=0; i<newCarping.getTags().size(); i++){
+                                    tags=tags+"#"+newCarping.getTags().get(i)+" ";
+                                }
+                                info_tags.setValue(tags);
+                                //newcarping info
+                                review_profile.setValue(SharedPreferenceManager.getInstance(context).getString("profile", ""));
+                                review_username.setValue(SharedPreferenceManager.getInstance(context).getString("username", "")+"님");
+                                star1.setValue(newCarping.getStar1());
+                                star2.setValue(newCarping.getStar2());
+                                star3.setValue(newCarping.getStar3());
+                                star4.setValue(newCarping.getStar4());
+                                review_count.setValue("리뷰 "+review_cnt_num.getValue());
+                                //newcarping total review
+                                reviews=newCarping.getReviews();
+                                newcarping_review_adapter.update_Item(reviews);
+                                //reviews recyclerview
+                                for(int i=0; i<reviews.size(); i++){
+                                    review_images.add(reviews.get(i).getImage());
+                                }
+                                newcarping_review_image_adapter.update_Item(review_images);
                             }
-                            info_tags.setValue(tags);
-                            //newcarping info
-                            review_profile.setValue(SharedPreferenceManager.getInstance(context).getString("profile", ""));
-                            review_username.setValue(SharedPreferenceManager.getInstance(context).getString("username", "")+"님");
-                            star1.setValue(newCarping.getStar1());
-                            star2.setValue(newCarping.getStar2());
-                            star3.setValue(newCarping.getStar3());
-                            star4.setValue(newCarping.getStar4());
-                            review_count.setValue("리뷰 "+review_cnt_num.getValue());
-                            //newcarping total review
-                            reviews=newCarping.getReviews();
-                            newcarping_review_adapter.update_Item(reviews);
-                            //reviews recyclerview
-                            for(int i=0; i<reviews.size(); i++){
-                                review_images.add(reviews.get(i).getImage());
-                            }
-                            newcarping_review_image_adapter.update_Item(review_images);
                         },
                         error -> {
                             System.out.println(error);

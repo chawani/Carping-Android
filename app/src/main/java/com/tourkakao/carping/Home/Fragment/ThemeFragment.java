@@ -71,10 +71,10 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
         Glide.with(this).load(R.drawable.theme_reports_img).into(themebinding.themeReports);
         Glide.with(this).load(R.drawable.theme_nature_img).into(themebinding.themeNature);
         Glide.with(this).load(R.drawable.theme_exp_img).into(themebinding.themeExp);
-        Glide.with(this).load(R.drawable.empty_new_carping_place_img).into(themebinding.noNewImg);
-        Glide.with(this).load(R.drawable.empty_data_img).into(themebinding.noWeekendImg);
-        Glide.with(this).load(R.drawable.empty_az_img).into(themebinding.noAzImg);
-        Glide.with(this).load(R.drawable.empty_data_img).into(themebinding.noPopularImg);
+
+
+
+
     }
 
 
@@ -91,6 +91,7 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
             @Override
             public void onChanged(Integer integer) {
                 if(integer==0){
+                    Glide.with(context).load(R.drawable.empty_data_img).into(themebinding.noWeekendImg);
                     themebinding.noWeekendImg.setVisibility(View.VISIBLE);
                     themebinding.thisWeekendRecyclerview.setVisibility(View.GONE);
                 }else if(integer>=1){
@@ -114,6 +115,7 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
             @Override
             public void onChanged(Integer integer) {
                 if(integer==0){
+                    Glide.with(context).load(R.drawable.empty_az_img).into(themebinding.noAzImg);
                     themebinding.noAzImg.setVisibility(View.VISIBLE);
                     themebinding.thisWeekendRecyclerview.setVisibility(View.GONE);
                 }else if(integer>=1){
@@ -137,6 +139,7 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
             @Override
             public void onChanged(Integer integer) {
                 if(integer==0){
+                    Glide.with(context).load(R.drawable.empty_new_carping_place_img).into(themebinding.noNewImg);
                     themebinding.noNewImg.setVisibility(View.VISIBLE);
                     themebinding.newCarpingPlaceRecyclerview.setVisibility(View.GONE);
                 }else if(integer>=1){
@@ -160,6 +163,7 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
             @Override
             public void onChanged(Integer integer) {
                 if(integer==0){
+                    Glide.with(context).load(R.drawable.empty_data_img).into(themebinding.noPopularImg);
                     themebinding.noPopularImg.setVisibility(View.VISIBLE);
                     themebinding.popularCarpingRecyclerview.setVisibility(View.GONE);
                 }else if(integer>=1){

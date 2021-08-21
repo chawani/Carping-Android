@@ -56,8 +56,8 @@ public class ThemeViewModel extends ViewModel {
     public ThemeViewModel(){
         main_thisweekends_post_cnt.setValue(-1);
         main_new_post_cnt.setValue(-1);
-        main_az_post_cnt.setValue(-1);
-        main_popular_cnt.setValue(-1);
+        main_az_post_cnt.setValue(0);
+        main_popular_cnt.setValue(0);
     }
 
     public void setContext(Context context){
@@ -84,11 +84,16 @@ public class ThemeViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         lists -> {
-                            main_thisweekends_post_cnt.setValue(lists.getData().size());
-                            Type type=new TypeToken<ArrayList<Thisweekend>>(){}.getType();
-                            String result=new Gson().toJson(lists.getData());
-                            thisweekends=new Gson().fromJson(result, type);
-                            thisWeekend_adapter.update_Item(thisweekends);
+                            if(lists==null){
+                                main_thisweekends_post_cnt.setValue(0);
+                            }else {
+                                main_thisweekends_post_cnt.setValue(lists.getData().size());
+                                Type type = new TypeToken<ArrayList<Thisweekend>>() {
+                                }.getType();
+                                String result = new Gson().toJson(lists.getData());
+                                thisweekends = new Gson().fromJson(result, type);
+                                thisWeekend_adapter.update_Item(thisweekends);
+                            }
                         },
                         error -> {
                             System.out.println(error);
@@ -131,11 +136,16 @@ public class ThemeViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         lists -> {
-                            main_new_post_cnt.setValue(lists.getData().size());
-                            Type type=new TypeToken<ArrayList<NewCapringPlace>>(){}.getType();
-                            String result=new Gson().toJson(lists.getData());
-                            newCapringPlaces=new Gson().fromJson(result, type);
-                            newCarpingPlace_adapter.update_Item(newCapringPlaces);
+                            if(lists==null){
+                                main_new_post_cnt.setValue(0);
+                            }else {
+                                main_new_post_cnt.setValue(lists.getData().size());
+                                Type type = new TypeToken<ArrayList<NewCapringPlace>>() {
+                                }.getType();
+                                String result = new Gson().toJson(lists.getData());
+                                newCapringPlaces = new Gson().fromJson(result, type);
+                                newCarpingPlace_adapter.update_Item(newCapringPlaces);
+                            }
                         },
                         error -> {
 

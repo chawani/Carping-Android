@@ -110,7 +110,7 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
                 double lat=eachNewCarpingViewModel.carpingplace_lat.getValue();
                 double lon=aDouble;
                 mapPoint=MapPoint.mapPointWithGeoCoord(lat, lon);
-                mapView.setMapCenterPointAndZoomLevel(mapPoint, 5, true);
+                mapView.setMapCenterPointAndZoomLevel(mapPoint, 3, true);
                 MapPOIItem marker=new MapPOIItem();
                 marker.setItemName(eachNewCarpingViewModel.title.getValue());
                 marker.setMapPoint(mapPoint);

@@ -52,7 +52,7 @@ public class ThisWeekend_Adapter extends RecyclerView.Adapter {
             });
         }
         public void setItem(Thisweekend post){
-            //Glide.with(context).load(post.getImage()).into(binding.thisweekendBackgroundImg);
+            Glide.with(context).load(post.getImage()).into(binding.thisweekendBackgroundImg);
             binding.thisweekendTitle.setText(post.getTitle());
             String tags="";
             for(int i=0; i<post.getTags().size(); i++){

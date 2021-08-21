@@ -30,7 +30,8 @@ public class Newcarping_Review_Adapter extends RecyclerView.Adapter {
 
         }
         public void setItem(Newcarping_Review review){
-            Glide.with(context).load(review.getImage()).circleCrop().into(binding.image);
+            Glide.with(context).load(review.getImage()).into(binding.image);
+            Glide.with(context).load(review.getReview_profile()).circleCrop().into(binding.profile);
             binding.date.setText(review.getCreated_at());
             binding.like.setText(Integer.toString(review.getLike_count()));
             binding.ratingstar.setRating(review.getTotal_star());
