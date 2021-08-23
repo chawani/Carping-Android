@@ -56,12 +56,16 @@ public class KakaoLogin implements LoginContract.Kakaologin{
                                 //그걸 사용하고 카카오 api 서버는 로그아웃 되도록 하는 방법 고민 필요
                                 SharedPreferenceManager.getInstance(context).setString("access_token", response.body().access_token);
                                 SharedPreferenceManager.getInstance(context).setString("refresh_token", response.body().refresh_token);
+                                SharedPreferenceManager.getInstance(context).setInt("id", response.body().getUser().getPk());
+                                SharedPreferenceManager.getInstance(context).setString("profile", response.body().getUser().getProfile().getImage());
+                                SharedPreferenceManager.getInstance(context).setString("email", response.body().getUser().getEmail());
+                                SharedPreferenceManager.getInstance(context).setString("username", response.body().getUser().getUserkname());
                                 loginActivity.finish();
                                 context.startActivity(new Intent(context, MainActivity.class));
                             }else{
                                 Log.e("login error", response.message());
-                                Toast.makeText(context, "로그인에 실패하였습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
-                                //Toast.makeText(context, "login error"+response.message(), Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(context, "로그인에 실패하였습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "login error"+response.message(), Toast.LENGTH_SHORT).show();
                             }
                         }
                         @Override

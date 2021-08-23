@@ -25,7 +25,7 @@ public class ThisWeekend_Adapter extends RecyclerView.Adapter {
         this.thisweekends=thisweekends;
     }
     public interface OnSelectItemClickListener{
-        void OnSelectItemClick(View v, int pos);
+        void OnSelectItemClick(View v, int pos, int pk);
     }
     private OnSelectItemClickListener mListener=null;
 
@@ -42,16 +42,17 @@ public class ThisWeekend_Adapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
                     int pos=getAdapterPosition();
+                    int pk=thisweekends.get(pos).getPk();
                     if(pos!=RecyclerView.NO_POSITION){
                         if(mListener!=null){
-                            mListener.OnSelectItemClick(v, pos);
+                            mListener.OnSelectItemClick(v, pos, pk);
                         }
                     }
                 }
             });
         }
         public void setItem(Thisweekend post){
-            //Glide.with(context).load(post.getImage()).into(binding.thisweekendBackgroundImg);
+            Glide.with(context).load(post.getImage()).into(binding.thisweekendBackgroundImg);
             binding.thisweekendTitle.setText(post.getTitle());
             String tags="";
             for(int i=0; i<post.getTags().size(); i++){

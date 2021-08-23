@@ -15,7 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".EcoCarping.EcoCarpingDetailActivity"></activity>
+        <activity android:name=".newcarping.Activity.Write_newcarping_reviewActivity"></activity>
+        <activity android:name=".newcarping.Activity.Each_NewCarpingActivity" />
+        <activity android:name=".thisweekend.Activity.Each_ThisWeekendActivity" />
+        <activity android:name=".thisweekend.Activity.ThisWeekend_totalActivity" />
+        <activity android:name=".EcoCarping.EcoCarpingDetailActivity" />
         <activity android:name=".EcoCarping.EcoCarpingWriteActivity" />
         <activity android:name=".EcoCarping.EcoCarpingListActivity" />
         <activity android:name=".Theme.Activity.ThemeActivity" />

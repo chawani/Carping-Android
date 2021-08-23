@@ -1,6 +1,7 @@
 package com.tourkakao.carping.Home.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,35 +10,17 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.tourkakao.carping.Home.HomeContract;
 import com.tourkakao.carping.Home.HomeViewModel.ThemeViewModel;
-import com.tourkakao.carping.Home.ThemeDataClass.AZPost;
-import com.tourkakao.carping.Home.ThemeDataClass.Thisweekend;
-import com.tourkakao.carping.Home.ThemeFragmentAdapter.Az_Adapter;
-import com.tourkakao.carping.Home.ThemeFragmentAdapter.NewCarpingPlace_Adapter;
-import com.tourkakao.carping.Home.ThemeFragmentAdapter.PopularCarpingPlace_Adapter;
-import com.tourkakao.carping.Home.ThemeFragmentAdapter.ThisWeekend_Adapter;
-import com.tourkakao.carping.NetworkwithToken.CommonClass;
-import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.R;
+import com.tourkakao.carping.thisweekend.Activity.ThisWeekend_totalActivity;
 import com.tourkakao.carping.databinding.MainThemeFragmentBinding;
-
-import java.lang.reflect.Type;
-import java.net.Proxy;
-import java.util.ArrayList;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Scheduler;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class ThemeFragment extends Fragment implements HomeContract.ThemeFragment_Contract, View.OnClickListener {
     private MainThemeFragmentBinding themebinding;
@@ -88,10 +71,10 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
         Glide.with(this).load(R.drawable.theme_reports_img).into(themebinding.themeReports);
         Glide.with(this).load(R.drawable.theme_nature_img).into(themebinding.themeNature);
         Glide.with(this).load(R.drawable.theme_exp_img).into(themebinding.themeExp);
-        Glide.with(this).load(R.drawable.empty_new_carping_place_img).into(themebinding.noNewImg);
-        Glide.with(this).load(R.drawable.empty_data_img).into(themebinding.noWeekendImg);
-        Glide.with(this).load(R.drawable.empty_az_img).into(themebinding.noAzImg);
-        Glide.with(this).load(R.drawable.empty_data_img).into(themebinding.noPopularImg);
+
+
+
+
     }
 
 
@@ -108,9 +91,10 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
             @Override
             public void onChanged(Integer integer) {
                 if(integer==0){
+                    Glide.with(context).load(R.drawable.empty_data_img).into(themebinding.noWeekendImg);
                     themebinding.noWeekendImg.setVisibility(View.VISIBLE);
                     themebinding.thisWeekendRecyclerview.setVisibility(View.GONE);
-                }else{
+                }else if(integer>=1){
                     themebinding.noWeekendImg.setVisibility(View.GONE);
                     themebinding.thisWeekendRecyclerview.setVisibility(View.VISIBLE);
                 }
@@ -131,9 +115,10 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
             @Override
             public void onChanged(Integer integer) {
                 if(integer==0){
+                    Glide.with(context).load(R.drawable.empty_az_img).into(themebinding.noAzImg);
                     themebinding.noAzImg.setVisibility(View.VISIBLE);
                     themebinding.thisWeekendRecyclerview.setVisibility(View.GONE);
-                }else{
+                }else if(integer>=1){
                     themebinding.noAzImg.setVisibility(View.GONE);
                     themebinding.thisWeekendRecyclerview.setVisibility(View.VISIBLE);
                 }
@@ -154,9 +139,10 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
             @Override
             public void onChanged(Integer integer) {
                 if(integer==0){
+                    Glide.with(context).load(R.drawable.empty_new_carping_place_img).into(themebinding.noNewImg);
                     themebinding.noNewImg.setVisibility(View.VISIBLE);
                     themebinding.newCarpingPlaceRecyclerview.setVisibility(View.GONE);
-                }else{
+                }else if(integer>=1){
                     themebinding.noNewImg.setVisibility(View.GONE);
                     themebinding.newCarpingPlaceRecyclerview.setVisibility(View.VISIBLE);
                 }
@@ -177,9 +163,10 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
             @Override
             public void onChanged(Integer integer) {
                 if(integer==0){
+                    Glide.with(context).load(R.drawable.empty_data_img).into(themebinding.noPopularImg);
                     themebinding.noPopularImg.setVisibility(View.VISIBLE);
                     themebinding.popularCarpingRecyclerview.setVisibility(View.GONE);
-                }else{
+                }else if(integer>=1){
                     themebinding.noPopularImg.setVisibility(View.GONE);
                     themebinding.popularCarpingRecyclerview.setVisibility(View.VISIBLE);
                 }
@@ -189,7 +176,12 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
 
     @Override
     public void setting_this_weekend_total_btn() {
-
+        themebinding.thisWeekendTotalTextview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, ThisWeekend_totalActivity.class));
+            }
+        });
     }
 
     @Override
