@@ -84,19 +84,16 @@ public class ThemeViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         lists -> {
-                            if(lists==null){
-                                main_thisweekends_post_cnt.setValue(0);
-                            }else {
-                                main_thisweekends_post_cnt.setValue(lists.getData().size());
-                                Type type = new TypeToken<ArrayList<Thisweekend>>() {
-                                }.getType();
-                                String result = new Gson().toJson(lists.getData());
-                                thisweekends = new Gson().fromJson(result, type);
-                                thisWeekend_adapter.update_Item(thisweekends);
-                            }
+                            main_thisweekends_post_cnt.setValue(lists.getData().size());
+                            Type type = new TypeToken<ArrayList<Thisweekend>>() {
+                            }.getType();
+                            String result = new Gson().toJson(lists.getData());
+                            thisweekends = new Gson().fromJson(result, type);
+                            thisWeekend_adapter.update_Item(thisweekends);
                         },
                         error -> {
                             System.out.println(error);
+                            System.out.println("eerererepreprepreprepre");
                         }
                 );
     }
@@ -136,19 +133,14 @@ public class ThemeViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         lists -> {
-                            if(lists==null){
-                                main_new_post_cnt.setValue(0);
-                            }else {
-                                main_new_post_cnt.setValue(lists.getData().size());
-                                Type type = new TypeToken<ArrayList<NewCapringPlace>>() {
-                                }.getType();
-                                String result = new Gson().toJson(lists.getData());
-                                newCapringPlaces = new Gson().fromJson(result, type);
-                                newCarpingPlace_adapter.update_Item(newCapringPlaces);
-                            }
+                            main_new_post_cnt.setValue(lists.getData().size());
+                            Type type = new TypeToken<ArrayList<NewCapringPlace>>() {
+                            }.getType();
+                            String result = new Gson().toJson(lists.getData());
+                            newCapringPlaces = new Gson().fromJson(result, type);
+                            newCarpingPlace_adapter.update_Item(newCapringPlaces);
                         },
                         error -> {
-
                         }
                 );
     }

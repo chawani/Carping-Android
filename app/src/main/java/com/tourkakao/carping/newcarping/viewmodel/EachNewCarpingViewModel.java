@@ -78,7 +78,8 @@ public class EachNewCarpingViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         detail -> {
-                            if(detail!=null){
+                            if(detail.getData()!=null){
+                                System.out.println(detail.getData().get(0));
                                 Type type=new TypeToken<NewCarping>(){}.getType();
                                 String result=new Gson().toJson(detail.getData().get(0));
                                 NewCarping newCarping=new Gson().fromJson(result, type);

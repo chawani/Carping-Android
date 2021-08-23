@@ -9,7 +9,7 @@ public class Newcarping_Review {
     int user;
     @SerializedName("username")
     String username;
-    @SerializedName("")
+    @SerializedName("profile")
     String review_profile;
     @SerializedName("text")
     String text;

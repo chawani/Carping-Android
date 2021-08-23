@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
@@ -129,6 +130,7 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
             }
         });
     }
+
 
     @Override
     public void onReverseGeoCoderFoundAddress(MapReverseGeoCoder mapReverseGeoCoder, String s) {

@@ -1,6 +1,7 @@
 package com.tourkakao.carping.newcarping.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.databinding.NewcarpingReviewFragmentBinding;
+import com.tourkakao.carping.newcarping.Activity.Write_newcarping_reviewActivity;
 import com.tourkakao.carping.newcarping.viewmodel.EachNewCarpingViewModel;
 
 public class ReviewFragment extends Fragment {
@@ -35,6 +37,7 @@ public class ReviewFragment extends Fragment {
         starting_observe_review_count();
         setting_review_recyclerview();
         setting_review_image_recyclerview();
+        setting_write_review();
         return reviewFragmentBinding.getRoot();
     }
 
@@ -78,6 +81,13 @@ public class ReviewFragment extends Fragment {
                     reviewFragmentBinding.newcarpingReviewRecyclerview.setVisibility(View.VISIBLE);
                 }
             }
+        });
+    }
+    public void setting_write_review(){
+        reviewFragmentBinding.myreview.setOnClickListener(v -> {
+            Intent intent=new Intent(context, Write_newcarping_reviewActivity.class);
+            intent.putExtra("title", eachNewCarpingViewModel.title.getValue());
+            startActivity(intent);
         });
     }
 }
