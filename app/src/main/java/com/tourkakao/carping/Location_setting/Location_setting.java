@@ -1,4 +1,4 @@
-package com.tourkakao.carping.Home;
+package com.tourkakao.carping.Location_setting;
 
 import android.Manifest;
 import android.app.Activity;
@@ -14,18 +14,17 @@ import android.provider.Settings;
 
 import androidx.core.app.ActivityCompat;
 
+import com.tourkakao.carping.Home.HomeContract;
 import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 
 public class Location_setting implements HomeContract, HomeContract.Location_setting_Contract{
     Context context;
     Activity used_Activity;
 
-    boolean isFirstPermissionCheck;
 
     public Location_setting(Context context, Activity used_Activity){
         this.context=context;
         this.used_Activity=used_Activity;
-        this.isFirstPermissionCheck=SharedPreferenceManager.getInstance(context).getBoolean("isFirstPermissionCheck", true);
     }
 
     @Override
@@ -51,27 +50,22 @@ public class Location_setting implements HomeContract, HomeContract.Location_set
                             });
                     builder.create().show();
                 }else{
-                    if(isFirstPermissionCheck){//사용자에게 처음 물어본 경우(처음 앱을 실행한 경우)
-                        SharedPreferenceManager.getInstance(context).setBoolean("isFirstPermissionCheck", false);
-                        ActivityCompat.requestPermissions(used_Activity, REQUIRED_PERMISSIONS, PERMISSION_LOCATION_REQUESTCODE);
-                    }else{//권한 설정 거부와 동시에 다시 묻지않음을 선택한 경우, 이번만 허용한 경우, 누적 두번 이상 거절한 경우
-                        AlertDialog.Builder builder=new AlertDialog.Builder(context);
-                        builder.setTitle("위치 권한 설정 알림")
-                                .setMessage("서비스 사용을 위해서는 위치 권한 설정이 필요합니다. 설정 화면으로 이동합니다.")
-                                .setCancelable(false)
-                                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                        Intent setting_permission_intent=new Intent();
-                                        //핸드폰 어플리케이션 설정으로 이동
-                                        setting_permission_intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                        setting_permission_intent.setData(Uri.parse("package:"+"com.tourkakao.carping"));
-                                        context.startActivity(setting_permission_intent);
-                                    }
-                                });
-                        builder.create().show();
-                    }
+                    AlertDialog.Builder builder=new AlertDialog.Builder(context);
+                    builder.setTitle("위치 권한 설정 알림")
+                            .setMessage("서비스 사용을 위해서는 위치 권한 설정이 필요합니다. 설정 화면으로 이동합니다.")
+                            .setCancelable(false)
+                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    Intent setting_permission_intent=new Intent();
+                                    //핸드폰 어플리케이션 설정으로 이동
+                                    setting_permission_intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                    setting_permission_intent.setData(Uri.parse("package:"+"com.tourkakao.carping"));
+                                    context.startActivity(setting_permission_intent);
+                                }
+                            });
+                    builder.create().show();
                 }
             }
         }

@@ -11,14 +11,19 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
+import com.tourkakao.carping.Gallerypermission.Gallery_setting;
 import com.tourkakao.carping.Home.Fragment.EcoFragment;
 import com.tourkakao.carping.Home.Fragment.EcoTopFragment;
 import com.tourkakao.carping.Home.Fragment.ThemeFragment;
 import com.tourkakao.carping.Home.Fragment.ThemeTopFragment;
+import com.tourkakao.carping.Location_setting.Location_setting;
+import com.tourkakao.carping.Permission.Permission_setting;
 import com.tourkakao.carping.R;
 
 public class MainActivity extends AppCompatActivity implements HomeContract, HomeContract.MainActivity_Contract{
     Location_setting location_setting;
+    Gallery_setting gallery_setting;
+    Permission_setting permission_setting;
     TabLayout tabs;
     EcoTopFragment eco_top_fragment;
     EcoFragment eco_fragment;
@@ -30,23 +35,59 @@ public class MainActivity extends AppCompatActivity implements HomeContract, Hom
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initialize_location_setting_class();
+        //initialize_location_setting_class();
+        //initialize_gallery_setting_class();
+        initialize_permission();
 
         init_main_fragment();
         switch_main_tap();
     }
-
+    public void initialize_permission(){
+        permission_setting=new Permission_setting(this, MainActivity.this);
+        permission_setting.check_permission();
+    }
     @Override
     public void initialize_location_setting_class() {
         location_setting=new Location_setting(this, MainActivity.this);
         location_setting.check_locate_permission();
     }
 
+    public void initialize_gallery_setting_class(){
+        gallery_setting=new Gallery_setting(this, MainActivity.this);
+        gallery_setting.check_gallery_permission();
+    }
+
     //권한 설정 후 return
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode==PERMISSION_LOCATION_REQUESTCODE){
+        if(requestCode==permission_setting.MULTIPLE_PERMISSION){
+            if(grantResults.length==permission_setting.PERMISSIONS.length) {
+                boolean check_result = true;
+                for (int result : grantResults) {
+                    if (result == PackageManager.PERMISSION_DENIED) {
+                        check_result = false;
+                        break;
+                    }
+                }
+                if (check_result) {
+                    Toast.makeText(this, "권한이 설정되었습니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setTitle("권한 설정 알림")
+                            .setMessage("서비스 사용을 위해서는 위치 및 갤러리 접근 권한 설정이 필요합니다.\n[설정]->[앱]에서 권한을 승인해주세요")
+                            .setCancelable(false)
+                            .setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    builder.create().show();
+                }
+            }
+        }
+        /*if(requestCode==PERMISSION_LOCATION_REQUESTCODE){
             if(grantResults.length==REQUIRED_PERMISSIONS.length){
                 boolean check_result=true;
                 for(int result: grantResults){
@@ -71,7 +112,32 @@ public class MainActivity extends AppCompatActivity implements HomeContract, Hom
                     builder.create().show();
                 }
             }
-        }
+        } else if(requestCode==gallery_setting.PERMISSION_GALLERY_REQUESTCODE){
+            if(grantResults.length==gallery_setting.REQUIRED_PERMISSIONS.length){
+                boolean check_result=true;
+                for(int result: grantResults){
+                    if(result== PackageManager.PERMISSION_DENIED){
+                        check_result=false;
+                        break;
+                    }
+                }
+                if(check_result){
+                    Toast.makeText(MainActivity.this, "갤러리 접근 권한이 설정되었습니다.", Toast.LENGTH_SHORT).show();
+                }else{
+                    AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+                    builder.setTitle("갤러리 접근 권한 설정 알림")
+                            .setMessage("서비스 사용을 위해서는 갤러리 접근 권한 설정이 필요합니다. [설정]->[앱]에서 갤러리 접근 권한을 승인해주세요")
+                            .setCancelable(false)
+                            .setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    builder.create().show();
+                }
+            }
+        }*/
     }
 
     @Override
