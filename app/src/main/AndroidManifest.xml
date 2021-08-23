@@ -15,7 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Theme.Activity.ThemeActivity"></activity>
+        <activity android:name=".EcoCarping.EcoCarpingDetailActivity"></activity>
+        <activity android:name=".EcoCarping.EcoCarpingWriteActivity" />
+        <activity android:name=".EcoCarping.EcoCarpingListActivity" />
+        <activity android:name=".Theme.Activity.ThemeActivity" />
         <activity android:name=".Home.MainActivity" />
         <activity android:name=".Login.LoginActivity">
             <intent-filter>

@@ -4,17 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
-import com.tourkakao.carping.Home.Fragment.EchoFragment;
-import com.tourkakao.carping.Home.Fragment.EchoTopFragment;
+import com.tourkakao.carping.Home.Fragment.EcoFragment;
+import com.tourkakao.carping.Home.Fragment.EcoTopFragment;
 import com.tourkakao.carping.Home.Fragment.ThemeFragment;
 import com.tourkakao.carping.Home.Fragment.ThemeTopFragment;
 import com.tourkakao.carping.R;
@@ -22,8 +20,8 @@ import com.tourkakao.carping.R;
 public class MainActivity extends AppCompatActivity implements HomeContract, HomeContract.MainActivity_Contract{
     Location_setting location_setting;
     TabLayout tabs;
-    EchoTopFragment echo_top_fragment;
-    EchoFragment echo_fragment;
+    EcoTopFragment eco_top_fragment;
+    EcoFragment eco_fragment;
     ThemeTopFragment theme_top_fragment;
     ThemeFragment theme_fragment;
 
@@ -78,8 +76,8 @@ public class MainActivity extends AppCompatActivity implements HomeContract, Hom
 
     @Override
     public void init_main_fragment(){
-        echo_top_fragment=new EchoTopFragment();
-        echo_fragment = new EchoFragment();
+        eco_top_fragment =new EcoTopFragment();
+        eco_fragment = new EcoFragment();
         theme_top_fragment=new ThemeTopFragment();
         theme_fragment = new ThemeFragment();
     }
@@ -103,8 +101,8 @@ public class MainActivity extends AppCompatActivity implements HomeContract, Hom
                     selected = theme_fragment;
                 }
                 else if(position == 1) {
-                    top_selected = echo_top_fragment;
-                    selected = echo_fragment;
+                    top_selected = eco_top_fragment;
+                    selected = eco_fragment;
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.top_container, top_selected).commit();
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, selected).commit();

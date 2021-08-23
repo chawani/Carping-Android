@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.Task;
 import com.tourkakao.carping.BuildConfig;
 import com.tourkakao.carping.LoginNetwork.ApiClient;
 import com.tourkakao.carping.LoginNetwork.ApiInterface;
+import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 
 import java.util.HashMap;
 
@@ -108,8 +109,10 @@ public class GoogleLogin implements LoginContract.GoogleLogin{
                     System.out.println("값 없음:"+response.code());
                 }
                 else if(response.isSuccessful()){
-                    Google_Token_and_User_Info token=response.body();
-                    System.out.println("성공:"+token.toString());
+                    //Google_Token_and_User_Info token=response.body();
+                    //System.out.println("성공:"+token.toString());
+                    SharedPreferenceManager.getInstance(context).setString("access_token", response.body().getAccess_token());
+                    SharedPreferenceManager.getInstance(context).setString("refresh_token", response.body().getRefresh_token());
                 }else{
                     System.out.println("응답 코드:"+response.code());
                 }

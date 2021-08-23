@@ -31,10 +31,10 @@
         android:layout_height="13dp"
         android:layout_marginLeft="105dp"
         android:layout_marginTop="85dp"
-        android:src="@drawable/main_echo_car_image"></ImageView>
+        android:src="@drawable/main_eco_car_image"></ImageView>
 
     <TextView
-        android:id="@+id/title_massage"
+        android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -57,6 +57,7 @@
         android:text="에코지수는"/>
 
     <TextView
+        android:id="@+id/percent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="112dp"
@@ -71,7 +72,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="179dp"
+        android:layout_toRightOf="@+id/percent"
+        android:layout_marginLeft="4dp"
         android:layout_marginTop="153dp"
         android:fontFamily="@font/spoqa_han_sans_neo"
         android:textStyle="normal"
@@ -89,6 +91,7 @@
         android:src="@drawable/main_rectangle"></ImageView>
 
     <TextView
+        android:id="@+id/level"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"

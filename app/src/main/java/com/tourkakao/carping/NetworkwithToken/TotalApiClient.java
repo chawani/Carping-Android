@@ -1,24 +1,16 @@
 package com.tourkakao.carping.NetworkwithToken;
 
 import android.content.Context;
-import android.content.Intent;
-
-import androidx.lifecycle.FlowLiveDataConversions;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.tourkakao.carping.Login.LoginActivity;
 import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 
 import org.apache.http.HttpStatus;
-import org.json.JSONObject;
 
 import java.io.IOException;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -33,6 +25,10 @@ public class TotalApiClient {
 
     public static ThemeInterface getApiService(Context context){
         return getInstance(context).create(ThemeInterface.class);
+    }
+
+    public static EcoInterface getEcoApiService(Context context){
+        return getInstance(context).create(EcoInterface.class);
     }
 
     private static Retrofit getInstance(Context context){

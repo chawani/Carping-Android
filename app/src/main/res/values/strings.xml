@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Carping</string>
+
+    <string-array name="eco_sort_item">
+        <item>인기순</item>
+        <item>거리순</item>
+        <item>최신순</item>
+    </string-array>
 </resources>
