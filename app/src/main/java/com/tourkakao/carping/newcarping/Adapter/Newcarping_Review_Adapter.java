@@ -1,6 +1,7 @@
 package com.tourkakao.carping.newcarping.Adapter;
 
 import android.content.Context;
+import android.util.AndroidException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
+import com.tourkakao.carping.R;
 import com.tourkakao.carping.databinding.EachNewcarpingReviewBinding;
 import com.tourkakao.carping.newcarping.DataClass.Newcarping_Review;
 
 import java.util.ArrayList;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Newcarping_Review_Adapter extends RecyclerView.Adapter {
     Context context;
@@ -37,6 +43,40 @@ public class Newcarping_Review_Adapter extends RecyclerView.Adapter {
             binding.ratingstar.setRating(review.getTotal_star());
             binding.userId.setText(review.getUsername());
             binding.review.setText(review.getText());
+            if(review.getCheck_like()==1){
+                Glide.with(context).load(R.drawable.like).into(binding.likeImg);
+            }else{
+                Glide.with(context).load(R.drawable.nolike).into(binding.likeImg);
+            }
+            binding.likeImg.setOnClickListener(v -> {
+                if(review.getCheck_like()==0) {
+                    TotalApiClient.getApiService(context).set_like(review.getId())
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                    result -> {
+                                        review.setCheck_like(1);
+                                        review.setLike_count(review.getLike_count()+1);
+                                        binding.like.setText(Integer.toString(review.getLike_count()));
+                                        Glide.with(context).load(R.drawable.like).into(binding.likeImg);
+                                    },
+                                    error -> { }
+                            );
+                }else{
+                    TotalApiClient.getApiService(context).release_like(review.getId())
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                    result -> {
+                                        review.setCheck_like(0);
+                                        review.setLike_count(review.getLike_count()-1);
+                                        binding.like.setText(Integer.toString(review.getLike_count()));
+                                        Glide.with(context).load(R.drawable.nolike).into(binding.likeImg);
+                                    },
+                                    error -> { }
+                            );
+                }
+            });
         }
     }
     @NonNull
@@ -63,4 +103,5 @@ public class Newcarping_Review_Adapter extends RecyclerView.Adapter {
         reviews=items;
         notifyDataSetChanged();
     }
+
 }

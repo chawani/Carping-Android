@@ -27,6 +27,10 @@ public class NewCarping {
     int review_count;
     @SerializedName("check_bookmark")
     int check_bookmark;
+    @SerializedName("my_review_count")
+    int my_review_cnt;
+    @SerializedName("my_star_avg")
+    float my_star_avg;
     @SerializedName("total_star_avg")
     float total_star;
     @SerializedName("star1_avg")
@@ -40,7 +44,7 @@ public class NewCarping {
     @SerializedName("review")
     ArrayList<Newcarping_Review> reviews;
 
-    public NewCarping(int id, int user, double latitude, double longitude, String image, String title, String text, int views, ArrayList<String> tags, int review_count, int check_bookmark, float total_star, float star1, float star2, float star3, float star4, ArrayList<Newcarping_Review> reviews) {
+    public NewCarping(int id, int user, double latitude, double longitude, String image, String title, String text, int views, ArrayList<String> tags, int review_count, int check_bookmark, int my_review_cnt, float my_star_avg, float total_star, float star1, float star2, float star3, float star4, ArrayList<Newcarping_Review> reviews) {
         this.id = id;
         this.user = user;
         this.latitude = latitude;
@@ -52,6 +56,8 @@ public class NewCarping {
         this.tags = tags;
         this.review_count = review_count;
         this.check_bookmark = check_bookmark;
+        this.my_review_cnt=my_review_cnt;
+        this.my_star_avg=my_star_avg;
         this.total_star = total_star;
         this.star1 = star1;
         this.star2 = star2;
@@ -146,6 +152,22 @@ public class NewCarping {
 
     public void setCheck_bookmark(int check_bookmark) {
         this.check_bookmark = check_bookmark;
+    }
+
+    public int getMy_review_cnt() {
+        return my_review_cnt;
+    }
+
+    public void setMy_review_cnt(int my_review_cnt) {
+        this.my_review_cnt = my_review_cnt;
+    }
+
+    public float getMy_star_avg() {
+        return my_star_avg;
+    }
+
+    public void setMy_star_avg(float my_star_avg) {
+        this.my_star_avg = my_star_avg;
     }
 
     public float getTotal_star() {
