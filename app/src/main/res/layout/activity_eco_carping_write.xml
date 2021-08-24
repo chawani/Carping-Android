@@ -35,13 +35,17 @@
                 android:layout_marginLeft="33.7dp"
                 />
             <EditText
+                android:id="@id/search_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edit_text_box_img"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:hint="어디서 에코캠핑을 하셨나요?"
-                android:textSize="13sp"/>
+                android:textSize="13sp"
+                android:maxLines="1"
+                android:inputType="textNoSuggestions"
+                android:imeOptions="actionSearch"/>
             <TextView
                 android:layout_width="184dp"
                 android:layout_height="20dp"
@@ -55,11 +59,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/photo_insert_button"
-                android:minHeight="0dp"
-                android:minWidth="0dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginLeft="16dp"
-                android:background="@android:color/transparent"/>
+                android:background="@android:color/transparent"
+                android:scaleType="centerInside"/>
             <TextView
                 android:layout_width="30dp"
                 android:layout_height="20dp"
