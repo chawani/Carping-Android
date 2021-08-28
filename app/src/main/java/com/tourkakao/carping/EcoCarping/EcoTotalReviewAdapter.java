@@ -1,10 +1,12 @@
 package com.tourkakao.carping.EcoCarping;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,6 +33,15 @@ public class EcoTotalReviewAdapter extends RecyclerView.Adapter<EcoTotalReviewAd
         public ViewHolder(EcoCarpingTotalListItemBinding binding){
             super(binding.getRoot());
             this.binding=binding;
+            binding.view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(context,EcoCarpingDetailActivity.class);
+                    intent.putExtra("pk",binding.pk.getText().toString());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            });
         }
         public void bind(EcoReview ecoReview){
             Glide.with(context).load(R.drawable.eco_certification_mark).into(binding.ecoCertification);
@@ -38,6 +49,7 @@ public class EcoTotalReviewAdapter extends RecyclerView.Adapter<EcoTotalReviewAd
                     .load(ecoReview.getImage())
                     .transform(new CenterCrop(), new RoundedCorners(30))
                     .into(binding.image);
+            binding.pk.setText(ecoReview.getId());
             binding.title.setText(ecoReview.getTitle());
             binding.content.setText(ecoReview.getText());
             binding.username.setText(ecoReview.getUser());

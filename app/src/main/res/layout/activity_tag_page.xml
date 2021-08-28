@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EcoCarping.LocationSearchActivity">
+    tools:context=".EcoCarping.TagPageActivity"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -17,24 +18,23 @@
             android:textStyle="bold"
             android:textSize="18sp"
             android:textColor="#191919"
-            android:text="작성하기"
+            android:text="태그"
             android:layout_gravity="center"/>
         <TextView
-            android:id="@+id/completion"
+            android:id="@+id/complete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/spoqa_han_sans_neo"
-            android:textStyle="normal"
-            android:textSize="17sp"
-            android:textColor="#473acf"
-            android:gravity="end"
             android:text="완료"
             android:layout_gravity="right"
-            android:layout_marginRight="22dp"/>
+            android:layout_marginRight="22dp"
+            android:layout_marginTop="18dp"
+            android:textColor="#473acf"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:clickable="true"/>
     </androidx.appcompat.widget.Toolbar>
-
     <EditText
-        android:id="@id/search_bar"
+        android:id="@+id/tag_write_bar"
         android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,22 +42,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:hint="어디서 에코캠핑을 하셨나요?"
         android:textSize="13sp"
         android:maxLines="1"
-        android:inputType="textNoSuggestions"
-        android:imeOptions="actionSearch"/>
-
-    <RelativeLayout
-        android:layout_below="@id/toolbar"
-        android:id="@+id/map_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/location_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="16dp"/>
-</RelativeLayout>
+        android:inputType="textNoSuggestions"/>
+</LinearLayout>

@@ -59,8 +59,8 @@ public class EcoCarpingListActivity extends AppCompatActivity {
 
         initializeToolbar();
         initializeImg();
-        settingEchoReview();
         selectSinnerItem();
+        settingEchoReview();
 
         ecobinding.writeButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -104,8 +104,8 @@ public class EcoCarpingListActivity extends AppCompatActivity {
         ArrayAdapter<String> spinner_adapter=new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,sort_list);
         spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinner_adapter);
-        spinner.setSelection(2);
         spinner.setOnItemSelectedListener(spinnerListener);
+        spinner.setSelection(2);
     }
 
     public void settingEchoReview(){
@@ -123,19 +123,21 @@ public class EcoCarpingListActivity extends AppCompatActivity {
     }
 
     public android.widget.AdapterView.OnItemSelectedListener spinnerListener=new AdapterView.OnItemSelectedListener(){
+        EcoTotalReviewAdapter adapter;
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             if(sort_list.get(i).equals("인기순")){
-                ecobinding.totalReviewRecycler
-                        .setAdapter(new EcoTotalReviewAdapter(getApplicationContext(),ecoTotalViewModel.getPopularOrderReviews().getValue()));
+                adapter=new EcoTotalReviewAdapter(getApplicationContext(),ecoTotalViewModel.getPopularOrderReviews().getValue());
+                ecobinding.totalReviewRecycler.setAdapter(adapter);
             }
             if(sort_list.get(i).equals("거리순")){
-                ecobinding.totalReviewRecycler
-                        .setAdapter(new EcoTotalReviewAdapter(getApplicationContext(),ecoTotalViewModel.getDistanceOrderReviews().getValue()));
+                adapter=new EcoTotalReviewAdapter(getApplicationContext(),ecoTotalViewModel.getDistanceOrderReviews().getValue());
+                ecobinding.totalReviewRecycler.setAdapter(adapter);
             }
             if(sort_list.get(i).equals("최신순")){
+                adapter=new EcoTotalReviewAdapter(getApplicationContext(),ecoTotalViewModel.getRecentOrderReviews().getValue());
                 ecobinding.totalReviewRecycler
-                        .setAdapter(new EcoTotalReviewAdapter(getApplicationContext(),ecoTotalViewModel.getRecentOrderReviews().getValue()));
+                        .setAdapter(adapter);
             }
         }
 
@@ -150,11 +152,9 @@ public class EcoCarpingListActivity extends AppCompatActivity {
         @Override
         public void onChanged(ArrayList<EcoReview> ecoReviews) {
             if(ecoReviews==null){
-                System.out.println("널임");
                 ecobinding.noReviewImg.setVisibility(View.VISIBLE);
                 ecobinding.totalReviewRecycler.setVisibility(View.GONE);
             }else{
-                System.out.println("널아님"+ecoReviews.get(0).getTitle());
                 ecobinding.noReviewImg.setVisibility(View.GONE);
                 ecobinding.totalReviewRecycler.setVisibility(View.VISIBLE);
                 spinner.setOnItemSelectedListener(spinnerListener);
