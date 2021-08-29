@@ -109,6 +109,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="35dp"/>
             <EditText
+                android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edit_text_box_img"
@@ -128,6 +129,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="38.5dp"/>
             <EditText
+                android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="156dp"
                 android:background="@drawable/edit_text_box_img"
@@ -145,7 +147,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="35dp"/>
 
-            <ScrollView
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
@@ -167,7 +169,7 @@
                         android:textColor="#5f51ef"
                         android:text="+"/>
                 </LinearLayout>
-            </ScrollView>
+            </HorizontalScrollView>
 
             <TextView
                 android:layout_width="174dp"
@@ -179,18 +181,23 @@
                 android:text="쓰레기가 몇리터나왔나요?"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="35dp"/>
-            <LinearLayout
+            <RadioGroup
+                android:id="@+id/radio_group"
                 android:layout_width="match_parent"
                 android:layout_height="39dp"
                 android:orientation="horizontal"
                 android:weightSum="5"
                 android:layout_marginTop="15dp"
-                android:layout_marginBottom="57dp">
-                <TextView
+                android:layout_marginBottom="57dp"
+                android:paddingBottom="3dp">
+                <RadioButton
+                    android:id="@+id/twozeroL"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/trash_tag_design"
+                    android:background="@drawable/selector_radio_button"
                     android:text="20L"
+                    android:button="@null"
+                    android:textColor="@drawable/selector_radio_text"
                     android:paddingVertical="10dp"
                     android:paddingHorizontal="20dp"
                     android:layout_weight="1"
@@ -199,11 +206,14 @@
                     android:autoSizeMinTextSize="1sp"
                     android:autoSizeMaxTextSize="100sp"
                     android:autoSizeTextType="uniform"/>
-                <TextView
+                <RadioButton
+                    android:id="@+id/onezeroL"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/trash_tag_design"
+                    android:background="@drawable/selector_radio_button"
                     android:text="10L"
+                    android:button="@null"
+                    android:textColor="@drawable/selector_radio_text"
                     android:paddingVertical="10dp"
                     android:paddingHorizontal="20dp"
                     android:layout_weight="1"
@@ -212,11 +222,14 @@
                     android:autoSizeMinTextSize="1sp"
                     android:autoSizeMaxTextSize="100sp"
                     android:autoSizeTextType="uniform"/>
-                <TextView
+                <RadioButton
+                    android:id="@+id/fiveL"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/trash_tag_design"
+                    android:background="@drawable/selector_radio_button"
                     android:text="5L"
+                    android:button="@null"
+                    android:textColor="@drawable/selector_radio_text"
                     android:paddingVertical="10dp"
                     android:paddingHorizontal="20dp"
                     android:layout_weight="1"
@@ -225,11 +238,14 @@
                     android:autoSizeMinTextSize="1sp"
                     android:autoSizeMaxTextSize="100sp"
                     android:autoSizeTextType="uniform"/>
-                <TextView
+                <RadioButton
+                    android:id="@+id/threeL"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/trash_tag_design"
+                    android:background="@drawable/selector_radio_button"
                     android:text="3L"
+                    android:button="@null"
+                    android:textColor="@drawable/selector_radio_text"
                     android:paddingVertical="10dp"
                     android:paddingHorizontal="20dp"
                     android:layout_weight="1"
@@ -238,11 +254,14 @@
                     android:autoSizeMinTextSize="1sp"
                     android:autoSizeMaxTextSize="100sp"
                     android:autoSizeTextType="uniform"/>
-                <TextView
+                <RadioButton
+                    android:id="@+id/underthreeL"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/trash_tag_design"
+                    android:background="@drawable/selector_radio_button"
                     android:text="3L 이하"
+                    android:button="@null"
+                    android:textColor="@drawable/selector_radio_text"
                     android:paddingVertical="10dp"
                     android:paddingHorizontal="20dp"
                     android:layout_weight="1"
@@ -251,7 +270,7 @@
                     android:autoSizeMinTextSize="1sp"
                     android:autoSizeMaxTextSize="100sp"
                     android:autoSizeTextType="uniform"/>
-            </LinearLayout>
+            </RadioGroup>
 
         </LinearLayout>
     </ScrollView>

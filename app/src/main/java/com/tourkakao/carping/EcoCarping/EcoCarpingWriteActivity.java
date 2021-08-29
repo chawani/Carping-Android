@@ -5,10 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
+import androidx.loader.content.CursorLoader;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.FileUtils;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
@@ -17,26 +25,54 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.tourkakao.carping.BuildConfig;
+import com.tourkakao.carping.NetworkwithToken.CommonClass;
+import com.tourkakao.carping.NetworkwithToken.EcoInterface;
+import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.R;
+import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 import com.tourkakao.carping.databinding.ActivityEcoCarpingWriteBinding;
 
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.observers.DisposableSingleObserver;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class EcoCarpingWriteActivity extends AppCompatActivity {
     ActivityEcoCarpingWriteBinding ecobinding;
     private static final int REQUEST_CODE = 0;
     private MutableLiveData<ArrayList<Uri>> imageList=new MutableLiveData<>();
     private ArrayList<Uri> uriList=new ArrayList<>();
+    private ArrayList<String> uriList2=new ArrayList<>();
+    private ArrayList<String> tagList=new ArrayList<>();
     private String KAKAO_KEY="KakaoAK "+ BuildConfig.KAKAO_REST_API_KEY;
     private MapPOIItem marker;
     private MapView mapView;
@@ -45,6 +81,7 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
     private int one_six;
     private int one_zero;
     private int two_zero;
+    private MapPoint mapPoint;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +121,13 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
         imageList.observe(this,observer);
 
         tag();
+
+        ecobinding.completionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                post();
+            }
+        });
     }
 
     public void settingToolbar(){
@@ -100,18 +144,20 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
             if(resultCode==RESULT_OK) {
                 try {
                     Uri uri = data.getData();
+                    String path=getPath(uri);
                     uriList.add(uri);
+                    uriList2.add(path);
                     imageList.setValue(uriList);
                 } catch (Exception e) {
 
                 }
             }else if(resultCode==RESULT_CANCELED){
-
             }
         }
         if(requestCode==1){
             if(resultCode==1) {
                 String tag = data.getStringExtra("tag");
+                tagList.add(tag);
                 TextView textView = new TextView(getApplicationContext());
                 LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 params.leftMargin= one_zero;
@@ -135,6 +181,7 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent();
+            intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(intent, REQUEST_CODE);
@@ -184,7 +231,7 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
         mapView=new MapView(this);
         mapView.setDaumMapApiKey(KAKAO_KEY);
         marker = new MapPOIItem();
-        MapPoint mapPoint=MapPoint.mapPointWithGeoCoord(y,x);
+        mapPoint=MapPoint.mapPointWithGeoCoord(y,x);
         ecobinding.mapView.addView(mapView);
         mapView.setMapCenterPoint(mapPoint,true);
         marker.setItemName(placeName);
@@ -192,6 +239,71 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
         marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
         marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
         mapView.addPOIItem(marker);
+    }
+
+    public void post(){
+        HashMap<String, RequestBody> map=new HashMap<>();
+        String userString=SharedPreferenceManager.getInstance(getApplicationContext()).getString("user_pk","");
+        RadioGroup rdgGroup = ecobinding.radioGroup;
+        RadioButton rdoButton = findViewById( rdgGroup.getCheckedRadioButtonId() );
+        String strPgmId = rdoButton.getText().toString();
+        String tagString="[";
+        for(int i=0;i<tagList.size();i++){
+            String tag='"'+tagList.get(i)+'"';
+            tagString=tagString+tag;
+            if(i!=tagList.size()-1)
+                tagString=tagString+",";
+        }
+        tagString=tagString+"]";
+
+        RequestBody user = RequestBody.create(MediaType.parse("text/plain"),userString);
+        RequestBody latitude = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(mapPoint.getMapPointGeoCoord().latitude));
+        RequestBody longitude = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(mapPoint.getMapPointGeoCoord().longitude));
+        RequestBody title = RequestBody.create(MediaType.parse("text/plain"),ecobinding.title.getText().toString());
+        RequestBody text = RequestBody.create(MediaType.parse("text/plain"),ecobinding.content.getText().toString());
+        RequestBody trash = RequestBody.create(MediaType.parse("text/plain"),strPgmId);
+        RequestBody tags = RequestBody.create(MediaType.parse("text/plain"), tagString);
+        map.put("user", user);
+        map.put("latitude", latitude);
+        map.put("longitude", longitude);
+        map.put("title", title);
+        map.put("text", text);
+        map.put("trash", trash);
+        map.put("tags", tags);
+
+        File file = new File(uriList2.get(0));
+        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part image=MultipartBody.Part.createFormData("image", file.getName() , requestBody);
+
+        TotalApiClient.getEcoApiService(getApplicationContext()).userEdit(image, map)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<CommonClass>() {
+                    @Override
+                    public void onSuccess(@NonNull CommonClass commonClass) {
+                        //setReviewData("recent",commonClass.getData());
+                        System.out.println("post 성공");
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        System.out.println("post 실패");
+                    }
+                });
+    }
+
+    public String getPath(Uri uri){
+        String filepath;
+        Cursor cursor=getContentResolver().query(uri, null, null, null, null);
+        if(cursor==null){
+            filepath=uri.getPath();
+        }else{
+            cursor.moveToFirst();
+            int idx=cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            filepath=cursor.getString(idx);
+            cursor.close();
+        }
+        return filepath;
     }
 
 }

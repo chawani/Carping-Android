@@ -113,6 +113,7 @@ public class GoogleLogin implements LoginContract.GoogleLogin{
                     //System.out.println("성공:"+token.toString());
                     SharedPreferenceManager.getInstance(context).setString("access_token", response.body().getAccess_token());
                     SharedPreferenceManager.getInstance(context).setString("refresh_token", response.body().getRefresh_token());
+                    SharedPreferenceManager.getInstance(context).setString("user_pk",Integer.toString(response.body().getUser().getPk()));
                 }else{
                     System.out.println("응답 코드:"+response.code());
                 }
