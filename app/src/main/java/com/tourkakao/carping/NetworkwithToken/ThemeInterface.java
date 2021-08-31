@@ -3,10 +3,14 @@ package com.tourkakao.carping.NetworkwithToken;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.android.gms.common.internal.service.Common;
 import com.tourkakao.carping.newcarping.DataClass.Newcarping_Review_post;
+
+import java.util.HashMap;
 
 import io.reactivex.rxjava3.core.Single;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
@@ -16,6 +20,7 @@ import retrofit2.http.HTTP;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 
 public interface ThemeInterface {
@@ -48,9 +53,9 @@ public interface ThemeInterface {
     @Multipart
     @POST("comments/review/")
     Single<CommonClass> send_newcarping_review(@Part MultipartBody.Part image,
+                                               @PartMap HashMap<String, RequestBody> text,
                                                @Part("user")int user,
                                                @Part("autocamp")int autocamp,
-                                               @Part("text")String text,
                                                @Part("star1")float star1,
                                                @Part("star2")float star2,
                                                @Part("star3")float star3,

@@ -93,7 +93,6 @@ public class ThemeViewModel extends ViewModel {
                         },
                         error -> {
                             System.out.println(error);
-                            System.out.println("eerererepreprepreprepre");
                         }
                 );
     }

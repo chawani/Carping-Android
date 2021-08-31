@@ -5,8 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".Login.KaKaoInitApplication"
@@ -17,7 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".newcarping.Activity.Write_newcarping_reviewActivity"></activity>
+        <activity android:name=".registernewcarping.Activity.TagsActivity"></activity>
+        <activity android:name=".registernewcarping.Activity.SearchNewCarpingActivity" />
+        <activity android:name=".registernewcarping.Activity.RegisterActivity" />
+        <activity android:name=".newcarping.Activity.Write_newcarping_reviewActivity" />
         <activity android:name=".newcarping.Activity.Each_NewCarpingActivity" />
         <activity android:name=".thisweekend.Activity.Each_ThisWeekendActivity" />
         <activity android:name=".thisweekend.Activity.ThisWeekend_totalActivity" />
@@ -45,7 +48,10 @@
                     android:scheme="kakao{KAKAO_API_KEY}" />
             </intent-filter>
         </activity>
-        <meta-data android:name="com.kakao.sdk.AppKey" android:value="KAKAO_API_KEY"/>
+
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="KAKAO_API_KEY" />
     </application>
 
 </manifest>

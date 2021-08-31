@@ -1,8 +1,12 @@
 package com.tourkakao.carping.newcarping.viewmodel;
 
+import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.widget.Toast;
 
@@ -26,6 +30,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -35,7 +40,10 @@ import okhttp3.RequestBody;
 
 public class EachNewCarpingViewModel extends ViewModel {
     public MutableLiveData<Integer> review_cnt_num=new MutableLiveData<>();
-    public MutableLiveData<String> image=new MutableLiveData<>();
+    public MutableLiveData<String> image1=new MutableLiveData<>();
+    public MutableLiveData<String> image2=new MutableLiveData<>();
+    public MutableLiveData<String> image3=new MutableLiveData<>();
+    public MutableLiveData<String> image4=new MutableLiveData<>();
     public MutableLiveData<String> title=new MutableLiveData<>();
     public MutableLiveData<String> info_review=new MutableLiveData<>();
     public MutableLiveData<Float> star1=new MutableLiveData<>();
@@ -49,7 +57,7 @@ public class EachNewCarpingViewModel extends ViewModel {
     public MutableLiveData<String> review_count=new MutableLiveData<>();
     public MutableLiveData<Integer> check_bookmark=new MutableLiveData<>();
     public MutableLiveData<String> address=new MutableLiveData<>();
-    public MutableLiveData<String> info_tags=new MutableLiveData<>();
+    public MutableLiveData<ArrayList<String>> info_tags=new MutableLiveData<>();
     public MutableLiveData<String> review_username=new MutableLiveData<>();
     public MutableLiveData<String> review_profile=new MutableLiveData<>();
     public MutableLiveData<Double> carpingplace_lat=new MutableLiveData<>();
@@ -65,10 +73,6 @@ public class EachNewCarpingViewModel extends ViewModel {
     public float r_star1, r_star2, r_star3, r_star4, r_totalstar;
     public String r_text=null;
     public Uri r_uri;
-
-    public int g_id, g_user, g_like_count, g_check_like;
-    public String g_username, g_review_profile, g_text, g_image, g_created_at;
-    public float g_star1, g_star2, g_star3, g_star4, g_total_star;
     public EachNewCarpingViewModel(){
         review_cnt_num.setValue(-1);
         my_review_cnt.setValue(0);
@@ -89,7 +93,6 @@ public class EachNewCarpingViewModel extends ViewModel {
         return newcarping_review_adapter;
     }
     public Newcarping_Review_Image_Adapter setting_newcarping_review_image_adapter(){
-        review_images=new ArrayList<>();
         newcarping_review_image_adapter=new Newcarping_Review_Image_Adapter(context, review_images);
         return newcarping_review_image_adapter;
     }
@@ -115,12 +118,14 @@ public class EachNewCarpingViewModel extends ViewModel {
                                 carpingplace_lon.setValue(newCarping.getLongitude());
                                 //map & address
                                 info_review.setValue(newCarping.getText());
-                                image.setValue(newCarping.getImage());
-                                String tags="";
-                                for(int i=0; i<newCarping.getTags().size(); i++){
-                                    tags=tags+"#"+newCarping.getTags().get(i)+" ";
+                                image1.setValue(newCarping.getImage1());
+                                image2.setValue(newCarping.getImage2());
+                                image3.setValue(newCarping.getImage3());
+                                image4.setValue(newCarping.getImage4());
+                                if(info_tags.getValue()!=null) {
+                                    info_tags=new MutableLiveData<>();
                                 }
-                                info_tags.setValue(tags);
+                                info_tags.setValue(newCarping.getTags());
                                 //newcarping info
                                 review_profile.setValue(SharedPreferenceManager.getInstance(context).getString("profile", ""));
                                 review_username.setValue(SharedPreferenceManager.getInstance(context).getString("username", "")+"님");
@@ -135,6 +140,11 @@ public class EachNewCarpingViewModel extends ViewModel {
                                 reviews=newCarping.getReviews();
                                 newcarping_review_adapter.update_Item(reviews);
                                 //reviews recyclerview
+                                if(review_images!=null){
+                                    review_images.clear();
+                                    review_images=null;
+                                }
+                                review_images=new ArrayList<>();
                                 for(int i=0; i<reviews.size(); i++){
                                     review_images.add(reviews.get(i).getImage());
                                 }
@@ -180,24 +190,18 @@ public class EachNewCarpingViewModel extends ViewModel {
     public void sending_newcarping_review(){
         String path=getPath(r_uri);
         File file=new File(path);
-        System.out.println(r_text);
         RequestBody requestBody=RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part image=MultipartBody.Part.createFormData("image", "review.jpg", requestBody);
         int userpk=SharedPreferenceManager.getInstance(context).getInt("id", 0);
-        TotalApiClient.getApiService(context).send_newcarping_review(image, userpk, pk, r_text, r_star1, r_star2, r_star3, r_star4, r_totalstar)
+        //Newcarping_Review_post post=new Newcarping_Review_post(userpk, pk, r_text, r_star1, r_star2, r_star3, r_star4, r_totalstar);
+        HashMap<String, RequestBody> map=new HashMap<>();
+        RequestBody rtext=RequestBody.create(MediaType.parse("text/plain"), r_text);
+        map.put("text", rtext);
+        TotalApiClient.getApiService(context).send_newcarping_review(image, map, userpk, pk, r_star1, r_star2, r_star3, r_star4, r_totalstar)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         res -> {
-                            Type type=new TypeToken<Newcarping_Review>(){}.getType();
-                            String result=new Gson().toJson(res.getData().get(0));
-                            Newcarping_Review newcarping_review=new Gson().fromJson(result, type);
-                            g_id=newcarping_review.getId(); g_user=newcarping_review.getUser();
-                            g_username=newcarping_review.getUsername(); g_review_profile=newcarping_review.getReview_profile();
-                            g_text=newcarping_review.getText(); g_image=newcarping_review.getImage();
-                            g_star1=newcarping_review.getStar1(); g_star2=newcarping_review.getStar2();
-                            g_star3=newcarping_review.getStar3(); g_star4=newcarping_review.getStar4(); g_total_star=newcarping_review.getTotal_star();
-                            g_created_at=newcarping_review.getCreated_at(); g_like_count=newcarping_review.getLike_count(); g_check_like=newcarping_review.getCheck_like();
                             review_send_ok.setValue(1);
                         },
                         error -> {
@@ -206,24 +210,82 @@ public class EachNewCarpingViewModel extends ViewModel {
                 );
     }
     public String getPath(Uri uri){
-        String filepath;
-        Cursor cursor=context.getContentResolver().query(uri, null, null, null, null);
-        if(cursor==null){
-            filepath=uri.getPath();
-        }else{
-            cursor.moveToFirst();
-            int idx=cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            filepath=cursor.getString(idx);
-            cursor.close();
+        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+// DocumentProvider
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
+// ExternalStorageProvider
+                if (isExternalStorageDocument(uri)) {
+                    final String docId = DocumentsContract.getDocumentId(uri);
+                    final String[] split = docId.split(":");
+                    final String type = split[0];
+                    if ("primary".equalsIgnoreCase(type)) {
+                        return Environment.getExternalStorageDirectory() + "/" + split[1];
+                    }
+                }
+// DownloadsProvider
+                else if (isDownloadsDocument(uri)) {
+                    final String id = DocumentsContract.getDocumentId(uri);
+                    final Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+                    return getDataColumn(context, contentUri, null, null);
+                }
+// MediaProvider
+                else if (isMediaDocument(uri)) {
+                    final String docId = DocumentsContract.getDocumentId(uri);
+                    final String[] split = docId.split(":");
+                    final String type = split[0];
+                    Uri contentUri = null;
+                    if ("image".equals(type)) {
+                        contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                    } else if ("video".equals(type)) {
+                        contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                    } else if ("audio".equals(type)) {
+                        contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                    }
+                    final String selection = "_id=?";
+                    final String[] selectionArgs = new String[]{
+                            split[1]
+                    };
+                    return getDataColumn(context, contentUri, selection, selectionArgs);
+                }
+            }
+// MediaStore (and general)
+            else if ("content".equalsIgnoreCase(uri.getScheme())) {
+                return getDataColumn(context, uri, null, null);
+            }
+// File
+            else if ("file".equalsIgnoreCase(uri.getScheme())) {
+                return uri.getPath();
+            }
         }
-        return filepath;
+        return null;
     }
-    public void update_review(Newcarping_Review review){
-        reviews.add(0, review);
-        newcarping_review_adapter.update_Item(reviews);
+
+    public static boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
     }
-    public void update_review_image(String image){
-        review_images.add(0, image);
-        newcarping_review_image_adapter.update_Item(review_images);
+
+    public static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
+        Cursor cursor = null;
+        final String column = "_data";
+        final String[] projection = {column};
+        try {
+            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                final int column_index = cursor.getColumnIndexOrThrow(column);
+                return cursor.getString(column_index);
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        return null;
+    }
+    public static boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+
+    public static boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
     }
 }

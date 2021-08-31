@@ -6,19 +6,21 @@ import androidx.fragment.app.Fragment;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
-import com.tourkakao.carping.Gallerypermission.Gallery_setting;
 import com.tourkakao.carping.Home.Fragment.EcoFragment;
 import com.tourkakao.carping.Home.Fragment.EcoTopFragment;
 import com.tourkakao.carping.Home.Fragment.ThemeFragment;
 import com.tourkakao.carping.Home.Fragment.ThemeTopFragment;
-import com.tourkakao.carping.Location_setting.Location_setting;
 import com.tourkakao.carping.Permission.Permission_setting;
 import com.tourkakao.carping.R;
+import com.tourkakao.carping.registernewcarping.Activity.RegisterActivity;
 
 public class MainActivity extends AppCompatActivity implements HomeContract, HomeContract.MainActivity_Contract{
     Permission_setting permission_setting;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements HomeContract, Hom
     ThemeTopFragment theme_top_fragment;
     ThemeFragment theme_fragment;
 
+    BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements HomeContract, Hom
 
         init_main_fragment();
         switch_main_tap();
+        init_bottomnavigationview();
     }
     public void initialize_permission(){
         permission_setting=new Permission_setting(this, MainActivity.this);
@@ -117,6 +121,21 @@ public class MainActivity extends AppCompatActivity implements HomeContract, Hom
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
+            }
+        });
+    }
+
+    public void init_bottomnavigationview(){
+        bottomNavigationView=findViewById(R.id.bottomnavigationview);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.upload:
+                        startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+                        break;
+                }
+                return true;
             }
         });
     }

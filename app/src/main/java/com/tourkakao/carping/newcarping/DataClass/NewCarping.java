@@ -13,8 +13,14 @@ public class NewCarping {
     double latitude;
     @SerializedName("longitude")
     double longitude;
-    @SerializedName("image")
-    String image;
+    @SerializedName("image1")
+    String image1;
+    @SerializedName("image2")
+    String image2;
+    @SerializedName("image3")
+    String image3;
+    @SerializedName("image4")
+    String image4;
     @SerializedName("title")
     String title;
     @SerializedName("text")
@@ -44,20 +50,23 @@ public class NewCarping {
     @SerializedName("review")
     ArrayList<Newcarping_Review> reviews;
 
-    public NewCarping(int id, int user, double latitude, double longitude, String image, String title, String text, int views, ArrayList<String> tags, int review_count, int check_bookmark, int my_review_cnt, float my_star_avg, float total_star, float star1, float star2, float star3, float star4, ArrayList<Newcarping_Review> reviews) {
+    public NewCarping(int id, int user, double latitude, double longitude, String image1, String image2, String image3, String image4, String title, String text, int views, ArrayList<String> tags, int review_count, int check_bookmark, int my_review_cnt, float my_star_avg, float total_star, float star1, float star2, float star3, float star4, ArrayList<Newcarping_Review> reviews) {
         this.id = id;
         this.user = user;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.image = image;
+        this.image1 = image1;
+        this.image2 = image2;
+        this.image3 = image3;
+        this.image4 = image4;
         this.title = title;
         this.text = text;
         this.views = views;
         this.tags = tags;
         this.review_count = review_count;
         this.check_bookmark = check_bookmark;
-        this.my_review_cnt=my_review_cnt;
-        this.my_star_avg=my_star_avg;
+        this.my_review_cnt = my_review_cnt;
+        this.my_star_avg = my_star_avg;
         this.total_star = total_star;
         this.star1 = star1;
         this.star2 = star2;
@@ -98,12 +107,36 @@ public class NewCarping {
         this.longitude = longitude;
     }
 
-    public String getImage() {
-        return image;
+    public String getImage1() {
+        return image1;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImage1(String image1) {
+        this.image1 = image1;
+    }
+
+    public String getImage2() {
+        return image2;
+    }
+
+    public void setImage2(String image2) {
+        this.image2 = image2;
+    }
+
+    public String getImage3() {
+        return image3;
+    }
+
+    public void setImage3(String image3) {
+        this.image3 = image3;
+    }
+
+    public String getImage4() {
+        return image4;
+    }
+
+    public void setImage4(String image4) {
+        this.image4 = image4;
     }
 
     public String getTitle() {

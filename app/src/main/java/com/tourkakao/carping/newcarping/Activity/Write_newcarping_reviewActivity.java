@@ -129,9 +129,14 @@ public class Write_newcarping_reviewActivity extends AppCompatActivity {
                 if(permission_read== PackageManager.PERMISSION_DENIED || permission_write==PackageManager.PERMISSION_DENIED){
                     gallery_setting.check_gallery_permission();
                 }else{
-                    Intent galleryintent=new Intent(Intent.ACTION_GET_CONTENT);
+                    /*Intent galleryintent=new Intent(Intent.ACTION_GET_CONTENT);
                     galleryintent.setType("image/*");
-                    startActivityForResult(galleryintent, gallery_setting.GALLERY_CODE);
+                    startActivityForResult(galleryintent, gallery_setting.GALLERY_CODE);*/
+                    Intent intent=new Intent();
+                    intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(intent, gallery_setting.GALLERY_CODE);
                 }
             }else{
                 Intent galleryintent=new Intent(Intent.ACTION_GET_CONTENT);
@@ -149,6 +154,11 @@ public class Write_newcarping_reviewActivity extends AppCompatActivity {
                     Intent galleryintent=new Intent(Intent.ACTION_GET_CONTENT);
                     galleryintent.setType("image/*");
                     startActivityForResult(galleryintent, gallery_setting.GALLERY_CODE);
+                    /*Intent intent=new Intent();
+                    intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(intent, gallery_setting.GALLERY_CODE);*/
                 }
             }else{
                 Intent galleryintent=new Intent(Intent.ACTION_GET_CONTENT);
@@ -212,20 +222,6 @@ public class Write_newcarping_reviewActivity extends AppCompatActivity {
             public void onChanged(Integer integer) {
                 if(integer==1){
                     Intent intentR=new Intent();
-                    intentR.putExtra("id", eachNewCarpingViewModel.g_id);
-                    intentR.putExtra("user", eachNewCarpingViewModel.g_user);
-                    intentR.putExtra("username", eachNewCarpingViewModel.g_username);
-                    intentR.putExtra("text", eachNewCarpingViewModel.g_text);
-                    intentR.putExtra("image", eachNewCarpingViewModel.g_image);
-                    intentR.putExtra("profile", eachNewCarpingViewModel.g_review_profile);
-                    intentR.putExtra("star1", eachNewCarpingViewModel.g_star1);
-                    intentR.putExtra("star2", eachNewCarpingViewModel.g_star2);
-                    intentR.putExtra("star3", eachNewCarpingViewModel.g_star3);
-                    intentR.putExtra("star4", eachNewCarpingViewModel.g_star4);
-                    intentR.putExtra("total_star", eachNewCarpingViewModel.g_total_star);
-                    intentR.putExtra("created_at", eachNewCarpingViewModel.g_created_at);
-                    intentR.putExtra("like_count", eachNewCarpingViewModel.g_like_count);
-                    intentR.putExtra("check_like", eachNewCarpingViewModel.g_check_like);
                     setResult(Activity.RESULT_OK, intentR);
                     finish();
                 }else if(integer==-1){
@@ -271,9 +267,17 @@ public class Write_newcarping_reviewActivity extends AppCompatActivity {
         if(resultCode==RESULT_OK){
             if(requestCode==gallery_setting.GALLERY_CODE){
                 currentImageUri=data.getData();
-                System.out.println(currentImageUri);
                 if(currentImageUri!=null){
-                    if(Build.VERSION.SDK_INT<28){
+                    reviewBinding.pictureBtn.setVisibility(View.GONE);
+                    reviewBinding.selectPictureLayout.setVisibility(View.VISIBLE);
+                    Glide.with(context).load(currentImageUri).into(reviewBinding.selectPictureBtn);
+                    send_image_ok=true;
+                    if(send_image_ok && send_text_ok) {
+                        reviewBinding.reviewBtn.setBackgroundColor(Color.BLACK);
+                    }else{
+                        reviewBinding.reviewBtn.setBackgroundColor(Color.parseColor("#A4A4A4"));
+                    }
+                    /*if(Build.VERSION.SDK_INT<28){
                         try {
                             currentImageBitmap= MediaStore.Images.Media.getBitmap(
                                     context.getContentResolver(),
@@ -306,7 +310,7 @@ public class Write_newcarping_reviewActivity extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                    }
+                    }*/
                 }
             }
         }

@@ -83,7 +83,7 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         themebinding.thisWeekendRecyclerview.setLayoutManager(layoutManager);
         themebinding.thisWeekendRecyclerview.setAdapter(themeViewModel.setting_thisweekend_adapter());
-        themeViewModel.getMain_thisweekends();
+
     }
 
     public void starting_observe_this_weekends(){
@@ -107,7 +107,7 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         themebinding.azRecyclerview.setLayoutManager(layoutManager);
         themebinding.azRecyclerview.setAdapter(themeViewModel.setting_az_adapter());
-        themeViewModel.getAz();
+
     }
 
     public void starting_observe_az(){
@@ -131,7 +131,7 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         themebinding.newCarpingPlaceRecyclerview.setLayoutManager(layoutManager);
         themebinding.newCarpingPlaceRecyclerview.setAdapter(themeViewModel.setting_newcarping_place_adapter());
-        themeViewModel.getNewCarpingPlace();
+
     }
 
     public void starting_observe_newcarping(){
@@ -155,7 +155,7 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         themebinding.popularCarpingRecyclerview.setLayoutManager(layoutManager);
         themebinding.popularCarpingRecyclerview.setAdapter(themeViewModel.setting_popularcarping_place_adapter());
-        themeViewModel.getPopularCarpingPlace();
+
     }
 
     public void starting_observe_popularcarping(){
@@ -216,5 +216,15 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
     public void onDestroyView() {
         super.onDestroyView();
         themebinding=null;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        themeViewModel.getMain_thisweekends();
+        themeViewModel.getAz();
+        themeViewModel.getNewCarpingPlace();
+        themeViewModel.getPopularCarpingPlace();
     }
 }
