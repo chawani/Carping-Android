@@ -55,7 +55,7 @@ public class SearchNewCarpingActivity extends AppCompatActivity {
     Context context;
     SearchViewmodel searchViewmodel;
     String search_text=null;
-    private String KAKAO_KEY="KakaoAK NATIVE KEY";
+    private String KAKAO_KEY="KakaoAK NATIVE_KEY";
     private Retrofit retrofit=null;
     private MutableLiveData<ArrayList<CarpingSearchKeyword.Place>> places=new MutableLiveData<>();
     private LocationInfoAdapter adapter=null;

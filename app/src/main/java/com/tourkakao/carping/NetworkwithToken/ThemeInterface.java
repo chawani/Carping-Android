@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.common.internal.service.Common;
+import com.tourkakao.carping.Theme.Dataclass.FilterTheme;
 import com.tourkakao.carping.newcarping.DataClass.Newcarping_Review_post;
 
 import java.util.HashMap;
@@ -70,4 +71,6 @@ public interface ThemeInterface {
     @HTTP(method="DELETE", path="comments/review/like", hasBody = true)
     Single<CommonClass> release_like(@Field("review_to_like")int review_to_like);
 
+    @POST("camps/theme")
+    Single<CommonClass> get_thema_carping(@Body FilterTheme filterTheme);
 }

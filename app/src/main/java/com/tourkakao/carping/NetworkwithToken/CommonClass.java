@@ -7,15 +7,18 @@ import java.util.ArrayList;
 public class CommonClass {
     @SerializedName("success")
     boolean success;
+    @SerializedName("error_message")
+    String error_message;
     @SerializedName("code")
-    String code;
+    int code;
     @SerializedName("data")
     ArrayList data;
 
     public CommonClass(){}
 
-    public CommonClass(boolean success, String code, ArrayList data) {
+    public CommonClass(boolean success, String error_message, int code, ArrayList data) {
         this.success = success;
+        this.error_message = error_message;
         this.code = code;
         this.data = data;
     }
@@ -28,11 +31,19 @@ public class CommonClass {
         this.success = success;
     }
 
-    public String getCode() {
+    public String getError_message() {
+        return error_message;
+    }
+
+    public void setError_message(String error_message) {
+        this.error_message = error_message;
+    }
+
+    public int getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
     }
 

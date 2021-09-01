@@ -19,10 +19,11 @@ import com.bumptech.glide.Glide;
 import com.tourkakao.carping.Home.HomeContract;
 import com.tourkakao.carping.Home.HomeViewModel.ThemeViewModel;
 import com.tourkakao.carping.R;
+import com.tourkakao.carping.Theme.Activity.ThemeActivity;
 import com.tourkakao.carping.thisweekend.Activity.ThisWeekend_totalActivity;
 import com.tourkakao.carping.databinding.MainThemeFragmentBinding;
 
-public class ThemeFragment extends Fragment implements HomeContract.ThemeFragment_Contract, View.OnClickListener {
+public class ThemeFragment extends Fragment implements HomeContract.ThemeFragment_Contract {
     private MainThemeFragmentBinding themebinding;
     Context context;
     ThemeViewModel themeViewModel;
@@ -37,6 +38,7 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
         themeViewModel.setContext(context);
 
         initialize_img();
+        setting_thema_click();
 
         setting_thisweekend_posts();
         starting_observe_this_weekends();
@@ -71,10 +73,6 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
         Glide.with(this).load(R.drawable.theme_reports_img).into(themebinding.themeReports);
         Glide.with(this).load(R.drawable.theme_nature_img).into(themebinding.themeNature);
         Glide.with(this).load(R.drawable.theme_exp_img).into(themebinding.themeExp);
-
-
-
-
     }
 
 
@@ -189,28 +187,41 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
 
     }
 
-    @Override
-    public void onClick(View v) {
-        switch(v.getId()){
-            case R.id.theme_culture:
-                break;
-            case R.id.theme_fire:
-                break;
-            case R.id.theme_pet:
-                break;
-            case R.id.theme_etc:
-                break;
-            case R.id.theme_season:
-                break;
-            case R.id.theme_reports:
-                break;
-            case R.id.theme_nature:
-                break;
-            case R.id.theme_exp:
-                break;
-        }
+    public void setting_thema_click(){
+        Intent themeintent=new Intent(context, ThemeActivity.class);
+        themebinding.themeCulture.setOnClickListener(v -> {
+            themeintent.putExtra("thema", "event");
+            startActivity(themeintent);
+        });
+        themebinding.themeFire.setOnClickListener(v -> {
+            themeintent.putExtra("thema", "brazier");
+            startActivity(themeintent);
+        });
+        themebinding.themePet.setOnClickListener(v -> {
+            themeintent.putExtra("thema", "animal");
+            startActivity(themeintent);
+        });
+        themebinding.themeEtc.setOnClickListener(v -> {
+            themeintent.putExtra("thema", "others");
+            startActivity(themeintent);
+        });
+        themebinding.themeSeason.setOnClickListener(v -> {
+            themeintent.putExtra("thema", "season");
+            startActivity(themeintent);
+        });
+        themebinding.themeReports.setOnClickListener(v -> {
+            themeintent.putExtra("thema", "leports");
+            startActivity(themeintent);
+        });
+        themebinding.themeNature.setOnClickListener(v -> {
+            themeintent.putExtra("thema", "nature");
+            startActivity(themeintent);
+        });
+        themebinding.themeExp.setOnClickListener(v -> {
+            themeintent.putExtra("thema", "program");
+            startActivity(themeintent);
+        });
     }
-
 
     @Override
     public void onDestroyView() {

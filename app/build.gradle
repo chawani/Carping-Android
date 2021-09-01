@@ -75,4 +75,6 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     //kakao map
     implementation files('libs/libDaumMapAndroid.jar')
+    //slidingup
+    implementation 'com.sothree.slidinguppanel:library:3.4.0'
 }
