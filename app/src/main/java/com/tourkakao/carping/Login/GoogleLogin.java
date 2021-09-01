@@ -109,10 +109,12 @@ public class GoogleLogin implements LoginContract.GoogleLogin{
                     System.out.println("값 없음:"+response.code());
                 }
                 else if(response.isSuccessful()){
-                    //Google_Token_and_User_Info token=response.body();
-                    //System.out.println("성공:"+token.toString());
                     SharedPreferenceManager.getInstance(context).setString("access_token", response.body().getAccess_token());
                     SharedPreferenceManager.getInstance(context).setString("refresh_token", response.body().getRefresh_token());
+                    SharedPreferenceManager.getInstance(context).setString("id",Integer.toString(response.body().getUser().getPk()));
+                    SharedPreferenceManager.getInstance(context).setString("profile", response.body().getUser().getProfile().getImage());
+                    SharedPreferenceManager.getInstance(context).setString("email", response.body().getUser().getEmail());
+                    SharedPreferenceManager.getInstance(context).setString("username", response.body().getUser().getUsername());
                 }else{
                     System.out.println("응답 코드:"+response.code());
                 }

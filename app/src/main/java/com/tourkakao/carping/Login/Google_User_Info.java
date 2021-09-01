@@ -10,22 +10,9 @@ public class Google_User_Info {
     @SerializedName("email")
     private final String email;
     @SerializedName("profile")
-    private final Profile profile;
+    private final Google_User_Profile profile;
 
-    private class Profile{
-        @SerializedName("image")
-        private final String image;
-
-        public Profile(String image) {
-            this.image = image;
-        }
-
-        public String getImage() {
-            return image;
-        }
-    }
-
-    public Google_User_Info(int pk, String username, String email, Profile profile) {
+    public Google_User_Info(int pk, String username, String email, Google_User_Profile profile) {
         this.pk = pk;
         this.username = username;
         this.email = email;
@@ -44,18 +31,8 @@ public class Google_User_Info {
         return email;
     }
 
-    public String getProfile() {
-        return profile.getImage();
-    }
-
-    @Override
-    public String toString() {
-        return "Google_User_Info{" +
-                "pk=" + pk +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", profile.image=" + profile.getImage() +
-                '}';
+    public Google_User_Profile getProfile() {
+        return profile;
     }
 }
 
