@@ -18,6 +18,9 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity android:name=".EcoCarping.Activity.TagPageActivity"></activity>
+        <activity android:name=".registernewcarping.Activity.TagsActivity"></activity>
+        <activity android:name=".registernewcarping.Activity.SearchNewCarpingActivity" />
+        <activity android:name=".registernewcarping.Activity.RegisterActivity" />
         <activity android:name=".newcarping.Activity.Write_newcarping_reviewActivity" />
         <activity android:name=".newcarping.Activity.Each_NewCarpingActivity" />
         <activity android:name=".thisweekend.Activity.Each_ThisWeekendActivity" />
