@@ -1,8 +1,10 @@
 package com.tourkakao.carping.newcarping.Fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.databinding.NewcarpingReviewFragmentBinding;
 import com.tourkakao.carping.newcarping.Activity.Write_newcarping_reviewActivity;
+import com.tourkakao.carping.newcarping.DataClass.Newcarping_Review;
 import com.tourkakao.carping.newcarping.viewmodel.EachNewCarpingViewModel;
 
 public class ReviewFragment extends Fragment {
@@ -87,7 +90,18 @@ public class ReviewFragment extends Fragment {
         reviewFragmentBinding.myreview.setOnClickListener(v -> {
             Intent intent=new Intent(context, Write_newcarping_reviewActivity.class);
             intent.putExtra("title", eachNewCarpingViewModel.title.getValue());
-            startActivity(intent);
+            intent.putExtra("pk", eachNewCarpingViewModel.pk);
+            startActivityForResult(intent, 100);
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==100){
+            if(resultCode== Activity.RESULT_OK){
+                eachNewCarpingViewModel.get_newcarping_detail();
+            }
+        }
     }
 }

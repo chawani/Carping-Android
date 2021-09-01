@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:isIndicator="true"
             android:numStars="5"
-            android:rating="@{eachnewcarpingviewmodel.total_star}"
+            android:rating="@{eachnewcarpingviewmodel.my_star_avg}"
             android:stepSize="0.1"
             style="@style/Widget.AppCompat.RatingBar.Indicator"
             android:layout_gravity="center"

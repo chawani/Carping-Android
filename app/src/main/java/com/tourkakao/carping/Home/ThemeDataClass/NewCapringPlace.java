@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class NewCapringPlace {
     @SerializedName("id")
     int pk;
-    @SerializedName("image")
+    @SerializedName("image1")
     String image;
 
     public NewCapringPlace(int pk, String image) {

@@ -26,6 +26,7 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
     private ActivityEachNewCarpingBinding eachNewCarpingBinding;
     private final String KAKAO_APPKEY=BuildConfig.KAKAO_NATIVE_APPKEY;
     Context context;
+    int post_pk;
     Each_NewCarpingActivity each_newCarpingActivity;
     MapView mapView;
     InfoFragment infoFragment;
@@ -47,7 +48,8 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
 
         eachNewCarpingViewModel=new ViewModelProvider(this).get(EachNewCarpingViewModel.class);
         eachNewCarpingViewModel.setContext(context);
-        eachNewCarpingViewModel.setPk(getIntent().getIntExtra("pk", 0));
+        post_pk=getIntent().getIntExtra("pk", 0);
+        eachNewCarpingViewModel.setPk(post_pk);
         eachNewCarpingBinding.setLifecycleOwner(this);
         eachNewCarpingBinding.setEachNewCarpingViewModel(eachNewCarpingViewModel);
         //setting viewmodel & binding
