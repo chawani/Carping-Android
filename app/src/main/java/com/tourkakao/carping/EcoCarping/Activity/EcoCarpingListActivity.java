@@ -1,23 +1,16 @@
-package com.tourkakao.carping.EcoCarping;
+package com.tourkakao.carping.EcoCarping.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,10 +19,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.bumptech.glide.Glide;
+import com.tourkakao.carping.EcoCarping.Adapter.EcoTotalReviewAdapter;
+import com.tourkakao.carping.EcoCarping.ViewModel.EcoTotalViewModel;
 import com.tourkakao.carping.GpsLocation.GpsTracker;
 import com.tourkakao.carping.Home.EcoDataClass.EcoReview;
-import com.tourkakao.carping.Home.EcoFragmentAdapter.EcoReviewAdapter;
-import com.tourkakao.carping.Home.HomeViewModel.EcoViewModel;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.databinding.ActivityEcoCarpingTotalBinding;
 
@@ -67,7 +60,7 @@ public class EcoCarpingListActivity extends AppCompatActivity {
             public void onClick(View view) {
                 switch (view.getId()){
                     case R.id.write_button:
-                        Intent intent=new Intent(context,EcoCarpingWriteActivity.class);
+                        Intent intent=new Intent(context, EcoCarpingWriteActivity.class);
                         startActivity(intent);
                         break;
                 }
@@ -155,6 +148,7 @@ public class EcoCarpingListActivity extends AppCompatActivity {
                 ecobinding.noReviewImg.setVisibility(View.VISIBLE);
                 ecobinding.totalReviewRecycler.setVisibility(View.GONE);
             }else{
+                selectSinnerItem();
                 ecobinding.noReviewImg.setVisibility(View.GONE);
                 ecobinding.totalReviewRecycler.setVisibility(View.VISIBLE);
                 spinner.setOnItemSelectedListener(spinnerListener);

@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
-import com.tourkakao.carping.EcoCarping.EcoCarpingListActivity;
+import com.tourkakao.carping.EcoCarping.Activity.EcoCarpingListActivity;
 import com.tourkakao.carping.Home.EcoDataClass.EcoRanking;
 import com.tourkakao.carping.Home.EcoDataClass.EcoReview;
 import com.tourkakao.carping.Home.EcoFragmentAdapter.EcoRankingAdapter;
@@ -28,14 +28,14 @@ import androidx.lifecycle.Observer;
 import java.util.ArrayList;
 
 public class EcoFragment extends Fragment {
-    private MainEcoFragmentBinding echobinding;
+    private MainEcoFragmentBinding ecobinding;
     Context context;
     EcoViewModel ecoViewModel;
     private EcoReviewAdapter ecoReviewAdapter;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        echobinding= MainEcoFragmentBinding.inflate(inflater, container, false);
+        ecobinding = MainEcoFragmentBinding.inflate(inflater, container, false);
         context=getActivity().getApplicationContext();
 
         ecoViewModel =new ViewModelProvider(this).get(EcoViewModel.class);
@@ -46,7 +46,7 @@ public class EcoFragment extends Fragment {
         settingEchoReview();
         settingEchoRanking();
 
-        echobinding.totalButton.setOnClickListener(new View.OnClickListener(){
+        ecobinding.totalButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 switch (view.getId()){
@@ -58,21 +58,21 @@ public class EcoFragment extends Fragment {
             }
         });
 
-        return echobinding.getRoot();
+        return ecobinding.getRoot();
     }
 
 
 
     public void initializeImg(){
-        Glide.with(this).load(R.drawable.main_eco_check_mark).into(echobinding.mainEcoCheckMark);
-        Glide.with(this).load(R.drawable.main_eco_image).into(echobinding.mainEcoImage);
-        Glide.with(this).load(R.drawable.main_eco_write_button).into(echobinding.mainEcoWriteButton);
-        Glide.with(this).load(R.drawable.no_ranking_image).into(echobinding.noRankingImg);
-        Glide.with(this).load(R.drawable.no_review_image).into(echobinding.noReviewImg);
+        Glide.with(this).load(R.drawable.main_eco_check_mark).into(ecobinding.mainEcoCheckMark);
+        Glide.with(this).load(R.drawable.main_eco_image).into(ecobinding.mainEcoImage);
+        Glide.with(this).load(R.drawable.main_eco_write_button).into(ecobinding.mainEcoWriteButton);
+        Glide.with(this).load(R.drawable.no_ranking_image).into(ecobinding.noRankingImg);
+        Glide.with(this).load(R.drawable.no_review_image).into(ecobinding.noReviewImg);
     }
 
     public void settingEchoReview(){
-        echobinding.ecoCarpingReview.setLayoutManager(new LinearLayoutManager(context));
+        ecobinding.ecoCarpingReview.setLayoutManager(new LinearLayoutManager(context));
         ecoViewModel.ecoReviewLiveData.observe(this,echoReviewObserver);
         ecoViewModel.todayLiveCount.observe(this,echoTodayCountObserver);
     }
@@ -80,7 +80,7 @@ public class EcoFragment extends Fragment {
     Observer<Integer> echoTodayCountObserver=new Observer<Integer>() {
         @Override
         public void onChanged(Integer integer) {
-            echobinding.todayEcoCarpingCount
+            ecobinding.todayEcoCarpingCount
                     .setText("오늘 "+Integer.toString(integer)+"개의 에코카핑 인증");
         }
     };
@@ -89,18 +89,18 @@ public class EcoFragment extends Fragment {
         @Override
         public void onChanged(ArrayList<EcoReview> ecoReviews) {
             if(ecoReviews==null){
-                echobinding.noReviewImg.setVisibility(View.VISIBLE);
-                echobinding.ecoCarpingReview.setVisibility(View.GONE);
+                ecobinding.noReviewImg.setVisibility(View.VISIBLE);
+                ecobinding.ecoCarpingReview.setVisibility(View.GONE);
             }else{
-                echobinding.noReviewImg.setVisibility(View.GONE);
-                echobinding.ecoCarpingReview.setVisibility(View.VISIBLE);
-                echobinding.ecoCarpingReview.setAdapter(new EcoReviewAdapter(context, ecoReviews));
+                ecobinding.noReviewImg.setVisibility(View.GONE);
+                ecobinding.ecoCarpingReview.setVisibility(View.VISIBLE);
+                ecobinding.ecoCarpingReview.setAdapter(new EcoReviewAdapter(context, ecoReviews));
             }
         }
     };
 
     public void settingEchoRanking(){
-        echobinding.ecoRanking.setLayoutManager(new LinearLayoutManager(context));
+        ecobinding.ecoRanking.setLayoutManager(new LinearLayoutManager(context));
         ecoViewModel.monthlyEcoCount.observe(this,echoMonthlyCountObserver);
         ecoViewModel.ecoRankingLiveData.observe(this,echoRankingObserver);
     }
@@ -109,12 +109,12 @@ public class EcoFragment extends Fragment {
         @Override
         public void onChanged(ArrayList<EcoRanking> ecoRankings) {
             if(ecoRankings==null){
-                echobinding.noRankingImg.setVisibility(View.VISIBLE);
-                echobinding.ecoRanking.setVisibility(View.GONE);
+                ecobinding.noRankingImg.setVisibility(View.VISIBLE);
+                ecobinding.ecoRanking.setVisibility(View.GONE);
             }else{
-                echobinding.noRankingImg.setVisibility(View.GONE);
-                echobinding.ecoRanking.setVisibility(View.VISIBLE);
-                echobinding.ecoRanking.setAdapter(new EcoRankingAdapter(context, ecoRankings));
+                ecobinding.noRankingImg.setVisibility(View.GONE);
+                ecobinding.ecoRanking.setVisibility(View.VISIBLE);
+                ecobinding.ecoRanking.setAdapter(new EcoRankingAdapter(context, ecoRankings));
             }
         }
     };
@@ -122,8 +122,8 @@ public class EcoFragment extends Fragment {
     Observer<Integer> echoMonthlyCountObserver=new Observer<Integer>() {
         @Override
         public void onChanged(Integer integer) {
-            echobinding.username.setText(ecoViewModel.currentUser.getValue().getUsername());
-            echobinding.monthWrite
+            ecobinding.username.setText(ecoViewModel.currentUser.getValue().getUsername());
+            ecobinding.monthWrite
                     .setText("최근 1개월 간\n에코리뷰 "+Integer.toString(integer)+"개 작성");
         }
     };

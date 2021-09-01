@@ -1,28 +1,20 @@
-package com.tourkakao.carping.EcoCarping;
+package com.tourkakao.carping.EcoCarping.Activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.loader.content.CursorLoader;
 
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.FileUtils;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.TypedValue;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -34,25 +26,19 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.tourkakao.carping.BuildConfig;
 import com.tourkakao.carping.NetworkwithToken.CommonClass;
-import com.tourkakao.carping.NetworkwithToken.EcoInterface;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 import com.tourkakao.carping.databinding.ActivityEcoCarpingWriteBinding;
+import com.tourkakao.carping.databinding.ImageItemBinding;
 
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
@@ -61,10 +47,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class EcoCarpingWriteActivity extends AppCompatActivity {
     ActivityEcoCarpingWriteBinding ecobinding;
@@ -96,18 +78,32 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
         two_zero=(int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,20,getResources().getDisplayMetrics());
         ecobinding.locationText.setText("위치");
 
-        ecobinding.searchBar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        ecobinding.searchBar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(actionId==EditorInfo.IME_ACTION_SEARCH) {
-                    Intent intent = new Intent(getApplicationContext(), LocationSearchActivity.class);
-                    intent.putExtra("검색어", ecobinding.searchBar.getText().toString());
-                    startActivityForResult(intent, 2);
-                    return true;
-                }
-                return false;
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), LocationSearchActivity.class);
+                startActivityForResult(intent, 2);
             }
         });
+//        ecobinding.searchBar.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View view, boolean b) {
+//                Intent intent = new Intent(getApplicationContext(), LocationSearchActivity.class);
+//                startActivityForResult(intent, 2);
+//            }
+//        });
+//        ecobinding.searchBar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if(actionId==EditorInfo.IME_ACTION_SEARCH) {
+//                    Intent intent = new Intent(getApplicationContext(), LocationSearchActivity.class);
+//                    intent.putExtra("검색어", ecobinding.searchBar.getText().toString());
+//                    startActivityForResult(intent, 2);
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
 
         ecobinding.insertImage.setOnClickListener(listener);
         ecobinding.addImage.setOnClickListener(listener);
@@ -115,12 +111,23 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
         if(uriList.size()==0){
             ecobinding.scrollview.setVisibility(View.GONE);
         }
+
         ecobinding.mapView.setVisibility(View.GONE);
+        ecobinding.reselect.setVisibility(View.GONE);
 
         ecobinding.scrollview.setHorizontalScrollBarEnabled(false);
         imageList.observe(this,observer);
 
         tag();
+
+        ecobinding.reselect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ecobinding.getRoot().removeView(ecobinding.mapView);
+                Intent intent = new Intent(getApplicationContext(), LocationSearchActivity.class);
+                startActivityForResult(intent, 2);
+            }
+        });
 
         ecobinding.completionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,7 +151,7 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
             if(resultCode==RESULT_OK) {
                 try {
                     Uri uri = data.getData();
-                    String path=getPath(uri);
+                    String path=getRealPathFromURI(uri);
                     uriList.add(uri);
                     uriList2.add(path);
                     imageList.setValue(uriList);
@@ -169,6 +176,7 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
             }
         }
         if(requestCode==2&&resultCode==2){
+            ecobinding.reselect.setVisibility(View.VISIBLE);
             ecobinding.searchBar.setVisibility(View.GONE);
             ecobinding.mapView.setVisibility(View.VISIBLE);
             placeName=data.getStringExtra("place");
@@ -200,18 +208,19 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
                 ecobinding.scrollview.setVisibility(View.VISIBLE);
                 ecobinding.imageArea.removeAllViews();
                 for(Uri uri:uris) {
-                    ImageView iv = new ImageView(getApplicationContext());
-                    LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(eight_six, eight_six);
-                    params.width= eight_six;
-                    params.height= eight_six;
-                    params.leftMargin= one_six;
-                    iv.setLayoutParams(params);
+                    ImageItemBinding imageItemBinding=ImageItemBinding.inflate(getLayoutInflater());//item 넣은 xml
+                    ImageView iv = imageItemBinding.addImage;//추가된 이미지
+                    ImageView iv2 = imageItemBinding.minusImage;//삭제 버튼
 
                     Glide.with(getApplicationContext()).load(uri)
                             .transform(new CenterCrop(), new RoundedCorners(30))
                             .into(iv);
 
-                    ecobinding.imageArea.addView(iv);
+                    Glide.with(getApplicationContext()).load(uri)//uri에서 - 이미지로 수정
+                            .transform(new CenterCrop(), new RoundedCorners(30))
+                            .into(iv2);
+
+                    ecobinding.imageArea.addView(imageItemBinding.getRoot());//write xml의 linearlayout영역에 추가
                 }
             }
         }
@@ -221,7 +230,7 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
         ecobinding.tagAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getApplicationContext(),TagPageActivity.class);
+                Intent intent=new Intent(getApplicationContext(), TagPageActivity.class);
                 startActivityForResult(intent, 1);
             }
         });
@@ -243,13 +252,13 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
 
     public void post(){
         HashMap<String, RequestBody> map=new HashMap<>();
-        String userString=SharedPreferenceManager.getInstance(getApplicationContext()).getString("user_pk","");
+        String userString=SharedPreferenceManager.getInstance(getApplicationContext()).getString("id","");
         RadioGroup rdgGroup = ecobinding.radioGroup;
         RadioButton rdoButton = findViewById( rdgGroup.getCheckedRadioButtonId() );
         String strPgmId = rdoButton.getText().toString();
         String tagString="[";
         for(int i=0;i<tagList.size();i++){
-            String tag='"'+tagList.get(i)+'"';
+            String tag='"'+tagList.get(i).replace("#","")+'"';
             tagString=tagString+tag;
             if(i!=tagList.size()-1)
                 tagString=tagString+",";
@@ -260,12 +269,14 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
         RequestBody latitude = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(mapPoint.getMapPointGeoCoord().latitude));
         RequestBody longitude = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(mapPoint.getMapPointGeoCoord().longitude));
         RequestBody title = RequestBody.create(MediaType.parse("text/plain"),ecobinding.title.getText().toString());
+        RequestBody place=RequestBody.create(MediaType.parse("text/plain"),ecobinding.locationText.getText().toString());
         RequestBody text = RequestBody.create(MediaType.parse("text/plain"),ecobinding.content.getText().toString());
         RequestBody trash = RequestBody.create(MediaType.parse("text/plain"),strPgmId);
         RequestBody tags = RequestBody.create(MediaType.parse("text/plain"), tagString);
         map.put("user", user);
         map.put("latitude", latitude);
         map.put("longitude", longitude);
+        map.put("place",place);
         map.put("title", title);
         map.put("text", text);
         map.put("trash", trash);
@@ -275,7 +286,7 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part image=MultipartBody.Part.createFormData("image", file.getName() , requestBody);
 
-        TotalApiClient.getEcoApiService(getApplicationContext()).userEdit(image, map)
+        TotalApiClient.getEcoApiService(getApplicationContext()).postReview(image, map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<CommonClass>() {
@@ -292,18 +303,22 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
                 });
     }
 
-    public String getPath(Uri uri){
-        String filepath;
-        Cursor cursor=getContentResolver().query(uri, null, null, null, null);
-        if(cursor==null){
-            filepath=uri.getPath();
-        }else{
-            cursor.moveToFirst();
-            int idx=cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            filepath=cursor.getString(idx);
-            cursor.close();
+    private String getRealPathFromURI(Uri contentUri) {
+        if (contentUri.getPath().startsWith("/storage")) {
+            return contentUri.getPath();
         }
-        return filepath;
+        String id = DocumentsContract.getDocumentId(contentUri).split(":")[1];
+        String[] columns = { MediaStore.Files.FileColumns.DATA };
+        String selection = MediaStore.Files.FileColumns._ID + " = " + id;
+        Cursor cursor = getContentResolver().query(MediaStore.Files.getContentUri("external"), columns, selection, null, null);
+        try {
+            int columnIndex = cursor.getColumnIndex(columns[0]);
+            if (cursor.moveToFirst())
+            { return cursor.getString(columnIndex);
+            }
+        } finally {
+            cursor.close();
+        } return null;
     }
 
 }

@@ -1,4 +1,4 @@
-package com.tourkakao.carping.EcoCarping;
+package com.tourkakao.carping.EcoCarping.DTO;
 
 import java.util.List;
 

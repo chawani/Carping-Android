@@ -1,17 +1,18 @@
 package com.tourkakao.carping.NetworkwithToken;
 
-import com.tourkakao.carping.EcoCarping.ResultSearchKeyword;
+import com.google.gson.JsonObject;
+import com.tourkakao.carping.EcoCarping.DTO.PostComment;
+import com.tourkakao.carping.EcoCarping.DTO.ResultSearchKeyword;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import io.reactivex.rxjava3.core.Single;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -45,7 +46,9 @@ public interface EcoInterface {
     Single<CommonClass> getEcoCarpingDetail(@Path("pk")int pk);
 
     @Multipart
-    @POST("/posts/eco-carping")
-    Single<CommonClass> userEdit(@Part MultipartBody.Part image, @PartMap HashMap<String, RequestBody> data);
+    @POST("/posts/eco-carping/")
+    Single<CommonClass> postReview(@Part MultipartBody.Part image, @PartMap HashMap<String, RequestBody> data);
 
+    @POST("/comments/comment/")
+    Single<CommonClass> postComment(@Body PostComment comment);
 }

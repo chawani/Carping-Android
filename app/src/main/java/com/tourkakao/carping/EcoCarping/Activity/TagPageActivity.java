@@ -1,4 +1,4 @@
-package com.tourkakao.carping.EcoCarping;
+package com.tourkakao.carping.EcoCarping.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 

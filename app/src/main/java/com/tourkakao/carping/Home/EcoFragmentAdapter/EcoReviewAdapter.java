@@ -32,7 +32,7 @@ public class EcoReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
         public void bind(EcoReview ecoReview){
             Glide.with(context)
-                    .load(ecoReview.getImage())
+                    .load(ecoReview.getImage1())
                     .transform(new CenterCrop(), new RoundedCorners(30))
                     .into(binding.image);
             binding.title.setText(ecoReview.getTitle());

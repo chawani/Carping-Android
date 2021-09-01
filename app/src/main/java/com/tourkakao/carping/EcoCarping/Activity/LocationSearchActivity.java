@@ -1,8 +1,7 @@
-package com.tourkakao.carping.EcoCarping;
+package com.tourkakao.carping.EcoCarping.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,19 +11,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.tourkakao.carping.BuildConfig;
-import com.tourkakao.carping.Home.EcoDataClass.EcoReview;
-import com.tourkakao.carping.NetworkwithToken.CommonClass;
+import com.tourkakao.carping.EcoCarping.Adapter.LocationInfoAdapter;
+import com.tourkakao.carping.EcoCarping.DTO.ResultSearchKeyword;
 import com.tourkakao.carping.NetworkwithToken.EcoInterface;
-import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
-import com.tourkakao.carping.R;
-import com.tourkakao.carping.databinding.ActivityEcoCarpingWriteBinding;
 import com.tourkakao.carping.databinding.ActivityLocationSearchBinding;
 
 import net.daum.mf.map.api.MapPOIItem;
@@ -62,11 +60,22 @@ public class LocationSearchActivity extends AppCompatActivity {
         setContentView(ecobinding.getRoot());
 
         ecobinding.searchBar.bringToFront();
-        ecobinding.searchBar.setText(getIntent().getStringExtra("검색어"));
+        //ecobinding.searchBar.setText(getIntent().getStringExtra("검색어"));
         settingToolbar();
         settingMapView();
-        searchKeyword(ecobinding.searchBar.getText().toString());
+
         settingLocationList();
+
+        ecobinding.searchBar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId== EditorInfo.IME_ACTION_SEARCH) {
+                    searchKeyword(ecobinding.searchBar.getText().toString());
+                    return true;
+                }
+                return false;
+            }
+        });
 
         ecobinding.completion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,7 +159,7 @@ public class LocationSearchActivity extends AppCompatActivity {
                 View view=snapHelper.findSnapView(ecobinding.locationView.getLayoutManager());
                 int position=ecobinding.locationView.getLayoutManager().getPosition(view);
                 ResultSearchKeyword.Place place=adapter.getItem(position);
-                ecobinding.searchBar.setText(place.getPlace_name());
+                //ecobinding.searchBar.setText(place.getPlace_name());
                 mapPoint=MapPoint.mapPointWithGeoCoord(Double.parseDouble(place.getY()),Double.parseDouble(place.getX()));
                 mapView.setMapCenterPoint(mapPoint,true);
                 marker.setItemName(place.getPlace_name());

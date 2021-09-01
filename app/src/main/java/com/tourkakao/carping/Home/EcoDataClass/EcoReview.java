@@ -4,7 +4,7 @@ public class EcoReview {
     private int today_count;
     private String id;
     private String user;
-    private String image;
+    private String image1;
     private String title;
     private String text;
     private String[] tags;
@@ -12,11 +12,11 @@ public class EcoReview {
 
     public EcoReview(){}
 
-    public EcoReview(int today_count, String id, String user, String image, String title, String text, String[] tags, String created_at) {
+    public EcoReview(int today_count, String id, String user, String image1, String title, String text, String[] tags, String created_at) {
         this.today_count = today_count;
         this.id = id;
         this.user = user;
-        this.image = image;
+        this.image1 = image1;
         this.title = title;
         this.text = text;
         this.tags = tags;
@@ -31,8 +31,8 @@ public class EcoReview {
         return user;
     }
 
-    public String getImage() {
-        return image;
+    public String getImage1() {
+        return image1;
     }
 
     public String getTitle() {
@@ -63,8 +63,8 @@ public class EcoReview {
         this.user = user;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImage1(String image1) {
+        this.image1 = image1;
     }
 
     public void setTitle(String title) {

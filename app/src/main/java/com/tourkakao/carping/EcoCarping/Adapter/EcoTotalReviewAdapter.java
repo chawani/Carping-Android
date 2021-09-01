@@ -1,12 +1,10 @@
-package com.tourkakao.carping.EcoCarping;
+package com.tourkakao.carping.EcoCarping.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,14 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.tourkakao.carping.EcoCarping.Activity.EcoCarpingDetailActivity;
 import com.tourkakao.carping.Home.EcoDataClass.EcoReview;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.databinding.EcoCarpingTotalListItemBinding;
-import com.tourkakao.carping.databinding.EcoReviewListItemBinding;
 
 import java.util.ArrayList;
-import java.util.List;
-
 
 
 public class EcoTotalReviewAdapter extends RecyclerView.Adapter<EcoTotalReviewAdapter.ViewHolder>{
@@ -36,7 +32,7 @@ public class EcoTotalReviewAdapter extends RecyclerView.Adapter<EcoTotalReviewAd
             binding.view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent=new Intent(context,EcoCarpingDetailActivity.class);
+                    Intent intent=new Intent(context, EcoCarpingDetailActivity.class);
                     intent.putExtra("pk",binding.pk.getText().toString());
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
@@ -46,7 +42,7 @@ public class EcoTotalReviewAdapter extends RecyclerView.Adapter<EcoTotalReviewAd
         public void bind(EcoReview ecoReview){
             Glide.with(context).load(R.drawable.eco_certification_mark).into(binding.ecoCertification);
             Glide.with(context)
-                    .load(ecoReview.getImage())
+                    .load(ecoReview.getImage1())
                     .transform(new CenterCrop(), new RoundedCorners(30))
                     .into(binding.image);
             binding.pk.setText(ecoReview.getId());
