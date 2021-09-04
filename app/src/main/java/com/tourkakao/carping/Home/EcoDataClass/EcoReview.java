@@ -4,23 +4,35 @@ public class EcoReview {
     private int today_count;
     private String id;
     private String user;
+    private String username;
     private String image1;
     private String title;
     private String text;
-    private String[] tags;
     private String created_at;
 
     public EcoReview(){}
 
-    public EcoReview(int today_count, String id, String user, String image1, String title, String text, String[] tags, String created_at) {
+    public EcoReview(int today_count, String id, String user, String username, String image1, String title, String text, String created_at) {
         this.today_count = today_count;
         this.id = id;
         this.user = user;
+        this.username = username;
         this.image1 = image1;
         this.title = title;
         this.text = text;
-        this.tags = tags;
         this.created_at = created_at;
+    }
+
+    public void setToday_count(int today_count) {
+        this.today_count = today_count;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getId() {
@@ -41,10 +53,6 @@ public class EcoReview {
 
     public String getText() {
         return text;
-    }
-
-    public String[] getTags() {
-        return tags;
     }
 
     public String getCreated_at() {
@@ -73,10 +81,6 @@ public class EcoReview {
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    public void setTags(String[] tags) {
-        this.tags = tags;
     }
 
     public void setCreated_at(String created_at) {

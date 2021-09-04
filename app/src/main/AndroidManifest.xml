@@ -17,8 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".EcoCarping.Activity.TagPageActivity"></activity>
-        <activity android:name=".registernewcarping.Activity.TagsActivity"></activity>
+        <activity android:name=".EcoCarping.Activity.EcoCarpingEditActivity"></activity>
+        <activity android:name=".EcoCarping.Activity.TagPageActivity" />
+        <activity android:name=".registernewcarping.Activity.TagsActivity" />
         <activity android:name=".registernewcarping.Activity.SearchNewCarpingActivity" />
         <activity android:name=".registernewcarping.Activity.RegisterActivity" />
         <activity android:name=".newcarping.Activity.Write_newcarping_reviewActivity" />

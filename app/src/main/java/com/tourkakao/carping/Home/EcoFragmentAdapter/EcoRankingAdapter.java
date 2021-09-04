@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.tourkakao.carping.Home.EcoDataClass.EcoRanking;
 import com.tourkakao.carping.databinding.EcoRankingListItemBinding;
 
@@ -30,7 +32,9 @@ public class EcoRankingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
         public void bind(EcoRanking ecoRanking, int position){
             binding.rank.setText(Integer.toString(position+1));
-            Glide.with(context).load(ecoRanking.getImage()).into(binding.image);
+            Glide.with(context).load(ecoRanking.getImage())
+                    .transform(new CenterCrop(), new RoundedCorners(100))
+                    .into(binding.image);
             binding.name.setText(ecoRanking.getUsername());
             Glide.with(context).load(ecoRanking.getBadge()).into(binding.badge);
             binding.level.setText("LV."+Integer.toString(ecoRanking.getLevel()));

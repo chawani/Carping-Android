@@ -27,7 +27,6 @@ public class EcoTopFragment extends Fragment {
     private MainEcoTopFragmentBinding ecobinding;
     private Context context;
     private EcoViewModel ecoViewModel;
-    private SpannableString spannableString;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -38,8 +37,6 @@ public class EcoTopFragment extends Fragment {
 
         ecoViewModel.ecoPercentage.observe(this,percentageObserver);
         ecoViewModel.currentUser.observe(this,userObserver);
-
-        spannableString = new SpannableString(ecobinding.username.getText());
 
         return ecobinding.getRoot();
     }
@@ -56,8 +53,9 @@ public class EcoTopFragment extends Fragment {
         public void onChanged(EcoRanking ecoRanking) {
 
             int length=ecoRanking.getUsername().length();
-            spannableString.setSpan(new StyleSpan(Typeface.BOLD),3,3+length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            ecobinding.username.setText("현재 "+ecoRanking.getUsername()+"님의");
+            SpannableString spannableString = new SpannableString(ecoRanking.getUsername());
+            spannableString.setSpan(new StyleSpan(Typeface.BOLD),0,spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            ecobinding.username.setText("현재 "+spannableString+"님의");
             ecobinding.level.setText("LV. "+ecoRanking.getLevel());
         }
     };

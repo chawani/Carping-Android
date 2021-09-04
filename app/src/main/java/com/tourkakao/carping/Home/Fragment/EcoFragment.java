@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.tourkakao.carping.EcoCarping.Activity.EcoCarpingListActivity;
+import com.tourkakao.carping.EcoCarping.Activity.EcoCarpingWriteActivity;
 import com.tourkakao.carping.Home.EcoDataClass.EcoRanking;
 import com.tourkakao.carping.Home.EcoDataClass.EcoReview;
 import com.tourkakao.carping.Home.EcoFragmentAdapter.EcoRankingAdapter;
@@ -49,12 +50,16 @@ public class EcoFragment extends Fragment {
         ecobinding.totalButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                switch (view.getId()){
-                    case R.id.total_button:
-                        Intent intent=new Intent(getActivity(),EcoCarpingListActivity.class);
-                        startActivity(intent);
-                        break;
-                }
+                Intent intent=new Intent(getActivity(),EcoCarpingListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ecobinding.mainEcoWriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(), EcoCarpingWriteActivity.class);
+                startActivity(intent);
             }
         });
 

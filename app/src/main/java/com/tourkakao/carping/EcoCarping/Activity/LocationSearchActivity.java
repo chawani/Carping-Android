@@ -51,6 +51,7 @@ public class LocationSearchActivity extends AppCompatActivity {
     private MapPOIItem marker;
     private MapView mapView;
     private MapPoint mapPoint;
+    private String placeName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,11 +82,11 @@ public class LocationSearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent=getIntent();
-                intent.putExtra("place",ecobinding.searchBar.getText().toString());
+                intent.putExtra("place",placeName);
                 intent.putExtra("x",mapPoint.getMapPointGeoCoord().longitude);
                 intent.putExtra("y",mapPoint.getMapPointGeoCoord().latitude);
+                ecobinding.mapView.removeView(mapView);
                 setResult(2, intent);
-                ecobinding.getRoot().removeView(ecobinding.mapView);
                 finish();
             }
         });
@@ -159,7 +160,7 @@ public class LocationSearchActivity extends AppCompatActivity {
                 View view=snapHelper.findSnapView(ecobinding.locationView.getLayoutManager());
                 int position=ecobinding.locationView.getLayoutManager().getPosition(view);
                 ResultSearchKeyword.Place place=adapter.getItem(position);
-                //ecobinding.searchBar.setText(place.getPlace_name());
+                placeName=place.getPlace_name();
                 mapPoint=MapPoint.mapPointWithGeoCoord(Double.parseDouble(place.getY()),Double.parseDouble(place.getX()));
                 mapView.setMapCenterPoint(mapPoint,true);
                 marker.setItemName(place.getPlace_name());

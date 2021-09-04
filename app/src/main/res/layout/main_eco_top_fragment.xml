@@ -40,7 +40,6 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="115dp"
         android:fontFamily="@font/spoqa_han_sans_neo"
-        android:text="현재 User_02님의"
         android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="normal" />
@@ -66,8 +65,7 @@
         android:textStyle="bold"
         android:textSize="30sp"
         android:textColor="#5f51ef"
-        android:lineSpacingExtra="12sp"
-        android:text="84%"/>
+        android:lineSpacingExtra="12sp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -99,7 +97,6 @@
         android:layout_marginRight="26dp"
         android:fontFamily="@font/spoqa_han_sans_neo_medium"
         android:gravity="center_horizontal"
-        android:text="LV. 3"
         android:textColor="#ffffff"
         android:textSize="12sp"
         android:textStyle="normal" />

@@ -11,13 +11,17 @@ import io.reactivex.rxjava3.core.Single;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
@@ -47,8 +51,38 @@ public interface EcoInterface {
 
     @Multipart
     @POST("/posts/eco-carping/")
-    Single<CommonClass> postReview(@Part MultipartBody.Part image, @PartMap HashMap<String, RequestBody> data);
+    Single<CommonClass> postReview(
+            @Part MultipartBody.Part image1,
+            @Part MultipartBody.Part image2,
+            @Part MultipartBody.Part image3,
+            @Part MultipartBody.Part image4,
+            @PartMap HashMap<String, RequestBody> data);
 
     @POST("/comments/comment/")
     Single<CommonClass> postComment(@Body PostComment comment);
+
+    @POST("/posts/eco-carping/like")
+    Single<CommonClass> postLike(@Body HashMap<String,Object> likeMap);
+
+    @HTTP(method = "DELETE", path = "/posts/eco-carping/like", hasBody = true)
+    Single<CommonClass> cancelLike(@Body HashMap<String,Object> likeMap);
+
+    @Multipart
+    @PUT("/posts/eco-carping/{id}/")
+    Single<CommonClass> editPost(@Path("id")int id,
+                                 @Part MultipartBody.Part image1,
+                                 @Part MultipartBody.Part image2,
+                                 @Part MultipartBody.Part image3,
+                                 @Part MultipartBody.Part image4,
+                                 @PartMap HashMap<String, RequestBody> data);
+
+    @DELETE("/posts/eco-carping/{id}/")
+    Single<CommonClass> deletePost(@Path("id")int id);
+
+//    @Multipart
+//    @PATCH("/comments/comment/{id}/")
+//    Single<CommonClass> editComment(@Path("id")int id,@PartMap HashMap<String, RequestBody> data);
+
+    @DELETE("/comments/comment/{id}/")
+    Single<CommonClass> deleteComment(@Path("id")int id);
 }

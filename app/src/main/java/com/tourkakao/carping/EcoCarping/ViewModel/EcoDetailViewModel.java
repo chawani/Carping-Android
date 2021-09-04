@@ -6,26 +6,20 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import com.tourkakao.carping.EcoCarping.DTO.Comment;
 import com.tourkakao.carping.EcoCarping.DTO.EcoPost;
+import com.tourkakao.carping.EcoCarping.DTO.LikeResponse;
 import com.tourkakao.carping.EcoCarping.DTO.PostComment;
-import com.tourkakao.carping.Home.EcoDataClass.EcoReview;
 import com.tourkakao.carping.NetworkwithToken.CommonClass;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.observers.DisposableSingleObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import okhttp3.RequestBody;
 
 public class EcoDetailViewModel  extends ViewModel {
     private Context context;
@@ -35,6 +29,7 @@ public class EcoDetailViewModel  extends ViewModel {
     private MutableLiveData<ArrayList<String>> tags=new MutableLiveData<>();
     private MutableLiveData<ArrayList<Comment>> comments=new MutableLiveData<>();
     private ArrayList<Comment> commentArray;
+    private MutableLiveData<String> likeStatus=new MutableLiveData<>();
 
     public void setContext(Context context){
         this.context=context;
@@ -49,6 +44,8 @@ public class EcoDetailViewModel  extends ViewModel {
     public MutableLiveData<ArrayList<String>> getTags(){return tags;}
 
     public MutableLiveData<ArrayList<Comment>> getComments(){return comments;}
+
+    public MutableLiveData<String> getLikeStatus(){return likeStatus;}
 
     public void setPostData(String total){
         System.out.println(total);
@@ -66,8 +63,7 @@ public class EcoDetailViewModel  extends ViewModel {
             imgArray.add(detail.getImage4());}
         images.setValue(imgArray);
 
-        //String tagString=gson.toJson(detail.getTags());
-        ArrayList<String> tagArray=new ArrayList<>();//=gson.fromJson(tagString, new TypeToken<ArrayList<String>>(){}.getType());
+        ArrayList<String> tagArray=new ArrayList<>();
         for(String s:detail.getTags()){
             tagArray.add(s);
         }
@@ -75,6 +71,8 @@ public class EcoDetailViewModel  extends ViewModel {
 
         commentArray=detail.getComment();
         comments.setValue(commentArray);
+
+        likeStatus.setValue(String.valueOf(detail.getIs_liked()));
     }
 
     public void loadDetail(){
@@ -116,6 +114,95 @@ public class EcoDetailViewModel  extends ViewModel {
                     @Override
                     public void onError(@NonNull Throwable e) {
                         System.out.println("post 실패"+e.getMessage());
+
+                    }
+                });
+    }
+
+    public void setLikeDataPush(String total){
+        Gson gson=new Gson();
+        LikeResponse message=gson.fromJson(total, LikeResponse.class);
+        if(message.getMessage().equals("포스트 좋아요 완료"))
+            likeStatus.setValue("true");
+    }
+
+    public void setLikeDataCancel(String total){
+        Gson gson=new Gson();
+        LikeResponse message=gson.fromJson(total, LikeResponse.class);
+        if(message.getMessage().equals("포스트 좋아요 취소"))
+            likeStatus.setValue("false");
+    }
+
+    public void pushLike(){
+        HashMap<String,Object> map=new HashMap<>();
+        int id=(int)Double.parseDouble(post.getValue().getId());
+
+        map.put("post_to_like",id);
+        TotalApiClient.getEcoApiService(context).postLike(map)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<CommonClass>() {
+                    @Override
+                    public void onSuccess(@NonNull CommonClass commonClass) {
+                        setLikeDataPush(new Gson().toJson(commonClass.getData().get(0)));
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                    }
+                });
+    }
+
+    public void cancelLike(){
+        HashMap<String,Object> map=new HashMap<>();
+        int id=(int)Double.parseDouble(post.getValue().getId());
+
+        map.put("post_to_like",id);
+        TotalApiClient.getEcoApiService(context).cancelLike(map)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<CommonClass>() {
+                    @Override
+                    public void onSuccess(@NonNull CommonClass commonClass) {
+                        setLikeDataCancel(new Gson().toJson(commonClass.getData().get(0)));
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                    }
+                });
+    }
+
+    public void deletePost(){
+        int id=(int)Double.parseDouble(post.getValue().getId());
+        TotalApiClient.getEcoApiService(context).deletePost(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<CommonClass>() {
+                    @Override
+                    public void onSuccess(@NonNull CommonClass commonClass) {
+                        System.out.println("삭제:"+commonClass.getCode());
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+                });
+    }
+
+    public void deleteComment(int pk){
+        TotalApiClient.getEcoApiService(context).deleteComment(pk)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<CommonClass>() {
+                    @Override
+                    public void onSuccess(@NonNull CommonClass commonClass) {
+                        System.out.println("삭제:"+commonClass.getCode());
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
 
                     }
                 });

@@ -8,12 +8,13 @@
         android:id="@+id/add_image"
         android:layout_width="86dp"
         android:layout_height="86dp"
-        android:background="@drawable/tag_design"/>
+        android:paddingVertical="3dp"
+        android:paddingHorizontal="3dp"
+        android:layout_marginLeft="12dp"/>
     <ImageView
         android:id="@+id/minus_image"
         android:layout_width="22dp"
         android:layout_height="22dp"
-        android:background="@drawable/tag_design"
         android:layout_alignRight="@id/add_image"/>
 
 </RelativeLayout>

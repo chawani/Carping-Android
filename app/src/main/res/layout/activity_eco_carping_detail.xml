@@ -49,7 +49,7 @@
                     android:src="@mipmap/ic_launcher"/>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_marginLeft="10dp">
@@ -58,7 +58,6 @@
                         android:id="@+id/username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="이름"
                         android:layout_marginTop="3dp"
                         android:textSize="14sp"
                         android:textColor="#000000"/>
@@ -67,11 +66,35 @@
                         android:id="@+id/hour"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="시간"
                         android:layout_marginTop="2dp"
                         android:textSize="11sp"/>
 
                 </LinearLayout>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/private_edit_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/spoqa_han_sans_neo"
+                    android:textStyle="normal"
+                    android:textSize="13sp"
+                    android:textColor="#5f51ef"
+                    android:gravity="end"
+                    android:text="수정"/>
+                <TextView
+                    android:id="@+id/private_delete_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/spoqa_han_sans_neo"
+                    android:textStyle="normal"
+                    android:textSize="13sp"
+                    android:textColor="#5f51ef"
+                    android:gravity="end"
+                    android:layout_marginLeft="16dp"
+                    android:text="삭제"/>
             </LinearLayout>
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/image_view_pager"
@@ -88,7 +111,6 @@
                 android:textSize="12sp"
                 android:textColor="#666666"
                 android:lineSpacingExtra="6.6sp"
-                tools:text="증말들"
                 android:layout_marginTop="15dp"/>
             <TextView
                 android:id="@+id/title"

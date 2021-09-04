@@ -1,7 +1,6 @@
 package com.tourkakao.carping.EcoCarping.DTO;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class EcoPost {
     private String id;
@@ -22,7 +21,7 @@ public class EcoPost {
     private String created_at;
     private ArrayList<Comment> comment;
     private String like_count;
-    private String check_like;
+    private boolean is_liked;
 
     public String getId() {
         return id;
@@ -160,12 +159,12 @@ public class EcoPost {
         this.like_count = like_count;
     }
 
-    public String getCheck_like() {
-        return check_like;
+    public boolean getIs_liked() {
+        return is_liked;
     }
 
-    public void setCheck_like(String check_like) {
-        this.check_like = check_like;
+    public void setIs_liked(boolean is_liked) {
+        this.is_liked = is_liked;
     }
 
     public String getPlace() {

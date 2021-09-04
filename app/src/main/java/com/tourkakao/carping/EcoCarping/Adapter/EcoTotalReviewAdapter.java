@@ -2,6 +2,8 @@ package com.tourkakao.carping.EcoCarping.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,10 +47,11 @@ public class EcoTotalReviewAdapter extends RecyclerView.Adapter<EcoTotalReviewAd
                     .load(ecoReview.getImage1())
                     .transform(new CenterCrop(), new RoundedCorners(30))
                     .into(binding.image);
+            binding.image.setColorFilter(Color.parseColor("#595959"), PorterDuff.Mode.MULTIPLY);
             binding.pk.setText(ecoReview.getId());
             binding.title.setText(ecoReview.getTitle());
             binding.content.setText(ecoReview.getText());
-            binding.username.setText(ecoReview.getUser());
+            binding.username.setText(ecoReview.getUsername());
             binding.date.setText(ecoReview.getCreated_at());
         }
     }

@@ -52,18 +52,14 @@ public class EcoCarpingListActivity extends AppCompatActivity {
 
         initializeToolbar();
         initializeImg();
-        selectSinnerItem();
         settingEchoReview();
+        selectSinnerItem();
 
         ecobinding.writeButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                switch (view.getId()){
-                    case R.id.write_button:
-                        Intent intent=new Intent(context, EcoCarpingWriteActivity.class);
-                        startActivity(intent);
-                        break;
-                }
+                Intent intent=new Intent(context, EcoCarpingWriteActivity.class);
+                startActivity(intent);
             }
         });
     }

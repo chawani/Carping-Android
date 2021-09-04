@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="55.5dp">
         <TextView
+            android:id="@+id/toolbar_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/spoqa_han_sans_neo"
@@ -107,8 +108,7 @@
                     <ImageView
                         android:id="@+id/add_image"
                         android:layout_width="86dp"
-                        android:layout_height="86dp"
-                        android:background="@drawable/tag_design"/>
+                        android:layout_height="86dp"/>
                     <LinearLayout
                         android:id="@+id/image_area"
                         android:layout_width="match_parent"
@@ -178,7 +178,7 @@
                     android:textSize="13sp"
                     android:textColor="#5f51ef"
                     android:gravity="end"
-                    android:text="삭제"
+                    android:text="전체 삭제"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="16dp"/>
             </RelativeLayout>
@@ -188,10 +188,10 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="15dp"
-                android:scrollbars="none">
+                android:scrollbars="none"
+                android:layout_marginBottom="35dp">
                 <LinearLayout
                     android:orientation="horizontal"
-                    android:id="@+id/tag_area"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     >
@@ -204,10 +204,16 @@
                         android:paddingHorizontal="20dp"
                         android:textColor="#5f51ef"
                         android:text="+"/>
+                    <LinearLayout
+                    android:orientation="horizontal"
+                    android:id="@+id/tag_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
                 </LinearLayout>
             </HorizontalScrollView>
 
             <TextView
+                android:id="@+id/radio_group_text"
                 android:layout_width="174dp"
                 android:layout_height="20dp"
                 android:fontFamily="@font/spoqa_han_sans_neo_medium"
@@ -215,8 +221,7 @@
                 android:textSize="16sp"
                 android:textColor="#000000"
                 android:text="쓰레기가 몇리터나왔나요?"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="35dp"/>
+                android:layout_marginLeft="16dp"/>
             <RadioGroup
                 android:id="@+id/radio_group"
                 android:layout_width="match_parent"
@@ -315,7 +320,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
-        android:background="#999999"
+        android:background="#000000"
         android:text="작성하기"
         android:fontFamily="@font/spoqa_han_sans_neo"
         android:textStyle="bold"
