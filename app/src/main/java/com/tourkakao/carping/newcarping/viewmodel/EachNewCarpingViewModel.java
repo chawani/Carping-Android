@@ -55,7 +55,7 @@ public class EachNewCarpingViewModel extends ViewModel {
     public MutableLiveData<Integer> my_review_cnt=new MutableLiveData<>();
     public MutableLiveData<Float> my_star_avg=new MutableLiveData<>();
     public MutableLiveData<String> review_count=new MutableLiveData<>();
-    public MutableLiveData<Integer> check_bookmark=new MutableLiveData<>();
+    public MutableLiveData<Boolean> check_bookmark=new MutableLiveData<>();
     public MutableLiveData<String> address=new MutableLiveData<>();
     public MutableLiveData<ArrayList<String>> info_tags=new MutableLiveData<>();
     public MutableLiveData<String> review_username=new MutableLiveData<>();
@@ -63,8 +63,10 @@ public class EachNewCarpingViewModel extends ViewModel {
     public MutableLiveData<Double> carpingplace_lat=new MutableLiveData<>();
     public MutableLiveData<Double> carpingplace_lon=new MutableLiveData<>();
     public MutableLiveData<Integer> review_send_ok=new MutableLiveData<>();
+    public MutableLiveData<Integer> fix_send_ok=new MutableLiveData<>();
     private Context context;
     public int pk;
+    public int userpk;
     Newcarping_Review_Adapter newcarping_review_adapter;
     Newcarping_Review_Image_Adapter newcarping_review_image_adapter;
     ArrayList<Newcarping_Review> reviews=null;
@@ -73,13 +75,18 @@ public class EachNewCarpingViewModel extends ViewModel {
     public float r_star1, r_star2, r_star3, r_star4, r_totalstar;
     public String r_text=null;
     public Uri r_uri;
+
+    public float fix_star1, fix_star2, fix_star3, fix_star4, fix_totalstar;
+    public String fix_text=null;
+    public Uri fix_uri=null;
     public EachNewCarpingViewModel(){
         review_cnt_num.setValue(-1);
         my_review_cnt.setValue(0);
-        check_bookmark.setValue(0);
+        check_bookmark.setValue(false);
         review_count.setValue("리뷰 0");
         r_star1=0; r_star2=0; r_star3=0; r_star4=0; r_totalstar=0;
         review_send_ok.setValue(0);
+        fix_send_ok.setValue(0);
     }
     public void setContext(Context context){
         this.context=context;
@@ -87,9 +94,13 @@ public class EachNewCarpingViewModel extends ViewModel {
     public void setPk(int pk){
         this.pk=pk;
     }
+    public void setUserpk(int userpk) {
+        this.userpk = userpk;
+    }
+
     public Newcarping_Review_Adapter setting_newcarping_review_adapter(){
         reviews=new ArrayList<>();
-        newcarping_review_adapter=new Newcarping_Review_Adapter(context, reviews);
+        newcarping_review_adapter=new Newcarping_Review_Adapter(context, reviews, userpk, pk);
         return newcarping_review_adapter;
     }
     public Newcarping_Review_Image_Adapter setting_newcarping_review_image_adapter(){
@@ -103,52 +114,57 @@ public class EachNewCarpingViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         detail -> {
-                            if(detail.getData()!=null){
-                                Type type=new TypeToken<NewCarping>(){}.getType();
-                                String result=new Gson().toJson(detail.getData().get(0));
-                                NewCarping newCarping=new Gson().fromJson(result, type);
+                            if(detail.isSuccess()) {
+                                if (detail.getData() != null) {
+                                    Type type = new TypeToken<NewCarping>() {
+                                    }.getType();
+                                    String result = new Gson().toJson(detail.getData().get(0));
+                                    NewCarping newCarping = new Gson().fromJson(result, type);
 
-                                title.setValue(newCarping.getTitle());
-                                total_star.setValue(newCarping.getTotal_star());
-                                review_cnt_num.setValue(newCarping.getReview_count());
-                                check_bookmark.setValue(newCarping.getCheck_bookmark());
-                                total_star_num.setValue(total_star.getValue()+" ("+review_cnt_num.getValue()+")");
-                                //common data
-                                carpingplace_lat.setValue(newCarping.getLatitude());
-                                carpingplace_lon.setValue(newCarping.getLongitude());
-                                //map & address
-                                info_review.setValue(newCarping.getText());
-                                image1.setValue(newCarping.getImage1());
-                                image2.setValue(newCarping.getImage2());
-                                image3.setValue(newCarping.getImage3());
-                                image4.setValue(newCarping.getImage4());
-                                if(info_tags.getValue()!=null) {
-                                    info_tags=new MutableLiveData<>();
+                                    title.setValue(newCarping.getTitle());
+                                    total_star.setValue(newCarping.getTotal_star());
+                                    review_cnt_num.setValue(newCarping.getReview_count());
+                                    check_bookmark.setValue(newCarping.isCheck_bookmark());
+                                    total_star_num.setValue(total_star.getValue() + " (" + review_cnt_num.getValue() + ")");
+                                    //common data
+                                    carpingplace_lat.setValue(newCarping.getLatitude());
+                                    carpingplace_lon.setValue(newCarping.getLongitude());
+                                    //map & address
+                                    info_review.setValue(newCarping.getText());
+                                    image1.setValue(newCarping.getImage1());
+                                    image2.setValue(newCarping.getImage2());
+                                    image3.setValue(newCarping.getImage3());
+                                    image4.setValue(newCarping.getImage4());
+                                    if (info_tags.getValue() != null) {
+                                        info_tags = new MutableLiveData<>();
+                                    }
+                                    info_tags.setValue(newCarping.getTags());
+                                    //newcarping info
+                                    review_profile.setValue(SharedPreferenceManager.getInstance(context).getString("profile", ""));
+                                    review_username.setValue(SharedPreferenceManager.getInstance(context).getString("username", "") + "님");
+                                    star1.setValue(newCarping.getStar1());
+                                    star2.setValue(newCarping.getStar2());
+                                    star3.setValue(newCarping.getStar3());
+                                    star4.setValue(newCarping.getStar4());
+                                    my_star_avg.setValue(newCarping.getMy_star_avg());
+                                    my_review_cnt.setValue(newCarping.getMy_review_cnt());
+                                    review_count.setValue("리뷰 " + review_cnt_num.getValue());
+                                    //newcarping total review
+                                    reviews = newCarping.getReviews();
+                                    newcarping_review_adapter.update_Item(reviews);
+                                    //reviews recyclerview
+                                    if (review_images != null) {
+                                        review_images.clear();
+                                        review_images = null;
+                                    }
+                                    review_images = new ArrayList<>();
+                                    for (int i = 0; i < reviews.size(); i++) {
+                                        review_images.add(reviews.get(i).getImage());
+                                    }
+                                    newcarping_review_image_adapter.update_Item(review_images);
                                 }
-                                info_tags.setValue(newCarping.getTags());
-                                //newcarping info
-                                review_profile.setValue(SharedPreferenceManager.getInstance(context).getString("profile", ""));
-                                review_username.setValue(SharedPreferenceManager.getInstance(context).getString("username", "")+"님");
-                                star1.setValue(newCarping.getStar1());
-                                star2.setValue(newCarping.getStar2());
-                                star3.setValue(newCarping.getStar3());
-                                star4.setValue(newCarping.getStar4());
-                                my_star_avg.setValue(newCarping.getMy_star_avg());
-                                my_review_cnt.setValue(newCarping.getMy_review_cnt());
-                                review_count.setValue("리뷰 "+review_cnt_num.getValue());
-                                //newcarping total review
-                                reviews=newCarping.getReviews();
-                                newcarping_review_adapter.update_Item(reviews);
-                                //reviews recyclerview
-                                if(review_images!=null){
-                                    review_images.clear();
-                                    review_images=null;
-                                }
-                                review_images=new ArrayList<>();
-                                for(int i=0; i<reviews.size(); i++){
-                                    review_images.add(reviews.get(i).getImage());
-                                }
-                                newcarping_review_image_adapter.update_Item(review_images);
+                            }else{
+                                System.out.println(detail.getError_message());
                             }
                         },
                         error -> {
@@ -164,8 +180,11 @@ public class EachNewCarpingViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         result -> {
-                            check_bookmark.setValue(1);
-                            System.out.println(result.getData().get(0));
+                            if(result.isSuccess()) {
+                                check_bookmark.setValue(true);
+                            }else{
+                                System.out.println(result.getError_message());
+                            }
                         },
                         error -> {
 
@@ -178,8 +197,11 @@ public class EachNewCarpingViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         result -> {
-                            check_bookmark.setValue(0);
-                            System.out.println(result.getData().get(0));
+                            if(result.isSuccess()) {
+                                check_bookmark.setValue(false);
+                            }else{
+                                System.out.println(result.getError_message());
+                            }
                         },
                         error -> {
 
@@ -202,12 +224,66 @@ public class EachNewCarpingViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         res -> {
-                            review_send_ok.setValue(1);
+                            if(res.isSuccess()) {
+                                review_send_ok.setValue(1);
+                            }else{
+                                System.out.println(res.getError_message());
+                                review_send_ok.setValue(-1);
+                            }
                         },
                         error -> {
-                            review_send_ok.setValue(-1);
                         }
                 );
+    }
+    public void fixing_newcarping_review(int id, int upk, int postpk){
+        String path;
+        File file;
+        RequestBody requestBody;
+        MultipartBody.Part image;
+        if(fix_uri!=null) {
+            path=getPath(fix_uri);
+            file=new File(path);
+            requestBody=RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            image=MultipartBody.Part.createFormData("image", "review.jpg", requestBody);
+        }else{
+            image=null;
+        }
+        HashMap<String, RequestBody> map=new HashMap<>();
+        RequestBody ftext=RequestBody.create(MediaType.parse("text/plain"), fix_text);
+        map.put("text", ftext);
+        if(image!=null) {
+            TotalApiClient.getApiService(context).change_newcarping_review(id, image, map, upk, postpk, fix_star1, fix_star2, fix_star3, fix_star4, fix_totalstar)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            res -> {
+                                if (res.isSuccess()) {
+                                    fix_send_ok.setValue(1);
+                                } else {
+                                    System.out.println(res.getError_message());
+                                    fix_send_ok.setValue(-1);
+                                }
+                            },
+                            error -> {
+                            }
+                    );
+        }else{
+            TotalApiClient.getApiService(context).change_newcarping_review_no_image(id, map, upk, postpk, fix_star1, fix_star2, fix_star3, fix_star4, fix_totalstar)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            res -> {
+                                if (res.isSuccess()) {
+                                    fix_send_ok.setValue(1);
+                                } else {
+                                    System.out.println(res.getError_message());
+                                    fix_send_ok.setValue(-1);
+                                }
+                            },
+                            error -> {
+                            }
+                    );
+        }
     }
     public String getPath(Uri uri){
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;

@@ -106,10 +106,14 @@ public class RegisterViewmodel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         result -> {
-                            newcarping_send_ok.setValue(1);
+                            if(result.isSuccess()) {
+                                newcarping_send_ok.setValue(1);
+                            }else{
+                                System.out.println(result.getError_message());
+                                newcarping_send_ok.setValue(-1);
+                            }
                         },
                         error -> {
-                            newcarping_send_ok.setValue(-1);
                         }
                 );
     }

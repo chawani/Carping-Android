@@ -40,30 +40,35 @@ public class SearchViewmodel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         lists-> {
-                            Type type = new TypeToken<ArrayList<NewCapringPlace>>() {
-                            }.getType();
-                            String result = new Gson().toJson(lists.getData());
-                            newCapringPlaces = new Gson().fromJson(result, type);
-                            for(int i=0; i<newCapringPlaces.size(); i++){
-                                int pk=newCapringPlaces.get(i).getPk();
-                                TotalApiClient.getApiService(context).get_each_newcarping_place_detail(pk)
-                                        .subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(
-                                                detail -> {
-                                                    if(detail.getData()!=null){
-                                                        Type type2=new TypeToken<NewCarping>(){}.getType();
-                                                        String result2=new Gson().toJson(detail.getData().get(0));
-                                                        NewCarping newCarping=new Gson().fromJson(result2, type2);
+                            if(lists.isSuccess()) {
+                                Type type = new TypeToken<ArrayList<NewCapringPlace>>() {
+                                }.getType();
+                                String result = new Gson().toJson(lists.getData());
+                                newCapringPlaces = new Gson().fromJson(result, type);
+                                for (int i = 0; i < newCapringPlaces.size(); i++) {
+                                    int pk = newCapringPlaces.get(i).getPk();
+                                    TotalApiClient.getApiService(context).get_each_newcarping_place_detail(pk)
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(
+                                                    detail -> {
+                                                        if (detail.getData() != null) {
+                                                            Type type2 = new TypeToken<NewCarping>() {
+                                                            }.getType();
+                                                            String result2 = new Gson().toJson(detail.getData().get(0));
+                                                            NewCarping newCarping = new Gson().fromJson(result2, type2);
 
-                                                        lats.add(Math.round(newCarping.getLatitude()*100000)/100000.0);
-                                                        lons.add(Math.round(newCarping.getLongitude()*100000)/100000.0);
+                                                            lats.add(Math.round(newCarping.getLatitude() * 100000) / 100000.0);
+                                                            lons.add(Math.round(newCarping.getLongitude() * 100000) / 100000.0);
+                                                        }
+                                                    },
+                                                    error -> {
+
                                                     }
-                                                },
-                                                error -> {
-
-                                                }
-                                        );
+                                            );
+                                }
+                            }else{
+                                System.out.println(lists.getError_message());
                             }
                         },
                         error -> {

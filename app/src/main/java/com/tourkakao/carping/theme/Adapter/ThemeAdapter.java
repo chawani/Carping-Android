@@ -1,4 +1,4 @@
-package com.tourkakao.carping.Theme.Adapter;
+package com.tourkakao.carping.theme.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -11,7 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.tourkakao.carping.Theme.Dataclass.Theme;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
+import com.tourkakao.carping.R;
+import com.tourkakao.carping.theme.Dataclass.Theme;
 import com.tourkakao.carping.databinding.EachThemeBinding;
 
 import java.util.ArrayList;
@@ -46,39 +49,69 @@ public class ThemeAdapter extends RecyclerView.Adapter {
                 }
             });
         }
-        public void setItem(Theme theme){
-            Glide.with(context).load(theme.getImage()).into(binding.image);
+        public void setItem(Theme theme, int pos){
+            if(theme.getImage()!=null) {
+                Glide.with(context).load(theme.getImage()).transform(new RoundedCorners(10)).into(binding.image);
+            }else{
+                Glide.with(context).load(R.drawable.thema_no_img).into(binding.image);
+            }
+            Glide.with(context).load(R.drawable.locate_img).into(binding.locateImg);
+            if(theme.isCheck_bookmark()){
+                Glide.with(context).load(R.drawable.mybookmark_img).into(binding.bookmark);
+            }else {
+                Glide.with(context).load(R.drawable.bookmark_img).into(binding.bookmark);
+            }
+            binding.bookmark.setOnClickListener(v -> {
+                if(theme.isCheck_bookmark()){
+                    TotalApiClient.getApiService(context).release_theme_bookmark(theme.getId()).subscribe();
+                    Glide.with(context).load(R.drawable.bookmark_img).into(binding.bookmark);
+                    themes.get(pos).setCheck_bookmark(false);
+                }else{
+                    TotalApiClient.getApiService(context).set_theme_bookmark(theme.getId()).subscribe();
+                    Glide.with(context).load(R.drawable.mybookmark_img).into(binding.bookmark);
+                    themes.get(pos).setCheck_bookmark(true);
+                }
+            });
             binding.address.setText(theme.getAddress());
-            binding.distance.setText(theme.getDistance());
+            binding.distance.setText(theme.getDistance()+"km");
             binding.name.setText(theme.getName());
-            binding.number.setText(theme.getPhone());
+            if(theme.getPhone()!=null) {
+                binding.number.setText(theme.getPhone());
+            }else{
+                binding.number.setText("번호없음");
+            }
             String[] cat=theme.getType().split(",");
+            binding.categoryLayout.removeAllViews();
             for(int i=0; i<cat.length; i++){
                 TextView textView=new TextView(context);
                 textView.setText(cat[i]);
-                textView.setPadding(20, 10, 20, 10);
-                textView.setBackgroundColor(Color.LTGRAY);
+                textView.setTextSize(10);
+                textView.setPadding(10, 10, 10, 10);
+                textView.setBackgroundColor(Color.parseColor("#FAFAFA"));
+                textView.setTextColor(Color.parseColor("#BDBDBD"));
                 binding.categoryLayout.addView(textView);
             }
+            binding.scrab.setText("스크랩 "+theme.getScrap_cnt());
         }
     }
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        themeBinding=EachThemeBinding.inflate(LayoutInflater.from(parent.getContext()));
+        themeBinding=EachThemeBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new Theme_ViewHolder(themeBinding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Theme_ViewHolder vh=(Theme_ViewHolder)holder;
-        vh.setItem(themes.get(position));
+        vh.setItem(themes.get(position), position);
     }
 
     @Override
     public int getItemCount() {
         return themes==null?0:themes.size();
     }
+
     public void update_Item(ArrayList<Theme> items){
         if(themes!=null){
             themes=null;

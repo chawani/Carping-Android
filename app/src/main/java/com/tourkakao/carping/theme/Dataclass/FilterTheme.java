@@ -1,4 +1,4 @@
-package com.tourkakao.carping.Theme.Dataclass;
+package com.tourkakao.carping.theme.Dataclass;
 
 import com.google.gson.annotations.SerializedName;
 

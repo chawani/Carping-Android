@@ -77,48 +77,53 @@ public class Each_ThisWeekend_ViewModel extends ViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         detail -> {
-                            Type type=new TypeToken<Each_campsite>(){}.getType();
-                            String result=new Gson().toJson(detail.getData());
-                            JSONArray array=new JSONArray(result);
-                            JSONObject object=array.getJSONObject(0);
-                            count.setValue(object.getInt("count"));
-                            title.setValue(object.getString("title"));
-                            Each_campsite campsite1=new Gson().fromJson(String.valueOf(object.getJSONObject("campsite1")), type);
-                            Each_campsite campsite2=new Gson().fromJson(String.valueOf(object.getJSONObject("campsite2")), type);
-                            Each_campsite campsite3=new Gson().fromJson(String.valueOf(object.getJSONObject("campsite3")), type);
-                            name1.setValue(campsite1.getCampsite_name());
-                            image1.setValue(campsite1.getImage());
-                            source1.setValue(campsite1.getImage_source());
-                            title1.setValue(campsite1.getTitle());
-                            body1.setValue(campsite1.getBody());
-                            address1.setValue(campsite1.getAddress());
-                            phone1.setValue(campsite1.getPhone());
-                            type1.setValue(campsite1.getType());
-                            oper1.setValue(campsite1.getOper_day());
-                            website1.setValue(campsite1.getWebsite());
-                            facility1.setValue(campsite1.getSub_facility());
-                            name2.setValue(campsite2.getCampsite_name());
-                            image2.setValue(campsite2.getImage());
-                            source2.setValue(campsite2.getImage_source());
-                            title2.setValue(campsite2.getTitle());
-                            body2.setValue(campsite2.getBody());
-                            address2.setValue(campsite2.getAddress());
-                            phone2.setValue(campsite2.getPhone());
-                            type2.setValue(campsite2.getType());
-                            oper2.setValue(campsite2.getOper_day());
-                            website2.setValue(campsite2.getWebsite());
-                            facility2.setValue(campsite2.getSub_facility());
-                            name3.setValue(campsite3.getCampsite_name());
-                            image3.setValue(campsite3.getImage());
-                            source3.setValue(campsite3.getImage_source());
-                            title3.setValue(campsite3.getTitle());
-                            body3.setValue(campsite3.getBody());
-                            address3.setValue(campsite3.getAddress());
-                            phone3.setValue(campsite3.getPhone());
-                            type3.setValue(campsite3.getType());
-                            oper3.setValue(campsite3.getOper_day());
-                            website3.setValue(campsite3.getWebsite());
-                            facility3.setValue(campsite3.getSub_facility());
+                            if(detail.isSuccess()) {
+                                Type type = new TypeToken<Each_campsite>() {
+                                }.getType();
+                                String result = new Gson().toJson(detail.getData());
+                                JSONArray array = new JSONArray(result);
+                                JSONObject object = array.getJSONObject(0);
+                                count.setValue(object.getInt("count"));
+                                title.setValue(object.getString("title"));
+                                Each_campsite campsite1 = new Gson().fromJson(String.valueOf(object.getJSONObject("campsite1")), type);
+                                Each_campsite campsite2 = new Gson().fromJson(String.valueOf(object.getJSONObject("campsite2")), type);
+                                Each_campsite campsite3 = new Gson().fromJson(String.valueOf(object.getJSONObject("campsite3")), type);
+                                name1.setValue(campsite1.getCampsite_name());
+                                image1.setValue(campsite1.getImage());
+                                source1.setValue(campsite1.getImage_source());
+                                title1.setValue(campsite1.getTitle());
+                                body1.setValue(campsite1.getBody());
+                                address1.setValue(campsite1.getAddress());
+                                phone1.setValue(campsite1.getPhone());
+                                type1.setValue(campsite1.getType());
+                                oper1.setValue(campsite1.getOper_day());
+                                website1.setValue(campsite1.getWebsite());
+                                facility1.setValue(campsite1.getSub_facility());
+                                name2.setValue(campsite2.getCampsite_name());
+                                image2.setValue(campsite2.getImage());
+                                source2.setValue(campsite2.getImage_source());
+                                title2.setValue(campsite2.getTitle());
+                                body2.setValue(campsite2.getBody());
+                                address2.setValue(campsite2.getAddress());
+                                phone2.setValue(campsite2.getPhone());
+                                type2.setValue(campsite2.getType());
+                                oper2.setValue(campsite2.getOper_day());
+                                website2.setValue(campsite2.getWebsite());
+                                facility2.setValue(campsite2.getSub_facility());
+                                name3.setValue(campsite3.getCampsite_name());
+                                image3.setValue(campsite3.getImage());
+                                source3.setValue(campsite3.getImage_source());
+                                title3.setValue(campsite3.getTitle());
+                                body3.setValue(campsite3.getBody());
+                                address3.setValue(campsite3.getAddress());
+                                phone3.setValue(campsite3.getPhone());
+                                type3.setValue(campsite3.getType());
+                                oper3.setValue(campsite3.getOper_day());
+                                website3.setValue(campsite3.getWebsite());
+                                facility3.setValue(campsite3.getSub_facility());
+                            }else{
+                                System.out.println(detail.getError_message());
+                            }
                         },
                         error -> {
                             System.out.println(error);

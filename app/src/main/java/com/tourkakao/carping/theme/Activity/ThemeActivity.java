@@ -1,4 +1,4 @@
-package com.tourkakao.carping.Theme.Activity;
+package com.tourkakao.carping.theme.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -16,7 +16,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.tourkakao.carping.GpsLocation.GpsTracker;
 import com.tourkakao.carping.R;
-import com.tourkakao.carping.Theme.viewmodel.ThemeViewModel;
+import com.tourkakao.carping.theme.viewmodel.ThemeViewModel;
 import com.tourkakao.carping.databinding.ActivityThemeBinding;
 
 public class ThemeActivity extends AppCompatActivity {
@@ -115,54 +115,70 @@ public class ThemeActivity extends AppCompatActivity {
                     case 0:
                         select_position=0;
                         theme="event"; sort="views"; select="";
+                        themeBinding.themeRecyclerview.scrollToPosition(0);
                         themeViewModel.get_each_thema_carpingplace(theme, sort, select, lat, lon);
                         themeBinding.firstSelect.setVisibility(View.GONE);
+                        themeBinding.secondSelect.setText("인기순▼");
                         break;
                     case 1:
                         select_position=1;
                         theme="brazier"; sort="views"; select="";
+                        themeBinding.themeRecyclerview.scrollToPosition(0);
                         themeViewModel.get_each_thema_carpingplace(theme, sort, select, lat, lon);
                         themeBinding.firstSelect.setVisibility(View.GONE);
+                        themeBinding.secondSelect.setText("인기순▼");
                         break;
                     case 2:
                         select_position=2;
                         theme="animal"; sort="views"; select="";
+                        themeBinding.themeRecyclerview.scrollToPosition(0);
                         themeViewModel.get_each_thema_carpingplace(theme, sort, select, lat, lon);
                         themeBinding.firstSelect.setVisibility(View.GONE);
+                        themeBinding.secondSelect.setText("인기순▼");
                         break;
                     case 3:
                         select_position=3;
                         theme="season"; sort="views"; select="봄";
+                        themeBinding.themeRecyclerview.scrollToPosition(0);
                         themeViewModel.get_each_thema_carpingplace(theme, sort, select, lat, lon);
                         themeBinding.firstSelect.setVisibility(View.VISIBLE);
                         themeBinding.firstSelect.setText("봄 ▼");
+                        themeBinding.secondSelect.setText("인기순▼");
                         break;
                     case 4:
                         select_position=4;
                         theme="leports"; sort="views"; select="수상레저";
+                        themeBinding.themeRecyclerview.scrollToPosition(0);
                         themeViewModel.get_each_thema_carpingplace(theme, sort, select, lat, lon);
                         themeBinding.firstSelect.setVisibility(View.VISIBLE);
                         themeBinding.firstSelect.setText("수상레저 ▼");
+                        themeBinding.secondSelect.setText("인기순▼");
                         break;
                     case 5:
                         select_position=5;
                         theme="nature"; sort="views"; select="봄꽃여행";
+                        themeBinding.themeRecyclerview.scrollToPosition(0);
                         themeViewModel.get_each_thema_carpingplace(theme, sort, select, lat, lon);
                         themeBinding.firstSelect.setVisibility(View.VISIBLE);
                         themeBinding.firstSelect.setText("봄꽃여행 ▼");
+                        themeBinding.secondSelect.setText("인기순▼");
                         break;
                     case 6:
                         select_position=6;
                         theme="program"; sort="views"; select="";
+                        themeBinding.themeRecyclerview.scrollToPosition(0);
                         themeViewModel.get_each_thema_carpingplace(theme, sort, select, lat, lon);
                         themeBinding.firstSelect.setVisibility(View.GONE);
+                        themeBinding.secondSelect.setText("인기순▼");
                         break;
                     case 7:
                         select_position=7;
                         theme="others"; sort="views"; select="일반야영장";
+                        themeBinding.themeRecyclerview.scrollToPosition(0);
                         themeViewModel.get_each_thema_carpingplace(theme, sort, select, lat, lon);
                         themeBinding.firstSelect.setVisibility(View.VISIBLE);
                         themeBinding.firstSelect.setText("일반야영장 ▼");
+                        themeBinding.secondSelect.setText("인기순▼");
                         break;
                 }
             }
@@ -228,6 +244,7 @@ public class ThemeActivity extends AppCompatActivity {
                     themeBinding.firstSelect.setText(select_str+"▼");
                     select=select_str;
                 }
+                themeBinding.themeRecyclerview.scrollToPosition(0);
                 themeViewModel.get_each_thema_carpingplace(theme, sort, select, lat, lon);
             }
         });
@@ -241,6 +258,7 @@ public class ThemeActivity extends AppCompatActivity {
     public void setting_recycleview(){
         themeBinding.themeRecyclerview.setLayoutManager(new LinearLayoutManager(context));
         themeBinding.themeRecyclerview.setAdapter(themeViewModel.setting_theme_adapter());
+        themeBinding.themeRecyclerview.scrollToPosition(0);
         themeViewModel.get_each_thema_carpingplace(theme, sort, select, lat, lon);
     }
     @Override

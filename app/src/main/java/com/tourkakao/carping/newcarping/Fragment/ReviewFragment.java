@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.tourkakao.carping.R;
+import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 import com.tourkakao.carping.databinding.NewcarpingReviewFragmentBinding;
 import com.tourkakao.carping.newcarping.Activity.Write_newcarping_reviewActivity;
 import com.tourkakao.carping.newcarping.DataClass.Newcarping_Review;
@@ -28,11 +29,13 @@ public class ReviewFragment extends Fragment {
     private NewcarpingReviewFragmentBinding reviewFragmentBinding;
     Context context;
     EachNewCarpingViewModel eachNewCarpingViewModel;
+    int userpk;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         reviewFragmentBinding=NewcarpingReviewFragmentBinding.inflate(inflater, container, false);
         context=getActivity().getApplicationContext();
+        userpk= SharedPreferenceManager.getInstance(context).getInt("id", 0);
         reviewFragmentBinding.setLifecycleOwner(this);
         reviewFragmentBinding.setEachnewcarpingviewmodel(eachNewCarpingViewModel);
 
@@ -103,5 +106,10 @@ public class ReviewFragment extends Fragment {
                 eachNewCarpingViewModel.get_newcarping_detail();
             }
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 }

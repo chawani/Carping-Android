@@ -17,8 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".EcoCarping.Activity.TagPageActivity"></activity>
-        <activity android:name=".registernewcarping.Activity.TagsActivity"></activity>
+        <activity android:name=".theme.Activity.ThemeDetailActivity"></activity>
+        <activity android:name=".newcarping.Activity.Fix_newcarping_reviewActivity" />
+        <activity android:name=".EcoCarping.Activity.TagPageActivity" />
+        <activity android:name=".registernewcarping.Activity.TagsActivity" />
         <activity android:name=".registernewcarping.Activity.SearchNewCarpingActivity" />
         <activity android:name=".registernewcarping.Activity.RegisterActivity" />
         <activity android:name=".newcarping.Activity.Write_newcarping_reviewActivity" />
@@ -29,7 +31,7 @@
         <activity android:name=".EcoCarping.Activity.EcoCarpingDetailActivity" />
         <activity android:name=".EcoCarping.Activity.EcoCarpingWriteActivity" />
         <activity android:name=".EcoCarping.Activity.EcoCarpingListActivity" />
-        <activity android:name=".Theme.Activity.ThemeActivity" />
+        <activity android:name=".theme.Activity.ThemeActivity" />
         <activity android:name=".Home.MainActivity" />
         <activity android:name=".Login.LoginActivity">
             <intent-filter>
@@ -47,13 +49,13 @@
                 <!-- 인가 코드 받기 위한 Redirect URI 설정 -->
                 <data
                     android:host="oauth"
-                    android:scheme="kakao{KAKAO_API_KEY}" />
+                    android:scheme="kakao{KAKAO_APP_KEY}" />
             </intent-filter>
         </activity>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="KAKAO_API_KEY" />
+            android:value="KAKAO_APP_KEY" />
     </application>
 
 </manifest>
