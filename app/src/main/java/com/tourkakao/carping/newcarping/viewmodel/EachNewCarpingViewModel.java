@@ -39,6 +39,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 public class EachNewCarpingViewModel extends ViewModel {
+    public MutableLiveData<Integer> post_userpk=new MutableLiveData<>();
     public MutableLiveData<Integer> review_cnt_num=new MutableLiveData<>();
     public MutableLiveData<String> image1=new MutableLiveData<>();
     public MutableLiveData<String> image2=new MutableLiveData<>();
@@ -80,6 +81,7 @@ public class EachNewCarpingViewModel extends ViewModel {
     public String fix_text=null;
     public Uri fix_uri=null;
     public EachNewCarpingViewModel(){
+        post_userpk.setValue(-1);
         review_cnt_num.setValue(-1);
         my_review_cnt.setValue(0);
         check_bookmark.setValue(false);
@@ -126,6 +128,11 @@ public class EachNewCarpingViewModel extends ViewModel {
                                     review_cnt_num.setValue(newCarping.getReview_count());
                                     check_bookmark.setValue(newCarping.isCheck_bookmark());
                                     total_star_num.setValue(total_star.getValue() + " (" + review_cnt_num.getValue() + ")");
+                                    if(userpk==newCarping.getUser()){
+                                        post_userpk.setValue(1);
+                                    }else{
+                                        post_userpk.setValue(0);
+                                    }
                                     //common data
                                     carpingplace_lat.setValue(newCarping.getLatitude());
                                     carpingplace_lon.setValue(newCarping.getLongitude());

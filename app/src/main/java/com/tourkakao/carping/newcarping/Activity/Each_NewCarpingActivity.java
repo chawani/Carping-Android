@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
@@ -70,6 +71,7 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
         setting_tablayout();
         starting_observe_bookmark_image();
         starting_observe_map_and_address();
+        starting_observe_userpk();
     }
 
     public void setting_map(){
@@ -135,7 +137,30 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
         });
     }
 
-
+    public void starting_observe_userpk(){
+        eachNewCarpingViewModel.post_userpk.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if(integer==1){
+                    eachNewCarpingBinding.fixNewcarping.setVisibility(View.VISIBLE);
+                    eachNewCarpingBinding.fixNewcarping.setOnClickListener(v -> {
+                        Intent fixintent=new Intent(context, Fix_newcarpingActivity.class);
+                        fixintent.putExtra("lat", eachNewCarpingViewModel.carpingplace_lat.getValue());
+                        fixintent.putExtra("lon", eachNewCarpingViewModel.carpingplace_lon.getValue());
+                        fixintent.putExtra("image1", eachNewCarpingViewModel.image1.getValue());
+                        fixintent.putExtra("image2", eachNewCarpingViewModel.image2.getValue());
+                        fixintent.putExtra("image3", eachNewCarpingViewModel.image3.getValue());
+                        fixintent.putExtra("image4", eachNewCarpingViewModel.image4.getValue());
+                        fixintent.putExtra("tags", eachNewCarpingViewModel.info_tags.getValue());
+                        fixintent.putExtra("title", eachNewCarpingViewModel.title.getValue());
+                        fixintent.putExtra("review", eachNewCarpingViewModel.info_review.getValue());
+                        fixintent.putExtra("id", eachNewCarpingViewModel.pk);
+                        startActivityForResult(fixintent, 1001);
+                    });
+                }
+            }
+        });
+    }
     @Override
     public void onReverseGeoCoderFoundAddress(MapReverseGeoCoder mapReverseGeoCoder, String s) {
         eachNewCarpingViewModel.address.setValue(s);
