@@ -29,10 +29,10 @@ public class Newcarping_Review {
     String created_at;
     @SerializedName("like_count")
     int like_count;
-    @SerializedName("check_like")
-    int check_like;
+    @SerializedName("is_liked")
+    boolean check_like;
 
-    public Newcarping_Review(int id, int user, String username, String review_profile, String text, String image, float star1, float star2, float star3, float star4, float total_star, String created_at, int like_count, int check_like) {
+    public Newcarping_Review(int id, int user, String username, String review_profile, String text, String image, float star1, float star2, float star3, float star4, float total_star, String created_at, int like_count, boolean check_like) {
         this.id = id;
         this.user = user;
         this.username = username;
@@ -153,11 +153,11 @@ public class Newcarping_Review {
         this.like_count = like_count;
     }
 
-    public int getCheck_like() {
+    public boolean isCheck_like() {
         return check_like;
     }
 
-    public void setCheck_like(int check_like) {
+    public void setCheck_like(boolean check_like) {
         this.check_like = check_like;
     }
 }

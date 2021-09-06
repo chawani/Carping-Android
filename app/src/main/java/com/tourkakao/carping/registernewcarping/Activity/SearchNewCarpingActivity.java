@@ -26,6 +26,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.tourkakao.carping.BuildConfig;
 import com.tourkakao.carping.NetworkwithToken.RegisterInterface;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.R;
@@ -55,7 +56,7 @@ public class SearchNewCarpingActivity extends AppCompatActivity {
     Context context;
     SearchViewmodel searchViewmodel;
     String search_text=null;
-    private String KAKAO_KEY="KakaoAK NATIVE_KEY";
+    private String KAKAO_KEY= "KakaoAK "+BuildConfig.KAKAO_REST_API_KEY;
     private Retrofit retrofit=null;
     private MutableLiveData<ArrayList<CarpingSearchKeyword.Place>> places=new MutableLiveData<>();
     private LocationInfoAdapter adapter=null;

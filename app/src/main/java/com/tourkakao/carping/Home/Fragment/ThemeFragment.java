@@ -19,7 +19,7 @@ import com.bumptech.glide.Glide;
 import com.tourkakao.carping.Home.HomeContract;
 import com.tourkakao.carping.Home.HomeViewModel.ThemeViewModel;
 import com.tourkakao.carping.R;
-import com.tourkakao.carping.Theme.Activity.ThemeActivity;
+import com.tourkakao.carping.theme.Activity.ThemeActivity;
 import com.tourkakao.carping.thisweekend.Activity.ThisWeekend_totalActivity;
 import com.tourkakao.carping.databinding.MainThemeFragmentBinding;
 
