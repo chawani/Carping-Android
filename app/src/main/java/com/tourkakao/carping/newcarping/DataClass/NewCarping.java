@@ -31,8 +31,8 @@ public class NewCarping {
     ArrayList<String> tags;
     @SerializedName("review_count")
     int review_count;
-    @SerializedName("check_bookmark")
-    int check_bookmark;
+    @SerializedName("is_bookmarked")
+    boolean check_bookmark;
     @SerializedName("my_review_count")
     int my_review_cnt;
     @SerializedName("my_star_avg")
@@ -50,7 +50,7 @@ public class NewCarping {
     @SerializedName("review")
     ArrayList<Newcarping_Review> reviews;
 
-    public NewCarping(int id, int user, double latitude, double longitude, String image1, String image2, String image3, String image4, String title, String text, int views, ArrayList<String> tags, int review_count, int check_bookmark, int my_review_cnt, float my_star_avg, float total_star, float star1, float star2, float star3, float star4, ArrayList<Newcarping_Review> reviews) {
+    public NewCarping(int id, int user, double latitude, double longitude, String image1, String image2, String image3, String image4, String title, String text, int views, ArrayList<String> tags, int review_count, boolean check_bookmark, int my_review_cnt, float my_star_avg, float total_star, float star1, float star2, float star3, float star4, ArrayList<Newcarping_Review> reviews) {
         this.id = id;
         this.user = user;
         this.latitude = latitude;
@@ -179,11 +179,11 @@ public class NewCarping {
         this.review_count = review_count;
     }
 
-    public int getCheck_bookmark() {
+    public boolean isCheck_bookmark() {
         return check_bookmark;
     }
 
-    public void setCheck_bookmark(int check_bookmark) {
+    public void setCheck_bookmark(boolean check_bookmark) {
         this.check_bookmark = check_bookmark;
     }
 

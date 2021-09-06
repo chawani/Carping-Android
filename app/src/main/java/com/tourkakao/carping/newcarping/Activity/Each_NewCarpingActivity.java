@@ -7,11 +7,13 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.tourkakao.carping.BuildConfig;
 import com.tourkakao.carping.R;
+import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 import com.tourkakao.carping.databinding.ActivityEachNewCarpingBinding;
 import com.tourkakao.carping.newcarping.Fragment.InfoFragment;
 import com.tourkakao.carping.newcarping.Fragment.ReviewFragment;
@@ -50,6 +52,7 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
         eachNewCarpingViewModel.setContext(context);
         post_pk=getIntent().getIntExtra("pk", 0);
         eachNewCarpingViewModel.setPk(post_pk);
+        eachNewCarpingViewModel.setUserpk(SharedPreferenceManager.getInstance(context).getInt("id", 0));
         eachNewCarpingBinding.setLifecycleOwner(this);
         eachNewCarpingBinding.setEachNewCarpingViewModel(eachNewCarpingViewModel);
         //setting viewmodel & binding
@@ -68,6 +71,7 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
         setting_tablayout();
         starting_observe_bookmark_image();
         starting_observe_map_and_address();
+        starting_observe_userpk();
     }
 
     public void setting_map(){
@@ -95,20 +99,20 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
         });
     }
     public void starting_observe_bookmark_image(){
-        eachNewCarpingViewModel.check_bookmark.observe(this, new Observer<Integer>() {
+        eachNewCarpingViewModel.check_bookmark.observe(this, new Observer<Boolean>() {
             @Override
-            public void onChanged(Integer integer) {
-                if(integer==0){
+            public void onChanged(Boolean aBoolean) {
+                if(!aBoolean){
                     Glide.with(context).load(R.drawable.bookmark_img).into(eachNewCarpingBinding.bookmarkImg);
-                }else if(integer==1){
+                }else if(aBoolean){
                     Glide.with(context).load(R.drawable.mybookmark_img).into(eachNewCarpingBinding.bookmarkImg);
                 }
             }
         });
         eachNewCarpingBinding.bookmarkImg.setOnClickListener(v -> {
-            if(eachNewCarpingViewModel.check_bookmark.getValue()==0) {
+            if(!eachNewCarpingViewModel.check_bookmark.getValue()) {
                 eachNewCarpingViewModel.setting_newcarping_bookmark();
-            }else if(eachNewCarpingViewModel.check_bookmark.getValue()==1){
+            }else if(eachNewCarpingViewModel.check_bookmark.getValue()){
                 eachNewCarpingViewModel.releasing_newcarping_bookmark();
             }
         });
@@ -133,7 +137,30 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
         });
     }
 
-
+    public void starting_observe_userpk(){
+        eachNewCarpingViewModel.post_userpk.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if(integer==1){
+                    eachNewCarpingBinding.fixNewcarping.setVisibility(View.VISIBLE);
+                    eachNewCarpingBinding.fixNewcarping.setOnClickListener(v -> {
+                        Intent fixintent=new Intent(context, Fix_newcarpingActivity.class);
+                        fixintent.putExtra("lat", eachNewCarpingViewModel.carpingplace_lat.getValue());
+                        fixintent.putExtra("lon", eachNewCarpingViewModel.carpingplace_lon.getValue());
+                        fixintent.putExtra("image1", eachNewCarpingViewModel.image1.getValue());
+                        fixintent.putExtra("image2", eachNewCarpingViewModel.image2.getValue());
+                        fixintent.putExtra("image3", eachNewCarpingViewModel.image3.getValue());
+                        fixintent.putExtra("image4", eachNewCarpingViewModel.image4.getValue());
+                        fixintent.putExtra("tags", eachNewCarpingViewModel.info_tags.getValue());
+                        fixintent.putExtra("title", eachNewCarpingViewModel.title.getValue());
+                        fixintent.putExtra("review", eachNewCarpingViewModel.info_review.getValue());
+                        fixintent.putExtra("id", eachNewCarpingViewModel.pk);
+                        startActivityForResult(fixintent, 1001);
+                    });
+                }
+            }
+        });
+    }
     @Override
     public void onReverseGeoCoderFoundAddress(MapReverseGeoCoder mapReverseGeoCoder, String s) {
         eachNewCarpingViewModel.address.setValue(s);

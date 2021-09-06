@@ -17,7 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".EcoCarping.Activity.EcoCarpingEditActivity"></activity>
+        <activity android:name=".newcarping.Activity.Fix_newcarpingActivity"></activity>
+        <activity android:name=".theme.Activity.ThemeDetailActivity" />
+        <activity android:name=".newcarping.Activity.Fix_newcarping_reviewActivity" />
+        <activity android:name=".EcoCarping.Activity.EcoCarpingEditActivity" />
         <activity android:name=".EcoCarping.Activity.TagPageActivity" />
         <activity android:name=".registernewcarping.Activity.TagsActivity" />
         <activity android:name=".registernewcarping.Activity.SearchNewCarpingActivity" />
@@ -30,7 +33,7 @@
         <activity android:name=".EcoCarping.Activity.EcoCarpingDetailActivity" />
         <activity android:name=".EcoCarping.Activity.EcoCarpingWriteActivity" />
         <activity android:name=".EcoCarping.Activity.EcoCarpingListActivity" />
-        <activity android:name=".Theme.Activity.ThemeActivity" />
+        <activity android:name=".theme.Activity.ThemeActivity" />
         <activity android:name=".Home.MainActivity" />
         <activity android:name=".Login.LoginActivity">
             <intent-filter>

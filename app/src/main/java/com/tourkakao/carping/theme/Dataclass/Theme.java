@@ -1,4 +1,4 @@
-package com.tourkakao.carping.Theme.Dataclass;
+package com.tourkakao.carping.theme.Dataclass;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -17,8 +17,12 @@ public class Theme {
     String phone;
     @SerializedName("distance")
     String distance;
+    @SerializedName("is_bookmarked")
+    boolean check_bookmark;
+    @SerializedName("bookmark_count")
+    int scrap_cnt;
 
-    public Theme(int id, String image, String type, String address, String name, String phone, String distance) {
+    public Theme(int id, String image, String type, String address, String name, String phone, String distance, boolean check_bookmark, int scrap_cnt) {
         this.id = id;
         this.image = image;
         this.type = type;
@@ -26,6 +30,8 @@ public class Theme {
         this.name = name;
         this.phone = phone;
         this.distance = distance;
+        this.check_bookmark = check_bookmark;
+        this.scrap_cnt = scrap_cnt;
     }
 
     public int getId() {
@@ -82,5 +88,21 @@ public class Theme {
 
     public void setDistance(String distance) {
         this.distance = distance;
+    }
+
+    public boolean isCheck_bookmark() {
+        return check_bookmark;
+    }
+
+    public void setCheck_bookmark(boolean check_bookmark) {
+        this.check_bookmark = check_bookmark;
+    }
+
+    public int getScrap_cnt() {
+        return scrap_cnt;
+    }
+
+    public void setScrap_cnt(int scrap_cnt) {
+        this.scrap_cnt = scrap_cnt;
     }
 }

@@ -14,39 +14,51 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.tourkakao.carping.Home.Fragment.CommunityFragment;
 import com.tourkakao.carping.Home.Fragment.EcoFragment;
 import com.tourkakao.carping.Home.Fragment.EcoTopFragment;
+import com.tourkakao.carping.Home.Fragment.HomeFragment;
+import com.tourkakao.carping.Home.Fragment.MapFragment;
+import com.tourkakao.carping.Home.Fragment.MypageFragment;
 import com.tourkakao.carping.Home.Fragment.ThemeFragment;
 import com.tourkakao.carping.Home.Fragment.ThemeTopFragment;
 import com.tourkakao.carping.Permission.Permission_setting;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.registernewcarping.Activity.RegisterActivity;
 
-public class MainActivity extends AppCompatActivity implements HomeContract, HomeContract.MainActivity_Contract{
+public class MainActivity extends AppCompatActivity{
     Permission_setting permission_setting;
-    TabLayout tabs;
-    EcoTopFragment eco_top_fragment;
-    EcoFragment eco_fragment;
-    ThemeTopFragment theme_top_fragment;
-    ThemeFragment theme_fragment;
-
     BottomNavigationView bottomNavigationView;
+    HomeFragment homeFragment;
+    MapFragment mapFragment;
+    CommunityFragment communityFragment;
+    MypageFragment mypageFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         initialize_permission();
-
-        init_main_fragment();
-        switch_main_tap();
+        initialize_fragment();
         init_bottomnavigationview();
     }
     public void initialize_permission(){
         permission_setting=new Permission_setting(this, MainActivity.this);
         permission_setting.check_permission();
     }
-
+    public void initialize_fragment(){
+        homeFragment=new HomeFragment();
+        mapFragment=new MapFragment();
+        communityFragment=new CommunityFragment();
+        mypageFragment=new MypageFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.main_container, homeFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.main_container, mapFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.main_container, communityFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.main_container, mypageFragment).commit();
+        getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
+        getSupportFragmentManager().beginTransaction().hide(communityFragment).commit();
+        getSupportFragmentManager().beginTransaction().hide(mypageFragment).commit();
+    }
     //권한 설정 후 return
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -79,51 +91,9 @@ public class MainActivity extends AppCompatActivity implements HomeContract, Hom
         }
     }
 
-    @Override
-    public void init_main_fragment(){
-        eco_top_fragment =new EcoTopFragment();
-        eco_fragment = new EcoFragment();
-        theme_top_fragment=new ThemeTopFragment();
-        theme_fragment = new ThemeFragment();
-    }
 
-    @Override
-    public void switch_main_tap(){
-        getSupportFragmentManager().beginTransaction().add(R.id.top_container, theme_top_fragment).commit();
-        getSupportFragmentManager().beginTransaction().add(R.id.container, theme_fragment).commit();
 
-        tabs = findViewById(R.id.tabs);
-        tabs.addTab(tabs.newTab().setText("테마카핑"));
-        tabs.addTab(tabs.newTab().setText("에코카핑"));
-        tabs.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                int position = tab.getPosition();
-                Fragment top_selected=null;
-                Fragment selected = null;
-                if(position == 0) {
-                    top_selected = theme_top_fragment;
-                    selected = theme_fragment;
-                }
-                else if(position == 1) {
-                    top_selected = eco_top_fragment;
-                    selected = eco_fragment;
-                }
-                getSupportFragmentManager().beginTransaction().replace(R.id.top_container, top_selected).commit();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, selected).commit();
-            }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-    }
 
     public void init_bottomnavigationview(){
         bottomNavigationView=findViewById(R.id.bottomnavigationview);
@@ -131,8 +101,32 @@ public class MainActivity extends AppCompatActivity implements HomeContract, Hom
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
+                    case R.id.home:
+                        getSupportFragmentManager().beginTransaction().show(homeFragment).commit();
+                        getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
+                        getSupportFragmentManager().beginTransaction().hide(communityFragment).commit();
+                        getSupportFragmentManager().beginTransaction().hide(mypageFragment).commit();
+                        break;
+                    case R.id.map:
+                        getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
+                        getSupportFragmentManager().beginTransaction().show(mapFragment).commit();
+                        getSupportFragmentManager().beginTransaction().hide(communityFragment).commit();
+                        getSupportFragmentManager().beginTransaction().hide(mypageFragment).commit();
+                        break;
                     case R.id.upload:
                         startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+                        break;
+                    case R.id.community:
+                        getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
+                        getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
+                        getSupportFragmentManager().beginTransaction().show(communityFragment).commit();
+                        getSupportFragmentManager().beginTransaction().hide(mypageFragment).commit();
+                        break;
+                    case R.id.profile:
+                        getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
+                        getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
+                        getSupportFragmentManager().beginTransaction().hide(communityFragment).commit();
+                        getSupportFragmentManager().beginTransaction().show(mypageFragment).commit();
                         break;
                 }
                 return true;

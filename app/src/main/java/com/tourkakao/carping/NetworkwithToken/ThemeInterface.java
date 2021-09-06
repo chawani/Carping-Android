@@ -1,11 +1,7 @@
 package com.tourkakao.carping.NetworkwithToken;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
-import com.google.android.gms.common.internal.service.Common;
-import com.tourkakao.carping.Theme.Dataclass.FilterTheme;
-import com.tourkakao.carping.newcarping.DataClass.Newcarping_Review_post;
+import com.tourkakao.carping.theme.Dataclass.DaumBlog;
+import com.tourkakao.carping.theme.Dataclass.FilterTheme;
 
 import java.util.HashMap;
 
@@ -13,16 +9,18 @@ import io.reactivex.rxjava3.core.Single;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
-import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
+import retrofit2.http.Header;
 import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ThemeInterface {
     @FormUrlEncoded
@@ -73,4 +71,39 @@ public interface ThemeInterface {
 
     @POST("camps/theme")
     Single<CommonClass> get_thema_carping(@Body FilterTheme filterTheme);
+
+    @FormUrlEncoded
+    @POST("camps/theme/bookmark")
+    Single<CommonClass> set_theme_bookmark(@Field("campsite_to_bookmark")int campsite_to_bookmark);
+
+    @FormUrlEncoded
+    @HTTP(method="DELETE", path="camps/theme/bookmark", hasBody=true)
+    Single<CommonClass> release_theme_bookmark(@Field("campsite_to_bookmark")int campsite_to_bookmark);
+
+    @Multipart
+    @PATCH("comments/review/{id}/")
+    Single<CommonClass> change_newcarping_review(@Path("id")int id,
+                                                 @Part MultipartBody.Part image,
+                                                 @PartMap HashMap<String, RequestBody> text,
+                                                 @Part("user")int user,
+                                                 @Part("autocamp")int autocamp,
+                                                 @Part("star1")float star1,
+                                                 @Part("star2")float star2,
+                                                 @Part("star3")float star3,
+                                                 @Part("star4")float star4,
+                                                 @Part("total_star")float total_star);
+    @Multipart
+    @PATCH("comments/review/{id}/")
+    Single<CommonClass> change_newcarping_review_no_image(@Path("id")int id,
+                                                 @PartMap HashMap<String, RequestBody> text,
+                                                 @Part("user")int user,
+                                                 @Part("autocamp")int autocamp,
+                                                 @Part("star1")float star1,
+                                                 @Part("star2")float star2,
+                                                 @Part("star3")float star3,
+                                                 @Part("star4")float star4,
+                                                 @Part("total_star")float total_star);
+
+    @GET("v2/search/blog")
+    Single<DaumBlog> getblog(@Header("Authorization")String key, @Query("query")String query);
 }
