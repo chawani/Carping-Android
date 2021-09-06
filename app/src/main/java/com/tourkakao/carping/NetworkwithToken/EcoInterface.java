@@ -68,7 +68,7 @@ public interface EcoInterface {
     Single<CommonClass> cancelLike(@Body HashMap<String,Object> likeMap);
 
     @Multipart
-    @PUT("/posts/eco-carping/{id}/")
+    @PATCH("/posts/eco-carping/{id}/")
     Single<CommonClass> editPost(@Path("id")int id,
                                  @Part MultipartBody.Part image1,
                                  @Part MultipartBody.Part image2,

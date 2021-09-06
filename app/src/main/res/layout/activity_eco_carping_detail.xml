@@ -45,8 +45,7 @@
                     android:id="@+id/profile"
                     android:layout_width="47dp"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:scaleType="centerCrop"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"

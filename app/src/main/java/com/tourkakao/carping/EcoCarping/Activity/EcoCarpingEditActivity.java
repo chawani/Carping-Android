@@ -176,6 +176,7 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
                 post();
                 Toast myToast = Toast.makeText(getApplicationContext(),"수정 완료", Toast.LENGTH_SHORT);
                 myToast.show();
+                finish();
             }
         });
 
@@ -337,27 +338,37 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
         MultipartBody.Part image2=null;
         MultipartBody.Part image3=null;
         MultipartBody.Part image4=null;
+        int index=0;
 
         int count=images.size();
+
         if(count>=1) {
-            File file = new File(images.get(0));
-            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            image1 = MultipartBody.Part.createFormData("image1", file.getName(), requestBody);
+            if(!images.get(0).contains("https://chanjongs.s3.amazonaws.com")){
+                File file = new File(images.get(0));
+                RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                image1 = MultipartBody.Part.createFormData("image1", file.getName(), requestBody);
+            }
         }
         if(count>=2) {
-            File file = new File(images.get(1));
-            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            image2 = MultipartBody.Part.createFormData("image2", file.getName(), requestBody);
+            if(!images.get(1).contains("https://chanjongs.s3.amazonaws.com")) {
+                File file = new File(images.get(1));
+                RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                image2 = MultipartBody.Part.createFormData("image2", file.getName(), requestBody);
+            }
         }
         if(count>=3) {
-            File file = new File(images.get(2));
-            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            image3=MultipartBody.Part.createFormData("image3", file.getName(), requestBody);
+            if(!images.get(2).contains("https://chanjongs.s3.amazonaws.com")) {
+                File file = new File(images.get(2));
+                RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                image3 = MultipartBody.Part.createFormData("image3", file.getName(), requestBody);
+            }
         }
         if(count>=4) {
-            File file = new File(images.get(3));
-            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            image4 = MultipartBody.Part.createFormData("image4", file.getName(), requestBody);
+            if(!images.get(3).contains("https://chanjongs.s3.amazonaws.com")) {
+                File file = new File(images.get(3));
+                RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                image4 = MultipartBody.Part.createFormData("image4", file.getName(), requestBody);
+            }
         }
 
         TotalApiClient.getEcoApiService(getApplicationContext()).editPost(pk,image1,image2,image3,image4, map)
