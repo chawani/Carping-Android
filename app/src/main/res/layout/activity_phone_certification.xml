@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Mypage.PhoneCertificationActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        >
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/spoqa_han_sans_neo"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="#191919"
+            android:text="휴대폰 인증"
+            android:gravity="center_horizontal"
+            />
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/spoqa_han_sans_neo"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:text="전화번호를 입력해주세요"/>
+
+    <TextView
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/spoqa_han_sans_neo"
+        android:textStyle="normal"
+        android:textSize="13sp"
+        android:textColor="#999999"
+        android:text="서비스 시작을 위해 전화번호 인증이 필요합니다."/>
+
+    <TextView
+        android:layout_marginTop="37dp"
+        android:layout_marginLeft="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/spoqa_han_sans_neo"
+        android:textStyle="bold"
+        android:textSize="13sp"
+        android:textColor="#7d7d7d"
+        android:text="휴대폰"/>
+
+    <EditText
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_box_img"
+        android:hint="010-XXXX-XXXX"
+        android:textSize="13sp"/>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="16dp"
+        android:layout_gravity="right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/spoqa_han_sans_neo"
+        android:textStyle="normal"
+        android:textSize="14sp"
+        android:textColor="#ffffff"
+        android:text="인증요청"
+        android:background="@drawable/border_round_fill_black"
+        android:paddingVertical="9dp"
+        android:paddingHorizontal="29dp"/>
+
+    <TextView
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="16dp"
+        android:layout_width="48dp"
+        android:layout_height="16dp"
+        android:fontFamily="@font/spoqa_han_sans_neo"
+        android:textStyle="bold"
+        android:textSize="13sp"
+        android:textColor="#7d7d7d"
+        android:text="인증번호"/>
+
+    <EditText
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_box_img"
+        android:layout_marginHorizontal="16dp"
+        android:hint="인증번호 입력"
+        android:textSize="13sp"/>
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/completion_button"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:background="#000000"
+        android:text="완료"
+        android:fontFamily="@font/spoqa_han_sans_neo"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="#ffffff"/>
+</RelativeLayout>

@@ -34,6 +34,11 @@ public class TotalApiClient {
     public static RegisterInterface getRegisterApiService(Context context){
         return getInstance(context).create(RegisterInterface.class);
     }
+
+    public static MypageInterface getMypageApiService(Context context){
+        return getInstance(context).create(MypageInterface.class);
+    }
+
     private static Retrofit getInstance(Context context){
         Retrofit retrofit=null;
         Gson gson=new GsonBuilder().setLenient().create();

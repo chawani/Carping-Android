@@ -17,7 +17,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".newcarping.Activity.Fix_newcarpingActivity"></activity>
+        <activity android:name=".Mypage.PhoneCertificationActivity"></activity>
+        <activity android:name=".Mypage.PersonalInformationActivity" />
+        <activity android:name=".Mypage.ProfileEditActivity" />
+        <activity android:name=".MypageMainActivities.Activity.MypageEcoReviewActivity" />
+        <activity android:name=".MypageMainActivities.Activity.MypageFreeSharingActivity" />
+        <activity android:name=".MypageMainActivities.Activity.MypageCarpingActivity" />
+        <activity android:name=".MypageMainActivities.Activity.MypagePostActivity" />
+        <activity android:name=".newcarping.Activity.Fix_newcarpingActivity" />
         <activity android:name=".theme.Activity.ThemeDetailActivity" />
         <activity android:name=".newcarping.Activity.Fix_newcarping_reviewActivity" />
         <activity android:name=".EcoCarping.Activity.EcoCarpingEditActivity" />

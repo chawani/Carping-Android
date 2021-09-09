@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/mypage_empty_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/spoqa_han_sans_neo"
+        android:textStyle="normal"
+        android:textSize="11sp"
+        android:textColor="#999999"
+        android:gravity="center_horizontal"
+        android:text="좋아요한 에코인증이 없습니다."
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mypage_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"/>
+</RelativeLayout>

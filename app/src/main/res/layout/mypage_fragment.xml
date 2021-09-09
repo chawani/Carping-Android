@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MyPage.MyPageActivity"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -32,10 +29,12 @@
     </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
+        android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp">
         <LinearLayout
+            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -49,6 +48,7 @@
                 android:layout_height="65dp"
                 android:scaleType="centerCrop"/>
             <LinearLayout
+                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -66,8 +66,8 @@
                         android:textStyle="bold"
                         android:textSize="18sp"
                         android:textColor="#000000"
-                        tools:text="user_02"/>
-                    <view
+                        android:text="user_02"/>
+                    <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_weight="1"/>
@@ -104,7 +104,7 @@
                 android:textStyle="bold"
                 android:textSize="18sp"
                 android:textColor="#000000"
-                tools:text="주요 활동"/>
+                android:text="주요 활동"/>
             <LinearLayout
                 android:id="@+id/carping"
                 android:layout_marginTop="25dp"
@@ -118,8 +118,8 @@
                     android:textStyle="normal"
                     android:textSize="15sp"
                     android:textColor="#000000"
-                    tools:text="차박지"/>
-                <view
+                    android:text="차박지"/>
+                <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
@@ -140,8 +140,8 @@
                     android:textStyle="normal"
                     android:textSize="15sp"
                     android:textColor="#000000"
-                    tools:text="포스트"/>
-                <view
+                    android:text="포스트"/>
+                <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
@@ -162,8 +162,8 @@
                     android:textStyle="normal"
                     android:textSize="15sp"
                     android:textColor="#000000"
-                    tools:text="무료나눔"/>
-                <view
+                    android:text="무료나눔"/>
+                <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
@@ -184,8 +184,61 @@
                     android:textStyle="normal"
                     android:textSize="15sp"
                     android:textColor="#000000"
-                    tools:text="에코인증"/>
-                <view
+                    android:text="에코인증"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:layout_width="7dp"
+                    android:layout_height="12dp"/>
+            </LinearLayout>
+            <TextView
+                android:layout_marginTop="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/spoqa_han_sans_neo"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#000000"
+                android:text="포스트"/>
+            <LinearLayout
+                android:id="@+id/post_regi"
+                android:layout_marginTop="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/spoqa_han_sans_neo"
+                    android:textStyle="normal"
+                    android:textSize="15sp"
+                    android:textColor="#000000"
+                    android:text="포스트 등록"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:layout_width="7dp"
+                    android:layout_height="12dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/post_appro"
+                android:layout_marginTop="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/spoqa_han_sans_neo"
+                    android:textStyle="normal"
+                    android:textSize="15sp"
+                    android:textColor="#000000"
+                    android:text="포스트 현황"/>
+                <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
@@ -201,7 +254,7 @@
                 android:textStyle="bold"
                 android:textSize="18sp"
                 android:textColor="#000000"
-                tools:text="서비스 약관"/>
+                android:text="서비스 약관"/>
             <LinearLayout
                 android:layout_marginTop="25dp"
                 android:layout_width="match_parent"
@@ -214,8 +267,8 @@
                     android:textStyle="normal"
                     android:textSize="15sp"
                     android:textColor="#000000"
-                    tools:text="서비스 이용약관"/>
-                <view
+                    android:text="서비스 이용약관"/>
+                <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
@@ -235,8 +288,8 @@
                     android:textStyle="normal"
                     android:textSize="15sp"
                     android:textColor="#000000"
-                    tools:text="위치정보 이용약관"/>
-                <view
+                    android:text="위치정보 이용약관"/>
+                <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
@@ -256,8 +309,8 @@
                     android:textStyle="normal"
                     android:textSize="15sp"
                     android:textColor="#000000"
-                    tools:text="개인정보 처리방침"/>
-                <view
+                    android:text="개인정보 처리방침"/>
+                <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
@@ -266,6 +319,7 @@
                     android:layout_height="12dp"/>
             </LinearLayout>
             <LinearLayout
+                android:layout_marginBottom="40dp"
                 android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -277,8 +331,8 @@
                     android:textStyle="normal"
                     android:textSize="15sp"
                     android:textColor="#000000"
-                    tools:text="오픈소스 라이선스"/>
-                <view
+                    android:text="오픈소스 라이선스"/>
+                <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
