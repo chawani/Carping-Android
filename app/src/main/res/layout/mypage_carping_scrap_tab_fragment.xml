@@ -21,10 +21,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"/>
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:layout_below="@+id/mypage_recycler"-->
-<!--        android:id="@+id/mypage_recycler2"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginHorizontal="16dp"/>-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@+id/mypage_recycler"
+        android:id="@+id/mypage_recycler2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"/>
 </RelativeLayout>

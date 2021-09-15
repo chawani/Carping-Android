@@ -38,6 +38,7 @@
             android:textColor="#000000"
             android:text="닉네임"/>
         <EditText
+            android:id="@+id/nickname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edit_text_box_img"
@@ -45,8 +46,7 @@
             android:hint="닉네임을 입력해주세요"
             android:textSize="13sp"
             android:maxLines="1"
-            android:layout_marginTop="15dp"
-            android:focusable="false"/>
+            android:layout_marginTop="15dp"/>
 
         <TextView
             android:layout_marginTop="35dp"
@@ -59,6 +59,7 @@
             android:textColor="#000000"
             android:text="한 줄 소개"/>
         <EditText
+            android:id="@+id/bio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edit_text_box_img"
@@ -66,10 +67,7 @@
             android:textSize="13sp"
             android:maxLines="1"
             android:hint="다른사람에게 소개하고 싶은 내용을 적어주세요"
-            android:inputType="textNoSuggestions"
-            android:imeOptions="actionSearch"
-            android:layout_marginTop="15dp"
-            android:focusable="false"/>
+            android:layout_marginTop="15dp"/>
 
         <TextView
             android:layout_marginTop="35dp"
@@ -89,6 +87,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <CheckBox
+                android:id="@+id/interest1"
                 android:button="@android:color/transparent"
                 android:layout_marginRight="10dp"
                 android:layout_width="wrap_content"
@@ -103,6 +102,7 @@
                 android:paddingVertical="10dp"
                 />
             <CheckBox
+                android:id="@+id/interest2"
                 android:button="@android:color/transparent"
                 android:layout_marginRight="10dp"
                 android:layout_width="wrap_content"
@@ -116,6 +116,7 @@
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="10dp"/>
             <CheckBox
+                android:id="@+id/interest3"
                 android:button="@android:color/transparent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -135,6 +136,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <CheckBox
+                android:id="@+id/interest4"
                 android:button="@android:color/transparent"
                 android:layout_marginRight="10dp"
                 android:layout_width="wrap_content"
@@ -148,6 +150,7 @@
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="10dp"/>
             <CheckBox
+                android:id="@+id/interest5"
                 android:button="@android:color/transparent"
                 android:layout_marginRight="10dp"
                 android:layout_width="wrap_content"
@@ -161,6 +164,7 @@
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="10dp"/>
             <CheckBox
+                android:id="@+id/interest6"
                 android:button="@android:color/transparent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -180,6 +184,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <CheckBox
+                android:id="@+id/interest7"
                 android:button="@android:color/transparent"
                 android:layout_marginRight="10dp"
                 android:layout_width="wrap_content"
@@ -193,6 +198,7 @@
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="10dp"/>
             <CheckBox
+                android:id="@+id/interest8"
                 android:button="@android:color/transparent"
                 android:layout_marginRight="10dp"
                 android:layout_width="wrap_content"
@@ -206,6 +212,7 @@
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="10dp"/>
             <CheckBox
+                android:id="@+id/interest9"
                 android:button="@android:color/transparent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -230,6 +237,7 @@
             android:textColor="#000000"
             android:text="이메일"/>
         <TextView
+            android:id="@+id/email"
             android:layout_marginTop="15dp"
             android:layout_marginHorizontal="16dp"
             android:layout_width="wrap_content"
@@ -237,8 +245,7 @@
             android:fontFamily="@font/spoqa_han_sans_neo"
             android:textStyle="normal"
             android:textSize="13sp"
-            android:textColor="#000000"
-            android:text="user_02@naver.com"/>
+            android:textColor="#000000"/>
     </LinearLayout>
 
     <Button

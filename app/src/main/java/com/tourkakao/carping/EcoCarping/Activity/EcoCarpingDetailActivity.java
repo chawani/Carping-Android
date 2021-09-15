@@ -68,7 +68,6 @@ public class EcoCarpingDetailActivity extends AppCompatActivity {
                     binding.privateEditButton.setVisibility(View.GONE);
                     binding.privateDeleteButton.setVisibility(View.GONE);
                 }
-                System.out.println("확인합니다:"+current_user+Integer.toString(id));
                 binding.username.setText(ecoPost.getUsername());
                 binding.hour.setText(ecoPost.getCreated_at());
                 binding.title.setText(ecoPost.getTitle());

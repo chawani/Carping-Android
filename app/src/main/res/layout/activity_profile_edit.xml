@@ -33,8 +33,7 @@
             android:id="@+id/profile"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_centerInParent="true"
-            />
+            android:layout_centerInParent="true"/>
         <ImageView
             android:id="@+id/edit_img"
             android:layout_width="27dp"
@@ -74,6 +73,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"/>
         <ImageView
+            android:id="@+id/arrow1"
+            android:layout_gravity="center_vertical"
             android:layout_width="7dp"
             android:layout_height="12dp"/>
     </LinearLayout>
@@ -96,13 +97,24 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/phone_certification_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/spoqa_han_sans_neo"
+            android:textStyle="normal"
+            android:textSize="14sp"
+            android:textColor="#999999"
+            android:text="휴대폰번호 인증이 필요합니다"
+            android:layout_marginRight="16dp"/>
         <ImageView
+            android:id="@+id/arrow2"
+            android:layout_gravity="center_vertical"
             android:layout_width="7dp"
             android:layout_height="12dp"/>
     </LinearLayout>
     <LinearLayout
         android:layout_marginHorizontal="16dp"
-        android:id="@+id/badge"
         android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -120,8 +132,21 @@
             android:layout_height="0dp"
             android:layout_weight="1"/>
         <ImageView
-            android:layout_width="7dp"
-            android:layout_height="12dp"/>
+            android:layout_gravity="center_vertical"
+            android:id="@+id/badge"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginRight="4dp"/>
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/spoqa_han_sans_neo"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:textColor="#5f51ef"
+            android:gravity="end"/>
     </LinearLayout>
     <LinearLayout
         android:layout_marginHorizontal="16dp"
@@ -171,6 +196,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"/>
         <ImageView
+            android:id="@+id/arrow3"
+            android:layout_gravity="center_vertical"
             android:layout_width="7dp"
             android:layout_height="12dp"/>
     </LinearLayout>

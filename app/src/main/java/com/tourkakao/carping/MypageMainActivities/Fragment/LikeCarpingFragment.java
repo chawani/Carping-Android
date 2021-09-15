@@ -49,52 +49,50 @@ public class LikeCarpingFragment extends Fragment {
 
     void initLayout(){
         binding.mypageEmptyText.setText("스크랩한 차박지가 없습니다.");
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        binding.mypageRecycler.setLayoutManager(mLayoutManager);
     }
     void initDatas(){
         viewModel.loadScrapCarpings();
-//        viewModel.getPostSize().observe(this, new Observer<Integer>() {
-//            @Override
-//            public void onChanged(Integer integer) {
-//                if(integer==0){
-//                    binding.mypageEmptyText.setVisibility(View.VISIBLE);
-//                    binding.mypageRecycler.setVisibility(View.GONE);
-//                    binding.mypageRecycler2.setVisibility(View.GONE);
-//                }else{
-//                    binding.mypageEmptyText.setVisibility(View.GONE);
-//                    binding.mypageRecycler.setVisibility(View.VISIBLE);
-//                    binding.mypageRecycler2.setVisibility(View.VISIBLE);
-//                }
-//            }
-//        });
-//        viewModel.getAutocampsLiveData().observe(this, new Observer<ArrayList<Autocamp>>() {
-//            @Override
-//            public void onChanged(ArrayList<Autocamp> autocamps) {
-//                if(autocamps==null){
-//                    binding.mypageRecycler.setVisibility(View.GONE);
-//                    binding.mypageEmptyText.setVisibility(View.VISIBLE);
-//                }
-//                else{
-//                    binding.mypageEmptyText.setVisibility(View.GONE);
-//                    binding.mypageRecycler.setVisibility(View.VISIBLE);
-//                    adapter=new ScrapAutoAdapter(context,autocamps);
-//                    binding.mypageRecycler.setAdapter(adapter);
-//                }
-//            }
-//        });
+        viewModel.getPostSize().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if(integer==0){
+                    binding.mypageEmptyText.setVisibility(View.VISIBLE);
+                    binding.mypageRecycler.setVisibility(View.GONE);
+                    binding.mypageRecycler2.setVisibility(View.GONE);
+                }else{
+                    binding.mypageEmptyText.setVisibility(View.GONE);
+                }
+            }
+        });
+        viewModel.getAutocampsLiveData().observe(this, new Observer<ArrayList<Autocamp>>() {
+            @Override
+            public void onChanged(ArrayList<Autocamp> autocamps) {
+                if(autocamps==null){
+                    binding.mypageRecycler.setVisibility(View.GONE);
+                }
+                else{
+                    mLayoutManager = new LinearLayoutManager(getActivity());
+                    binding.mypageRecycler.setLayoutManager(mLayoutManager);
+                    binding.mypageEmptyText.setVisibility(View.GONE);
+                    binding.mypageRecycler.setVisibility(View.VISIBLE);
+                    adapter=new ScrapAutoAdapter(context,autocamps);
+                    binding.mypageRecycler.setAdapter(adapter);
+                }
+            }
+        });
         viewModel.getCampsitesLiveData().observe(this, new Observer<ArrayList<Campsite>>() {
             @Override
             public void onChanged(ArrayList<Campsite> campsites) {
                 if(campsites==null){
-                    binding.mypageRecycler.setVisibility(View.GONE);
-                    binding.mypageEmptyText.setVisibility(View.VISIBLE);
+                    binding.mypageRecycler2.setVisibility(View.GONE);
                 }
                 else{
+                    mLayoutManager2=new LinearLayoutManager(getActivity());
+                    binding.mypageRecycler2.setLayoutManager(mLayoutManager2);
                     binding.mypageEmptyText.setVisibility(View.GONE);
-                    binding.mypageRecycler.setVisibility(View.VISIBLE);
+                    binding.mypageRecycler2.setVisibility(View.VISIBLE);
                     adapter2=new ScrapCarpingAdapter(context,campsites);
-                    binding.mypageRecycler.setAdapter(adapter2);
+                    binding.mypageRecycler2.setAdapter(adapter2);
                 }
             }
         });

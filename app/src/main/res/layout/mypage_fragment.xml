@@ -65,8 +65,7 @@
                         android:fontFamily="@font/spoqa_han_sans_neo"
                         android:textStyle="bold"
                         android:textSize="18sp"
-                        android:textColor="#000000"
-                        android:text="user_02"/>
+                        android:textColor="#000000"/>
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
@@ -97,6 +96,27 @@
             </LinearLayout>
         </LinearLayout>
             <TextView
+                android:id="@+id/introduce"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/spoqa_han_sans_neo"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:textColor="#000000"
+                android:layout_marginLeft="23dp"
+                android:layout_marginTop="20dp"/>
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginLeft="23dp">
+                <LinearLayout
+                    android:id="@id/tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
+            <TextView
                 android:layout_marginTop="40dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -124,6 +144,8 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
                 <ImageView
+                    android:id="@+id/arrow1"
+                    android:layout_gravity="center_vertical"
                     android:layout_width="7dp"
                     android:layout_height="12dp"/>
             </LinearLayout>
@@ -146,6 +168,8 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
                 <ImageView
+                    android:id="@+id/arrow2"
+                    android:layout_gravity="center_vertical"
                     android:layout_width="7dp"
                     android:layout_height="12dp"/>
             </LinearLayout>
@@ -168,6 +192,8 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
                 <ImageView
+                    android:id="@+id/arrow3"
+                    android:layout_gravity="center_vertical"
                     android:layout_width="7dp"
                     android:layout_height="12dp"/>
             </LinearLayout>
@@ -190,6 +216,8 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
                 <ImageView
+                    android:id="@+id/arrow4"
+                    android:layout_gravity="center_vertical"
                     android:layout_width="7dp"
                     android:layout_height="12dp"/>
             </LinearLayout>
@@ -221,6 +249,8 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
                 <ImageView
+                    android:id="@+id/arrow5"
+                    android:layout_gravity="center_vertical"
                     android:layout_width="7dp"
                     android:layout_height="12dp"/>
             </LinearLayout>
@@ -243,6 +273,8 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
                 <ImageView
+                    android:id="@+id/arrow6"
+                    android:layout_gravity="center_vertical"
                     android:layout_width="7dp"
                     android:layout_height="12dp"/>
             </LinearLayout>
@@ -273,6 +305,8 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
                 <ImageView
+                    android:id="@+id/arrow7"
+                    android:layout_gravity="center_vertical"
                     android:layout_width="7dp"
                     android:layout_height="12dp"/>
             </LinearLayout>
@@ -294,6 +328,8 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
                 <ImageView
+                    android:id="@+id/arrow8"
+                    android:layout_gravity="center_vertical"
                     android:layout_width="7dp"
                     android:layout_height="12dp"/>
             </LinearLayout>
@@ -315,11 +351,12 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
                 <ImageView
+                    android:id="@+id/arrow9"
+                    android:layout_gravity="center_vertical"
                     android:layout_width="7dp"
                     android:layout_height="12dp"/>
             </LinearLayout>
             <LinearLayout
-                android:layout_marginBottom="40dp"
                 android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -337,9 +374,21 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
                 <ImageView
+                    android:id="@+id/arrow10"
+                    android:layout_gravity="center_vertical"
                     android:layout_width="7dp"
                     android:layout_height="12dp"/>
             </LinearLayout>
+            <TextView
+                android:layout_marginTop="35dp"
+                android:layout_marginBottom="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/spoqa_han_sans_neo"
+                android:textStyle="normal"
+                android:textSize="15sp"
+                android:textColor="#666666"
+                android:text="로그아웃"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
