@@ -25,6 +25,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.google.gson.Gson;
 import com.tourkakao.carping.Home.HomeViewModel.EcoViewModel;
 import com.tourkakao.carping.Home.HomeViewModel.MypageViewModel;
+import com.tourkakao.carping.Mypage.PostApprovalActivity;
 import com.tourkakao.carping.Mypage.Profile;
 import com.tourkakao.carping.Mypage.ProfileEditActivity;
 import com.tourkakao.carping.MypageMainActivities.Activity.MypageCarpingActivity;
@@ -33,6 +34,7 @@ import com.tourkakao.carping.MypageMainActivities.Activity.MypageFreeSharingActi
 import com.tourkakao.carping.MypageMainActivities.Activity.MypagePostActivity;
 import com.tourkakao.carping.NetworkwithToken.CommonClass;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
+import com.tourkakao.carping.Post.PostRegisterActivity;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 import com.tourkakao.carping.databinding.MypageFragmentBinding;
@@ -97,7 +99,15 @@ public class MypageFragment extends Fragment {
         mypagebinding.postAppro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent=new Intent(context, PostApprovalActivity.class);
+                startActivity(intent);
+            }
+        });
+        mypagebinding.postRegi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context, PostRegisterActivity.class);
+                startActivity(intent);
             }
         });
         myViewModel.getProfileMutableLiveData().observe(this, new Observer<Profile>() {

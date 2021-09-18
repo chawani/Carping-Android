@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    
+    <RelativeLayout
+        android:layout_width="182dp"
+        android:layout_height="87.4dp">
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <ImageView
+            android:id="@+id/like"
+            android:layout_width="19dp"
+            android:layout_height="19dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="13dp"
+            android:layout_marginRight="13dp"/>
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_marginTop="8.6dp"
+        android:layout_width="39dp"
+        android:layout_height="14dp"/>
+    <TextView
+        android:layout_marginTop="6dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/spoqa_han_sans_neo_medium"
+        android:textStyle="normal"
+        android:textSize="14sp"
+        android:textColor="#000000"
+        android:text="차박고수가 알려주는 차박꿀팁"/>
+    <LinearLayout
+        android:layout_marginTop="6dp"
+        android:layout_below="@id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/star"
+            android:layout_width="wrap_content"
+            android:layout_height="7.8dp"/>
+        <TextView
+            android:id="@+id/star_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(130)"
+            android:textSize="6sp"/>
+    </LinearLayout>
+    <TextView
+        android:layout_marginTop="7.2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/spoqa_han_sans_neo"
+        android:textStyle="normal"
+        android:textSize="11sp"
+        android:textColor="#666666"
+        android:text="꿀팁저장소"/>
+    <TextView
+        android:layout_marginTop="14dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/spoqa_han_sans_neo_medium"
+        android:textStyle="normal"
+        android:textSize="14sp"
+        android:textColor="#000000"
+        android:text="1,500원"/>
+</LinearLayout>

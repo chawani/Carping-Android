@@ -36,7 +36,7 @@ public class MypageViewModel extends ViewModel {
     }
 
     public void loadProfile(){
-        String userId= SharedPreferenceManager.getInstance(context).getString("id","");
+        int userId= SharedPreferenceManager.getInstance(context).getInt("id",0);
         TotalApiClient.getMypageApiService(context).getMypageInfo(userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

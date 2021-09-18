@@ -41,7 +41,7 @@ public class EcoCarpingDetailActivity extends AppCompatActivity {
     private CommentAdapter commentAdapter;
     private String postId;
     private int likeCount;
-    private String current_user;
+    private int current_user;
     private int commentCount;
 
     @Override
@@ -58,13 +58,13 @@ public class EcoCarpingDetailActivity extends AppCompatActivity {
         binding.commentView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        current_user=SharedPreferenceManager.getInstance(getApplicationContext()).getString("id","");
+        current_user=SharedPreferenceManager.getInstance(getApplicationContext()).getInt("id",0);
 
         ecoDetailViewModel.getPost().observe(this, new Observer<EcoPost>() {
             @Override
             public void onChanged(EcoPost ecoPost) {
                 int id=(int)Double.parseDouble(ecoPost.getUser());
-                if(!current_user.equals(Integer.toString(id))){
+                if(current_user!=id){
                     binding.privateEditButton.setVisibility(View.GONE);
                     binding.privateDeleteButton.setVisibility(View.GONE);
                 }

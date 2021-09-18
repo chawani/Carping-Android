@@ -34,31 +34,32 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <ImageView
+                android:scaleType="centerCrop"
                 android:id="@+id/thumbnail"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"/>
             <EditText
-                android:layout_marginTop="16dp"
                 android:id="@+id/title"
+                android:layout_marginTop="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/spoqa_han_sans_neo"
                 android:textStyle="bold"
                 android:textSize="24sp"
-                android:textColor="#d0d0d0"
-                android:text="제목을 입력해주세요"
-                android:background="null"
+                android:textColor="#000000"
+                android:hint="제목을 입력해주세요"
+                android:background="@null"
                 android:layout_marginHorizontal="16dp"/>
             <View
                 android:layout_marginTop="13.9dp"
                 android:layout_marginHorizontal="16dp"
-                android:layout_width="380dp"
+                android:layout_width="match_parent"
                 android:layout_height="0.20000000298023224dp"
                 android:background="#d7d7d7">
             </View>
             <LinearLayout
                 android:layout_marginTop="33.9dp"
-                android:id="@+id/content_area"
+                android:id="@+id/content_area1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -68,21 +69,22 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <EditText
+                        android:id="@+id/subheading1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/spoqa_han_sans_neo_medium"
                         android:textStyle="normal"
                         android:textSize="18sp"
-                        android:textColor="#d0d0d0"
-                        tools:text="소제목을 입력해주세요"
-                        android:background="null"/>
+                        android:textColor="#000000"
+                        android:hint="소제목을 입력해주세요"
+                        android:background="@null"/>
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_weight="1"/>
                     <LinearLayout
+                        android:id="@+id/add1"
                         android:layout_gravity="center"
-                        android:id="@+id/add"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -93,8 +95,85 @@
                             android:textStyle="normal"
                             android:textSize="15sp"
                             android:textColor="#d0d0d0"
-                            tools:text="문단추가"/>
+                            android:text="문단추가"/>
                         <ImageView
+                            android:id="@+id/add_content_img1"
+                            android:layout_gravity="center"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:layout_marginLeft="3dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <EditText
+                    android:layout_marginTop="11dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:id="@+id/content1"
+                    android:layout_width="match_parent"
+                    android:layout_height="156dp"
+                    android:fontFamily="@font/spoqa_han_sans_neo"
+                    android:textStyle="normal"
+                    android:textSize="15sp"
+                    android:textColor="#000000"
+                    android:letterSpacing="-0.02"
+                    android:lineSpacingExtra="12sp"
+                    android:hint="포스트 내용을 입력해주세요. (최대 500자)\n사진만 등록할 시 소제목만 입력해주시면 됩니다."
+                    android:gravity="top"
+                    android:padding="14dp"
+                    android:background="@drawable/edit_text_box_img"/>
+                <ImageView
+                    android:layout_marginTop="28dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:id="@+id/image1"
+                    android:layout_width="match_parent"
+                    android:layout_height="86dp"/>
+                <ImageView
+                    android:layout_marginTop="28dp"
+                    android:id="@+id/image_change1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="33.9dp"
+                android:id="@+id/content_area2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/subheading2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                        android:textStyle="normal"
+                        android:textSize="18sp"
+                        android:textColor="#000000"
+                        android:hint="소제목을 입력해주세요"
+                        android:background="@null"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+                    <LinearLayout
+                        android:layout_gravity="center"
+                        android:id="@+id/add2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                            android:textStyle="normal"
+                            android:textSize="15sp"
+                            android:textColor="#d0d0d0"
+                            android:text="문단추가"/>
+                        <ImageView
+                            android:layout_marginLeft="3dp"
+                            android:id="@+id/add_content_img2"
                             android:layout_gravity="center"
                             android:layout_width="14dp"
                             android:layout_height="14dp"/>
@@ -103,25 +182,260 @@
                 <EditText
                     android:layout_marginTop="11dp"
                     android:layout_marginHorizontal="16dp"
-                    android:id="@+id/content"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/content2"
+                    android:layout_width="match_parent"
                     android:layout_height="156dp"
                     android:fontFamily="@font/spoqa_han_sans_neo"
                     android:textStyle="normal"
                     android:textSize="15sp"
-                    android:textColor="#d0d0d0"
+                    android:textColor="#000000"
                     android:letterSpacing="-0.02"
                     android:lineSpacingExtra="12sp"
-                    android:text="포스트 내용을 입력해주세요. (최대 500자)"
+                    android:hint="포스트 내용을 입력해주세요. (최대 500자)\n
+사진만 등록할 시 소제목만 입력해주시면 됩니다."
                     android:gravity="top"
                     android:padding="14dp"
                     android:background="@drawable/edit_text_box_img"/>
                 <ImageView
                     android:layout_marginTop="28dp"
                     android:layout_marginHorizontal="16dp"
-                    android:id="@+id/image"
+                    android:id="@+id/image2"
                     android:layout_width="match_parent"
                     android:layout_height="86dp"/>
+                <ImageView
+                    android:layout_marginTop="28dp"
+                    android:id="@+id/image_change2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="33.9dp"
+                android:id="@+id/content_area3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/subheading3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                        android:textStyle="normal"
+                        android:textSize="18sp"
+                        android:textColor="#000000"
+                        android:hint="소제목을 입력해주세요"
+                        android:background="@null"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+                    <LinearLayout
+                        android:layout_gravity="center"
+                        android:id="@+id/add3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                            android:textStyle="normal"
+                            android:textSize="15sp"
+                            android:textColor="#d0d0d0"
+                            android:text="문단추가"/>
+                        <ImageView
+                            android:layout_marginLeft="3dp"
+                            android:id="@+id/add_content_img3"
+                            android:layout_gravity="center"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <EditText
+                    android:layout_marginTop="11dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:id="@+id/content3"
+                    android:layout_width="match_parent"
+                    android:layout_height="156dp"
+                    android:fontFamily="@font/spoqa_han_sans_neo"
+                    android:textStyle="normal"
+                    android:textSize="15sp"
+                    android:textColor="#000000"
+                    android:letterSpacing="-0.02"
+                    android:lineSpacingExtra="12sp"
+                    android:hint="포스트 내용을 입력해주세요. (최대 500자)\n
+사진만 등록할 시 소제목만 입력해주시면 됩니다."
+                    android:gravity="top"
+                    android:padding="14dp"
+                    android:background="@drawable/edit_text_box_img"/>
+                <ImageView
+                    android:layout_marginTop="28dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:id="@+id/image3"
+                    android:layout_width="match_parent"
+                    android:layout_height="86dp"/>
+                <ImageView
+                    android:layout_marginTop="28dp"
+                    android:id="@+id/image_change3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="33.9dp"
+                android:id="@+id/content_area4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/subheading4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                        android:textStyle="normal"
+                        android:textSize="18sp"
+                        android:textColor="#000000"
+                        android:hint="소제목을 입력해주세요"
+                        android:background="@null"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+                    <LinearLayout
+                        android:layout_gravity="center"
+                        android:id="@+id/add4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                            android:textStyle="normal"
+                            android:textSize="15sp"
+                            android:textColor="#d0d0d0"
+                            android:text="문단추가"/>
+                        <ImageView
+                            android:layout_marginLeft="3dp"
+                            android:id="@+id/add_content_img4"
+                            android:layout_gravity="center"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <EditText
+                    android:layout_marginTop="11dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:id="@+id/content4"
+                    android:layout_width="match_parent"
+                    android:layout_height="156dp"
+                    android:fontFamily="@font/spoqa_han_sans_neo"
+                    android:textStyle="normal"
+                    android:textSize="15sp"
+                    android:textColor="#000000"
+                    android:letterSpacing="-0.02"
+                    android:lineSpacingExtra="12sp"
+                    android:hint="포스트 내용을 입력해주세요. (최대 500자)\n
+사진만 등록할 시 소제목만 입력해주시면 됩니다."
+                    android:gravity="top"
+                    android:padding="14dp"
+                    android:background="@drawable/edit_text_box_img"/>
+                <ImageView
+                    android:layout_marginTop="28dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:id="@+id/image4"
+                    android:layout_width="match_parent"
+                    android:layout_height="86dp"/>
+                <ImageView
+                    android:layout_marginTop="28dp"
+                    android:id="@+id/image_change4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="33.9dp"
+                android:id="@+id/content_area5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="24dp">
+                <LinearLayout
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/subheading5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                        android:textStyle="normal"
+                        android:textSize="18sp"
+                        android:textColor="#000000"
+                        android:hint="소제목을 입력해주세요"
+                        android:background="@null"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+                    <LinearLayout
+                        android:layout_gravity="center"
+                        android:id="@+id/add5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                            android:textStyle="normal"
+                            android:textSize="15sp"
+                            android:textColor="#d0d0d0"
+                            android:text="문단추가"/>
+                        <ImageView
+                            android:layout_marginLeft="3dp"
+                            android:id="@+id/add_content_img5"
+                            android:layout_gravity="center"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <EditText
+                    android:layout_marginTop="11dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:id="@+id/content5"
+                    android:layout_width="match_parent"
+                    android:layout_height="156dp"
+                    android:fontFamily="@font/spoqa_han_sans_neo"
+                    android:textStyle="normal"
+                    android:textSize="15sp"
+                    android:textColor="#000000"
+                    android:letterSpacing="-0.02"
+                    android:lineSpacingExtra="12sp"
+                    android:hint="포스트 내용을 입력해주세요. (최대 500자)\n
+사진만 등록할 시 소제목만 입력해주시면 됩니다."
+                    android:gravity="top"
+                    android:padding="14dp"
+                    android:background="@drawable/edit_text_box_img"/>
+                <ImageView
+                    android:layout_marginTop="28dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:id="@+id/image5"
+                    android:layout_width="match_parent"
+                    android:layout_height="86dp"/>
+                <ImageView
+                    android:layout_marginTop="28dp"
+                    android:id="@+id/image_change5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
@@ -131,7 +445,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
-        android:background="#000000"
+        android:background="#999999"
         android:text="다음"
         android:fontFamily="@font/spoqa_han_sans_neo"
         android:textStyle="bold"

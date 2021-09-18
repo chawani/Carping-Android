@@ -80,4 +80,6 @@ dependencies {
     implementation files('libs/libDaumMapAndroid.jar')
     //slidingup
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
+    //cardview
+    implementation "androidx.cardview:cardview:1.0.0"
 }

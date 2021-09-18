@@ -17,7 +17,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Post.PostSettingActivity"></activity>
+        <activity android:name=".Post.PostReviewWriteActivity"></activity>
+        <activity android:name=".Post.PostReviewActivity" />
+        <activity android:name=".Post.PremiumPostActivity" />
+        <activity android:name=".Post.PostCategoryActivity" />
+        <activity android:name=".Post.PostTotalActivity" />
+        <activity android:name=".Post.PostSearchActivity" />
+        <activity android:name=".Post.PostDetailActivity" />
+        <activity android:name=".Post.PostSettingActivity" />
         <activity android:name=".Post.PostWriteActivity" />
         <activity android:name=".Post.PostRegisterActivity3" />
         <activity android:name=".Post.PostRegisterActivity2" />

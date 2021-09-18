@@ -111,7 +111,7 @@ public class GoogleLogin implements LoginContract.GoogleLogin{
                 else if(response.isSuccessful()){
                     SharedPreferenceManager.getInstance(context).setString("access_token", response.body().getAccess_token());
                     SharedPreferenceManager.getInstance(context).setString("refresh_token", response.body().getRefresh_token());
-                    SharedPreferenceManager.getInstance(context).setString("id",Integer.toString(response.body().getUser().getPk()));
+                    SharedPreferenceManager.getInstance(context).setInt("id",response.body().getUser().getPk());
                     SharedPreferenceManager.getInstance(context).setString("profile", response.body().getUser().getProfile().getImage());
                     SharedPreferenceManager.getInstance(context).setString("email", response.body().getUser().getEmail());
                     SharedPreferenceManager.getInstance(context).setString("username", response.body().getUser().getUsername());

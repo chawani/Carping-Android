@@ -26,7 +26,7 @@ public interface MypageInterface {
     Single<CommonClass> getScrap(@Field("sort")String sort,@Field("subsort")String subsort,@Field("lat")String lat,@Field("lon")String lon);
 
     @GET("mypage/profile/{id}/")
-    Single<CommonClass> getMypageInfo(@Path("id")String id);
+    Single<CommonClass> getMypageInfo(@Path("id")int id);
 
     @Multipart
     @PATCH("mypage/profile/{id}/")

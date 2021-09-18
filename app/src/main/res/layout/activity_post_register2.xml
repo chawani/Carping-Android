@@ -69,15 +69,15 @@
             android:text="유료포스트 발행을 위한 한번의 인증과정이 필요합니다."/>
         <TextView
             android:layout_marginTop="37dp"
-            android:layout_width="51dp"
-            android:layout_height="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/spoqa_han_sans_neo"
             android:textStyle="bold"
             android:textSize="13sp"
             android:textColor="#7d7d7d"
             android:text="채널 소개"/>
         <EditText
-            android:id="@+id/phone_number"
+            android:id="@+id/channel"
             android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -89,14 +89,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <ImageView
+            <CheckBox
                 android:layout_marginRight="10.5dp"
+                android:id="@+id/check_all"
                 android:layout_width="21dp"
-                android:layout_height="21dp"/>
+                android:layout_height="21dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/selector_purple_check"
+                android:button="@android:color/transparent"/>
             <TextView
                 android:layout_gravity="center_vertical"
-                android:layout_width="168dp"
-                android:layout_height="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/spoqa_han_sans_neo"
                 android:textStyle="bold"
                 android:textSize="14sp"
@@ -108,14 +112,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <ImageView
+            <CheckBox
                 android:layout_marginRight="10.5dp"
+                android:id="@+id/check1"
                 android:layout_width="21dp"
-                android:layout_height="21dp"/>
+                android:layout_height="21dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/selector_purple_check"
+                android:button="@android:color/transparent"/>
             <TextView
                 android:layout_gravity="center_vertical"
-                android:layout_width="116dp"
-                android:layout_height="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/spoqa_han_sans_neo"
                 android:textStyle="normal"
                 android:textSize="12sp"
@@ -124,8 +132,8 @@
             <TextView
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:layout_width="58dp"
-                android:layout_height="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/spoqa_han_sans_neo_medium"
                 android:textStyle="normal"
                 android:textSize="12sp"
@@ -137,14 +145,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <ImageView
+            <CheckBox
                 android:layout_marginRight="10.5dp"
+                android:id="@+id/check2"
                 android:layout_width="21dp"
-                android:layout_height="21dp"/>
+                android:layout_height="21dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/selector_purple_check"
+                android:button="@android:color/transparent"/>
             <TextView
                 android:layout_gravity="center_vertical"
-                android:layout_width="240dp"
-                android:layout_height="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/spoqa_han_sans_neo"
                 android:textStyle="normal"
                 android:textSize="12sp"
@@ -153,8 +165,8 @@
             <TextView
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:layout_width="58dp"
-                android:layout_height="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/spoqa_han_sans_neo_medium"
                 android:textStyle="normal"
                 android:textSize="12sp"
@@ -166,14 +178,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <ImageView
+            <CheckBox
                 android:layout_marginRight="10.5dp"
+                android:id="@+id/check3"
                 android:layout_width="21dp"
-                android:layout_height="21dp"/>
+                android:layout_height="21dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/selector_purple_check"
+                android:button="@android:color/transparent"/>
             <TextView
                 android:layout_gravity="center_vertical"
-                android:layout_width="199dp"
-                android:layout_height="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/spoqa_han_sans_neo"
                 android:textStyle="normal"
                 android:textSize="12sp"
@@ -182,8 +198,8 @@
             <TextView
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:layout_width="58dp"
-                android:layout_height="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/spoqa_han_sans_neo_medium"
                 android:textStyle="normal"
                 android:textSize="12sp"
@@ -195,14 +211,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <ImageView
+            <CheckBox
                 android:layout_marginRight="10.5dp"
+                android:id="@+id/check4"
                 android:layout_width="21dp"
-                android:layout_height="21dp"/>
+                android:layout_height="21dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/selector_purple_check"
+                android:button="@android:color/transparent"/>
             <TextView
                 android:layout_gravity="center_vertical"
-                android:layout_width="286dp"
-                android:layout_height="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/spoqa_han_sans_neo"
                 android:textStyle="normal"
                 android:textSize="12sp"
@@ -215,7 +235,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
-        android:background="#000000"
+        android:background="#999999"
         android:text="다음"
         android:fontFamily="@font/spoqa_han_sans_neo"
         android:textStyle="bold"

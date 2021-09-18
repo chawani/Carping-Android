@@ -38,7 +38,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private ArrayList<Comment> comments;
     private EcoDetailViewModel viewModel;
     private EcoCarpingDetailActivity activity;
-    private String current_user;
+    private int current_user;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private CommentItemBinding binding;
@@ -76,7 +76,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.comments=comments;
         this.viewModel=viewModel;
         this.activity=activity;
-        current_user=SharedPreferenceManager.getInstance(context).getString("id","");
+        current_user=SharedPreferenceManager.getInstance(context).getInt("id",0);
     }
 
     @NonNull

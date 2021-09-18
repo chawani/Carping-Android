@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="33dp"
+                android:layout_height="26dp"/>
+            <TextView
+                android:layout_marginTop="22dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                android:textStyle="normal"
+                android:textSize="13sp"
+                android:textColor="#666666"
+                android:gravity="center_horizontal"
+                android:text="포스팅 형식"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginHorizontal="45dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="24dp"
+                android:layout_height="34dp"/>
+            <TextView
+                android:layout_marginTop="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                android:textStyle="normal"
+                android:textSize="13sp"
+                android:textColor="#666666"
+                android:gravity="center_horizontal"
+                android:text="목차 7개"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="24dp"
+                android:layout_height="23dp"/>
+            <TextView
+                android:layout_marginTop="23dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                android:textStyle="normal"
+                android:textSize="13sp"
+                android:textColor="#666666"
+                android:gravity="center_horizontal"
+                android:text="찜 159명"/>
+        </LinearLayout>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <TextView
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/spoqa_han_sans_neo"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:text="포스트 미리보기"/>
+    <HorizontalScrollView
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"/>
+    </HorizontalScrollView>
+    <TextView
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/spoqa_han_sans_neo"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:text="포스트 소개"/>
+    <TextView
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/spoqa_han_sans_neo_medium"
+        android:textStyle="normal"
+        android:textSize="13sp"
+        android:textColor="#666666"
+        android:lineSpacingExtra="7.2sp"
+        android:text="아늑하고 조용하게 차박을 하고 싶지만 어디로 가야하는지 모를땐 이 포
+스트를 참고하셨으면 좋겠습니다:)
+덜 알려진 근교의 차크닉 장소를 테슬라 모델 이용 후기와 함께 작성 하였
+습니다"/>
+    <TextView
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/spoqa_han_sans_neo"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:text="추천하는 대상"/>
+    <TextView
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/spoqa_han_sans_neo"
+        android:textStyle="normal"
+        android:textSize="13sp"
+        android:textColor="#666666"
+        android:lineSpacingExtra="7.2sp"
+        android:text="✔︎ 덜 알려진 근교의 차크닉 장소를 알고싶은 분
+✔︎ 테슬라 모델 X 에 관심이 있거나 보유하고 계신 분
+✔︎ 차크닉에 대해 알고싶은 분"/>
+    <TextView
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/spoqa_han_sans_neo"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:text="작가의 한마디"/>
+    <LinearLayout
+        android:layout_marginTop="44.5dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="47dp"
+            android:layout_height="47dp"/>
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/spoqa_han_sans_neo"
+                    android:textStyle="bold"
+                    android:textSize="17sp"
+                    android:textColor="#000000"
+                    android:text="수린"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:layout_marginTop="4dp"
+                    android:layout_width="36dp"
+                    android:layout_height="20dp"/>
+            </LinearLayout>
+            <TextView
+                android:layout_marginTop="14dp"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="14dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/spoqa_han_sans_neo"
+                android:textStyle="normal"
+                android:textSize="13sp"
+                android:textColor="#666666"
+                android:lineSpacingExtra="7.2sp"
+                android:text="10년동안 전국의 차박지를 돌아다니며 관련 자료들을 개인적으로 기록해두었습니다. 차박에 대한 즐거움과 간편함을 보다 쉽게 전달하여 차박에 대한 진입장벽을 낮추는 것이 제 목표입니다."/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
