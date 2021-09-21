@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.tourkakao.carping.Home.HomeContract;
 import com.tourkakao.carping.Home.HomeViewModel.ThemeViewModel;
+import com.tourkakao.carping.Post.PostTotalActivity;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.theme.Activity.ThemeActivity;
 import com.tourkakao.carping.thisweekend.Activity.ThisWeekend_totalActivity;
@@ -184,7 +185,12 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
 
     @Override
     public void setting_az_total_btn() {
-
+        themebinding.azTotalTextview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(context, PostTotalActivity.class));
+            }
+        });
     }
 
     public void setting_thema_click(){

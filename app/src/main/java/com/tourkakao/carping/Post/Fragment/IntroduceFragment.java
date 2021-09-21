@@ -11,7 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
 import com.tourkakao.carping.MypageMainActivities.MypageViewModel.MypageCarpingViewModel;
+import com.tourkakao.carping.R;
 import com.tourkakao.carping.databinding.MypageCarpingScrapTabFragmentBinding;
 import com.tourkakao.carping.databinding.PostIntroduceFragmentBinding;
 
@@ -30,6 +32,8 @@ public class IntroduceFragment extends Fragment {
     }
 
     public void initLayout(){
-
+        Glide.with(context).load(R.drawable.posting_icon).into(binding.postingImg);
+        Glide.with(context).load(R.drawable.contents_icon).into(binding.contentsNumberImg);
+        Glide.with(context).load(R.drawable.like_icon_purple).into(binding.postingImg);
     }
 }

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.tourkakao.carping.Home.ThemeDataClass.AZPost;
+import com.tourkakao.carping.R;
 import com.tourkakao.carping.databinding.EachAzBinding;
 
 import java.util.ArrayList;
@@ -54,11 +55,13 @@ public class Az_Adapter extends RecyclerView.Adapter {
             Glide.with(context).load(post.getProfile()).circleCrop().into(binding.azProfileImg);
             Glide.with(context).load(post.getImage()).into(binding.azBackgroundImg);
             if(post.getIsprimeum()==0){
-                binding.premiumText.setVisibility(View.GONE);
+                Glide.with(context).load(R.drawable.free_mark).into(binding.premiumImage);
+            }
+            if(post.getIsprimeum()!=0){
+                Glide.with(context).load(R.drawable.premium_mark).into(binding.premiumImage);
             }
             binding.azTitleText.setText(post.getTitle());
-            binding.azStarnumberText.setText("("+post.getStar_number()+")");
-            binding.azRatingstar.setRating(post.getStar_score());
+            binding.star.setText("★ "+post.getStar_number());
         }
     }
     @NonNull

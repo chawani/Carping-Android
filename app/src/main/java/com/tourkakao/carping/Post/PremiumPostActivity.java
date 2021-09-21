@@ -25,6 +25,9 @@ public class PremiumPostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding= ActivityPremiumPostBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        settingToolbar();
+        settingTab();
     }
 
     void settingToolbar(){

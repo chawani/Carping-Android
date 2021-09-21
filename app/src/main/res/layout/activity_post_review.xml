@@ -80,7 +80,6 @@
                 android:layout_height="wrap_content"
                 android:isIndicator="true"
                 android:numStars="5"
-                android:rating="@{eachnewcarpingviewmodel.total_star}"
                 android:stepSize="0.1"
                 style="@style/Widget.AppCompat.RatingBar.Small"
                 android:layout_gravity="center"/>
@@ -110,7 +109,6 @@
                     android:layout_height="wrap_content"
                     android:isIndicator="true"
                     android:numStars="5"
-                    android:rating="@{eachnewcarpingviewmodel.total_star}"
                     android:stepSize="0.1"
                     style="@style/Widget.AppCompat.RatingBar.Small"
                     android:layout_gravity="center"/>
@@ -143,7 +141,6 @@
                     android:layout_height="wrap_content"
                     android:isIndicator="true"
                     android:numStars="5"
-                    android:rating="@{eachnewcarpingviewmodel.total_star}"
                     android:stepSize="0.1"
                     style="@style/Widget.AppCompat.RatingBar.Small"
                     android:layout_gravity="center"/>
@@ -176,7 +173,6 @@
                     android:layout_height="wrap_content"
                     android:isIndicator="true"
                     android:numStars="5"
-                    android:rating="@{eachnewcarpingviewmodel.total_star}"
                     android:stepSize="0.1"
                     style="@style/Widget.AppCompat.RatingBar.Small"
                     android:layout_gravity="center"/>
@@ -209,7 +205,6 @@
                     android:layout_height="wrap_content"
                     android:isIndicator="true"
                     android:numStars="5"
-                    android:rating="@{eachnewcarpingviewmodel.total_star}"
                     android:stepSize="0.1"
                     style="@style/Widget.AppCompat.RatingBar.Small"
                     android:layout_gravity="center"/>

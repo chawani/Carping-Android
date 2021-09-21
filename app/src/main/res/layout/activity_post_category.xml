@@ -17,6 +17,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginLeft="16dp"/>
         <TextView
+            android:id="@+id/title"
             android:layout_marginLeft="18dp"
             android:layout_marginBottom="44dp"
             android:layout_alignParentBottom="true"
@@ -39,7 +40,13 @@
             android:textColor="#ffffff"
             android:text="전체포스트 64개"/>
     </RelativeLayout>
-    <androidx.recyclerview.widget.RecyclerView
+    <GridView
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="30dp"
+        android:horizontalSpacing="15dp"
+        android:verticalSpacing="30dp"
+        android:id="@+id/gridview"
+        android:numColumns="2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </LinearLayout>
