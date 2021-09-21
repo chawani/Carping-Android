@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
@@ -19,13 +21,16 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.tourkakao.carping.BuildConfig;
+import com.tourkakao.carping.GpsLocation.GpsTracker;
 import com.tourkakao.carping.NetworkwithToken.ThemeInterface;
 import com.tourkakao.carping.R;
+import com.tourkakao.carping.theme.Activity.ThemeDetailActivity;
 import com.tourkakao.carping.theme.Adapter.BlogAdapter;
 import com.tourkakao.carping.theme.Dataclass.DaumBlog;
 import com.tourkakao.carping.databinding.ThemeInfoFragmentBinding;
 import com.tourkakao.carping.theme.viewmodel.ThemeDetailViewModel;
 
+import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
@@ -57,12 +62,23 @@ public class ThemeInfoFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         infoFragmentBinding=ThemeInfoFragmentBinding.inflate(inflater, container, false);
         context=getContext();
+        GpsTracker gpsTracker=new GpsTracker(context);
+        detailViewModel= ((ThemeDetailActivity)getActivity()).detailViewModel;
+        detailViewModel.setContext(context);
+        infoFragmentBinding.setLifecycleOwner(this);
+        infoFragmentBinding.setThemedetailviewmodel(detailViewModel);
 
+        Glide.with(context).load(R.drawable.locate_img).into(infoFragmentBinding.locateImg);
         Glide.with(context).load(R.drawable.themedetail_reserve_img).into(infoFragmentBinding.themeReserveImg);
         Glide.with(context).load(R.drawable.themedetail_fire_img).into(infoFragmentBinding.themeFireImg);
         Glide.with(context).load(R.drawable.themedetail_pet_img).into(infoFragmentBinding.themePetImg);
 
+        detailViewModel.getting_themedetail(pk, gpsTracker.getLatitude(), gpsTracker.getLongitude());
+        starting_observe_lat_and_lon();
+        gpsTracker.stopUsingGPS();
+
         setting_map();
+
         return infoFragmentBinding.getRoot();
     }
     public void setName(String name){
@@ -74,9 +90,6 @@ public class ThemeInfoFragment extends Fragment {
     public void setting_map(){
         mapView=new MapView(context);
         infoFragmentBinding.mapView.addView(mapView);
-    }
-    public void setting_viewmodel(ThemeDetailViewModel detailViewModel){
-        this.detailViewModel=detailViewModel;
     }
     public void searchblog(){
         Gson gson=new GsonBuilder().setLenient().create();
@@ -127,5 +140,21 @@ public class ThemeInfoFragment extends Fragment {
             }
         });
         infoFragmentBinding.themeSearchRecyclerview.setAdapter(blogAdapter);
+    }
+    public void starting_observe_lat_and_lon(){
+        detailViewModel.carping_lon.observe(this, new Observer<Float>() {
+            @Override
+            public void onChanged(Float aFloat) {
+                float lan=detailViewModel.carping_lat.getValue();
+                float lon=aFloat;
+                MapPoint mapPoint=MapPoint.mapPointWithGeoCoord(lan, lon);
+                mapView.setMapCenterPointAndZoomLevel(mapPoint, 3, true);
+                MapPOIItem marker=new MapPOIItem();
+                marker.setItemName(name);
+                marker.setMapPoint(mapPoint);
+                marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+                mapView.addPOIItem(marker);
+            }
+        });
     }
 }

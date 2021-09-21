@@ -216,11 +216,10 @@
         android:layout_height="0dp"
         android:layout_weight="0.8"
         android:orientation="horizontal"
-        android:weightSum="2"
         android:layout_alignParentBottom="true">
         <TextView
             android:id="@+id/fix"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="수정하기"
@@ -228,18 +227,6 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:background="#A4A4A4"
-            android:textColor="#FFFFFF"
-            android:gravity="center"/>
-        <TextView
-            android:id="@+id/remove"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="삭제하기"
-            android:clickable="true"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:background="#FF0000"
             android:textColor="#FFFFFF"
             android:gravity="center"/>
     </LinearLayout>

@@ -123,6 +123,8 @@ public class EachNewCarpingViewModel extends ViewModel {
                                     String result = new Gson().toJson(detail.getData().get(0));
                                     NewCarping newCarping = new Gson().fromJson(result, type);
 
+                                    userpk=newCarping.getUser();
+                                    pk=newCarping.getId();
                                     title.setValue(newCarping.getTitle());
                                     total_star.setValue(newCarping.getTotal_star());
                                     review_cnt_num.setValue(newCarping.getReview_count());
@@ -142,8 +144,8 @@ public class EachNewCarpingViewModel extends ViewModel {
                                     image2.setValue(newCarping.getImage2());
                                     image3.setValue(newCarping.getImage3());
                                     image4.setValue(newCarping.getImage4());
-                                    if (info_tags.getValue() != null) {
-                                        info_tags = new MutableLiveData<>();
+                                    if(info_tags.getValue()!=null){
+                                        info_tags.getValue().clear();
                                     }
                                     info_tags.setValue(newCarping.getTags());
                                     //newcarping info

@@ -51,10 +51,12 @@ public class InfoFragment extends Fragment {
         eachNewCarpingViewModel.image1.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
+                infoFragmentBinding.imageLayout.removeAllViews();
                 if(s!=null) {
                     EachNewcarpingDetailImageBinding binding= EachNewcarpingDetailImageBinding.inflate(getLayoutInflater());
                     ImageView img=binding.newcarpingInfoImg;
-                    Glide.with(context).load(s).transform(new CenterCrop(), new RoundedCorners(30)).into(img);
+                    img.setScaleType(ImageView.ScaleType.FIT_XY);
+                    Glide.with(context).load(s).transform(new RoundedCorners(30)).into(img);
                     infoFragmentBinding.imageLayout.addView(binding.getRoot());
                 }
             }
@@ -97,6 +99,7 @@ public class InfoFragment extends Fragment {
         eachNewCarpingViewModel.info_tags.observe(this, new Observer<ArrayList<String>>() {
             @Override
             public void onChanged(ArrayList<String> strings) {
+                infoFragmentBinding.tagsLayout.removeAllViews();
                 for(int i=0; i<strings.size(); i++){
                     TextView tag=new TextView(context);
                     tag.setText("#"+strings.get(i));

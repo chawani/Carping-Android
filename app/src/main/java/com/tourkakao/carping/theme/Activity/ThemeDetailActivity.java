@@ -1,11 +1,13 @@
 package com.tourkakao.carping.theme.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.os.Bundle;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.newcarping.Fragment.InfoFragment;
@@ -19,7 +21,7 @@ import net.daum.mf.map.api.MapView;
 
 public class ThemeDetailActivity extends AppCompatActivity {
     private ActivityThemeDetailBinding detailBinding;
-    private ThemeDetailViewModel detailViewModel;
+    public ThemeDetailViewModel detailViewModel;
     Context context;
     ThemeInfoFragment infoFragment;
     ThemeRecommendFragment recommendFragment;
@@ -42,12 +44,12 @@ public class ThemeDetailActivity extends AppCompatActivity {
         infoFragment=new ThemeInfoFragment();
         infoFragment.setName(name);
         infoFragment.setPk(pk);
-        infoFragment.setting_viewmodel(detailViewModel);
         infoFragment.searchblog();
         recommendFragment=new ThemeRecommendFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.theme_detail_frame, infoFragment).commit();
         getSupportFragmentManager().beginTransaction().add(R.id.theme_detail_frame, recommendFragment).commit();
         setting_tablayout();
+        starting_observe_image();
     }
 
     public void setting_tablayout(){
@@ -72,6 +74,18 @@ public class ThemeDetailActivity extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
+            }
+        });
+    }
+    public void starting_observe_image(){
+        detailViewModel.image.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if(s!=null) {
+                    Glide.with(context).load(s).into(detailBinding.themeMainImg);
+                }else{
+                    Glide.with(context).load(R.drawable.thema_no_img).into(detailBinding.themeMainImg);
+                }
             }
         });
     }
