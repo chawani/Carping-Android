@@ -94,7 +94,7 @@ public class EcoCarpingListActivity extends AppCompatActivity {
         spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinner_adapter);
         spinner.setOnItemSelectedListener(spinnerListener);
-        spinner.setSelection(2);
+        spinner.setSelection(1);
     }
 
     public void settingEchoReview(){
@@ -117,10 +117,6 @@ public class EcoCarpingListActivity extends AppCompatActivity {
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             if(sort_list.get(i).equals("인기순")){
                 adapter=new EcoTotalReviewAdapter(getApplicationContext(),ecoTotalViewModel.getPopularOrderReviews().getValue());
-                ecobinding.totalReviewRecycler.setAdapter(adapter);
-            }
-            if(sort_list.get(i).equals("거리순")){
-                adapter=new EcoTotalReviewAdapter(getApplicationContext(),ecoTotalViewModel.getDistanceOrderReviews().getValue());
                 ecobinding.totalReviewRecycler.setAdapter(adapter);
             }
             if(sort_list.get(i).equals("최신순")){

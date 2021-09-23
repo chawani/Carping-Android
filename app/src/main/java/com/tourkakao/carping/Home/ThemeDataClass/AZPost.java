@@ -3,37 +3,22 @@ package com.tourkakao.carping.Home.ThemeDataClass;
 import com.google.gson.annotations.SerializedName;
 
 public class AZPost {
-    @SerializedName("")
-    int pk;
-    @SerializedName("")
-    String title;
-    @SerializedName("")
-    String image;
-    @SerializedName("")
-    String profile;
-    @SerializedName("")
-    int star_score;
-    @SerializedName("")
-    int star_number;
-    @SerializedName("")
-    int isprimeum;
+    private String id;
+    private String title;
+    private String total_star_avg;
+    private String author;
+    private String thumbnail;
+    private String is_liked;
+    private String category;
+    private String pay_type;
+    private String point;
 
-    public AZPost(int pk, String title, String image, String profile, int star_score, int star_number, int isprimeum) {
-        this.pk = pk;
-        this.title = title;
-        this.image = image;
-        this.profile = profile;
-        this.star_score = star_score;
-        this.star_number = star_number;
-        this.isprimeum = isprimeum;
+    public String getId() {
+        return id;
     }
 
-    public int getPk() {
-        return pk;
-    }
-
-    public void setPk(int pk) {
-        this.pk = pk;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -44,43 +29,59 @@ public class AZPost {
         this.title = title;
     }
 
-    public String getImage() {
-        return image;
+    public String getTotal_star_avg() {
+        return total_star_avg;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setTotal_star_avg(String total_star_avg) {
+        this.total_star_avg = total_star_avg;
     }
 
-    public String getProfile() {
-        return profile;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setProfile(String profile) {
-        this.profile = profile;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
-    public int getStar_score() {
-        return star_score;
+    public String getThumbnail() {
+        return thumbnail;
     }
 
-    public void setStar_score(int star_score) {
-        this.star_score = star_score;
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
-    public int getStar_number() {
-        return star_number;
+    public String getIs_liked() {
+        return is_liked;
     }
 
-    public void setStar_number(int star_number) {
-        this.star_number = star_number;
+    public void setIs_liked(String is_liked) {
+        this.is_liked = is_liked;
     }
 
-    public int getIsprimeum() {
-        return isprimeum;
+    public String getCategory() {
+        return category;
     }
 
-    public void setIsprimeum(int isprimeum) {
-        this.isprimeum = isprimeum;
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getPay_type() {
+        return pay_type;
+    }
+
+    public void setPay_type(String pay_type) {
+        this.pay_type = pay_type;
+    }
+
+    public String getPoint() {
+        return point;
+    }
+
+    public void setPoint(String point) {
+        this.point = point;
     }
 }

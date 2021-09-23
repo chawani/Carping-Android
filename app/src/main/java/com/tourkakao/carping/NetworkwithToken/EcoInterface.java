@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.tourkakao.carping.EcoCarping.DTO.PostComment;
 import com.tourkakao.carping.EcoCarping.DTO.ResultSearchKeyword;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -74,7 +75,8 @@ public interface EcoInterface {
                                  @Part MultipartBody.Part image2,
                                  @Part MultipartBody.Part image3,
                                  @Part MultipartBody.Part image4,
-                                 @PartMap HashMap<String, RequestBody> data);
+                                 @PartMap HashMap<String, RequestBody> data,
+                                 @Part("is_null") ArrayList<Integer> is_null);
 
     @DELETE("/posts/eco-carping/{id}/")
     Single<CommonClass> deletePost(@Path("id")int id);

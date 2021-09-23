@@ -116,10 +116,10 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
                 if(integer==0){
                     Glide.with(context).load(R.drawable.empty_az_img).into(themebinding.noAzImg);
                     themebinding.noAzImg.setVisibility(View.VISIBLE);
-                    themebinding.thisWeekendRecyclerview.setVisibility(View.GONE);
+                    themebinding.azRecyclerview.setVisibility(View.GONE);
                 }else if(integer>=1){
                     themebinding.noAzImg.setVisibility(View.GONE);
-                    themebinding.thisWeekendRecyclerview.setVisibility(View.VISIBLE);
+                    themebinding.azRecyclerview.setVisibility(View.VISIBLE);
                 }
             }
         });

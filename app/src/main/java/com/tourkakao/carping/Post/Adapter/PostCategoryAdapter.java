@@ -56,7 +56,7 @@ public class PostCategoryAdapter extends BaseAdapter {
         }
 
         PostListItem item=(PostListItem)getItem(position);
-        binding.name.setText(item.getName());
+        binding.name.setText(item.getAuthor());
         binding.title.setText(item.getTitle());
         Glide.with(context).load(R.drawable.like_mark).into(binding.like);
         Glide.with(context).load(R.drawable.free_mark).into(binding.premiumImage);

@@ -54,6 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <LinearLayout
+                android:id="@+id/beginner_total"
                 android:layout_marginTop="35dp"
                 android:layout_marginHorizontal="16dp"
                 android:layout_width="match_parent"
@@ -72,7 +73,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
                 <ImageView
-                    android:id="@+id/beginner_total"
+                    android:id="@+id/beginner_arrow"
                     android:layout_gravity="center"
                     android:layout_width="10dp"
                     android:layout_height="10dp"/>
@@ -84,6 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <LinearLayout
+                android:id="@+id/all_of_total"
                 android:layout_marginTop="35dp"
                 android:layout_marginHorizontal="16dp"
                 android:layout_width="match_parent"
@@ -102,7 +104,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
                 <ImageView
-                    android:id="@+id/all_of_total"
+                    android:id="@+id/all_of_arrow"
                     android:layout_gravity="center"
                     android:layout_width="10dp"
                     android:layout_height="10dp"/>
@@ -114,6 +116,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <LinearLayout
+                android:id="@+id/car_total"
                 android:layout_marginTop="35dp"
                 android:layout_marginHorizontal="16dp"
                 android:layout_width="match_parent"
@@ -132,7 +135,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
                 <ImageView
-                    android:id="@+id/car_total"
+                    android:id="@+id/car_arrow"
                     android:layout_gravity="center"
                     android:layout_width="10dp"
                     android:layout_height="10dp"/>

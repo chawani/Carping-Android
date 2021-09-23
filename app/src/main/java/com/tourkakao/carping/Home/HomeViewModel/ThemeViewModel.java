@@ -24,13 +24,17 @@ import com.tourkakao.carping.Home.ThemeFragmentAdapter.PopularCarpingPlace_Adapt
 import com.tourkakao.carping.Home.ThemeFragmentAdapter.ThisWeekend_Adapter;
 import com.tourkakao.carping.NetworkwithToken.CommonClass;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
+import com.tourkakao.carping.Post.PostDetailActivity;
 import com.tourkakao.carping.newcarping.Activity.Each_NewCarpingActivity;
 import com.tourkakao.carping.thisweekend.Activity.Each_ThisWeekendActivity;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.observers.DisposableSingleObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class ThemeViewModel extends ViewModel {
@@ -106,14 +110,42 @@ public class ThemeViewModel extends ViewModel {
         az_adapter=new Az_Adapter(context, azPosts);
         az_adapter.setOnSelectItemCLickListener(new Az_Adapter.OnSelectItemClickListener() {
             @Override
-            public void OnSelectItemClick(View v, int pos) {
-
+            public void OnSelectItemClick(View v, int pos, int pk) {
+                Intent intent=new Intent(context, PostDetailActivity.class);
+                intent.putExtra("pk", pk);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             }
         });
         return az_adapter;
     }
     public void getAz(){
+        HashMap<String,Object> map=new HashMap<>();
+        map.put("type",1);
+        TotalApiClient.getPostApiService(context).getPostList(map)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<CommonClass>() {
+                    @Override
+                    public void onSuccess(@NonNull CommonClass commonClass) {
+                        if(commonClass.getCode()==200) {
+                            main_az_post_cnt.setValue(commonClass.getData().size());
+                            Type type = new TypeToken<ArrayList<AZPost>>() {
+                            }.getType();
+                            String result = new Gson().toJson(commonClass.getData());
+                            azPosts = new Gson().fromJson(result, type);
+                            az_adapter.update_Item(azPosts);
+                        }
+                        else {
+                            System.out.println("요청실패:"+commonClass.getCode()+commonClass.getError_message());
+                        }
+                    }
 
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+                });
     }
 
     public NewCarpingPlace_Adapter setting_newcarping_place_adapter(){

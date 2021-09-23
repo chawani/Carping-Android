@@ -17,6 +17,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
@@ -69,63 +71,32 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
     private String placeName;
     private MapPoint mapPoint;
     private boolean imgPossible=true;
-    private boolean placeCheck=false;
-    private Intent beforeActivity;
     private Context context;
+    private boolean placeCheck=false;
+    private boolean imgCheck=false;
+    private boolean titleCheck=false;
+    private boolean contentCheck=false;
+    private boolean tagCheck=false;
+    private boolean trashCheck=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         ecobinding=ActivityEcoCarpingWriteBinding.inflate(getLayoutInflater());
         setContentView(ecobinding.getRoot());
-
-        settingToolbar();
-        Glide.with(this).load(R.drawable.write_add_img_button).into(ecobinding.addImage);
-        ecobinding.locationText.setText("위치");
-        tagListLiveData.setValue(tagList);
-
         context=getApplicationContext();
 
-        ecobinding.searchBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), LocationSearchActivity.class);
-                startActivityForResult(intent, 2);
-            }
-        });
-
-        ecobinding.insertImage.setOnClickListener(listener);
-        ecobinding.addImage.setOnClickListener(listener);
-
-        if(uriList.size()==0){
-            ecobinding.scrollview.setVisibility(View.GONE);
-        }
-
-        ecobinding.mapView.setVisibility(View.GONE);
-        ecobinding.reselect.setVisibility(View.GONE);
-
-        ecobinding.scrollview.setHorizontalScrollBarEnabled(false);
-        imageList.observe(this,observer);
-
+        settingToolbar();
+        initLayout();
+        selectPlace();
+        selectImage();
         tag();
-
-        ecobinding.reselect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ecobinding.mapView.removeView(mapView);
-                Intent intent = new Intent(getApplicationContext(), LocationSearchActivity.class);
-                startActivityForResult(intent, 2);
-            }
-        });
+        writeCheck();
 
         ecobinding.completionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(ecobinding.title.getText().toString().length()==0||
-                        ecobinding.content.getText().toString().length()==0||
-                        !placeCheck||
-                        tagListLiveData.getValue().size()==0||
-                        imageList.getValue().size()==0){
+                if(!checkAll()){
                     Toast myToast = Toast.makeText(getApplicationContext(),"모두 입력해주세요", Toast.LENGTH_SHORT);
                     myToast.show();
                     return;
@@ -136,27 +107,6 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-        tagListLiveData.observe(this, new Observer<ArrayList<String>>() {
-            @Override
-            public void onChanged(ArrayList<String> strings) {
-                if(strings.size()==0){
-                    ecobinding.deleteTag.setVisibility(View.GONE);
-                }
-                else{
-                    ecobinding.deleteTag.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
-        ecobinding.deleteTag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ecobinding.tagArea.removeAllViews();
-                tagList.clear();
-                tagListLiveData.setValue(tagList);
-            }
-        });
     }
 
     public void settingToolbar(){
@@ -164,6 +114,42 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+
+    public void initLayout(){
+        Glide.with(this).load(R.drawable.write_add_img_button).into(ecobinding.addImage);
+        ecobinding.locationText.setText("위치");
+        tagListLiveData.setValue(tagList);
+        if(uriList.size()==0){
+            ecobinding.scrollview.setVisibility(View.GONE);
+        }
+        ecobinding.mapView.setVisibility(View.GONE);
+        ecobinding.reselect.setVisibility(View.GONE);
+        ecobinding.scrollview.setHorizontalScrollBarEnabled(false);
+    }
+
+    public void selectPlace(){
+        ecobinding.searchBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), LocationSearchActivity.class);
+                startActivityForResult(intent, 2);
+            }
+        });
+        ecobinding.reselect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ecobinding.mapView.removeView(mapView);
+                Intent intent = new Intent(getApplicationContext(), LocationSearchActivity.class);
+                startActivityForResult(intent, 2);
+            }
+        });
+    }
+
+    public void selectImage(){
+        ecobinding.insertImage.setOnClickListener(listener);
+        ecobinding.addImage.setOnClickListener(listener);
+        imageList.observe(this, imgObserver);
     }
 
     @Override
@@ -204,6 +190,7 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
         }
         if(requestCode==2&&resultCode==2){
             placeCheck=true;
+            changeButtonColor(checkAll());
             ecobinding.reselect.setVisibility(View.VISIBLE);
             ecobinding.searchBar.setVisibility(View.GONE);
             ecobinding.mapView.setVisibility(View.VISIBLE);
@@ -227,16 +214,21 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
         }
     };
 
-    Observer<ArrayList<Uri>> observer=new Observer<ArrayList<Uri>>() {
+    Observer<ArrayList<Uri>> imgObserver =new Observer<ArrayList<Uri>>() {
         @Override
         public void onChanged(ArrayList<Uri> uris) {
+            ecobinding.imageCount.setText(uris.size()+"/4");
             if(uris.size()==0){
                 ecobinding.insertImage.setVisibility(View.VISIBLE);
                 ecobinding.scrollview.setVisibility(View.GONE);
+                imgCheck=false;
+                changeButtonColor(checkAll());
             }
             else{
                 ecobinding.insertImage.setVisibility(View.GONE);
                 ecobinding.scrollview.setVisibility(View.VISIBLE);
+                imgCheck=true;
+                changeButtonColor(checkAll());
                 ecobinding.imageArea.removeAllViews();
                 for(int i=0;i<uris.size();i++) {
                     int index=i;
@@ -281,6 +273,98 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
                 startActivityForResult(intent, 1);
             }
         });
+        tagListLiveData.observe(this, new Observer<ArrayList<String>>() {
+            @Override
+            public void onChanged(ArrayList<String> strings) {
+                if(strings.size()==0){
+                    ecobinding.deleteTag.setVisibility(View.GONE);
+                    tagCheck=false;
+                    changeButtonColor(checkAll());
+                }
+                else{
+                    ecobinding.deleteTag.setVisibility(View.VISIBLE);
+                    tagCheck=true;
+                    changeButtonColor(checkAll());
+                }
+            }
+        });
+        ecobinding.deleteTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ecobinding.tagArea.removeAllViews();
+                tagList.clear();
+                tagListLiveData.setValue(tagList);
+            }
+        });
+    }
+
+    public void writeCheck(){
+        ecobinding.title.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // 입력되는 텍스트에 변화가 있을 때 호출된다.
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // 입력이 끝났을 때 호출된다.
+                if(ecobinding.title.getText().toString().length()==0){
+                    titleCheck=false;
+                }
+                else{
+                    titleCheck=true;
+                }
+                changeButtonColor(checkAll());
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // 입력하기 전에 호출된다.
+            }
+        });
+        ecobinding.content.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                ecobinding.textLength.setText(s.toString().length()+"/500");
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // 입력이 끝났을 때 호출된다.
+                if(ecobinding.content.getText().toString().length()==0){
+                    contentCheck=false;
+                }
+                else{
+                    contentCheck=true;
+                }
+                changeButtonColor(checkAll());
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // 입력하기 전에 호출된다.
+            }
+        });
+        ecobinding.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                trashCheck=true;
+                changeButtonColor(checkAll());
+            }
+        });
+    }
+
+    public boolean checkAll(){
+        if(placeCheck&&imgCheck&&titleCheck&&contentCheck&&tagCheck&&trashCheck)
+            return true;
+        return false;
+    }
+
+    public void changeButtonColor(boolean check){
+        if(check)
+            ecobinding.completionButton.setBackgroundColor(Color.BLACK);
+        else
+            ecobinding.completionButton.setBackgroundColor(Color.parseColor("#999999"));
     }
 
     public void settingMapView(Double x,Double y){

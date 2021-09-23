@@ -18,6 +18,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
@@ -47,6 +49,7 @@ import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -72,6 +75,12 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
     private ArrayList<String> images=new ArrayList<>();
     private MutableLiveData<ArrayList<String>> imagesLiveData=new MutableLiveData<>();
     private Context context;
+    private boolean imgCheck=false;
+    private boolean titleCheck=false;
+    private boolean contentCheck=false;
+    private boolean tagCheck=false;
+    private ArrayList<Integer> is_null=new ArrayList<>();
+    private int[] initialImgCheck={0,0,0,0};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,88 +96,15 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
         settingLayout();
         settingToolbar();
         getDetailInfo();
-
-        ecobinding.searchBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), LocationSearchActivity.class);
-                startActivityForResult(intent, 2);
-            }
-        });
-
-        tagsLiveData.observe(this, new Observer<ArrayList<String>>() {
-            @Override
-            public void onChanged(ArrayList<String> strings) {
-                if(strings.size()==0){
-                    ecobinding.deleteTag.setVisibility(View.GONE);
-                }
-                else{
-                    ecobinding.deleteTag.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
-        ecobinding.addImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                //intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent, 0);
-            }
-        });
-
-        ecobinding.tagAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(getApplicationContext(), TagPageActivity.class);
-                startActivityForResult(intent, 1);
-            }
-        });
-
-        ecobinding.deleteTag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ecobinding.tagArea.removeAllViews();
-                tags.clear();
-            }
-        });
-
-        imagesLiveData.observe(this, imgObserver);
-        tagsLiveData.observe(this,tagObserver);
-
-        ecoDetailViewModel.getPost().observe(this, new Observer<EcoPost>() {
-            @Override
-            public void onChanged(EcoPost post) {
-                ecobinding.locationText.setText(post.getPlace());
-                ecobinding.title.setText(post.getTitle());
-                ecobinding.content.setText(post.getText());
-                settingMapView(Double.parseDouble(post.getLongitude()),Double.parseDouble(post.getLatitude()));
-            }
-        });
-        ecoDetailViewModel.getImages().observe(this, new Observer<ArrayList<String>>() {
-            @Override
-            public void onChanged(ArrayList<String> strings) {
-                images=strings;
-                imagesLiveData.setValue(images);
-            }
-        });
-        ecoDetailViewModel.getTags().observe(this, new Observer<ArrayList<String>>() {
-            @Override
-            public void onChanged(ArrayList<String> strings) {
-                tags=strings;
-                tagsLiveData.setValue(strings);
-            }
-        });
+        selectImage();
+        selectPlace();
+        writeCheck();
+        tag();
 
         ecobinding.completionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(ecobinding.title.getText().toString().length()==0||
-                        ecobinding.content.getText().toString().length()==0||
-                        tagsLiveData.getValue().size()==0||
-                        imagesLiveData.getValue().size()==0){
+                if(!checkAll()){
                     Toast myToast = Toast.makeText(getApplicationContext(),"모두 입력해주세요", Toast.LENGTH_SHORT);
                     myToast.show();
                     return;
@@ -179,7 +115,9 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
 
+    public void selectPlace(){
         ecobinding.reselect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -188,6 +126,56 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
                 startActivityForResult(intent, 2);
             }
         });
+    }
+
+    public void selectImage(){
+        ecoDetailViewModel.getImages().observe(this, new Observer<ArrayList<String>>() {
+            @Override
+            public void onChanged(ArrayList<String> strings) {
+                for(int i=0;i<strings.size();i++){
+                    initialImgCheck[i]=1;
+                }
+                images=strings;
+                imagesLiveData.setValue(images);
+            }
+        });
+        ecobinding.addImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                //intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent, 0);
+            }
+        });
+        imagesLiveData.observe(this, imgObserver);
+    }
+
+    public void tag(){
+        ecoDetailViewModel.getTags().observe(this, new Observer<ArrayList<String>>() {
+            @Override
+            public void onChanged(ArrayList<String> strings) {
+                tags=strings;
+                tagsLiveData.setValue(strings);
+            }
+        });
+        ecobinding.tagAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getApplicationContext(), TagPageActivity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
+        ecobinding.deleteTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ecobinding.tagArea.removeAllViews();
+                tags.clear();
+                tagsLiveData.setValue(tags);
+            }
+        });
+        tagsLiveData.observe(this,tagObserver);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -227,11 +215,31 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
         ecobinding.reselect.setVisibility(View.VISIBLE);
         ecobinding.searchBar.setVisibility(View.GONE);
         ecobinding.mapView.setVisibility(View.VISIBLE);
+        ecoDetailViewModel.getPost().observe(this, new Observer<EcoPost>() {
+            @Override
+            public void onChanged(EcoPost post) {
+                ecobinding.locationText.setText(post.getPlace());
+                ecobinding.title.setText(post.getTitle());
+                ecobinding.content.setText(post.getText());
+                settingMapView(Double.parseDouble(post.getLongitude()),Double.parseDouble(post.getLatitude()));
+            }
+        });
     }
 
     public Observer<ArrayList<String>> tagObserver=new Observer<ArrayList<String>>() {
         @Override
         public void onChanged(ArrayList<String> strings) {
+            if(strings.size()==0) {
+                ecobinding.deleteTag.setVisibility(View.GONE);
+                tagCheck = false;
+                changeButtonColor(checkAll());
+                return;
+            }
+            else{
+                ecobinding.deleteTag.setVisibility(View.VISIBLE);
+                tagCheck=true;
+                changeButtonColor(checkAll());
+            }
             ecobinding.tagArea.removeAllViews();
             for(String tag:strings){
                 TextView textView = new TextView(getApplicationContext());
@@ -269,13 +277,68 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
         mapView.addPOIItem(marker);
     }
 
-    public void settingMapPoint(Double x,Double y){
-        mapPoint= MapPoint.mapPointWithGeoCoord(y,x);
+    public void writeCheck(){
+        ecobinding.title.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // 입력되는 텍스트에 변화가 있을 때 호출된다.
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // 입력이 끝났을 때 호출된다.
+                if(ecobinding.title.getText().toString().length()==0){
+                    titleCheck=false;
+                }
+                else{
+                    titleCheck=true;
+                }
+                changeButtonColor(checkAll());
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // 입력하기 전에 호출된다.
+            }
+        });
+        ecobinding.content.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // 입력되는 텍스트에 변화가 있을 때 호출된다.
+                ecobinding.textLength.setText(s.toString().length()+"/500");
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // 입력이 끝났을 때 호출된다.
+                if(ecobinding.content.getText().toString().length()==0){
+                    contentCheck=false;
+                }
+                else{
+                    contentCheck=true;
+                }
+                changeButtonColor(checkAll());
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // 입력하기 전에 호출된다.
+            }
+        });
     }
 
     public Observer<ArrayList<String>> imgObserver=new Observer<ArrayList<String>>() {
         @Override
         public void onChanged(ArrayList<String> strings) {
+            ecobinding.imageCount.setText(strings.size()+"/4");
+            if (strings.size()==0){
+                imgCheck=false;
+                changeButtonColor(checkAll());
+            }
+            else{
+                imgCheck=true;
+                changeButtonColor(checkAll());
+            }
             ecobinding.imageArea.removeAllViews();
             for(int i=0;i<strings.size();i++) {
                 int index=i;
@@ -294,20 +357,36 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
                 iv2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        if(initialImgCheck[index]==1){
+                            initialImgCheck[index]=0;
+                            is_null.add(index+1);
+                        }
                         imageItemBinding.getRoot().removeView(view);
                         imageItemBinding.getRoot().removeView(iv);
                         deleteURI(index);
                     }
                 });
-
                 ecobinding.imageArea.addView(imageItemBinding.getRoot());
             }
         }
     };
 
+    public boolean checkAll(){
+        if(imgCheck&&titleCheck&&contentCheck&&tagCheck)
+            return true;
+        return false;
+    }
+
+    public void changeButtonColor(boolean check){
+        if(check)
+            ecobinding.completionButton.setBackgroundColor(Color.BLACK);
+        else
+            ecobinding.completionButton.setBackgroundColor(Color.parseColor("#999999"));
+    }
+
     public void post(){
         HashMap<String, RequestBody> map=new HashMap<>();
-        String userString= SharedPreferenceManager.getInstance(getApplicationContext()).getString("id","");
+        int userPk= SharedPreferenceManager.getInstance(getApplicationContext()).getInt("id",0);
         String tagString="[";
         for(int i=0;i<tags.size();i++){
             String tag='"'+tags.get(i).replace("#","")+'"';
@@ -317,7 +396,7 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
         }
         tagString=tagString+"]";
 
-        RequestBody user = RequestBody.create(MediaType.parse("text/plain"),userString);
+        RequestBody user = RequestBody.create(MediaType.parse("text/plain"),Integer.toString(userPk));
         RequestBody latitude = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(mapPoint.getMapPointGeoCoord().latitude));
         RequestBody longitude = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(mapPoint.getMapPointGeoCoord().longitude));
         RequestBody title = RequestBody.create(MediaType.parse("text/plain"),ecobinding.title.getText().toString());
@@ -332,58 +411,54 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
         map.put("text", text);
         map.put("tags", tags);
 
-        //System.out.println("longitude:"+String.valueOf(mapPoint.getMapPointGeoCoord().longitude)+"latitude:"+String.valueOf(mapPoint.getMapPointGeoCoord().latitude)+"place:"+ecobinding.locationText.getText().toString());
-
         MultipartBody.Part image1=null;
         MultipartBody.Part image2=null;
         MultipartBody.Part image3=null;
         MultipartBody.Part image4=null;
-        int index=0;
 
-        int count=images.size();
-
-        if(count>=1) {
-            if(!images.get(0).contains("https://chanjongs.s3.amazonaws.com")){
+        if(images.size()>=1) {
                 File file = new File(images.get(0));
                 RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                 image1 = MultipartBody.Part.createFormData("image1", file.getName(), requestBody);
-            }
         }
-        if(count>=2) {
-            if(!images.get(1).contains("https://chanjongs.s3.amazonaws.com")) {
+        if(images.size()>=2) {
                 File file = new File(images.get(1));
                 RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                 image2 = MultipartBody.Part.createFormData("image2", file.getName(), requestBody);
-            }
         }
-        if(count>=3) {
-            if(!images.get(2).contains("https://chanjongs.s3.amazonaws.com")) {
+        if(images.size()>=3) {
                 File file = new File(images.get(2));
                 RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                 image3 = MultipartBody.Part.createFormData("image3", file.getName(), requestBody);
-            }
         }
-        if(count>=4) {
-            if(!images.get(3).contains("https://chanjongs.s3.amazonaws.com")) {
+        if(images.size()>=4) {
                 File file = new File(images.get(3));
                 RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                 image4 = MultipartBody.Part.createFormData("image4", file.getName(), requestBody);
-            }
         }
 
-        TotalApiClient.getEcoApiService(getApplicationContext()).editPost(pk,image1,image2,image3,image4, map)
+        for(int i:is_null) {
+            System.out.println("지울것" +i);
+        }
+
+        TotalApiClient.getEcoApiService(getApplicationContext()).editPost(pk,image1,image2,image3,image4,map,is_null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<CommonClass>() {
                     @Override
                     public void onSuccess(@NonNull CommonClass commonClass) {
-                        System.out.println(commonClass.getCode()+commonClass.getError_message());
-                        System.out.println("post 성공");
+                        if(commonClass.getCode()==200) {
+                            System.out.println(commonClass.getCode() + commonClass.getError_message());
+                            System.out.println("post 성공");
+                        }
+                        else{
+                            System.out.println("post 실패"+commonClass.getError_message());
+                        }
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        System.out.println("post 실패");
+                        System.out.println("오류"+e.getMessage());
                     }
                 });
     }

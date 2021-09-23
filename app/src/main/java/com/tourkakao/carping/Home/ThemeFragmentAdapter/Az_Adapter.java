@@ -1,6 +1,8 @@
 package com.tourkakao.carping.Home.ThemeFragmentAdapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.tourkakao.carping.Home.ThemeDataClass.AZPost;
+import com.tourkakao.carping.Home.ThemeDataClass.Thisweekend;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.databinding.EachAzBinding;
 
@@ -24,7 +27,7 @@ public class Az_Adapter extends RecyclerView.Adapter {
         this.azposts=azposts;
     }
     public interface OnSelectItemClickListener{
-        void OnSelectItemClick(View v, int pos);
+        void OnSelectItemClick(View v, int pos, int pk);
     }
     private OnSelectItemClickListener mListener=null;
 
@@ -43,25 +46,27 @@ public class Az_Adapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View v) {
                     int pos=getAdapterPosition();
+                    int pk=(int)Double.parseDouble(azposts.get(pos).getId());
                     if(pos!=RecyclerView.NO_POSITION){
                         if(mListener!=null){
-                            mListener.OnSelectItemClick(v, pos);
+                            mListener.OnSelectItemClick(v, pos, pk);
                         }
                     }
                 }
             });
         }
         public void setItem(AZPost post){
-            Glide.with(context).load(post.getProfile()).circleCrop().into(binding.azProfileImg);
-            Glide.with(context).load(post.getImage()).into(binding.azBackgroundImg);
-            if(post.getIsprimeum()==0){
+            //Glide.with(context).load(post.get).circleCrop().into(binding.azProfileImg);
+            Glide.with(context).load(post.getThumbnail()).into(binding.azBackgroundImg);
+            if(post.getPay_type().equals("0.0")){
                 Glide.with(context).load(R.drawable.free_mark).into(binding.premiumImage);
             }
-            if(post.getIsprimeum()!=0){
+            if(post.getPay_type().equals("1.0")){
                 Glide.with(context).load(R.drawable.premium_mark).into(binding.premiumImage);
             }
+            binding.azBackgroundImg.setColorFilter(Color.parseColor("#595959"), PorterDuff.Mode.MULTIPLY);
             binding.azTitleText.setText(post.getTitle());
-            binding.star.setText("★ "+post.getStar_number());
+            binding.star.setText("★ "+post.getTotal_star_avg());
         }
     }
     @NonNull
@@ -80,5 +85,13 @@ public class Az_Adapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         return azposts==null?0:azposts.size();
+    }
+
+    public void update_Item(ArrayList<AZPost> items){
+        if(azposts!=null){
+            azposts=null;
+        }
+        azposts=items;
+        notifyDataSetChanged();
     }
 }

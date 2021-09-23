@@ -45,8 +45,12 @@ public class PostTotalAdapter extends RecyclerView.Adapter<PostTotalAdapter.View
             });
         }
         public void bind(PostListItem items){
-            binding.title.setText(items.getTitle());
             Glide.with(context).load(R.drawable.like_mark).into(binding.like);
+            Glide.with(context).load(items.getThumbnail()).into(binding.image);
+            binding.title.setText(items.getTitle());
+            int id=(int)Double.parseDouble(items.getId());
+            binding.pk.setText(id);
+            binding.star.setText("★ "+items.getTotal_star_avg());
         }
     }
 

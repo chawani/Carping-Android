@@ -39,6 +39,10 @@ public class TotalApiClient {
         return getInstance(context).create(MypageInterface.class);
     }
 
+    public static PostInterface getPostApiService(Context context){
+        return getInstance(context).create(PostInterface.class);
+    }
+
     private static Retrofit getInstance(Context context){
         Retrofit retrofit=null;
         Gson gson=new GsonBuilder().setLenient().create();

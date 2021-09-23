@@ -55,7 +55,7 @@ public class EcoTopFragment extends Fragment {
             int length=ecoRanking.getUsername().length();
             SpannableString spannableString = new SpannableString(ecoRanking.getUsername());
             spannableString.setSpan(new StyleSpan(Typeface.BOLD),0,spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            ecobinding.username.setText("현재 "+spannableString+"님의");
+            ecobinding.username.setText(spannableString);
             ecobinding.level.setText("LV. "+ecoRanking.getLevel());
         }
     };
