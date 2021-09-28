@@ -1,11 +1,13 @@
 package com.tourkakao.carping.newcarping.Activity;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
@@ -30,13 +32,14 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
     Context context;
     int post_pk;
     Each_NewCarpingActivity each_newCarpingActivity;
-    MapView mapView;
+    MapView mapView=null;
     InfoFragment infoFragment;
     ReviewFragment reviewFragment;
     EachNewCarpingViewModel eachNewCarpingViewModel;
     MapReverseGeoCoder.ReverseGeoCodingResultListener reverseGeoCodingResultListener;
     MapReverseGeoCoder reverseGeoCoder=null;
     MapPoint mapPoint=null;
+    boolean to_edit=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,8 +78,10 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
     }
 
     public void setting_map(){
-        mapView=new MapView(this);
-        eachNewCarpingBinding.mapView.addView(mapView);
+        if(mapView==null) {
+            mapView = new MapView(this);
+            eachNewCarpingBinding.mapView.addView(mapView);
+        }
     }
 
     public void setting_tablayout(){
@@ -142,20 +147,64 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
             @Override
             public void onChanged(Integer integer) {
                 if(integer==1){
-                    eachNewCarpingBinding.fixNewcarping.setVisibility(View.VISIBLE);
-                    eachNewCarpingBinding.fixNewcarping.setOnClickListener(v -> {
-                        Intent fixintent=new Intent(context, Fix_newcarpingActivity.class);
-                        fixintent.putExtra("lat", eachNewCarpingViewModel.carpingplace_lat.getValue());
-                        fixintent.putExtra("lon", eachNewCarpingViewModel.carpingplace_lon.getValue());
-                        fixintent.putExtra("image1", eachNewCarpingViewModel.image1.getValue());
-                        fixintent.putExtra("image2", eachNewCarpingViewModel.image2.getValue());
-                        fixintent.putExtra("image3", eachNewCarpingViewModel.image3.getValue());
-                        fixintent.putExtra("image4", eachNewCarpingViewModel.image4.getValue());
-                        fixintent.putExtra("tags", eachNewCarpingViewModel.info_tags.getValue());
-                        fixintent.putExtra("title", eachNewCarpingViewModel.title.getValue());
-                        fixintent.putExtra("review", eachNewCarpingViewModel.info_review.getValue());
-                        fixintent.putExtra("id", eachNewCarpingViewModel.pk);
-                        startActivityForResult(fixintent, 1001);
+                    Glide.with(context).load(R.drawable.list_show_btn).into(eachNewCarpingBinding.listbtn);
+                    eachNewCarpingBinding.listbtn.setVisibility(View.VISIBLE);
+                    eachNewCarpingBinding.listbtn.setOnClickListener(v -> {
+                        eachNewCarpingBinding.listLayout.setVisibility(View.VISIBLE);
+                        eachNewCarpingBinding.newcarpingEdit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                eachNewCarpingBinding.mapView.removeView(mapView);
+                                mapView=null;
+                                eachNewCarpingBinding.listLayout.setVisibility(View.GONE);
+                                to_edit=true;
+                                Intent fixintent=new Intent(context, Fix_newcarpingActivity.class);
+                                fixintent.putExtra("lat", eachNewCarpingViewModel.carpingplace_lat.getValue());
+                                fixintent.putExtra("lon", eachNewCarpingViewModel.carpingplace_lon.getValue());
+                                fixintent.putExtra("image1", eachNewCarpingViewModel.image1.getValue());
+                                fixintent.putExtra("image2", eachNewCarpingViewModel.image2.getValue());
+                                fixintent.putExtra("image3", eachNewCarpingViewModel.image3.getValue());
+                                fixintent.putExtra("image4", eachNewCarpingViewModel.image4.getValue());
+                                fixintent.putExtra("tags", eachNewCarpingViewModel.info_tags.getValue());
+                                fixintent.putExtra("title", eachNewCarpingViewModel.title.getValue());
+                                fixintent.putExtra("review", eachNewCarpingViewModel.info_review.getValue());
+                                fixintent.putExtra("postpk", eachNewCarpingViewModel.pk);
+                                fixintent.putExtra("userpk", eachNewCarpingViewModel.userpk);
+                                startActivityForResult(fixintent, 1001);
+                            }
+                        });
+                    });
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        eachNewCarpingBinding.imagenest.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                            @Override
+                            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                                eachNewCarpingBinding.listLayout.setVisibility(View.GONE);
+                            }
+                        });
+                    }
+                    eachNewCarpingBinding.newcarpingTabs.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            eachNewCarpingBinding.listLayout.setVisibility(View.GONE);
+                        }
+                    });
+                    eachNewCarpingBinding.newcarpingTitle.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            eachNewCarpingBinding.listLayout.setVisibility(View.GONE);
+                        }
+                    });
+                    eachNewCarpingBinding.newcarpingTotalRating.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            eachNewCarpingBinding.listLayout.setVisibility(View.GONE);
+                        }
+                    });
+                    eachNewCarpingBinding.locate.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            eachNewCarpingBinding.listLayout.setVisibility(View.GONE);
+                        }
                     });
                 }
             }
@@ -169,5 +218,38 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
     @Override
     public void onReverseGeoCoderFailedToFindAddress(MapReverseGeoCoder mapReverseGeoCoder) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==RESULT_OK){
+            if(requestCode==1001){
+                eachNewCarpingViewModel.get_newcarping_detail();
+            }
+        }
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setting_map();
+        if(to_edit){
+            double lat=eachNewCarpingViewModel.carpingplace_lat.getValue();
+            double lon=eachNewCarpingViewModel.carpingplace_lon.getValue();
+            mapPoint=MapPoint.mapPointWithGeoCoord(lat, lon);
+            mapView.setMapCenterPointAndZoomLevel(mapPoint, 3, true);
+            MapPOIItem marker=new MapPOIItem();
+            marker.setItemName(eachNewCarpingViewModel.title.getValue());
+            marker.setMapPoint(mapPoint);
+            marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+            mapView.addPOIItem(marker);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        eachNewCarpingBinding.mapView.removeView(mapView);
+        mapView=null;
     }
 }

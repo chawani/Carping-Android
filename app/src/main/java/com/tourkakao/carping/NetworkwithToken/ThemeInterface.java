@@ -3,6 +3,7 @@ package com.tourkakao.carping.NetworkwithToken;
 import com.tourkakao.carping.theme.Dataclass.DaumBlog;
 import com.tourkakao.carping.theme.Dataclass.FilterTheme;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import io.reactivex.rxjava3.core.Single;
@@ -106,4 +107,20 @@ public interface ThemeInterface {
 
     @GET("v2/search/blog")
     Single<DaumBlog> getblog(@Header("Authorization")String key, @Query("query")String query);
+
+    @FormUrlEncoded
+    @POST("camps/theme/detail/{pk}")
+    Single<CommonClass> get_themedetail(@Path("pk")int pk, @Field("lat")double lat, @Field("lon")double lon);
+
+    @Multipart
+    @PATCH("camps/auto-camp/{id}/")
+    Single<CommonClass> edit_newcarping(@Path("id")int id,
+                                        @Part MultipartBody.Part image1,
+                                        @Part MultipartBody.Part image2,
+                                        @Part MultipartBody.Part image3,
+                                        @Part MultipartBody.Part image4,
+                                        @PartMap HashMap<String, RequestBody> data,
+                                        @Part("latitude")double latitude,
+                                        @Part("longitude")double longitude,
+                                        @Part("is_null")ArrayList<Integer> is_null);
 }

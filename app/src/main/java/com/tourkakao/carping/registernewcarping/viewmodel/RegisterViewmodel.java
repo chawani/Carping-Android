@@ -90,7 +90,6 @@ public class RegisterViewmodel extends ViewModel {
                 tagString=tagString+",";
             }
         }
-        System.out.println(image1+" "+image2+" "+image3+" "+image4);
         tagString=tagString+"]";
         HashMap<String, RequestBody> map=new HashMap<>();
         RequestBody text=RequestBody.create(MediaType.parse("text/plain"), n_text);
