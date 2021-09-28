@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="locateviewmodel"
+            type="com.tourkakao.carping.registernewshare.viewmodel.LocateViewModel" />
+    </data>
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:layout_marginTop="10dp">
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_weight="0.1"
+                android:src="@drawable/back"
+                android:layout_gravity="center_vertical"
+                android:clickable="true"/>
+            <EditText
+                android:id="@+id/search_edittext"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9"
+                android:hint="@{locateviewmodel.searchhint}"
+                android:text="@{locateviewmodel.searchnull}"
+                android:textColor="#000000"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/search_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{locateviewmodel.title}"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="20dp"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/locate_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
+    </LinearLayout>
+</layout>
