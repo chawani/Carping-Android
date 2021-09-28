@@ -55,6 +55,7 @@ public class PostCategoryActivity extends AppCompatActivity {
         viewModel.getCategoryData().observe(this, new Observer<ArrayList<PostListItem>>() {
             @Override
             public void onChanged(ArrayList<PostListItem> postListItems) {
+                binding.postCount.setText("전체포스트 "+postListItems.size()+"개");
                 adapter=new PostCategoryAdapter(getApplicationContext(),postListItems);
                 gridView.setAdapter(adapter);
             }
@@ -66,6 +67,7 @@ public class PostCategoryActivity extends AppCompatActivity {
         viewModel.getCategoryData().observe(this, new Observer<ArrayList<PostListItem>>() {
             @Override
             public void onChanged(ArrayList<PostListItem> postListItems) {
+                binding.postCount.setText("전체포스트 "+postListItems.size()+"개");
                 adapter = new PostCategoryAdapter(getApplicationContext(), postListItems);
                 gridView.setAdapter(adapter);
             }
@@ -77,6 +79,7 @@ public class PostCategoryActivity extends AppCompatActivity {
         viewModel.getCategoryData().observe(this, new Observer<ArrayList<PostListItem>>() {
             @Override
             public void onChanged(ArrayList<PostListItem> postListItems) {
+                binding.postCount.setText("전체포스트 "+postListItems.size()+"개");
                 adapter = new PostCategoryAdapter(getApplicationContext(), postListItems);
                 gridView.setAdapter(adapter);
             }

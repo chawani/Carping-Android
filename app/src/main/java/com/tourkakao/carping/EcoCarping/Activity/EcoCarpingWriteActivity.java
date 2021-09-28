@@ -102,9 +102,6 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
                     return;
                 }
                 post();
-                Toast myToast = Toast.makeText(getApplicationContext(),"작성 완료", Toast.LENGTH_SHORT);
-                myToast.show();
-                finish();
             }
         });
     }
@@ -383,7 +380,7 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
 
     public void post(){
         HashMap<String, RequestBody> map=new HashMap<>();
-        String userString=SharedPreferenceManager.getInstance(getApplicationContext()).getString("id","");
+        int userId=SharedPreferenceManager.getInstance(getApplicationContext()).getInt("id",0);
         RadioGroup rdgGroup = ecobinding.radioGroup;
         RadioButton rdoButton = findViewById( rdgGroup.getCheckedRadioButtonId() );
         String strPgmId = rdoButton.getText().toString();
@@ -396,7 +393,7 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
         }
         tagString=tagString+"]";
 
-        RequestBody user = RequestBody.create(MediaType.parse("text/plain"),userString);
+        RequestBody user = RequestBody.create(MediaType.parse("text/plain"),Integer.toString(userId));
         RequestBody latitude = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(mapPoint.getMapPointGeoCoord().latitude));
         RequestBody longitude = RequestBody.create(MediaType.parse("text/plain"),String.valueOf(mapPoint.getMapPointGeoCoord().longitude));
         RequestBody title = RequestBody.create(MediaType.parse("text/plain"),ecobinding.title.getText().toString());
@@ -446,13 +443,20 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
                 .subscribeWith(new DisposableSingleObserver<CommonClass>() {
                     @Override
                     public void onSuccess(@NonNull CommonClass commonClass) {
-                        System.out.println(commonClass.getCode()+commonClass.getError_message());
-                        System.out.println("post 성공");
+                        if(commonClass.getCode()==200) {
+                            Toast myToast = Toast.makeText(getApplicationContext(),"작성 완료", Toast.LENGTH_SHORT);
+                            myToast.show();
+                            finish();
+                        }
+                        else{
+                            System.out.println(commonClass.getCode()+commonClass.getError_message());
+                            Toast myToast = Toast.makeText(getApplicationContext(),"작성 실패", Toast.LENGTH_SHORT);
+                            myToast.show();
+                        }
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        System.out.println("post 실패");
                     }
                 });
     }

@@ -99,6 +99,7 @@ public class EcoCarpingDetailActivity extends AppCompatActivity {
         ecoDetailViewModel.getTags().observe(this, new Observer<ArrayList<String>>() {
             @Override
             public void onChanged(ArrayList<String> strings) {
+                binding.tagArea.removeAllViews();
                 for(String tag:strings) {
                     TextView textView = new TextView(getApplicationContext());
                     LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -218,5 +219,11 @@ public class EcoCarpingDetailActivity extends AppCompatActivity {
     public int convertDp(int dp) {
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, metrics);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getDetailInfo();
     }
 }

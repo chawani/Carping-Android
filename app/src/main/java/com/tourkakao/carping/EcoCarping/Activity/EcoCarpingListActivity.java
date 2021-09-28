@@ -102,13 +102,6 @@ public class EcoCarpingListActivity extends AppCompatActivity {
         ecobinding.totalReviewRecycler.setLayoutManager(mLayoutManager);
         ecoTotalViewModel.getPopularOrderReviews().observe(lifecycleOwner,reviewsObserver);
         ecoTotalViewModel.getRecentOrderReviews().observe(lifecycleOwner,reviewsObserver);
-        ecoTotalViewModel.getDistanceOrderReviews().observe(lifecycleOwner,reviewsObserver);
-        //수정
-        GpsTracker gpsTracker = new GpsTracker(getApplicationContext());
-        currentLatitude = (float)gpsTracker.getLatitude();
-        currentLongitude = (float)gpsTracker.getLongitude();
-        ecoTotalViewModel.setLocation(currentLatitude,currentLongitude);
-        ecoTotalViewModel.startDistance();
     }
 
     public android.widget.AdapterView.OnItemSelectedListener spinnerListener=new AdapterView.OnItemSelectedListener(){
@@ -147,4 +140,13 @@ public class EcoCarpingListActivity extends AppCompatActivity {
             }
         }
     };
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ecoTotalViewModel.loadPopularReviews();
+        ecoTotalViewModel.loadRecentReviews();
+    }
+
 }

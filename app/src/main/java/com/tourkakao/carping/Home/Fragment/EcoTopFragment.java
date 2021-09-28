@@ -51,12 +51,14 @@ public class EcoTopFragment extends Fragment {
     Observer<EcoRanking> userObserver=new Observer<EcoRanking>() {
         @Override
         public void onChanged(EcoRanking ecoRanking) {
-
-            int length=ecoRanking.getUsername().length();
-            SpannableString spannableString = new SpannableString(ecoRanking.getUsername());
-            spannableString.setSpan(new StyleSpan(Typeface.BOLD),0,spannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            ecobinding.username.setText(spannableString);
+            ecobinding.username.setText(ecoRanking.getUsername());
             ecobinding.level.setText("LV. "+ecoRanking.getLevel());
         }
     };
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ecoViewModel.getRanking();
+    }
 }

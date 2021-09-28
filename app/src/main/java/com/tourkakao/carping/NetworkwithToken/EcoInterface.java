@@ -37,10 +37,6 @@ public interface EcoInterface {
     @POST("posts/eco-carping/sort")
     Single<CommonClass> getPopularEcoCarpingReview(@Field("sort")String sort);
 
-    @FormUrlEncoded
-    @POST("posts/eco-carping/sort")
-    Single<CommonClass> getDistanceEcoCarpingReview(@Field("sort")String sort,@Field("latitude")Float latitude,@Field("longitude")Float longitude);
-
     @GET("accounts/eco-ranking")
     Single<CommonClass> getEcoCarpingRanking();
 

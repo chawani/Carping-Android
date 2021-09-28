@@ -97,13 +97,13 @@ public class ProfileEditActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==0&&resultCode==RESULT_OK){
-            String userId= SharedPreferenceManager.getInstance(context).getString("id","");
+            int userId= SharedPreferenceManager.getInstance(context).getInt("id",0);
             Uri uri = data.getData();
             String path=getPath(uri);
             File file = new File(path);
             RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
             MultipartBody.Part image = MultipartBody.Part.createFormData("image", file.getName(), requestBody);
-            TotalApiClient.getMypageApiService(context).postProfileImg(userId,image)
+            TotalApiClient.getMypageApiService(context).postProfileImg(Integer.toString(userId),image)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(new DisposableSingleObserver<CommonClass>() {
@@ -131,7 +131,6 @@ public class ProfileEditActivity extends AppCompatActivity {
         Glide.with(context).load(R.drawable.right_arrow).into(binding.arrow3);
     }
     public void settingInfo(){
-        myViewModel.loadProfile();
         myViewModel.getProfileMutableLiveData().observe(this, new Observer<Profile>() {
             @Override
             public void onChanged(Profile profile) {
@@ -223,5 +222,11 @@ public class ProfileEditActivity extends AppCompatActivity {
 
     public static boolean isDownloadsDocument(Uri uri) {
         return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        myViewModel.loadProfile();
     }
 }

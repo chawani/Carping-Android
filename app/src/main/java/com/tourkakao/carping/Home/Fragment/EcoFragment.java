@@ -132,4 +132,11 @@ public class EcoFragment extends Fragment {
                     .setText("최근 1개월 간\n에코리뷰 "+Integer.toString(integer)+"개 작성");
         }
     };
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ecoViewModel.getRanking();
+        ecoViewModel.getReviews();
+    }
 }

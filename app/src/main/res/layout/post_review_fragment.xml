@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <ImageView
+        android:id="@+id/profile"
         android:layout_marginTop="35.5dp"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -18,8 +19,36 @@
         android:stepSize="0.1"
         style="@style/Widget.AppCompat.RatingBar.Indicator"
         android:layout_gravity="center"/>
-    <TextView
+    <LinearLayout
         android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/current_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/spoqa_han_sans_neo"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:textColor="#5f51ef"
+            android:lineSpacingExtra="8.3sp"
+            android:gravity="center_horizontal"
+            android:text="user2"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/spoqa_han_sans_neo"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:textColor="#000000"
+            android:lineSpacingExtra="8.3sp"
+            android:gravity="center_horizontal"
+            android:text="님"/>
+    </LinearLayout>
+    <TextView
+        android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/spoqa_han_sans_neo"
@@ -31,6 +60,7 @@
         android:text="이 포스트를 평가해주세요!"
         android:layout_gravity="center"/>
     <TextView
+        android:id="@+id/review_count"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="35dp"
         android:layout_width="wrap_content"
@@ -52,6 +82,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/review_avg"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -61,6 +92,7 @@
                 android:textColor="#5f51ef"
                 android:text="4.7"/>
             <RatingBar
+                android:id="@+id/total_star"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:isIndicator="true"
@@ -89,6 +121,7 @@
                     android:textColor="#666666"
                     android:text="유익성"/>
                 <RatingBar
+                    android:id="@+id/start1_star"
                     android:layout_marginLeft="23dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -98,6 +131,7 @@
                     style="@style/Widget.AppCompat.RatingBar.Small"
                     android:layout_gravity="center"/>
                 <TextView
+                    android:id="@+id/star1"
                     android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -121,6 +155,7 @@
                     android:textSize="12sp"
                     android:textStyle="normal" />
                 <RatingBar
+                    android:id="@+id/start2_star"
                     android:layout_marginLeft="23dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -130,6 +165,7 @@
                     style="@style/Widget.AppCompat.RatingBar.Small"
                     android:layout_gravity="center"/>
                 <TextView
+                    android:id="@+id/star2"
                     android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -153,6 +189,7 @@
                     android:textColor="#666666"
                     android:text="전달력"/>
                 <RatingBar
+                    android:id="@+id/start3_star"
                     android:layout_marginLeft="23dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -162,6 +199,7 @@
                     style="@style/Widget.AppCompat.RatingBar.Small"
                     android:layout_gravity="center"/>
                 <TextView
+                    android:id="@+id/star3"
                     android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -185,6 +223,7 @@
                     android:textColor="#666666"
                     android:text="친절도"/>
                 <RatingBar
+                    android:id="@+id/start4_star"
                     android:layout_marginLeft="23dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -194,6 +233,7 @@
                     style="@style/Widget.AppCompat.RatingBar.Small"
                     android:layout_gravity="center"/>
                 <TextView
+                    android:id="@+id/star4"
                     android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -206,11 +246,13 @@
         </LinearLayout>
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/reviews"
         android:layout_marginTop="30.5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"/>
     <ImageView
+        android:layout_marginBottom="60dp"
         android:id="@+id/review_more"
         android:clickable="true"
         android:layout_width="match_parent"

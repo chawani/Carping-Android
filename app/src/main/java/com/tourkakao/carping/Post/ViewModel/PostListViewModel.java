@@ -60,16 +60,16 @@ public class PostListViewModel extends ViewModel {
         ArrayList<PostListItem> listItems=gson.fromJson(total, new TypeToken<ArrayList<PostListItem>>(){}.getType());
         for(PostListItem item:listItems){
             int category=(int)Double.parseDouble(item.getCategory());
-            if(category==0){//반드시 수정하거라
+            if(category==1){
                 popular.add(item);
             }
-            if(category==0){
+            if(category==2){
                 beginner.add(item);
             }
-            if(category==0){
+            if(category==3){
                 allOf.add(item);
             }
-            if(category==0){
+            if(category==4){
                 car.add(item);
             }
         }
@@ -77,7 +77,7 @@ public class PostListViewModel extends ViewModel {
         beginnerLiveData.setValue(beginner);
         allOfLiveData.setValue(allOf);
         carLiveData.setValue(car);
-        System.out.println("제대로 오니"+total);
+        System.out.println("확인"+total);
     }
 
     public void setCategoryData(List data){
@@ -85,7 +85,6 @@ public class PostListViewModel extends ViewModel {
         String total=gson.toJson(data);
         ArrayList<PostListItem> listItems=gson.fromJson(total, new TypeToken<ArrayList<PostListItem>>(){}.getType());
         categoryData.setValue(listItems);
-        System.out.println("카테고리 제대로 오니"+total);
     }
 
     public void loadTotalList(){

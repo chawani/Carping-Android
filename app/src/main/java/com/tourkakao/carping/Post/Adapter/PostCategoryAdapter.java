@@ -10,6 +10,8 @@ import android.widget.BaseAdapter;
 import androidx.databinding.DataBindingUtil;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.tourkakao.carping.Post.DTO.PostListItem;
 import com.tourkakao.carping.Post.PostDetailActivity;
 import com.tourkakao.carping.Post.PremiumPostActivity;
@@ -56,11 +58,23 @@ public class PostCategoryAdapter extends BaseAdapter {
         }
 
         PostListItem item=(PostListItem)getItem(position);
-        binding.name.setText(item.getAuthor());
-        binding.title.setText(item.getTitle());
+        Glide.with(context).load(item.getThumbnail())
+                .transform(new CenterCrop(), new RoundedCorners(30))
+                .into(binding.image);
         Glide.with(context).load(R.drawable.like_mark).into(binding.like);
-        Glide.with(context).load(R.drawable.free_mark).into(binding.premiumImage);
-        //Glide.with(context).load(R.drawable.premium_mark).into(binding.premiumImage);
+        if(item.getPoint().equals("0.0")) {
+            Glide.with(context).load(R.drawable.free_mark).into(binding.premiumImage);
+        }else{
+            Glide.with(context).load(R.drawable.premium_mark).into(binding.premiumImage);
+        }
+        binding.title.setText(item.getTitle());
+        binding.star.setText("★ "+item.getTotal_star_avg());
+        binding.name.setText(item.getAuthor());
+        binding.pk.setText(item.getId());
+        if(!item.getPoint().equals("0.0")){
+            int point=(int)Double.parseDouble(item.getPoint());
+            binding.point.setText(Integer.toString(point)+"원");
+        }
 
         binding.view.setOnClickListener(new View.OnClickListener() {
             @Override

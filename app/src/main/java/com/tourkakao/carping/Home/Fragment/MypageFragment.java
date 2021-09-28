@@ -58,7 +58,6 @@ public class MypageFragment extends Fragment {
         myViewModel =new ViewModelProvider(this).get(MypageViewModel.class);
         myViewModel.setContext(context);
         settingImg();
-        myViewModel.loadProfile();
 
 
         mypagebinding.editButton.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +125,7 @@ public class MypageFragment extends Fragment {
                 interest=interest.replace("]","");
                 interest=interest.replace(" ","");
                 String[] tags=interest.split(",");
-                //System.out.println("관심사 확인"+interest);
+                mypagebinding.tag.removeAllViews();
                 for(String tag:tags){
                     TextView textView = new TextView(context);
                     LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -161,5 +160,17 @@ public class MypageFragment extends Fragment {
     public int convertDp(int dp) {
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, metrics);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mypagebinding=null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        myViewModel.loadProfile();
     }
 }

@@ -69,8 +69,8 @@ public class PersonalInformationActivity extends AppCompatActivity {
         map.put("username", username);
         map.put("bio", bio);
         map.put("interest",interest);
-        String userId= SharedPreferenceManager.getInstance(context).getString("id","");
-        TotalApiClient.getMypageApiService(context).postUserInfo(userId,map)
+        int userId= SharedPreferenceManager.getInstance(context).getInt("id",0);
+        TotalApiClient.getMypageApiService(context).postUserInfo(Integer.toString(userId),map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<CommonClass>() {

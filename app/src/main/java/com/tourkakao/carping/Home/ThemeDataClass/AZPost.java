@@ -3,6 +3,7 @@ package com.tourkakao.carping.Home.ThemeDataClass;
 import com.google.gson.annotations.SerializedName;
 
 public class AZPost {
+    private String user_profile;
     private String id;
     private String title;
     private String total_star_avg;
@@ -12,6 +13,14 @@ public class AZPost {
     private String category;
     private String pay_type;
     private String point;
+
+    public String getUser_profile() {
+        return user_profile;
+    }
+
+    public void setUser_profile(String user_profile) {
+        this.user_profile = user_profile;
+    }
 
     public String getId() {
         return id;

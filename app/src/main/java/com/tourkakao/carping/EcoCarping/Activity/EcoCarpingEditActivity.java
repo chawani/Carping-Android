@@ -110,9 +110,6 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
                     return;
                 }
                 post();
-                Toast myToast = Toast.makeText(getApplicationContext(),"수정 완료", Toast.LENGTH_SHORT);
-                myToast.show();
-                finish();
             }
         });
     }
@@ -416,22 +413,22 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
         MultipartBody.Part image3=null;
         MultipartBody.Part image4=null;
 
-        if(images.size()>=1) {
+        if(images.size()>=1&&initialImgCheck[0]==0) {
                 File file = new File(images.get(0));
                 RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                 image1 = MultipartBody.Part.createFormData("image1", file.getName(), requestBody);
         }
-        if(images.size()>=2) {
+        if(images.size()>=2&&initialImgCheck[1]==0) {
                 File file = new File(images.get(1));
                 RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                 image2 = MultipartBody.Part.createFormData("image2", file.getName(), requestBody);
         }
-        if(images.size()>=3) {
+        if(images.size()>=3&&initialImgCheck[2]==0) {
                 File file = new File(images.get(2));
                 RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                 image3 = MultipartBody.Part.createFormData("image3", file.getName(), requestBody);
         }
-        if(images.size()>=4) {
+        if(images.size()>=4&&initialImgCheck[3]==0) {
                 File file = new File(images.get(3));
                 RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                 image4 = MultipartBody.Part.createFormData("image4", file.getName(), requestBody);
@@ -440,6 +437,7 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
         for(int i:is_null) {
             System.out.println("지울것" +i);
         }
+        System.out.println("이미지 수"+images.size());
 
         TotalApiClient.getEcoApiService(getApplicationContext()).editPost(pk,image1,image2,image3,image4,map,is_null)
                 .subscribeOn(Schedulers.io())
@@ -448,8 +446,9 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(@NonNull CommonClass commonClass) {
                         if(commonClass.getCode()==200) {
-                            System.out.println(commonClass.getCode() + commonClass.getError_message());
-                            System.out.println("post 성공");
+                            Toast myToast = Toast.makeText(getApplicationContext(),"수정 완료", Toast.LENGTH_SHORT);
+                            myToast.show();
+                            finish();
                         }
                         else{
                             System.out.println("post 실패"+commonClass.getError_message());

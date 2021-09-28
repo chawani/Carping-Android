@@ -4,61 +4,26 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <LinearLayout
+    <TextView
         android:layout_marginHorizontal="16dp"
+        android:lineSpacingExtra="10dp"
+        android:background="#fafafa"
+        android:paddingHorizontal="14dp"
+        android:paddingVertical="14dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <ImageView
-            android:layout_width="47dp"
-            android:layout_height="47dp"/>
-        <LinearLayout
-            android:layout_marginLeft="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_marginTop="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/spoqa_han_sans_neo"
-                    android:textStyle="bold"
-                    android:textSize="17sp"
-                    android:textColor="#000000"
-                    android:text="수린"/>
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"/>
-                <ImageView
-                    android:layout_marginTop="4dp"
-                    android:layout_width="36dp"
-                    android:layout_height="20dp"/>
-            </LinearLayout>
-            <TextView
-                android:lineSpacingExtra="10dp"
-                android:background="#fafafa"
-                android:paddingHorizontal="14dp"
-                android:paddingVertical="14dp"
-                android:layout_marginTop="14dp"
-                android:layout_width="match_parent"
-                android:layout_height="97dp"
-                android:fontFamily="@font/spoqa_han_sans_neo"
-                android:textStyle="normal"
-                android:textSize="12sp"
-                android:textColor="#666666"
-                android:text="✔️ 결제 후 마이페이지에서 포스트를 열람하실 수 있습니다.\n✔️ 포스트는 영상이 아닌 이미지와 글로 구성되어 있습니다.\n✔️ 기타 관련 문의사항은 1:1 문의하기로 해주세요:)"/>
-        </LinearLayout>
-    </LinearLayout>
+        android:layout_height="97dp"
+        android:fontFamily="@font/spoqa_han_sans_neo"
+        android:textStyle="normal"
+        android:textSize="12sp"
+        android:textColor="#666666"
+        android:text="✔️ 결제 후 마이페이지에서 포스트를 열람하실 수 있습니다.\n✔️ 포스트는 영상이 아닌 이미지와 글로 구성되어 있습니다.\n✔️ 기타 관련 문의사항은 1:1 문의하기로 해주세요:)"/>
 
     <ImageView
-        android:layout_marginTop="66dp"
+        android:id="@+id/question_button"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:clickable="true"
+        android:layout_marginBottom="43dp"
         android:layout_marginHorizontal="16dp"/>
 </LinearLayout>

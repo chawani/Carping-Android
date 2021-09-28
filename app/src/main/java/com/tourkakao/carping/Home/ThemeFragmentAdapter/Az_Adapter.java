@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.tourkakao.carping.Home.ThemeDataClass.AZPost;
 import com.tourkakao.carping.Home.ThemeDataClass.Thisweekend;
 import com.tourkakao.carping.R;
@@ -56,7 +58,9 @@ public class Az_Adapter extends RecyclerView.Adapter {
             });
         }
         public void setItem(AZPost post){
-            //Glide.with(context).load(post.get).circleCrop().into(binding.azProfileImg);
+            Glide.with(context).load(post.getUser_profile())
+                    .transform(new CenterCrop(), new RoundedCorners(100))
+                    .into(binding.azProfileImg);
             Glide.with(context).load(post.getThumbnail()).into(binding.azBackgroundImg);
             if(post.getPay_type().equals("0.0")){
                 Glide.with(context).load(R.drawable.free_mark).into(binding.premiumImage);

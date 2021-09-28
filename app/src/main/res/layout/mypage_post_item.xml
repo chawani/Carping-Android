@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="380dp"
+        android:layout_height="248dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="185dp">
+                <ImageView
+                    android:id="@+id/az_background_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="center"/>
+                <ImageView
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="19.4dp"
+                    android:layout_width="50dp"
+                    android:layout_height="18dp"/>
+                <TextView
+                    android:layout_marginHorizontal="19.4dp"
+                    android:layout_marginTop="45dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/spoqa_han_sans_neo"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textColor="#ffffff"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="3만원으로 전국차박 정복하기"/>
+                <TextView
+                    android:layout_width="48.90080261230469dp"
+                    android:layout_height="16dp"
+                    android:fontFamily="@font/spoqa_han_sans_neo"
+                    android:textStyle="normal"
+                    android:textSize="13sp"
+                    android:textColor="#ffffff"
+                    android:text="결제완료"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="19.4dp"
+                    android:layout_marginBottom="13dp"/>
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_marginLeft="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"/>
+                <LinearLayout
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="9dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                        android:textStyle="normal"
+                        android:textSize="15sp"
+                        android:textColor="#000000"
+                        android:text="every 2ear"/>
+                    <TextView
+                        android:layout_marginTop="3dp"
+                        android:id="@+id/star"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/spoqa_han_sans_neo"
+                        android:textStyle="bold"
+                        android:textSize="11sp"
+                        android:textColor="#5f51ef"
+                        android:text="★ 3.5 "/>
+                </LinearLayout>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:layout_marginRight="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

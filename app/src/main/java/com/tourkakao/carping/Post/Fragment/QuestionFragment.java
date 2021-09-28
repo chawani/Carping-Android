@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.tourkakao.carping.R;
 import com.tourkakao.carping.databinding.PostIntroduceFragmentBinding;
 import com.tourkakao.carping.databinding.PostQuestionFragmentBinding;
 
@@ -28,6 +30,6 @@ public class QuestionFragment extends Fragment {
     }
 
     public void initLayout(){
-
+        Glide.with(context).load(R.drawable.question_button).into(binding.questionButton);
     }
 }

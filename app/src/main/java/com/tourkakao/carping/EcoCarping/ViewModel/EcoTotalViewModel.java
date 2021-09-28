@@ -25,31 +25,13 @@ public class EcoTotalViewModel extends ViewModel {
     private Context context;
     private MutableLiveData<ArrayList<EcoReview>> recentOrderReviews=new MutableLiveData<>();
     private MutableLiveData<ArrayList<EcoReview>> popularOrderReviews=new MutableLiveData<>();
-    private MutableLiveData<ArrayList<EcoReview>> distanceOrderReviews=new MutableLiveData<>();
-    private Float latitude;
-    private Float longitude;
-
-    public EcoTotalViewModel(){
-        updateRecentReviews();
-        updatePopularReviews();
-    }
-
-    public void startDistance(){
-        updateDistanceReviews();
-    }
 
     public void setContext(Context context){
         this.context=context;
     }
 
-    public void setLocation(Float latitude,Float longitude){
-        this.latitude=latitude;
-        this.longitude=longitude;
-    }
-
     public MutableLiveData<ArrayList<EcoReview>> getRecentOrderReviews(){return recentOrderReviews;}
     public MutableLiveData<ArrayList<EcoReview>> getPopularOrderReviews(){return popularOrderReviews;}
-    public MutableLiveData<ArrayList<EcoReview>> getDistanceOrderReviews(){return distanceOrderReviews;}
 
     public void setReviewData(String sort,ArrayList data){
         Gson gson=new Gson();
@@ -64,12 +46,9 @@ public class EcoTotalViewModel extends ViewModel {
         if(sort.equals("popular")){
             popularOrderReviews.setValue(reviews);
         }
-        if(sort.equals("distance")){
-            distanceOrderReviews.setValue(reviews);
-        }
     }
 
-    public void updateRecentReviews(){
+    public void loadRecentReviews(){
         TotalApiClient.getEcoApiService(context).getRecentEcoCarpingReview("recent",0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -86,7 +65,7 @@ public class EcoTotalViewModel extends ViewModel {
                 });
     }
 
-    public void updatePopularReviews(){
+    public void loadPopularReviews(){
         TotalApiClient.getEcoApiService(context).getPopularEcoCarpingReview("popular")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -94,23 +73,6 @@ public class EcoTotalViewModel extends ViewModel {
                     @Override
                     public void onSuccess(@NonNull CommonClass commonClass) {
                         setReviewData("popular",commonClass.getData());
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-
-                    }
-                });
-    }
-
-    public void updateDistanceReviews(){
-        TotalApiClient.getEcoApiService(context).getDistanceEcoCarpingReview("distance",latitude,longitude)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<CommonClass>() {
-                    @Override
-                    public void onSuccess(@NonNull CommonClass commonClass) {
-                        setReviewData("distance",commonClass.getData());
                     }
 
                     @Override

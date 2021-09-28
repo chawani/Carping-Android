@@ -42,11 +42,6 @@ public class EcoViewModel extends ViewModel {
     public MutableLiveData<Integer> ecoPercentage=new MutableLiveData<>();
     public MutableLiveData<Integer> monthlyEcoCount=new MutableLiveData<>();
 
-    public EcoViewModel(){
-        getReviews();
-        getRanking();
-    }
-
     public void setContext(Context context) {
         this.context = context;
     }
