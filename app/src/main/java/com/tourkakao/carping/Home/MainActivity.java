@@ -102,12 +102,14 @@ public class MainActivity extends AppCompatActivity{
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
                     case R.id.home:
+                        mapFragment.setting_remove_map();
                         getSupportFragmentManager().beginTransaction().show(homeFragment).commit();
                         getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
                         getSupportFragmentManager().beginTransaction().hide(communityFragment).commit();
                         getSupportFragmentManager().beginTransaction().hide(mypageFragment).commit();
                         break;
                     case R.id.map:
+                        mapFragment.setting_map();
                         getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
                         getSupportFragmentManager().beginTransaction().show(mapFragment).commit();
                         getSupportFragmentManager().beginTransaction().hide(communityFragment).commit();
@@ -132,5 +134,11 @@ public class MainActivity extends AppCompatActivity{
                 return true;
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mapFragment.setting_remove_map();
     }
 }

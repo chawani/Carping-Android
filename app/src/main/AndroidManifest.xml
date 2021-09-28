@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".sharedetail.Activity.ShareTotalActivity"></activity>
+        <activity android:name=".Map.Activity.MapSearchActivity"></activity>
+        <activity android:name=".sharedetail.Activity.ShareTotalActivity" />
         <activity android:name=".registernewshare.Activity.LocateSelectActivity" />
         <activity android:name=".sharedetail.Activity.ShareDetailActivity" />
         <activity android:name=".registernewshare.Activity.Register_ShareActivity" />

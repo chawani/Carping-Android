@@ -37,6 +37,9 @@ public class TotalApiClient {
     public static CommunityInterface getCommunityApiService(Context context){
         return getInstance(context).create(CommunityInterface.class);
     }
+    public static MapInterface getMapApiService(Context context){
+        return getInstance(context).create(MapInterface.class);
+    }
     private static Retrofit getInstance(Context context){
         Retrofit retrofit=null;
         Gson gson=new GsonBuilder().setLenient().create();

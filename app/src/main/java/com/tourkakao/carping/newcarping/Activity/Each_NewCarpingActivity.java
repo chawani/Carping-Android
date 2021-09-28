@@ -245,4 +245,11 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
             mapView.addPOIItem(marker);
         }
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        eachNewCarpingBinding.mapView.removeView(mapView);
+        mapView=null;
+    }
 }
