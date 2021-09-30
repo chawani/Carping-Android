@@ -2,6 +2,7 @@ package com.tourkakao.carping.NetworkwithToken;
 
 import com.tourkakao.carping.theme.Dataclass.DaumBlog;
 import com.tourkakao.carping.theme.Dataclass.FilterTheme;
+import com.tourkakao.carping.theme.Dataclass.TourSearch;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -143,5 +144,29 @@ public interface ThemeInterface {
     @FormUrlEncoded
     @HTTP(method="DELETE", path="search/keyword", hasBody = true)
     Single<CommonClass> delete_search_keyword(@Field("keyword")String keyword, @Field("type")String type);
+
+    @GET("v2/local/search/category.json")
+    Single<TourSearch> getTour(
+            @Header("Authorization")String key,
+            @Query("category_group_code")String category_group_code,
+            @Query("x")String x,
+            @Query("y")String y,
+            @Query("radius")int radius);
+
+    @GET("v2/local/search/category.json")
+    Single<TourSearch> getRestaurant(
+            @Header("Authorization")String key,
+            @Query("category_group_code")String category_group_code,
+            @Query("x")String x,
+            @Query("y")String y,
+            @Query("radius")int radius);
+
+    @GET("v2/local/search/category.json")
+    Single<TourSearch> getCulture(
+            @Header("Authorization")String key,
+            @Query("category_group_code")String category_group_code,
+            @Query("x")String x,
+            @Query("y")String y,
+            @Query("radius")int radius);
 
 }

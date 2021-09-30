@@ -46,10 +46,13 @@ public class ThemeDetailActivity extends AppCompatActivity {
         infoFragment.setPk(pk);
         infoFragment.searchblog();
         recommendFragment=new ThemeRecommendFragment();
+
         getSupportFragmentManager().beginTransaction().add(R.id.theme_detail_frame, infoFragment).commit();
         getSupportFragmentManager().beginTransaction().add(R.id.theme_detail_frame, recommendFragment).commit();
+        getSupportFragmentManager().beginTransaction().hide(recommendFragment).commit();
         setting_tablayout();
         starting_observe_image();
+        starting_observe_lat_and_lon();
     }
 
     public void setting_tablayout(){
@@ -58,11 +61,11 @@ public class ThemeDetailActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 int pos=tab.getPosition();
                 if(pos==0){
-                    getSupportFragmentManager().beginTransaction().show(infoFragment);
-                    getSupportFragmentManager().beginTransaction().hide(recommendFragment);
+                    getSupportFragmentManager().beginTransaction().show(infoFragment).commit();
+                    getSupportFragmentManager().beginTransaction().hide(recommendFragment).commit();
                 }else{
-                    getSupportFragmentManager().beginTransaction().hide(infoFragment);
-                    getSupportFragmentManager().beginTransaction().show(recommendFragment);
+                    getSupportFragmentManager().beginTransaction().hide(infoFragment).commit();
+                    getSupportFragmentManager().beginTransaction().show(recommendFragment).commit();
                 }
             }
 
@@ -86,6 +89,16 @@ public class ThemeDetailActivity extends AppCompatActivity {
                 }else{
                     Glide.with(context).load(R.drawable.thema_no_img).into(detailBinding.themeMainImg);
                 }
+            }
+        });
+    }
+    public void starting_observe_lat_and_lon(){
+        detailViewModel.carping_lon.observe(this, new Observer<Float>() {
+            @Override
+            public void onChanged(Float aFloat) {
+                recommendFragment.setLat(String.valueOf(detailViewModel.carping_lat.getValue()));
+                recommendFragment.setLon(String.valueOf(aFloat));
+                recommendFragment.search_tour();
             }
         });
     }
