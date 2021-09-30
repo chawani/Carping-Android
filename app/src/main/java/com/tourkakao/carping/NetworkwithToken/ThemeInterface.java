@@ -123,4 +123,25 @@ public interface ThemeInterface {
                                         @Part("latitude")double latitude,
                                         @Part("longitude")double longitude,
                                         @Part("is_null")ArrayList<Integer> is_null);
+
+    @FormUrlEncoded
+    @POST("search/region")
+    Single<CommonClass> get_eachcity(@Field("region")String region);
+
+    @FormUrlEncoded
+    @POST("search/main")
+    Single<CommonClass> main_search(@Field("keyword")String keyword, @Field("lat")double lat, @Field("lon")double lon);
+
+    @FormUrlEncoded
+    @POST("search/complete")
+    Single<CommonClass> save_search_keyword(@Field("keyword")String keyword, @Field("name")String name, @Field("type")String type);
+
+    @FormUrlEncoded
+    @POST("search/keyword")
+    Single<CommonClass> get_popular_recent_keyword(@Field("type")String type);
+
+    @FormUrlEncoded
+    @HTTP(method="DELETE", path="search/keyword", hasBody = true)
+    Single<CommonClass> delete_search_keyword(@Field("keyword")String keyword, @Field("type")String type);
+
 }

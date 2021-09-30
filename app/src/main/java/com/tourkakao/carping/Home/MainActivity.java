@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.tourkakao.carping.Home.Fragment.CommunityFragment;
 import com.tourkakao.carping.Home.Fragment.EcoFragment;
 import com.tourkakao.carping.Home.Fragment.EcoTopFragment;
@@ -116,15 +117,18 @@ public class MainActivity extends AppCompatActivity{
                         getSupportFragmentManager().beginTransaction().hide(mypageFragment).commit();
                         break;
                     case R.id.upload:
+                        mapFragment.setting_map();
                         startActivity(new Intent(MainActivity.this, RegisterActivity.class));
                         break;
                     case R.id.community:
+                        mapFragment.setting_map();
                         getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
                         getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
                         getSupportFragmentManager().beginTransaction().show(communityFragment).commit();
                         getSupportFragmentManager().beginTransaction().hide(mypageFragment).commit();
                         break;
                     case R.id.profile:
+                        mapFragment.setting_map();
                         getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
                         getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
                         getSupportFragmentManager().beginTransaction().hide(communityFragment).commit();
@@ -140,5 +144,14 @@ public class MainActivity extends AppCompatActivity{
     protected void onPause() {
         super.onPause();
         mapFragment.setting_remove_map();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(homeFragment.homebinding.slidingLayout.getPanelState()== SlidingUpPanelLayout.PanelState.COLLAPSED){
+            super.onBackPressed();
+        }else if(homeFragment.homebinding.slidingLayout.getPanelState()== SlidingUpPanelLayout.PanelState.EXPANDED){
+            homeFragment.homebinding.slidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        }
     }
 }
