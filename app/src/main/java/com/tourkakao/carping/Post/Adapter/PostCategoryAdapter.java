@@ -2,12 +2,16 @@ package com.tourkakao.carping.Post.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -15,6 +19,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.tourkakao.carping.Post.DTO.PostListItem;
 import com.tourkakao.carping.Post.PostDetailActivity;
 import com.tourkakao.carping.Post.PremiumPostActivity;
+import com.tourkakao.carping.Post.ViewModel.PostDetailViewModel;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.databinding.PostCategoryItemBinding;
 import com.tourkakao.carping.databinding.PostTotalItemBinding;
@@ -24,6 +29,14 @@ import java.util.ArrayList;
 public class PostCategoryAdapter extends BaseAdapter {
     private ArrayList<PostListItem> items;
     private Context context;
+
+    public interface OnLikeItemClickListener {
+        void onItemClick(View v, int position) ;
+    }
+    private PostCategoryAdapter.OnLikeItemClickListener lListener = null ;
+    public void setOnItemClickListener(PostCategoryAdapter.OnLikeItemClickListener listener) {
+        this.lListener = listener ;
+    }
 
     public PostCategoryAdapter(Context context,ArrayList<PostListItem> items){
         this.context=context;
@@ -45,7 +58,6 @@ public class PostCategoryAdapter extends BaseAdapter {
         return position;
     }
 
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         PostCategoryItemBinding binding;
@@ -61,32 +73,45 @@ public class PostCategoryAdapter extends BaseAdapter {
         Glide.with(context).load(item.getThumbnail())
                 .transform(new CenterCrop(), new RoundedCorners(30))
                 .into(binding.image);
-        Glide.with(context).load(R.drawable.like_mark).into(binding.like);
-        if(item.getPoint().equals("0.0")) {
+        if (item.isIs_liked()) {
+            Glide.with(context).load(R.drawable.is_pushed_like).into(binding.like);
+        }else{
+            Glide.with(context).load(R.drawable.like_mark).into(binding.like);
+        }
+        if(item.getPay_type()==0) {
             Glide.with(context).load(R.drawable.free_mark).into(binding.premiumImage);
         }else{
+            binding.point.setText(Integer.toString(item.getPoint())+"원");
             Glide.with(context).load(R.drawable.premium_mark).into(binding.premiumImage);
         }
         binding.title.setText(item.getTitle());
         binding.star.setText("★ "+item.getTotal_star_avg());
         binding.name.setText(item.getAuthor());
-        binding.pk.setText(item.getId());
-        if(!item.getPoint().equals("0.0")){
-            int point=(int)Double.parseDouble(item.getPoint());
-            binding.point.setText(Integer.toString(point)+"원");
-        }
+        binding.pk.setText(Integer.toString(item.getId()));
+        binding.image.setColorFilter(Color.parseColor("#595959"), PorterDuff.Mode.MULTIPLY);
 
-        binding.view.setOnClickListener(new View.OnClickListener() {
+        binding.like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(context, PremiumPostActivity.class);
-                intent.putExtra("pk",binding.pk.getText().toString());
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+                if (position != RecyclerView.NO_POSITION) {
+                    if (lListener != null) {
+                        lListener.onItemClick(view, position);
+                        if (item.isIs_liked()) {
+                            item.setIs_liked(false);
+                        }else{
+                            item.setIs_liked(true);
+                        }
+                    }
+                }
             }
         });
 
         convertView.setTag(binding);
         return convertView;
+    }
+
+    public boolean getLike(int position) {return items.get(position).isIs_liked();}
+    public int getId(int position) {
+        return items.get(position).getId();
     }
 }

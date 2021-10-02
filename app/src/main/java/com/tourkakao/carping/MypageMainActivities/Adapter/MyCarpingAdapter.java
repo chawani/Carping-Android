@@ -17,6 +17,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.tourkakao.carping.EcoCarping.Activity.EcoCarpingDetailActivity;
 import com.tourkakao.carping.EcoCarping.Adapter.EcoTotalReviewAdapter;
 import com.tourkakao.carping.Home.EcoDataClass.EcoReview;
+import com.tourkakao.carping.Home.ThemeFragmentAdapter.NewCarpingPlace_Adapter;
 import com.tourkakao.carping.MypageMainActivities.DTO.MyCarpingPost;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.databinding.EcoCarpingTotalListItemBinding;
@@ -29,20 +30,32 @@ public class MyCarpingAdapter extends RecyclerView.Adapter<MyCarpingAdapter.View
     Context context;
     ArrayList<MyCarpingPost> myCarpingPosts;
 
+    public interface OnSelectItemClickListener{
+        void OnSelectItemClick(View v, int pos, int pk);
+    }
+    private MyCarpingAdapter.OnSelectItemClickListener mListener=null;
+
+    public void setOnSelectItemCLickListener(MyCarpingAdapter.OnSelectItemClickListener listener){
+        this.mListener=listener;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder{
         private MypageCarpingApiListItemBinding binding;
         public ViewHolder(MypageCarpingApiListItemBinding binding){
             super(binding.getRoot());
             this.binding=binding;
-//            binding.view.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Intent intent=new Intent(context, EcoCarpingDetailActivity.class);
-//                    intent.putExtra("pk",binding.pk.getText().toString());
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    context.startActivity(intent);
-//                }
-//            });
+            binding.getRoot().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos=getAdapterPosition();
+                    int pk=myCarpingPosts.get(pos).getId();
+                    if(pos!=RecyclerView.NO_POSITION){
+                        if(mListener!=null){
+                            mListener.OnSelectItemClick(v, pos, pk);
+                        }
+                    }
+                }
+            });
         }
         public void bind(MyCarpingPost myCarpingPost){
             Glide.with(context)
@@ -50,7 +63,7 @@ public class MyCarpingAdapter extends RecyclerView.Adapter<MyCarpingAdapter.View
                     .transform(new CenterCrop(), new RoundedCorners(30))
                     .into(binding.image);
             binding.title.setText(myCarpingPost.getTitle());
-            binding.bookmarkCount.setText(myCarpingPost.getBookmark_count());
+            binding.bookmarkCount.setText("스크랩 "+myCarpingPost.getBookmark_count());
         }
     }
 

@@ -14,6 +14,7 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 import com.tourkakao.carping.EcoCarping.Adapter.EcoTotalReviewAdapter;
 import com.tourkakao.carping.EcoCarping.ViewModel.EcoTotalViewModel;
+import com.tourkakao.carping.Post.Adapter.PostCategoryAdapter;
 import com.tourkakao.carping.Post.Adapter.PostTotalAdapter;
 import com.tourkakao.carping.Post.DTO.PostListItem;
 import com.tourkakao.carping.Post.ViewModel.PostListViewModel;
@@ -26,7 +27,10 @@ import java.util.ArrayList;
 public class PostTotalActivity extends AppCompatActivity {
     private ActivityPostTotalBinding binding;
     private Context context;
-    private PostTotalAdapter adapter;
+    private PostTotalAdapter popularAdapter;
+    private PostTotalAdapter beginnerAdapter;
+    private PostTotalAdapter allOfAdapter;
+    private PostTotalAdapter carAdapter;
     private PostListViewModel viewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +60,7 @@ public class PostTotalActivity extends AppCompatActivity {
     }
 
     public void initLayout(){
-        Glide.with(context).load(R.drawable.main_reading_glasses).into(binding.searchButton);
+        Glide.with(context).load(R.drawable.search_img).into(binding.searchButton);
         Glide.with(context).load(R.drawable.right_arrow_black).into(binding.allOfArrow);
         Glide.with(context).load(R.drawable.right_arrow_black).into(binding.beginnerArrow);
         Glide.with(context).load(R.drawable.right_arrow_black).into(binding.carArrow);
@@ -68,8 +72,21 @@ public class PostTotalActivity extends AppCompatActivity {
         viewModel.getPopularLiveData().observe(this, new Observer<ArrayList<PostListItem>>() {
             @Override
             public void onChanged(ArrayList<PostListItem> postListItems) {
-                adapter=new PostTotalAdapter(getApplicationContext(),postListItems);
-                binding.popularRecycler.setAdapter(adapter);
+                popularAdapter=new PostTotalAdapter(getApplicationContext(),postListItems);
+                binding.popularRecycler.setAdapter(popularAdapter);
+                popularAdapter.setOnItemClickListener(new PostCategoryAdapter.OnLikeItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int position) {
+                        if(popularAdapter.getLike(position)){
+                            viewModel.cancelLike(popularAdapter.getId(position));
+                            popularAdapter.cancelLike(position);
+                        }else{
+                            viewModel.postLike(popularAdapter.getId(position));
+                            popularAdapter.setLike(position);
+                        }
+                        popularAdapter.notifyDataSetChanged();
+                    }
+                });
             }
         });
 
@@ -81,8 +98,21 @@ public class PostTotalActivity extends AppCompatActivity {
         viewModel.getBeginnerLiveData().observe(this, new Observer<ArrayList<PostListItem>>() {
             @Override
             public void onChanged(ArrayList<PostListItem> postListItems) {
-                adapter=new PostTotalAdapter(getApplicationContext(),postListItems);
-                binding.beginnerRecycler.setAdapter(adapter);
+                beginnerAdapter=new PostTotalAdapter(getApplicationContext(),postListItems);
+                binding.beginnerRecycler.setAdapter(beginnerAdapter);
+                beginnerAdapter.setOnItemClickListener(new PostCategoryAdapter.OnLikeItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int position) {
+                        if(beginnerAdapter.getLike(position)){
+                            viewModel.cancelLike(beginnerAdapter.getId(position));
+                            beginnerAdapter.cancelLike(position);
+                        }else{
+                            viewModel.postLike(beginnerAdapter.getId(position));
+                            beginnerAdapter.setLike(position);
+                        }
+                        beginnerAdapter.notifyDataSetChanged();
+                    }
+                });
             }
         });
     }
@@ -93,8 +123,21 @@ public class PostTotalActivity extends AppCompatActivity {
         viewModel.getAllOfLiveData().observe(this, new Observer<ArrayList<PostListItem>>() {
             @Override
             public void onChanged(ArrayList<PostListItem> postListItems) {
-                adapter=new PostTotalAdapter(getApplicationContext(),postListItems);
-                binding.allOfRecycler.setAdapter(adapter);
+                allOfAdapter=new PostTotalAdapter(getApplicationContext(),postListItems);
+                binding.allOfRecycler.setAdapter(allOfAdapter);
+                allOfAdapter.setOnItemClickListener(new PostCategoryAdapter.OnLikeItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int position) {
+                        if(allOfAdapter.getLike(position)){
+                            viewModel.cancelLike(allOfAdapter.getId(position));
+                            allOfAdapter.cancelLike(position);
+                        }else{
+                            viewModel.postLike(allOfAdapter.getId(position));
+                            allOfAdapter.setLike(position);
+                        }
+                        allOfAdapter.notifyDataSetChanged();
+                    }
+                });
             }
         });
     }
@@ -105,8 +148,21 @@ public class PostTotalActivity extends AppCompatActivity {
         viewModel.getCarLiveData().observe(this, new Observer<ArrayList<PostListItem>>() {
             @Override
             public void onChanged(ArrayList<PostListItem> postListItems) {
-                adapter=new PostTotalAdapter(getApplicationContext(),postListItems);
-                binding.carRecycler.setAdapter(adapter);
+                carAdapter=new PostTotalAdapter(getApplicationContext(),postListItems);
+                binding.carRecycler.setAdapter(carAdapter);
+                carAdapter.setOnItemClickListener(new PostCategoryAdapter.OnLikeItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int position) {
+                        if(carAdapter.getLike(position)){
+                            viewModel.cancelLike(carAdapter.getId(position));
+                            carAdapter.cancelLike(position);
+                        }else{
+                            viewModel.postLike(carAdapter.getId(position));
+                            carAdapter.setLike(position);
+                        }
+                        carAdapter.notifyDataSetChanged();
+                    }
+                });
             }
         });
     }
@@ -136,5 +192,11 @@ public class PostTotalActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        viewModel.loadTotalList();
     }
 }

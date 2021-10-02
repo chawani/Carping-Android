@@ -27,6 +27,8 @@ public class LikePostFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(MypageEcoViewModel.class);
         viewModel.setContext(context);
 
+        initLayout();
+
         return binding.getRoot();
     }
 

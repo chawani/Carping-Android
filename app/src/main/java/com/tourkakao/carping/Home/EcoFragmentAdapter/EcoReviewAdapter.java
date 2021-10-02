@@ -50,6 +50,7 @@ public class EcoReviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             binding.title.setText(ecoReview.getTitle());
             binding.content.setText(ecoReview.getText());
             binding.pk.setText(ecoReview.getId());
+            binding.date.setText(ecoReview.getCreated_at());
         }
     }
 

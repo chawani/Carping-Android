@@ -1,16 +1,21 @@
 package com.tourkakao.carping.Post.DTO;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostInfoDetail {
+public class PostInfoDetail implements Serializable {
     private int id;
+    private int userpost_id;
+    private String author_name;
+    private String author_profile;
+    private String author_comment;
     private String title;
     private String thumbnail;
     private int point;
     private String info;
     private String recommend_to;
-    private ArrayList<Review> review;
+    private List<Review> review;
     private float star1_avg;
     private float star2_avg;
     private float star3_avg;
@@ -19,10 +24,60 @@ public class PostInfoDetail {
     private float total_star_avg;
     private int my_review_count;
     private int review_count;
-    private boolean is_liked;
+    private String is_liked;
     private String preview_image1;
     private String preview_image2;
     private String preview_image3;
+    private int like_count;
+    private int contents_count;
+
+    public int getUserpost_id() {
+        return userpost_id;
+    }
+
+    public void setUserpost_id(int userpost_id) {
+        this.userpost_id = userpost_id;
+    }
+
+    public int getContents_count() {
+        return contents_count;
+    }
+
+    public void setContents_count(int contents_count) {
+        this.contents_count = contents_count;
+    }
+
+    public String getAuthor_comment() {
+        return author_comment;
+    }
+
+    public void setAuthor_comment(String author_comment) {
+        this.author_comment = author_comment;
+    }
+
+    public int getLike_count() {
+        return like_count;
+    }
+
+    public void setLike_count(int like_count) {
+        this.like_count = like_count;
+    }
+
+    public String getAuthor_name() {
+        return author_name;
+    }
+
+    public void setAuthor_name(String author_name) {
+        this.author_name = author_name;
+    }
+
+    public String getAuthor_profile() {
+        return author_profile;
+    }
+
+    public void setAuthor_profile(String author_profile) {
+        this.author_profile = author_profile;
+    }
 
     public int getId() {
         return id;
@@ -72,11 +127,11 @@ public class PostInfoDetail {
         this.recommend_to = recommend_to;
     }
 
-    public ArrayList<Review> getReview() {
+    public List<Review> getReview() {
         return review;
     }
 
-    public void setReview(ArrayList<Review> review) {
+    public void setReview(List<Review> review) {
         this.review = review;
     }
 
@@ -144,11 +199,11 @@ public class PostInfoDetail {
         this.review_count = review_count;
     }
 
-    public boolean isIs_liked() {
+    public String getIs_liked() {
         return is_liked;
     }
 
-    public void setIs_liked(boolean is_liked) {
+    public void setIs_liked(String is_liked) {
         this.is_liked = is_liked;
     }
 

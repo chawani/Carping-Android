@@ -1,6 +1,7 @@
 package com.tourkakao.carping.MypageMainActivities.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +15,17 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.tourkakao.carping.Home.ThemeFragmentAdapter.ThisWeekend_Adapter;
 import com.tourkakao.carping.MypageMainActivities.Adapter.ScrapAutoAdapter;
 import com.tourkakao.carping.MypageMainActivities.Adapter.ScrapCarpingAdapter;
 import com.tourkakao.carping.MypageMainActivities.DTO.Autocamp;
 import com.tourkakao.carping.MypageMainActivities.DTO.Campsite;
+import com.tourkakao.carping.MypageMainActivities.DTO.MyCarpingPost;
 import com.tourkakao.carping.MypageMainActivities.MypageViewModel.MypageCarpingViewModel;
 import com.tourkakao.carping.databinding.MypageCarpingScrapTabFragmentBinding;
+import com.tourkakao.carping.newcarping.Activity.Each_NewCarpingActivity;
+import com.tourkakao.carping.theme.Activity.ThemeDetailActivity;
+import com.tourkakao.carping.thisweekend.Activity.Each_ThisWeekendActivity;
 
 import java.util.ArrayList;
 
@@ -51,7 +57,6 @@ public class LikeCarpingFragment extends Fragment {
         binding.mypageEmptyText.setText("스크랩한 차박지가 없습니다.");
     }
     void initDatas(){
-        viewModel.loadScrapCarpings();
         viewModel.getPostSize().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
@@ -64,9 +69,9 @@ public class LikeCarpingFragment extends Fragment {
                 }
             }
         });
-        viewModel.getAutocampsLiveData().observe(this, new Observer<ArrayList<Autocamp>>() {
+        viewModel.getAutocampsLiveData().observe(this, new Observer<ArrayList<MyCarpingPost>>() {
             @Override
-            public void onChanged(ArrayList<Autocamp> autocamps) {
+            public void onChanged(ArrayList<MyCarpingPost> autocamps) {
                 if(autocamps==null){
                     binding.mypageRecycler.setVisibility(View.GONE);
                 }
@@ -77,6 +82,15 @@ public class LikeCarpingFragment extends Fragment {
                     binding.mypageRecycler.setVisibility(View.VISIBLE);
                     adapter=new ScrapAutoAdapter(context,autocamps);
                     binding.mypageRecycler.setAdapter(adapter);
+                    adapter.setOnSelectItemCLickListener(new ScrapAutoAdapter.OnSelectItemClickListener() {
+                        @Override
+                        public void OnSelectItemClick(View v, int pos, int pk) {
+                            Intent intent=new Intent(context, Each_NewCarpingActivity.class);
+                            intent.putExtra("pk", pk);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(intent);
+                        }
+                    });
                 }
             }
         });
@@ -93,8 +107,23 @@ public class LikeCarpingFragment extends Fragment {
                     binding.mypageRecycler2.setVisibility(View.VISIBLE);
                     adapter2=new ScrapCarpingAdapter(context,campsites);
                     binding.mypageRecycler2.setAdapter(adapter2);
+                    adapter2.setOnSelectItemCLickListener(new ScrapCarpingAdapter.OnSelectItemClickListener() {
+                        @Override
+                        public void OnSelectItemClick(View v, int pos, int pk) {
+                            Intent intent=new Intent(context, ThemeDetailActivity.class);
+                            intent.putExtra("name", adapter2.getName(pos));
+                            intent.putExtra("pk", pk);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(intent);
+                        }
+                    });
                 }
             }
         });
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        viewModel.loadScrapCarpings();
     }
 }

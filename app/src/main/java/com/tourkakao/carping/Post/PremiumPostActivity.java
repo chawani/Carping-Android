@@ -8,9 +8,13 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.google.android.material.tabs.TabLayout;
 import com.tourkakao.carping.MypageMainActivities.Fragment.LikeCarpingFragment;
 import com.tourkakao.carping.MypageMainActivities.Fragment.MyCarpingFragment;
@@ -30,6 +34,9 @@ public class PremiumPostActivity extends AppCompatActivity {
     private Fragment selected;
     private PostDetailViewModel viewModel;
     private Context context;
+    private int pk;
+    private int likeCount;
+    private int userpost_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,12 +48,15 @@ public class PremiumPostActivity extends AppCompatActivity {
         viewModel.setContext(this);
 
         Intent intent=getIntent();
-        int pk=(int)Double.parseDouble(intent.getStringExtra("pk"));
-        viewModel.loadInfoDetail(pk);
+        pk=intent.getIntExtra("pk",0);
+        viewModel.setPk(pk);
+        viewModel.loadInfoDetail();
 
         settingToolbar();
         settingTab();
         settingInfo();
+        pushLike();
+        clickPayment();
     }
 
     void settingToolbar(){
@@ -102,7 +112,10 @@ public class PremiumPostActivity extends AppCompatActivity {
         viewModel.getPostInfo().observe(this, new Observer<PostInfoDetail>() {
             @Override
             public void onChanged(PostInfoDetail postInfoDetail) {
-                //프로필, 작성자
+                Glide.with(context).load(postInfoDetail.getAuthor_profile())
+                        .transform(new CenterCrop(), new RoundedCorners(100))
+                        .into(binding.profile);
+                binding.name.setText(postInfoDetail.getAuthor_name());
                 Glide.with(context).load(postInfoDetail.getThumbnail()).into(binding.thumbnail);
                 if(postInfoDetail.getPoint()!=0){
                     Glide.with(context).load(R.drawable.premium_mark).into(binding.premiumImage);
@@ -111,15 +124,67 @@ public class PremiumPostActivity extends AppCompatActivity {
                 }
                 binding.star.setText("★ "+postInfoDetail.getTotal_star_avg());
                 binding.title.setText(postInfoDetail.getTitle());
-                binding.point.setText(postInfoDetail.getPoint());
-                if(postInfoDetail.isIs_liked()==false){
+                binding.point.setText(Integer.toString(postInfoDetail.getPoint())+"원");
+                if(postInfoDetail.getIs_liked().equals("false")){
                     Glide.with(context).load(R.drawable.like_mark).into(binding.likeMark);
                 }else{
                     Glide.with(context).load(R.drawable.is_pushed_like).into(binding.likeMark);
+                    binding.likeCount.setTextColor(Color.parseColor("#ff4e5e"));
                 }
-                //binding.likeCount.setText(postInfoDetail.);
+                likeCount=postInfoDetail.getLike_count();
+                binding.likeCount.setText(Integer.toString(postInfoDetail.getLike_count()));
+                userpost_id=postInfoDetail.getUserpost_id();
             }
         });
 
+    }
+
+    public void pushLike(){
+        viewModel.getLikeStatus().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if(s.equals("true")){
+                    Glide.with(getApplicationContext()).load(R.drawable.is_pushed_like).into(binding.likeMark);
+                    binding.likeCount.setTextColor(Color.parseColor("#ff4e5e"));
+                }
+                if(s.equals("false")){
+                    Glide.with(getApplicationContext()).load(R.drawable.like_mark).into(binding.likeMark);
+                }
+            }
+        });
+        binding.likeMark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(viewModel.getLikeStatus().getValue().equals("true")){
+                    viewModel.cancelLike(pk);
+                    likeCount=likeCount-1;
+                    binding.likeCount.setTextColor(Color.parseColor("#000000"));
+                    binding.likeCount.setText(Integer.toString(likeCount));
+                }
+                if(viewModel.getLikeStatus().getValue().equals("false")){
+                    viewModel.postLike(pk);
+                    likeCount=likeCount+1;
+                    binding.likeCount.setTextColor(Color.parseColor("#ff4e5e"));
+                    binding.likeCount.setText(Integer.toString(likeCount));
+                }
+            }
+        });
+    }
+
+    void clickPayment(){
+        binding.paymentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context, PayActivity.class);
+                intent.putExtra("id",userpost_id);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        viewModel.loadInfoDetail();
     }
 }

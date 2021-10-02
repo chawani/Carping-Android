@@ -27,7 +27,7 @@ public class MypageCarpingViewModel extends ViewModel {
     private Context context;
     private MutableLiveData<ArrayList<MyCarpingPost>> myCarpings=new MutableLiveData<>();
     private MutableLiveData<ArrayList<Campsite>> campsitesLiveData=new MutableLiveData<>();
-    private MutableLiveData<ArrayList<Autocamp>> autocampsLiveData=new MutableLiveData<>();
+    private MutableLiveData<ArrayList<MyCarpingPost>> autocampsLiveData=new MutableLiveData<>();
     private MutableLiveData<Integer> postSize=new MutableLiveData<>();
 
     public void setContext(Context context){
@@ -35,7 +35,7 @@ public class MypageCarpingViewModel extends ViewModel {
     }
     public MutableLiveData<ArrayList<MyCarpingPost>> getMyCarpings(){return myCarpings;}
     public MutableLiveData<ArrayList<Campsite>> getCampsitesLiveData(){return campsitesLiveData;}
-    public MutableLiveData<ArrayList<Autocamp>> getAutocampsLiveData(){return autocampsLiveData;}
+    public MutableLiveData<ArrayList<MyCarpingPost>> getAutocampsLiveData(){return autocampsLiveData;}
     public MutableLiveData<Integer> getPostSize(){return postSize;}
 
     public void setMyPostData(ArrayList data) {
@@ -48,7 +48,7 @@ public class MypageCarpingViewModel extends ViewModel {
         postSize.setValue(0);
         ScrapData scrapData=gson.fromJson(gson.toJson(data.get(0)),ScrapData.class);
         String autocampString=gson.toJson(scrapData.getAutocamp());
-        ArrayList<Autocamp> autocamps
+        ArrayList<MyCarpingPost> autocamps
                 =gson.fromJson(autocampString, new TypeToken<ArrayList<Autocamp>>(){}.getType());
         scrapData=gson.fromJson(gson.toJson(data.get(0)),ScrapData.class);
         String campsiteString=gson.toJson(scrapData.getCampsite());

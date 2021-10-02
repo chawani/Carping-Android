@@ -19,6 +19,7 @@ import com.tourkakao.carping.EcoCarping.Adapter.EcoTotalReviewAdapter;
 import com.tourkakao.carping.Home.EcoDataClass.EcoReview;
 import com.tourkakao.carping.Post.DTO.PostListItem;
 import com.tourkakao.carping.Post.PostDetailActivity;
+import com.tourkakao.carping.Post.PremiumPostActivity;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.databinding.EcoCarpingTotalListItemBinding;
 import com.tourkakao.carping.databinding.PostTotalItemBinding;
@@ -28,6 +29,14 @@ import java.util.ArrayList;
 public class PostTotalAdapter extends RecyclerView.Adapter<PostTotalAdapter.ViewHolder>{
     private Context context;
     private ArrayList<PostListItem> items;
+
+    public interface OnLikeItemClickListener {
+        void onItemClick(View v, int position) ;
+    }
+    private PostCategoryAdapter.OnLikeItemClickListener lListener = null ;
+    public void setOnItemClickListener(PostCategoryAdapter.OnLikeItemClickListener listener) {
+        this.lListener = listener ;
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private PostTotalItemBinding binding;
@@ -43,14 +52,29 @@ public class PostTotalAdapter extends RecyclerView.Adapter<PostTotalAdapter.View
                     context.startActivity(intent);
                 }
             });
+            binding.like.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        if (lListener != null) {
+                            lListener.onItemClick(view, position);
+                        }
+                    }
+                }
+            });
         }
         public void bind(PostListItem item){
-            Glide.with(context).load(R.drawable.like_mark).into(binding.like);
+            if (item.isIs_liked()) {
+                Glide.with(context).load(R.drawable.is_pushed_like).into(binding.like);
+            }else{
+                Glide.with(context).load(R.drawable.like_mark).into(binding.like);
+            }
             Glide.with(context).load(item.getThumbnail()).into(binding.image);
             binding.title.setText(item.getTitle());
-            int id=(int)Double.parseDouble(item.getId());
-            binding.pk.setText(Integer.toString(id));
+            binding.pk.setText(Integer.toString(item.getId()));
             binding.star.setText("★ "+item.getTotal_star_avg());
+            binding.image.setColorFilter(Color.parseColor("#595959"), PorterDuff.Mode.MULTIPLY);
         }
     }
 
@@ -73,5 +97,16 @@ public class PostTotalAdapter extends RecyclerView.Adapter<PostTotalAdapter.View
     @Override
     public int getItemCount() {
         return items==null?0:items.size();
+    }
+
+    public int getId(int position) {
+        return items.get(position).getId();
+    }
+    public boolean getLike(int position) {return items.get(position).isIs_liked();}
+    public void setLike(int position){
+        items.get(position).setIs_liked(true);
+    }
+    public void cancelLike(int position){
+        items.get(position).setIs_liked(false);
     }
 }

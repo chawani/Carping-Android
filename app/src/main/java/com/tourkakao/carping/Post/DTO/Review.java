@@ -1,6 +1,8 @@
 package com.tourkakao.carping.Post.DTO;
 
-public class Review {
+import java.io.Serializable;
+
+public class Review implements Serializable {
     private int id;
     private int user;
     private String username;

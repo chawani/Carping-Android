@@ -2,6 +2,8 @@ package com.tourkakao.carping.Post.Fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,26 +52,33 @@ public class IntroduceFragment extends Fragment {
         viewModel.getPostInfo().observe(this, new Observer<PostInfoDetail>() {
             @Override
             public void onChanged(PostInfoDetail postInfoDetail) {
-                //목차,찜
+                binding.contentCount.setText("목차 "+postInfoDetail.getContents_count()+"개");
+                binding.likeCount.setText("찜 "+postInfoDetail.getLike_count()+"명");
+
+                ImageView imageView = new ImageView(context);
+                imageView.setLayoutParams(new ViewGroup.LayoutParams(convertDp(323), ViewGroup.LayoutParams.MATCH_PARENT));
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 if(postInfoDetail.getPreview_image1()!=null) {
-                    ImageView imageView = new ImageView(context);
                     Glide.with(context).load(postInfoDetail.getPreview_image1()).into(imageView);
                     binding.imageArea.addView(imageView);
                 }
                 if(postInfoDetail.getPreview_image2()!=null) {
-                    ImageView imageView = new ImageView(context);
                     Glide.with(context).load(postInfoDetail.getPreview_image1()).into(imageView);
                     binding.imageArea.addView(imageView);
                 }
                 if(postInfoDetail.getPreview_image3()!=null) {
-                    ImageView imageView = new ImageView(context);
                     Glide.with(context).load(postInfoDetail.getPreview_image1()).into(imageView);
                     binding.imageArea.addView(imageView);
                 }
                 binding.postIntroduce.setText(postInfoDetail.getInfo());
                 binding.recommendText.setText(postInfoDetail.getRecommend_to());
-                //작가의 한마디
+                binding.writerComment.setText(postInfoDetail.getAuthor_comment());
             }
         });
+    }
+
+    public int convertDp(int dp) {
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, metrics);
     }
 }

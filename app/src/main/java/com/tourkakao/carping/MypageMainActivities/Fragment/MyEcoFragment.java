@@ -49,7 +49,6 @@ public class MyEcoFragment extends Fragment {
         binding.mypageRecycler.setLayoutManager(mLayoutManager);
     }
     void observeData(){
-        viewModel.getEcoPosts("my");
         viewModel.getMyReviews().observe(this, new Observer<ArrayList<EcoReview>>() {
             @Override
             public void onChanged(ArrayList<EcoReview> ecoReviews) {
@@ -65,5 +64,11 @@ public class MyEcoFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        viewModel.getEcoPosts("my");
     }
 }

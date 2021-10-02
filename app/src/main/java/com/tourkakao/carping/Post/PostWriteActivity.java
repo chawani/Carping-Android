@@ -39,6 +39,9 @@ public class PostWriteActivity extends AppCompatActivity {
     private ActivityPostWriteBinding binding;
     private Context context;
     private MutableLiveData<Integer> addCount=new MutableLiveData<>();
+    private boolean thumbnailCheck,titleCheck,subtitle1Check,subtitle2Check,subtitle3Check,subtitle4Check,subtitle5Check=false;
+    private boolean content1Check,content2Check,content3Check,content4Check,content5Check=false;
+    private boolean image1Check,image2Check,image3Check,image4Check,image5Check=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

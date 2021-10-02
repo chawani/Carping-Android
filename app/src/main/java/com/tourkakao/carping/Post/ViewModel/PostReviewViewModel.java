@@ -6,12 +6,14 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import com.tourkakao.carping.EcoCarping.DTO.EcoPost;
 import com.tourkakao.carping.Home.EcoDataClass.EcoReview;
 import com.tourkakao.carping.NetworkwithToken.CommonClass;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
-import com.tourkakao.carping.Post.DTO.PostListItem;
+import com.tourkakao.carping.Post.DTO.Review;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,130 +24,39 @@ import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.observers.DisposableSingleObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class PostListViewModel extends ViewModel {
+public class PostReviewViewModel extends ViewModel {
     private Context context;
-    private MutableLiveData<ArrayList<PostListItem>> popularLiveData=new MutableLiveData<>();
-    private MutableLiveData<ArrayList<PostListItem>> beginnerLiveData=new MutableLiveData<>();
-    private MutableLiveData<ArrayList<PostListItem>> allOfLiveData=new MutableLiveData<>();
-    private MutableLiveData<ArrayList<PostListItem>> carLiveData=new MutableLiveData<>();
-    private MutableLiveData<ArrayList<PostListItem>> categoryData=new MutableLiveData<>();
+    private Gson gson=new Gson();
+    private MutableLiveData<ArrayList<Review>> recentOrderReviews=new MutableLiveData<>();
+    private MutableLiveData<ArrayList<Review>> popularOrderReviews=new MutableLiveData<>();
 
     public void setContext(Context context){
         this.context=context;
     }
-    public MutableLiveData<ArrayList<PostListItem>> getPopularLiveData(){
-        return popularLiveData;
-    }
-    public MutableLiveData<ArrayList<PostListItem>> getBeginnerLiveData(){
-        return beginnerLiveData;
-    }
-    public MutableLiveData<ArrayList<PostListItem>> getAllOfLiveData(){
-        return allOfLiveData;
-    }
-    public MutableLiveData<ArrayList<PostListItem>> getCarLiveData(){
-        return carLiveData;
-    }
-    public MutableLiveData<ArrayList<PostListItem>> getCategoryData(){
-        return categoryData;
-    }
 
-    public void setTotalData(List data){
-        ArrayList<PostListItem> popular=new ArrayList<>();
-        ArrayList<PostListItem> beginner=new ArrayList<>();
-        ArrayList<PostListItem> allOf=new ArrayList<>();
-        ArrayList<PostListItem> car=new ArrayList<>();
+    public MutableLiveData<ArrayList<Review>> getRecentOrderReviews(){return recentOrderReviews;}
+    public MutableLiveData<ArrayList<Review>> getPopularOrderReviews(){return popularOrderReviews;}
 
-        Gson gson=new Gson();
-        String total=gson.toJson(data);
-        ArrayList<PostListItem> listItems=gson.fromJson(total, new TypeToken<ArrayList<PostListItem>>(){}.getType());
-        for(PostListItem item:listItems){
-            int category=item.getCategory();
-            if(category==1){
-                popular.add(item);
-            }
-            if(category==2){
-                beginner.add(item);
-            }
-            if(category==3){
-                allOf.add(item);
-            }
-            if(category==4){
-                car.add(item);
-            }
+    public void setReviewsData(String sort,List data){
+        String totalDataString=gson.toJson(data);
+        ArrayList<Review> reviews=gson.fromJson(totalDataString,new TypeToken<ArrayList<Review>>(){}.getType());
+        if(sort.equals("recent")){
+            recentOrderReviews.setValue(reviews);
         }
-        popularLiveData.setValue(popular);
-        beginnerLiveData.setValue(beginner);
-        allOfLiveData.setValue(allOf);
-        carLiveData.setValue(car);
+        if(sort.equals("popular")){
+            popularOrderReviews.setValue(reviews);
+        }
     }
 
-    public void setCategoryData(List data){
-        Gson gson=new Gson();
-        String total=gson.toJson(data);
-        ArrayList<PostListItem> listItems=gson.fromJson(total, new TypeToken<ArrayList<PostListItem>>(){}.getType());
-        categoryData.setValue(listItems);
-    }
-
-    public void loadTotalList(){
-        HashMap<String,Object> map=new HashMap<>();
-        map.put("type",2);
-        TotalApiClient.getPostApiService(context).getPostList(map)
+    public void postReview(HashMap<String,Object> map){
+        TotalApiClient.getPostApiService(context).postReview(map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<CommonClass>() {
                     @Override
                     public void onSuccess(@NonNull CommonClass commonClass) {
                         if(commonClass.getCode()==200) {
-                                setTotalData(commonClass.getData());
-                        }
-                        else {
-                            System.out.println("요청실패:"+commonClass.getCode()+commonClass.getError_message());
-                        }
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-
-                    }
-                });
-    }
-
-    public void loadCategoryList(int category){
-        HashMap<String,Object> map=new HashMap<>();
-        map.put("type",3);
-        map.put("category",category);
-        TotalApiClient.getPostApiService(context).getPostList(map)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<CommonClass>() {
-                    @Override
-                    public void onSuccess(@NonNull CommonClass commonClass) {
-                        if(commonClass.getCode()==200) {
-                            setCategoryData(commonClass.getData());
-                        }
-                        else {
-                            System.out.println("요청실패:"+commonClass.getCode()+commonClass.getError_message());
-                        }
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-
-                    }
-                });
-    }
-
-    public void postLike(int pk){
-        HashMap<String,Object> map=new HashMap<>();
-        map.put("post_to_like",pk);
-        TotalApiClient.getPostApiService(context).postLike(map)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<CommonClass>() {
-                    @Override
-                    public void onSuccess(@NonNull CommonClass commonClass) {
-                        if(commonClass.getCode()==200) {
-                            System.out.println("좋아요 완료"+commonClass.getData().get(0).toString());
+                            System.out.println("리뷰 완료"+commonClass.getData().get(0).toString());
                         }
                         else {
                             System.out.println("요청실패:"+commonClass.getCode()+commonClass.getError_message());
@@ -159,17 +70,34 @@ public class PostListViewModel extends ViewModel {
                 });
     }
 
-    public void cancelLike(int pk){
-        HashMap<String,Object> map=new HashMap<>();
-        map.put("post_to_like",pk);
-        TotalApiClient.getPostApiService(context).cancelLike(map)
+    public void deleteComment(int pk){
+        TotalApiClient.getPostApiService(context).deleteReview(pk)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<CommonClass>() {
+                    @Override
+                    public void onSuccess(@NonNull CommonClass commonClass) {
+
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+                });
+    }
+
+    public void loadReviews(String pk,String sort){
+        HashMap<String,String> map=new HashMap<>();
+        map.put("sort",sort);
+        TotalApiClient.getPostApiService(context).getReviewTotal(Integer.parseInt(pk),map)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(new DisposableSingleObserver<CommonClass>() {
                     @Override
                     public void onSuccess(@NonNull CommonClass commonClass) {
                         if(commonClass.getCode()==200) {
-                            System.out.println("좋아요 완료"+commonClass.getData().get(0).toString());
+                            setReviewsData(sort,commonClass.getData());
                         }
                         else {
                             System.out.println("요청실패:"+commonClass.getCode()+commonClass.getError_message());
@@ -178,8 +106,56 @@ public class PostListViewModel extends ViewModel {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
+                        System.out.println("에러"+e.getMessage());
                     }
                 });
     }
 
+    public void pushLike(int pk){
+        HashMap<String,Object> map=new HashMap<>();
+        map.put("review_to_like",pk);
+        TotalApiClient.getPostApiService(context).likeReview(map)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<CommonClass>() {
+                    @Override
+                    public void onSuccess(@NonNull CommonClass commonClass) {
+                        if(commonClass.getCode()==200) {
+                            System.out.println(gson.toJson(commonClass.getData()));
+                        }
+                        else {
+                            System.out.println("요청실패:"+commonClass.getCode()+commonClass.getError_message());
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+                });
+    }
+
+    public void cancelLike(int pk){
+        HashMap<String,Object> map=new HashMap<>();
+        map.put("review_to_like",pk);
+        TotalApiClient.getPostApiService(context).cancelReviewLike(map)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<CommonClass>() {
+                    @Override
+                    public void onSuccess(@NonNull CommonClass commonClass) {
+                        if(commonClass.getCode()==200) {
+                            System.out.println(gson.toJson(commonClass.getData()));
+                        }
+                        else {
+                            System.out.println("요청실패:"+commonClass.getCode()+commonClass.getError_message());
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+                });
+    }
 }

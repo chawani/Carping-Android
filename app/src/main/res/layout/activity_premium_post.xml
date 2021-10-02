@@ -52,8 +52,7 @@
                     android:fontFamily="@font/spoqa_han_sans_neo_medium"
                     android:textStyle="normal"
                     android:textSize="14sp"
-                    android:textColor="#000000"
-                    android:text="수린"/>
+                    android:textColor="#000000"/>
             </LinearLayout>
             <RelativeLayout
                 android:layout_marginTop="15dp"
@@ -81,8 +80,7 @@
                 android:fontFamily="@font/spoqa_han_sans_neo"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:textColor="#5f51ef"
-                android:text="★ 3.5"/>
+                android:textColor="#5f51ef"/>
             <TextView
                 android:id="@+id/title"
                 android:layout_marginHorizontal="16dp"
@@ -92,8 +90,7 @@
                 android:fontFamily="@font/spoqa_han_sans_neo_medium"
                 android:textStyle="normal"
                 android:textSize="20sp"
-                android:textColor="#000000"
-                android:text="근교의 차크닉 장소를 소개합니다!"/>
+                android:textColor="#000000"/>
             <TextView
                 android:id="@+id/point"
                 android:layout_marginTop="9dp"
@@ -103,8 +100,7 @@
                 android:fontFamily="@font/spoqa_han_sans_neo"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:textColor="#000000"
-                android:text="2,000원"/>
+                android:textColor="#000000"/>
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs"
                 android:layout_width="wrap_content"
@@ -138,6 +134,7 @@
             android:orientation="vertical"
             android:layout_marginHorizontal="23dp">
             <ImageView
+                android:clickable="true"
                 android:id="@+id/like_mark"
                 android:layout_width="24dp"
                 android:layout_height="24dp"/>

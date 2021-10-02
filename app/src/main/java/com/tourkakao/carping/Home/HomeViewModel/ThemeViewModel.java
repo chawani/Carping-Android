@@ -112,7 +112,7 @@ public class ThemeViewModel extends ViewModel {
             @Override
             public void OnSelectItemClick(View v, int pos, int pk) {
                 Intent intent=new Intent(context, PostDetailActivity.class);
-                intent.putExtra("pk", pk);
+                intent.putExtra("pk", Integer.toString(pk));
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

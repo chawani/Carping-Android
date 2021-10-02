@@ -37,7 +37,6 @@ public class EcoCarpingListActivity extends AppCompatActivity {
    private Context context;
    private LifecycleOwner lifecycleOwner;
     private Spinner spinner;
-    private float currentLatitude,currentLongitude;
     private List<String> sort_list=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Post.PostReviewWriteActivity"></activity>
+        <activity android:name=".Post.PayActivity"></activity>
+        <activity android:name=".Post.PostReviewWriteActivity" />
         <activity android:name=".Post.PostReviewActivity" />
         <activity android:name=".Post.PremiumPostActivity" />
         <activity android:name=".Post.PostCategoryActivity" />
@@ -37,7 +38,7 @@
         <activity android:name=".MypageMainActivities.Activity.MypageCarpingActivity" />
         <activity android:name=".MypageMainActivities.Activity.MypagePostActivity" />
         <activity android:name=".newcarping.Activity.Fix_newcarpingActivity" />
-        <activity android:name=".Map.Activity.MapSearchActivity"></activity>
+        <activity android:name=".Map.Activity.MapSearchActivity" />
         <activity android:name=".sharedetail.Activity.ShareTotalActivity" />
         <activity android:name=".registernewshare.Activity.LocateSelectActivity" />
         <activity android:name=".sharedetail.Activity.ShareDetailActivity" />
