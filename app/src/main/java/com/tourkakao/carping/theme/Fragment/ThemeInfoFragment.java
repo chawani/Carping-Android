@@ -46,7 +46,7 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ThemeInfoFragment extends Fragment {
-    private ThemeInfoFragmentBinding infoFragmentBinding;
+    public ThemeInfoFragmentBinding infoFragmentBinding;
     ThemeDetailViewModel detailViewModel;
     private String KAKAO_KEY= "KakaoAK "+BuildConfig.KAKAO_REST_API_KEY;
     private Retrofit retrofit;
@@ -55,7 +55,7 @@ public class ThemeInfoFragment extends Fragment {
     private BlogAdapter blogAdapter;
     ArrayList<DaumBlog.Blog> blogs=new ArrayList<>();
 
-    MapView mapView;
+    public MapView mapView;
     MapPoint mapPoint=null;
     @Nullable
     @Override
@@ -88,8 +88,10 @@ public class ThemeInfoFragment extends Fragment {
         this.pk=pk;
     }
     public void setting_map(){
-        mapView=new MapView(context);
-        infoFragmentBinding.mapView.addView(mapView);
+        if(mapView==null) {
+            mapView = new MapView(context);
+            infoFragmentBinding.mapView.addView(mapView);
+        }
     }
     public void searchblog(){
         Gson gson=new GsonBuilder().setLenient().create();
@@ -157,4 +159,6 @@ public class ThemeInfoFragment extends Fragment {
             }
         });
     }
+
+
 }

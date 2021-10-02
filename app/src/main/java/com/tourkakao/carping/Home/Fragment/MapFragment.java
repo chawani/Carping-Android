@@ -28,7 +28,7 @@ import static android.app.Activity.RESULT_OK;
 public class MapFragment extends Fragment {
     MapFragmentBinding mapbinding;
     Context context;
-    MapView mapView=null;
+    MapView mapView;
     int to_another_page=0;
     int call_from_activityresult=0;
     double mylat, mylon;
@@ -50,7 +50,6 @@ public class MapFragment extends Fragment {
         Glide.with(context).load(R.drawable.parking_btn).into(mapbinding.parking);
 
         getting_my_locate();
-        setting_map();
         setting_btn();
 
         return mapbinding.getRoot();
@@ -63,7 +62,8 @@ public class MapFragment extends Fragment {
         gpsTracker.stopUsingGPS();
     }
     public void setting_map(){
-        if(mapView==null){
+        if(mapbinding.mapView.getChildAt(0)==null) {
+            mapView=null;
             mapView=new MapView(getContext());
             mapbinding.mapView.addView(mapView);
         }
@@ -117,31 +117,9 @@ public class MapFragment extends Fragment {
         });
     }
     public void setting_remove_map(){
-
-        if(mapView!=null) {
-            mapbinding.mapView.removeView(mapView);
-            mapView = null;
-        }
-        to_another_page=1;
-    }
-    @Override
-    public void onStop() {
-        System.out.println("mapfragment onstop");
-        super.onStop();
         mapbinding.mapView.removeView(mapView);
-        mapView=null;
-        to_another_page=1;
     }
 
-    @Override
-    public void onResume() {
-        System.out.println("mapfragment onresume");
-        super.onResume();
-        if(to_another_page==1){
-            setting_map();
-            to_another_page=0;
-        }
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

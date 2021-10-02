@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName;
 public class Comment {
 
     @SerializedName("id")
-    String id;
+    int id;
     @SerializedName("user")
-    String user;
+    int user;
     @SerializedName("username")
     String username;
     @SerializedName("profile")
@@ -23,7 +23,7 @@ public class Comment {
     @SerializedName("created_at")
     String created_at;
 
-    public Comment(String id, String user, String username, String profile, String level, String badge, String text, String root, String created_at) {
+    public Comment(int id, int user, String username, String profile, String level, String badge, String text, String root, String created_at) {
         this.id = id;
         this.user = user;
         this.username = username;
@@ -35,19 +35,19 @@ public class Comment {
         this.created_at = created_at;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getUser() {
+    public int getUser() {
         return user;
     }
 
-    public void setUser(String user) {
+    public void setUser(int user) {
         this.user = user;
     }
 

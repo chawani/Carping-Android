@@ -8,11 +8,14 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 import com.tourkakao.carping.Home.ShareDataClass.Share;
 import com.tourkakao.carping.Home.ShareFragmentAdapter.ShareAdapter;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.sharedetail.Activity.ShareDetailActivity;
+import com.tourkakao.carping.sharedetail.Adapter.CommentAdapter;
+import com.tourkakao.carping.sharedetail.DataClass.Comment;
 import com.tourkakao.carping.sharedetail.DataClass.ShareDetail;
 
 import java.lang.reflect.Type;
@@ -24,7 +27,10 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class ShareDetailViewModel extends ViewModel {
     Context context;
     ShareAdapter shareAdapter;
+    CommentAdapter commentAdapter;
+    ArrayList<Comment> comments=null;
     ArrayList<Share> shares=null;
+    int userpk;
     private MutableLiveData<ArrayList<String>> images=new MutableLiveData<>();
     private MutableLiveData<ArrayList<String>> tags=new MutableLiveData<>();
     private MutableLiveData<ShareDetail> detail=new MutableLiveData<>();
@@ -36,6 +42,10 @@ public class ShareDetailViewModel extends ViewModel {
     public void setContext(Context context){
         this.context=context;
     }
+    public void setUserpk(int userpk) {
+        this.userpk = userpk;
+    }
+
     public ShareAdapter setting_share_adapter(){
         shares=new ArrayList<>();
         shareAdapter=new ShareAdapter(context, shares);
@@ -49,6 +59,11 @@ public class ShareDetailViewModel extends ViewModel {
             }
         });
         return shareAdapter;
+    }
+    public CommentAdapter setting_comment_adapter(){
+        comments=new ArrayList<>();
+        commentAdapter=new CommentAdapter(context, comments, userpk);
+        return commentAdapter;
     }
     public void get_total_share(String sort, int count){
         TotalApiClient.getCommunityApiService(context).get_share(sort, count)
@@ -142,6 +157,25 @@ public class ShareDetailViewModel extends ViewModel {
                         error -> {}
                 );
     }
+    public void send_comment(int id, String text){
+        TotalApiClient.getCommunityApiService(context).send_share_comment(userpk, id, text)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        res -> {
+                            if(res.isSuccess()){
+                                Type type=new TypeToken<Comment>(){}.getType();
+                                String result=new Gson().toJson(res.getData().get(0));
+                                Comment comment=new Gson().fromJson(result, type);
+                                comments.add(comment);
+                                commentAdapter.updateItem(comments);
+                            }
+                        },
+                        error -> {
+
+                        }
+                );
+    }
     public void setShareDetail(String result){
         ShareDetail shareDetail=new Gson().fromJson(result, ShareDetail.class);
         detail.setValue(shareDetail);
@@ -169,6 +203,8 @@ public class ShareDetailViewModel extends ViewModel {
             share_complete.setValue(0);
         }
         tags.setValue(tagarr);
+        comments=shareDetail.getComment();
+        commentAdapter.updateItem(comments);
     }
     public MutableLiveData<ArrayList<String>> getImages() {
         return images;

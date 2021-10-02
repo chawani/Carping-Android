@@ -102,4 +102,11 @@ public class ThemeDetailActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        infoFragment.infoFragmentBinding.mapView.removeView(infoFragment.mapView);
+        infoFragment.mapView=null;
+    }
 }

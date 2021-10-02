@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.tourkakao.carping.Gallerypermission.Gallery_setting;
 import com.tourkakao.carping.R;
+import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 import com.tourkakao.carping.databinding.ActivityFixNewcarpingReviewBinding;
 import com.tourkakao.carping.newcarping.viewmodel.EachNewCarpingViewModel;
 
@@ -232,6 +233,7 @@ public class Fix_newcarping_reviewActivity extends AppCompatActivity {
             @Override
             public void onChanged(Integer integer) {
                 if(integer==1){
+                    SharedPreferenceManager.getInstance(context).setInt("newcarping_review_fix", 1);
                     finish();
                 }else if(integer==-1){
                     Toast.makeText(context, "10M 이하의 이미지로 선택해주세요!", Toast.LENGTH_SHORT).show();

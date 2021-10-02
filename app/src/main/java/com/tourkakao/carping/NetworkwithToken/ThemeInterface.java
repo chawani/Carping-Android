@@ -40,6 +40,10 @@ public interface ThemeInterface {
     @POST("camps/auto-camp/partial")
     Single<CommonClass> get_newcarping_place(@Field("count")int count);
 
+    @FormUrlEncoded
+    @POST("search/popular-site")
+    Single<CommonClass> get_popular_place(@Field("region")String region);
+
     @GET("camps/auto-camp/{pk}")
     Single<CommonClass> get_each_newcarping_place_detail(@Path("pk")int pk);
 
@@ -50,6 +54,9 @@ public interface ThemeInterface {
     @FormUrlEncoded
     @HTTP(method="DELETE", path="camps/auto-camp/bookmark", hasBody = true)
     Single<CommonClass> release_bookmark(@Field("autocamp_to_bookmark")int autocamp_to_bookmark);
+
+    @HTTP(method="DELETE", path="camps/auto-camp/{id}/", hasBody = true)
+    Single<CommonClass> delete_newcarping(@Path("id")int id);
 
     @Multipart
     @POST("comments/review/")
@@ -105,6 +112,10 @@ public interface ThemeInterface {
                                                  @Part("star3")float star3,
                                                  @Part("star4")float star4,
                                                  @Part("total_star")float total_star);
+
+    @HTTP(method="DELETE", path="comments/review/{id}/", hasBody=true)
+    Single<CommonClass> delete_newcarping_review(@Path("id")int id);
+
 
     @GET("v2/search/blog")
     Single<DaumBlog> getblog(@Header("Authorization")String key, @Query("query")String query);

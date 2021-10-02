@@ -91,7 +91,16 @@
             android:layout_height="wrap_content"
             android:textSize="13sp"
             android:layout_marginLeft="10dp"
+            android:clickable="true"
             android:text="수정"/>
+        <TextView
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:layout_marginLeft="10dp"
+            android:clickable="true"
+            android:text="삭제"/>
     </LinearLayout>
 
 </LinearLayout>

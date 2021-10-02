@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity{
     MapFragment mapFragment;
     CommunityFragment communityFragment;
     MypageFragment mypageFragment;
+    int choose=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,32 +104,35 @@ public class MainActivity extends AppCompatActivity{
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
                     case R.id.home:
-                        mapFragment.setting_remove_map();
+                        choose=0;
                         getSupportFragmentManager().beginTransaction().show(homeFragment).commit();
                         getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
                         getSupportFragmentManager().beginTransaction().hide(communityFragment).commit();
                         getSupportFragmentManager().beginTransaction().hide(mypageFragment).commit();
                         break;
                     case R.id.map:
-                        mapFragment.setting_map();
+                        choose=1;
                         getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
                         getSupportFragmentManager().beginTransaction().show(mapFragment).commit();
                         getSupportFragmentManager().beginTransaction().hide(communityFragment).commit();
                         getSupportFragmentManager().beginTransaction().hide(mypageFragment).commit();
                         break;
                     case R.id.upload:
-                        mapFragment.setting_map();
+                        getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
+                        getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
+                        getSupportFragmentManager().beginTransaction().hide(communityFragment).commit();
+                        getSupportFragmentManager().beginTransaction().hide(mypageFragment).commit();
                         startActivity(new Intent(MainActivity.this, RegisterActivity.class));
                         break;
                     case R.id.community:
-                        mapFragment.setting_map();
+                        choose=3;
                         getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
                         getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
                         getSupportFragmentManager().beginTransaction().show(communityFragment).commit();
                         getSupportFragmentManager().beginTransaction().hide(mypageFragment).commit();
                         break;
                     case R.id.profile:
-                        mapFragment.setting_map();
+                        choose=4;
                         getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
                         getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
                         getSupportFragmentManager().beginTransaction().hide(communityFragment).commit();
@@ -152,6 +156,42 @@ public class MainActivity extends AppCompatActivity{
             super.onBackPressed();
         }else if(homeFragment.homebinding.slidingLayout.getPanelState()== SlidingUpPanelLayout.PanelState.EXPANDED){
             homeFragment.homebinding.slidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mapFragment.setting_map();
+        switch(choose){
+            case 0:
+                getSupportFragmentManager().beginTransaction().show(homeFragment).commit();
+                getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
+                getSupportFragmentManager().beginTransaction().hide(communityFragment).commit();
+                getSupportFragmentManager().beginTransaction().hide(mypageFragment).commit();
+                bottomNavigationView.setSelectedItemId(R.id.home);
+                break;
+            case 1:
+                getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
+                getSupportFragmentManager().beginTransaction().show(mapFragment).commit();
+                getSupportFragmentManager().beginTransaction().hide(communityFragment).commit();
+                getSupportFragmentManager().beginTransaction().hide(mypageFragment).commit();
+                bottomNavigationView.setSelectedItemId(R.id.map);
+                break;
+            case 3:
+                getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
+                getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
+                getSupportFragmentManager().beginTransaction().show(communityFragment).commit();
+                getSupportFragmentManager().beginTransaction().hide(mypageFragment).commit();
+                bottomNavigationView.setSelectedItemId(R.id.community);
+                break;
+            case 4:
+                getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
+                getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
+                getSupportFragmentManager().beginTransaction().hide(communityFragment).commit();
+                getSupportFragmentManager().beginTransaction().show(mypageFragment).commit();
+                bottomNavigationView.setSelectedItemId(R.id.profile);
+                break;
         }
     }
 }

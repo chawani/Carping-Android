@@ -28,6 +28,7 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
     private MainThemeFragmentBinding themebinding;
     Context context;
     ThemeViewModel themeViewModel;
+    String region;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,6 +58,10 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
         setting_az_total_btn();
 
         return themebinding.getRoot();
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
     }
 
     @Override
@@ -152,10 +157,8 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
 
     public void setting_popularcarping_posts(){
         LinearLayoutManager layoutManager=new LinearLayoutManager(context);
-        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         themebinding.popularCarpingRecyclerview.setLayoutManager(layoutManager);
         themebinding.popularCarpingRecyclerview.setAdapter(themeViewModel.setting_popularcarping_place_adapter());
-
     }
 
     public void starting_observe_popularcarping(){
@@ -243,6 +246,6 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
         themeViewModel.getMain_thisweekends();
         themeViewModel.getAz();
         themeViewModel.getNewCarpingPlace();
-        themeViewModel.getPopularCarpingPlace();
+        themeViewModel.getPopularCarpingPlace(region);
     }
 }

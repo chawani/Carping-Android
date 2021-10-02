@@ -10,10 +10,12 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.tourkakao.carping.BuildConfig;
+import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 import com.tourkakao.carping.databinding.ActivityEachNewCarpingBinding;
@@ -25,6 +27,9 @@ import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapReverseGeoCoder;
 import net.daum.mf.map.api.MapView;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class Each_NewCarpingActivity extends AppCompatActivity implements MapReverseGeoCoder.ReverseGeoCodingResultListener {
     private ActivityEachNewCarpingBinding eachNewCarpingBinding;
@@ -75,6 +80,7 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
         starting_observe_bookmark_image();
         starting_observe_map_and_address();
         starting_observe_userpk();
+        starting_observe_delete_review();
     }
 
     public void setting_map(){
@@ -151,6 +157,23 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
                     eachNewCarpingBinding.listbtn.setVisibility(View.VISIBLE);
                     eachNewCarpingBinding.listbtn.setOnClickListener(v -> {
                         eachNewCarpingBinding.listLayout.setVisibility(View.VISIBLE);
+                        eachNewCarpingBinding.newcarpingDelete.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                TotalApiClient.getApiService(context).delete_newcarping(post_pk)
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(
+                                                res -> {
+                                                    if(res.isSuccess()){
+                                                        Toast.makeText(Each_NewCarpingActivity.this, "신규 차박지가 삭제되었어요", Toast.LENGTH_SHORT).show();
+                                                        finish();
+                                                    }
+                                                },
+                                                error -> {}
+                                        );
+                            }
+                        });
                         eachNewCarpingBinding.newcarpingEdit.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -206,6 +229,18 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
                             eachNewCarpingBinding.listLayout.setVisibility(View.GONE);
                         }
                     });
+                }else if(integer==0){
+                    eachNewCarpingBinding.listbtn.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+    public void starting_observe_delete_review(){
+        eachNewCarpingViewModel.delete_review_ok.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if(integer==1){
+                    eachNewCarpingViewModel.get_newcarping_detail();
                 }
             }
         });
@@ -243,6 +278,10 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
             marker.setMapPoint(mapPoint);
             marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
             mapView.addPOIItem(marker);
+        }
+        if(SharedPreferenceManager.getInstance(context).getInt("newcarping_review_fix", 0)==1){
+            eachNewCarpingViewModel.get_newcarping_detail();
+            SharedPreferenceManager.getInstance(context).setInt("newcarping_review_fix", 0);
         }
     }
 

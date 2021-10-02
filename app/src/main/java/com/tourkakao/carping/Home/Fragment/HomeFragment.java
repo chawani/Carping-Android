@@ -67,6 +67,7 @@ public class HomeFragment extends Fragment {
         eco_fragment = new EcoFragment();
         theme_top_fragment=new ThemeTopFragment();
         theme_fragment = new ThemeFragment();
+        theme_fragment.setRegion(region);
     }
     public void switch_main_tap(){
         getChildFragmentManager().beginTransaction().add(R.id.top_container, theme_top_fragment).commit();
@@ -158,6 +159,8 @@ public class HomeFragment extends Fragment {
                 }
             }
             searchViewModel.get_popularlist(region);
+            theme_fragment.setRegion(region);
+            theme_fragment.themeViewModel.getPopularCarpingPlace(region);
         });
         homebinding.i2.setOnClickListener(v -> {
             city_select=1;
@@ -170,6 +173,8 @@ public class HomeFragment extends Fragment {
                 }
             }
             searchViewModel.get_popularlist(region);
+            theme_fragment.setRegion(region);
+            theme_fragment.themeViewModel.getPopularCarpingPlace(region);
         });
         homebinding.i3.setOnClickListener(v -> {
             city_select=2;
@@ -182,6 +187,8 @@ public class HomeFragment extends Fragment {
                 }
             }
             searchViewModel.get_popularlist(region);
+            theme_fragment.setRegion(region);
+            theme_fragment.themeViewModel.getPopularCarpingPlace(region);
         });
         homebinding.i4.setOnClickListener(v -> {
             city_select=3;
@@ -194,6 +201,8 @@ public class HomeFragment extends Fragment {
                 }
             }
             searchViewModel.get_popularlist(region);
+            theme_fragment.setRegion(region);
+            theme_fragment.themeViewModel.getPopularCarpingPlace(region);
         });
         homebinding.i5.setOnClickListener(v -> {
             city_select=4;
@@ -206,6 +215,8 @@ public class HomeFragment extends Fragment {
                 }
             }
             searchViewModel.get_popularlist(region);
+            theme_fragment.setRegion(region);
+            theme_fragment.themeViewModel.getPopularCarpingPlace(region);
         });
         homebinding.i6.setOnClickListener(v -> {
             city_select=5;
@@ -218,6 +229,8 @@ public class HomeFragment extends Fragment {
                 }
             }
             searchViewModel.get_popularlist(region);
+            theme_fragment.setRegion(region);
+            theme_fragment.themeViewModel.getPopularCarpingPlace(region);
         });
         homebinding.i7.setOnClickListener(v -> {
             city_select=6;
@@ -230,6 +243,8 @@ public class HomeFragment extends Fragment {
                 }
             }
             searchViewModel.get_popularlist(region);
+            theme_fragment.setRegion(region);
+            theme_fragment.themeViewModel.getPopularCarpingPlace(region);
         });
         homebinding.i8.setOnClickListener(v -> {
             city_select=7;
@@ -242,6 +257,8 @@ public class HomeFragment extends Fragment {
                 }
             }
             searchViewModel.get_popularlist(region);
+            theme_fragment.setRegion(region);
+            theme_fragment.themeViewModel.getPopularCarpingPlace(region);
         });
         homebinding.i9.setOnClickListener(v -> {
             city_select=8;
@@ -254,6 +271,8 @@ public class HomeFragment extends Fragment {
                 }
             }
             searchViewModel.get_popularlist(region);
+            theme_fragment.setRegion(region);
+            theme_fragment.themeViewModel.getPopularCarpingPlace(region);
         });
         homebinding.i10.setOnClickListener(v -> {
             city_select=9;
@@ -266,6 +285,8 @@ public class HomeFragment extends Fragment {
                 }
             }
             searchViewModel.get_popularlist(region);
+            theme_fragment.setRegion(region);
+            theme_fragment.themeViewModel.getPopularCarpingPlace(region);
         });
         homebinding.i11.setOnClickListener(v -> {
             city_select=10;
@@ -278,6 +299,8 @@ public class HomeFragment extends Fragment {
                 }
             }
             searchViewModel.get_popularlist(region);
+            theme_fragment.setRegion(region);
+            theme_fragment.themeViewModel.getPopularCarpingPlace(region);
         });
         homebinding.i12.setOnClickListener(v -> {
             city_select=11;
@@ -290,6 +313,8 @@ public class HomeFragment extends Fragment {
                 }
             }
             searchViewModel.get_popularlist(region);
+            theme_fragment.setRegion(region);
+            theme_fragment.themeViewModel.getPopularCarpingPlace(region);
         });
         homebinding.i13.setOnClickListener(v -> {
             city_select=12;
@@ -302,6 +327,8 @@ public class HomeFragment extends Fragment {
                 }
             }
             searchViewModel.get_popularlist(region);
+            theme_fragment.setRegion(region);
+            theme_fragment.themeViewModel.getPopularCarpingPlace(region);
         });
         homebinding.i14.setOnClickListener(v -> {
             city_select=13;
@@ -314,6 +341,8 @@ public class HomeFragment extends Fragment {
                 }
             }
             searchViewModel.get_popularlist(region);
+            theme_fragment.setRegion(region);
+            theme_fragment.themeViewModel.getPopularCarpingPlace(region);
         });
         homebinding.i15.setOnClickListener(v -> {
             city_select=14;
@@ -326,6 +355,8 @@ public class HomeFragment extends Fragment {
                 }
             }
             searchViewModel.get_popularlist(region);
+            theme_fragment.setRegion(region);
+            theme_fragment.themeViewModel.getPopularCarpingPlace(region);
         });
         homebinding.i16.setOnClickListener(v -> {
             city_select=15;
@@ -338,7 +369,8 @@ public class HomeFragment extends Fragment {
                 }
             }
             searchViewModel.get_popularlist(region);
-
+            theme_fragment.setRegion(region);
+            theme_fragment.themeViewModel.getPopularCarpingPlace(region);
         });
     }
     public void setting_searchadapter(){

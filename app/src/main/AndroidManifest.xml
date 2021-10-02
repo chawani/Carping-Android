@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
+        <activity android:name=".sharedetail.Activity.FixShareActivity"></activity>
         <activity android:name=".MainSearch.Activity.MainSearchWith" />
         <activity android:name=".Post.PostReviewWriteActivity" />
         <activity android:name=".Post.PostReviewActivity" />

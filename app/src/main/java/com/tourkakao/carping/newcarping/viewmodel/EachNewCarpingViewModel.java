@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
@@ -65,6 +66,7 @@ public class EachNewCarpingViewModel extends ViewModel {
     public MutableLiveData<Double> carpingplace_lon=new MutableLiveData<>();
     public MutableLiveData<Integer> review_send_ok=new MutableLiveData<>();
     public MutableLiveData<Integer> fix_send_ok=new MutableLiveData<>();
+    public MutableLiveData<Integer> delete_review_ok=new MutableLiveData<>();
     private Context context;
     public int pk;
     public int userpk;
@@ -89,6 +91,7 @@ public class EachNewCarpingViewModel extends ViewModel {
         r_star1=0; r_star2=0; r_star3=0; r_star4=0; r_totalstar=0;
         review_send_ok.setValue(0);
         fix_send_ok.setValue(0);
+        delete_review_ok.setValue(0);
     }
     public void setContext(Context context){
         this.context=context;
@@ -103,6 +106,12 @@ public class EachNewCarpingViewModel extends ViewModel {
     public Newcarping_Review_Adapter setting_newcarping_review_adapter(){
         reviews=new ArrayList<>();
         newcarping_review_adapter=new Newcarping_Review_Adapter(context, reviews, userpk, pk);
+        newcarping_review_adapter.setOnSelectItemClickListener(new Newcarping_Review_Adapter.OnSelectItemClickListener() {
+            @Override
+            public void OnSelectItemClick(View v, int pos, int pk) {
+                deleting_review(pk, pos);
+            }
+        });
         return newcarping_review_adapter;
     }
     public Newcarping_Review_Image_Adapter setting_newcarping_review_image_adapter(){
@@ -123,7 +132,6 @@ public class EachNewCarpingViewModel extends ViewModel {
                                     String result = new Gson().toJson(detail.getData().get(0));
                                     NewCarping newCarping = new Gson().fromJson(result, type);
 
-                                    userpk=newCarping.getUser();
                                     pk=newCarping.getId();
                                     title.setValue(newCarping.getTitle());
                                     total_star.setValue(newCarping.getTotal_star());
@@ -293,6 +301,23 @@ public class EachNewCarpingViewModel extends ViewModel {
                             }
                     );
         }
+    }
+    public void deleting_review(int id, int pos){
+        TotalApiClient.getApiService(context).delete_newcarping_review(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        res -> {
+                            if(res.isSuccess()){
+                                delete_review_ok.setValue(1);
+                                Toast.makeText(context, "리뷰가 삭제되었어요", Toast.LENGTH_SHORT).show();
+                                reviews.remove(pos);
+                                newcarping_review_adapter.update_Item(reviews);
+                                delete_review_ok.setValue(0);
+                            }
+                        },
+                        error -> {}
+                );
     }
     public String getPath(Uri uri){
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
