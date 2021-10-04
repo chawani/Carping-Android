@@ -63,6 +63,7 @@ public class Location_setting implements HomeContract, HomeContract.Location_set
                                     setting_permission_intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                                     setting_permission_intent.setData(Uri.parse("package:"+"com.tourkakao.carping"));
                                     context.startActivity(setting_permission_intent);
+                                    used_Activity.finish();
                                 }
                             });
                     builder.create().show();

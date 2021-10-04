@@ -192,6 +192,9 @@ public class ShareDetailViewModel extends ViewModel {
         if(shareDetail.getImage4()!=null){
             imgarr.add(shareDetail.getImage4());
         }
+        for(int i=0; i<imgarr.size(); i++){
+            System.out.println(imgarr.get(i));
+        }
         images.setValue(imgarr);
         ArrayList<String> tagarr=new ArrayList<>();
         for(int i=0; i<shareDetail.getTags().size(); i++){

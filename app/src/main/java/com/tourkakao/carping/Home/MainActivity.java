@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity{
                         break;
                     case R.id.map:
                         choose=1;
+                        mapFragment.setting_map();
                         getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
                         getSupportFragmentManager().beginTransaction().show(mapFragment).commit();
                         getSupportFragmentManager().beginTransaction().hide(communityFragment).commit();
@@ -162,7 +163,6 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        mapFragment.setting_map();
         switch(choose){
             case 0:
                 getSupportFragmentManager().beginTransaction().show(homeFragment).commit();
@@ -172,6 +172,7 @@ public class MainActivity extends AppCompatActivity{
                 bottomNavigationView.setSelectedItemId(R.id.home);
                 break;
             case 1:
+                mapFragment.setting_map();
                 getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
                 getSupportFragmentManager().beginTransaction().show(mapFragment).commit();
                 getSupportFragmentManager().beginTransaction().hide(communityFragment).commit();

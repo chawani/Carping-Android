@@ -133,6 +133,7 @@ public class EachNewCarpingViewModel extends ViewModel {
                                     NewCarping newCarping = new Gson().fromJson(result, type);
 
                                     pk=newCarping.getId();
+                                    System.out.println(pk+"pk----------------");
                                     title.setValue(newCarping.getTitle());
                                     total_star.setValue(newCarping.getTotal_star());
                                     review_cnt_num.setValue(newCarping.getReview_count());

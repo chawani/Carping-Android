@@ -198,8 +198,10 @@ public class MapSearchActivity extends AppCompatActivity {
         String total=gson.toJson(data);
         Type type=new TypeToken<ArrayList<MapSearch.Place>>(){}.getType();
         list=gson.fromJson(total, type);
-        Collections.sort(list);
-        setting_search_recyclerview(list);
+        if(list.size()!=0) {
+            Collections.sort(list);
+            setting_search_recyclerview(list);
+        }
     }
     public void setting_search_recyclerview(ArrayList<MapSearch.Place> list){
         searchBinding.mapsearchRecyclerview.setLayoutManager(new LinearLayoutManager(context));

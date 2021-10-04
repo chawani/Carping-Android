@@ -19,5 +19,7 @@
         android:background="#ffffff"
         android:backgroundTint="#ffffff"
         app:labelVisibilityMode="labeled"
-        app:menu="@menu/bottom_navigation_tab" />
+        app:menu="@menu/bottom_navigation_tab"
+        app:itemIconTint="@drawable/item_select"
+        app:itemTextColor="@drawable/item_select"/>
 </LinearLayout>

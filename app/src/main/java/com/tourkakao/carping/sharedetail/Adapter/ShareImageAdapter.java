@@ -22,6 +22,7 @@ public class ShareImageAdapter extends RecyclerView.Adapter<ShareImageAdapter.Sh
             this.binding=binding;
         }
         public void setItem(String image){
+            System.out.println(image+"---------------------shareimageadapter");
             Glide.with(context).load(image).into(binding.shareImg);
         }
     }

@@ -68,9 +68,10 @@ public class PopularCarpingPlace_Adapter extends RecyclerView.Adapter {
             }
             binding.pname.setText(popular.getName());
             binding.paddress.setText(popular.getAddress());
+            Glide.with(context).load(R.drawable.group).into(binding.psearchImg);
             binding.psearchCnt.setText(popular.getSearch_count()+"");
             if(popular.isIs_bookmarked()==false){
-                Glide.with(context).load(R.drawable.bookmark_img).into(binding.pbookmark);
+                Glide.with(context).load(R.drawable.red_bookmark).into(binding.pbookmark);
             }else{
                 Glide.with(context).load(R.drawable.mybookmark_img).into(binding.pbookmark);
             }
@@ -93,7 +94,7 @@ public class PopularCarpingPlace_Adapter extends RecyclerView.Adapter {
             binding.pbookmark.setOnClickListener(v -> {
                 if(popular.isIs_bookmarked()){
                     TotalApiClient.getApiService(context).release_theme_bookmark(popular.getId()).subscribe();
-                    Glide.with(context).load(R.drawable.bookmark_img).into(binding.pbookmark);
+                    Glide.with(context).load(R.drawable.red_bookmark).into(binding.pbookmark);
                     populars.get(pos).setIs_bookmarked(false);
                 }else{
                     TotalApiClient.getApiService(context).set_theme_bookmark(popular.getId()).subscribe();
