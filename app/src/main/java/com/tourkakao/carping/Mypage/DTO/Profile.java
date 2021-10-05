@@ -1,4 +1,4 @@
-package com.tourkakao.carping.Mypage;
+package com.tourkakao.carping.Mypage.DTO;
 
 import java.util.List;
 

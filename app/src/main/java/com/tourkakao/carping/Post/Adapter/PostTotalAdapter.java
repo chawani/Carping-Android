@@ -12,16 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.tourkakao.carping.EcoCarping.Activity.EcoCarpingDetailActivity;
-import com.tourkakao.carping.EcoCarping.Adapter.EcoTotalReviewAdapter;
-import com.tourkakao.carping.Home.EcoDataClass.EcoReview;
 import com.tourkakao.carping.Post.DTO.PostListItem;
 import com.tourkakao.carping.Post.PostDetailActivity;
-import com.tourkakao.carping.Post.PremiumPostActivity;
+import com.tourkakao.carping.Post.PostInfoActivity;
 import com.tourkakao.carping.R;
-import com.tourkakao.carping.databinding.EcoCarpingTotalListItemBinding;
 import com.tourkakao.carping.databinding.PostTotalItemBinding;
 
 import java.util.ArrayList;
@@ -46,8 +40,9 @@ public class PostTotalAdapter extends RecyclerView.Adapter<PostTotalAdapter.View
             binding.view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent=new Intent(context, PostDetailActivity.class);
-                    intent.putExtra("pk",binding.pk.getText().toString());
+                    Intent intent=new Intent(context, PostInfoActivity.class);
+                    int pk=Integer.parseInt(binding.pk.getText().toString());
+                    intent.putExtra("pk",pk);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 }

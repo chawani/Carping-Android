@@ -11,13 +11,9 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.tourkakao.carping.Post.Adapter.PostCategoryAdapter;
-import com.tourkakao.carping.Post.Adapter.PostTotalAdapter;
-import com.tourkakao.carping.Post.Adapter.ReviewAdapter;
-import com.tourkakao.carping.Post.DTO.PostDetail;
 import com.tourkakao.carping.Post.DTO.PostListItem;
 import com.tourkakao.carping.Post.ViewModel.PostListViewModel;
 import com.tourkakao.carping.databinding.ActivityPostCategoryBinding;
-import com.tourkakao.carping.databinding.ActivityPostDetailBinding;
 
 import java.util.ArrayList;
 
@@ -99,7 +95,7 @@ public class PostCategoryActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> a_parent, View a_view, int a_position, long a_id) {
                 PostListItem item = (PostListItem) adapter.getItem(a_position);
-                Intent intent=new Intent(getApplicationContext(), PremiumPostActivity.class);
+                Intent intent=new Intent(getApplicationContext(), PostInfoActivity.class);
                 intent.putExtra("pk",item.getId());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);

@@ -94,17 +94,38 @@
         android:textColor="#000000"
         android:text="포스트 미리보기"/>
     <HorizontalScrollView
-        android:layout_marginHorizontal="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:scrollbars="none"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_marginHorizontal="16dp">
         <LinearLayout
+            android:layout_marginTop="20dp"
             android:id="@+id/image_area"
             android:layout_width="match_parent"
             android:layout_height="170dp"
-            android:orientation="horizontal"/>
+            android:orientation="horizontal">
+            <ImageView
+                android:scaleType="centerCrop"
+                android:id="@+id/image1"
+                android:layout_width="323dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="14dp">
+            </ImageView>
+            <ImageView
+                android:scaleType="centerCrop"
+                android:id="@+id/image2"
+                android:layout_width="323dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="14dp">
+            </ImageView>
+            <ImageView
+                android:scaleType="centerCrop"
+                android:id="@+id/image3"
+                android:layout_width="323dp"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
     </HorizontalScrollView>
+
     <TextView
         android:layout_marginLeft="16dp"
         android:layout_marginTop="40dp"

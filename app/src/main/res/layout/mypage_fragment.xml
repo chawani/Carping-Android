@@ -286,8 +286,42 @@
                 android:textStyle="bold"
                 android:textSize="18sp"
                 android:textColor="#000000"
+                android:text="고객지원"/>
+            <LinearLayout
+                android:id="@+id/help"
+                android:layout_marginTop="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/spoqa_han_sans_neo"
+                    android:textStyle="normal"
+                    android:textSize="15sp"
+                    android:textColor="#000000"
+                    android:text="고객센터/도움말"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:id="@+id/arrow7"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="7dp"
+                    android:layout_height="12dp"/>
+            </LinearLayout>
+            <TextView
+                android:layout_marginTop="35dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/spoqa_han_sans_neo"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="#000000"
                 android:text="서비스 약관"/>
             <LinearLayout
+                android:id="@+id/terms"
                 android:layout_marginTop="25dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -305,53 +339,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
                 <ImageView
-                    android:id="@+id/arrow7"
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="7dp"
-                    android:layout_height="12dp"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_marginTop="30dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/spoqa_han_sans_neo"
-                    android:textStyle="normal"
-                    android:textSize="15sp"
-                    android:textColor="#000000"
-                    android:text="위치정보 이용약관"/>
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"/>
-                <ImageView
-                    android:id="@+id/arrow8"
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="7dp"
-                    android:layout_height="12dp"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_marginTop="30dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/spoqa_han_sans_neo"
-                    android:textStyle="normal"
-                    android:textSize="15sp"
-                    android:textColor="#000000"
-                    android:text="개인정보 처리방침"/>
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"/>
-                <ImageView
-                    android:id="@+id/arrow9"
+                    android:id="@+id/arrow11"
                     android:layout_gravity="center_vertical"
                     android:layout_width="7dp"
                     android:layout_height="12dp"/>

@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.gson.Gson;
-import com.tourkakao.carping.Mypage.Profile;
+import com.tourkakao.carping.Mypage.DTO.Profile;
 import com.tourkakao.carping.NetworkwithToken.CommonClass;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;

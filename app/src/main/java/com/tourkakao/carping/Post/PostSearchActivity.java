@@ -18,10 +18,8 @@ import com.bumptech.glide.Glide;
 import com.tourkakao.carping.Post.Adapter.KeywordAdapter;
 import com.tourkakao.carping.Post.Adapter.PostCategoryAdapter;
 import com.tourkakao.carping.Post.DTO.PostListItem;
-import com.tourkakao.carping.Post.ViewModel.PostListViewModel;
 import com.tourkakao.carping.Post.ViewModel.PostSearchViewModel;
 import com.tourkakao.carping.R;
-import com.tourkakao.carping.databinding.ActivityPostDetailBinding;
 import com.tourkakao.carping.databinding.ActivityPostSearchBinding;
 
 import java.util.ArrayList;
@@ -99,7 +97,7 @@ public class PostSearchActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> a_parent, View a_view, int a_position, long a_id) {
                 PostListItem item = (PostListItem) postAdapter.getItem(a_position);
                 viewModel.completeSearch(binding.searchText.getText().toString(),item.getTitle());
-                Intent intent=new Intent(context, PremiumPostActivity.class);
+                Intent intent=new Intent(context, PostInfoActivity.class);
                 intent.putExtra("pk",item.getId());
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);

@@ -17,10 +17,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Post.PayActivity"></activity>
+        <activity android:name=".Mypage.HelpDetailActivity"></activity>
+        <activity android:name=".Mypage.TermsOfServiceActivity" />
+        <activity android:name=".Mypage.HelpListActivity" />
+        <activity android:name=".Post.PayActivity" />
         <activity android:name=".Post.PostReviewWriteActivity" />
         <activity android:name=".Post.PostReviewActivity" />
-        <activity android:name=".Post.PremiumPostActivity" />
+        <activity android:name=".Post.PostInfoActivity" />
         <activity android:name=".Post.PostCategoryActivity" />
         <activity android:name=".Post.PostTotalActivity" />
         <activity android:name=".Post.PostSearchActivity" />
@@ -33,6 +36,7 @@
         <activity android:name=".Mypage.PhoneCertificationActivity" />
         <activity android:name=".Mypage.PersonalInformationActivity" />
         <activity android:name=".Mypage.ProfileEditActivity" />
+        <activity android:name=".Mypage.PostApprovalActivity" />
         <activity android:name=".MypageMainActivities.Activity.MypageEcoReviewActivity" />
         <activity android:name=".MypageMainActivities.Activity.MypageFreeSharingActivity" />
         <activity android:name=".MypageMainActivities.Activity.MypageCarpingActivity" />

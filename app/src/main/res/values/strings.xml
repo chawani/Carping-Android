@@ -5,4 +5,44 @@
         <item>최신순</item>
         <item>인기순</item>
     </string-array>
+
+    <string-array name="post_category">
+        <item>카테고리를 선택해주세요</item>
+        <item>초보 차박러를 위한 포스트</item>
+        <item>차박의 모든 것</item>
+        <item>차에 맞는 차박여행</item>
+    </string-array>
+
+    <string-array name="bank">
+        <item>은행선택</item>
+        <item>카카오뱅크</item>
+        <item>농협</item>
+        <item>신한</item>
+        <item>IBK기업</item>
+        <item>하나</item>
+        <item>우리</item>
+        <item>국민</item>
+        <item>SC제일</item>
+        <item>대구</item>
+        <item>부산</item>
+        <item>광주</item>
+        <item>새마을금고</item>
+        <item>경남</item>
+        <item>전북</item>
+        <item>제주</item>
+        <item>산업</item>
+        <item>우체국</item>
+        <item>신협</item>
+        <item>수협</item>
+        <item>씨티</item>
+        <item>케이뱅크</item>
+        <item>도이치</item>
+        <item>BOA</item>
+        <item>BNP</item>
+        <item>중국공상</item>
+        <item>HSBC</item>
+        <item>JP모간</item>
+        <item>산림조합</item>
+        <item>저축은행</item>
+    </string-array>
 </resources>

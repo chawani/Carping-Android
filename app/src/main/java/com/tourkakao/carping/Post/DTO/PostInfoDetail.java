@@ -13,6 +13,7 @@ public class PostInfoDetail implements Serializable {
     private String title;
     private String thumbnail;
     private int point;
+    private int final_point;
     private String info;
     private String recommend_to;
     private List<Review> review;
@@ -30,6 +31,41 @@ public class PostInfoDetail implements Serializable {
     private String preview_image3;
     private int like_count;
     private int contents_count;
+    private String kakao_openchat_url;
+    private boolean is_approved;
+    int author_id;
+
+    public int getAuthor_id() {
+        return author_id;
+    }
+
+    public void setAuthor_id(int author_id) {
+        this.author_id = author_id;
+    }
+
+    public boolean isIs_approved() {
+        return is_approved;
+    }
+
+    public void setIs_approved(boolean is_approved) {
+        this.is_approved = is_approved;
+    }
+
+    public String getKakao_openchat_url() {
+        return kakao_openchat_url;
+    }
+
+    public void setKakao_openchat_url(String kakao_openchat_url) {
+        this.kakao_openchat_url = kakao_openchat_url;
+    }
+
+    public int getFinal_point() {
+        return final_point;
+    }
+
+    public void setFinal_point(int final_point) {
+        this.final_point = final_point;
+    }
 
     public int getUserpost_id() {
         return userpost_id;

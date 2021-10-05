@@ -203,4 +203,21 @@ public class PostDetailViewModel extends ViewModel {
                     }
                 });
     }
+
+    public void deletePost(int id){
+        TotalApiClient.getPostApiService(context).deactivatePost(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<CommonClass>() {
+                    @Override
+                    public void onSuccess(@NonNull CommonClass commonClass) {
+                        System.out.println("삭제:"+commonClass.getCode());
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+                });
+    }
 }

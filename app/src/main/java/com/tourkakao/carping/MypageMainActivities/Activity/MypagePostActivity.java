@@ -53,10 +53,10 @@ public class MypagePostActivity extends AppCompatActivity {
                     selected=myFragment;
                 }
                 if(pos==1){
-                    selected=likeFragment;
+                    selected=purchaseFragment;
                 }
                 if(pos==2){
-                    selected=purchaseFragment;
+                    selected=likeFragment;
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.mypage_container,selected).commit();
             }

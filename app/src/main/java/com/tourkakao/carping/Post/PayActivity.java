@@ -19,7 +19,6 @@ import com.tourkakao.carping.databinding.ActivityPostDetailBinding;
 public class PayActivity extends AppCompatActivity {
     private ActivityPayBinding binding;
     private PostDetailViewModel viewModel;
-    private String pgToken;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

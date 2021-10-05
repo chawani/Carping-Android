@@ -20,15 +20,13 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.tourkakao.carping.Home.HomeViewModel.MypageViewModel;
-import com.tourkakao.carping.MypageMainActivities.Activity.MypageEcoReviewActivity;
+import com.tourkakao.carping.Mypage.DTO.Profile;
 import com.tourkakao.carping.NetworkwithToken.CommonClass;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
-import com.tourkakao.carping.databinding.ActivityEcoCarpingDetailBinding;
 import com.tourkakao.carping.databinding.ActivityProfileEditBinding;
 
 import java.io.File;

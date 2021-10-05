@@ -7,15 +7,14 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.tourkakao.carping.Home.HomeViewModel.MypageViewModel;
+import com.tourkakao.carping.Mypage.DTO.Profile;
 import com.tourkakao.carping.NetworkwithToken.CommonClass;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 import com.tourkakao.carping.databinding.ActivityPersonalInformationBinding;
-import com.tourkakao.carping.databinding.ActivityProfileEditBinding;
 
 import java.util.HashMap;
 

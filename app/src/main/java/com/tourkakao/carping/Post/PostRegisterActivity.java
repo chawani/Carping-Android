@@ -17,6 +17,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.tourkakao.carping.NetworkwithToken.CommonClass;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
+import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 import com.tourkakao.carping.databinding.ActivityPostRegisterBinding;
 
 import java.util.HashMap;
@@ -29,6 +30,7 @@ public class PostRegisterActivity extends AppCompatActivity {
     private ActivityPostRegisterBinding binding;
     private Context context;
     private boolean phone_check=false;
+    private boolean phoneRecordCheck=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +38,7 @@ public class PostRegisterActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         context=getApplicationContext();
 
+        phoneRecordCheck= SharedPreferenceManager.getInstance(context).getBoolean("phone",false);
         initLayout();
 
         observeChanges();
@@ -132,11 +135,11 @@ public class PostRegisterActivity extends AppCompatActivity {
         binding.completionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if(!phone_check){
-//                    Toast myToast = Toast.makeText(getApplicationContext(),"휴대폰 인증은 필수입니다", Toast.LENGTH_SHORT);
-//                    myToast.show();
-//                    return;
-//                }
+                if(!phone_check){
+                    Toast myToast = Toast.makeText(getApplicationContext(),"휴대폰 인증은 필수입니다", Toast.LENGTH_SHORT);
+                    myToast.show();
+                    return;
+                }
                 if(!checkAgreeList()){
                     Toast myToast = Toast.makeText(getApplicationContext(),"필수 항목들에 모두 체크해주세요", Toast.LENGTH_SHORT);
                     myToast.show();
@@ -150,6 +153,10 @@ public class PostRegisterActivity extends AppCompatActivity {
     }
 
     public void initLayout(){
+        if(phoneRecordCheck==true){
+            binding.phone.setVisibility(View.GONE);
+            phone_check=true;
+        }
         binding.phoneCertificationArea.setVisibility(View.GONE);
     }
 

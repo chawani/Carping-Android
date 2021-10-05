@@ -41,4 +41,7 @@ public interface MypageInterface {
 
     @POST("/accounts/sms-verification")
     Single<CommonClass> postverificationNumber(@Body HashMap<String,Object> auth_num);
+
+    @POST("mypage/post-status")
+    Single<CommonClass> getPostStatus(@Body HashMap<String,Object> map);
 }

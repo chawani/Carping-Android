@@ -1,7 +1,6 @@
 package com.tourkakao.carping.Post.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
@@ -9,20 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.tourkakao.carping.Post.DTO.PostListItem;
-import com.tourkakao.carping.Post.PostDetailActivity;
-import com.tourkakao.carping.Post.PremiumPostActivity;
-import com.tourkakao.carping.Post.ViewModel.PostDetailViewModel;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.databinding.PostCategoryItemBinding;
-import com.tourkakao.carping.databinding.PostTotalItemBinding;
 
 import java.util.ArrayList;
 

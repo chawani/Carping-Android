@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +17,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.tourkakao.carping.MypageMainActivities.MypageViewModel.MypageCarpingViewModel;
 import com.tourkakao.carping.Post.DTO.PostInfoDetail;
 import com.tourkakao.carping.Post.ViewModel.PostDetailViewModel;
@@ -46,6 +49,10 @@ public class IntroduceFragment extends Fragment {
         Glide.with(context).load(R.drawable.posting_icon).into(binding.postingImg);
         Glide.with(context).load(R.drawable.contents_icon).into(binding.contentsNumberImg);
         Glide.with(context).load(R.drawable.like_icon_purple).into(binding.likeImg);
+        binding.imageArea.setVisibility(View.GONE);
+        binding.image1.setVisibility(View.GONE);
+        binding.image2.setVisibility(View.GONE);
+        binding.image3.setVisibility(View.GONE);
     }
 
     public void settingInfo(){
@@ -55,30 +62,31 @@ public class IntroduceFragment extends Fragment {
                 binding.contentCount.setText("목차 "+postInfoDetail.getContents_count()+"개");
                 binding.likeCount.setText("찜 "+postInfoDetail.getLike_count()+"명");
 
-                ImageView imageView = new ImageView(context);
-                imageView.setLayoutParams(new ViewGroup.LayoutParams(convertDp(323), ViewGroup.LayoutParams.MATCH_PARENT));
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 if(postInfoDetail.getPreview_image1()!=null) {
-                    Glide.with(context).load(postInfoDetail.getPreview_image1()).into(imageView);
-                    binding.imageArea.addView(imageView);
+                    binding.imageArea.setVisibility(View.VISIBLE);
+                    binding.image1.setVisibility(View.VISIBLE);
+                    Glide.with(context).load(postInfoDetail.getPreview_image1())
+                            .transform(new CenterCrop(), new RoundedCorners(20))
+                            .into(binding.image1);
                 }
                 if(postInfoDetail.getPreview_image2()!=null) {
-                    Glide.with(context).load(postInfoDetail.getPreview_image1()).into(imageView);
-                    binding.imageArea.addView(imageView);
+                    binding.imageArea.setVisibility(View.VISIBLE);
+                    binding.image2.setVisibility(View.VISIBLE);
+                    Glide.with(context).load(postInfoDetail.getPreview_image2())
+                            .transform(new CenterCrop(), new RoundedCorners(20))
+                            .into(binding.image2);
                 }
                 if(postInfoDetail.getPreview_image3()!=null) {
-                    Glide.with(context).load(postInfoDetail.getPreview_image1()).into(imageView);
-                    binding.imageArea.addView(imageView);
+                    binding.imageArea.setVisibility(View.VISIBLE);
+                    binding.image3.setVisibility(View.VISIBLE);
+                    Glide.with(context).load(postInfoDetail.getPreview_image3())
+                            .transform(new CenterCrop(), new RoundedCorners(20))
+                            .into(binding.image3);
                 }
                 binding.postIntroduce.setText(postInfoDetail.getInfo());
                 binding.recommendText.setText(postInfoDetail.getRecommend_to());
                 binding.writerComment.setText(postInfoDetail.getAuthor_comment());
             }
         });
-    }
-
-    public int convertDp(int dp) {
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, metrics);
     }
 }

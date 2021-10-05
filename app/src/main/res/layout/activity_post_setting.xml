@@ -35,6 +35,108 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
+                android:layout_marginTop="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                android:textStyle="normal"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:text="포스트 카테고리"/>
+            <Spinner
+                android:id="@+id/category_spinner"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/edit_text_box_img"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="30dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                    android:textStyle="normal"
+                    android:textSize="16sp"
+                    android:textColor="#000000"
+                    android:text="포스트 소개"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/introduce_text_length"
+                    android:layout_width="wrap_content"
+                    android:layout_height="16dp"
+                    android:fontFamily="@font/spoqa_han_sans_neo"
+                    android:textStyle="normal"
+                    android:textSize="13sp"
+                    android:textColor="#9d9d9d"
+                    android:text="0/100"/>
+            </LinearLayout>
+            <EditText
+                android:maxLength="100"
+                android:id="@+id/introduce"
+                android:layout_marginTop="17dp"
+                android:layout_width="match_parent"
+                android:layout_height="156dp"
+                android:fontFamily="@font/spoqa_han_sans_neo"
+                android:textStyle="normal"
+                android:textSize="13sp"
+                android:textColor="#000000"
+                android:letterSpacing="-0.02"
+                android:lineSpacingExtra="12sp"
+                android:hint="포스트 메인에 보여드릴 소개글을 간단하게 적어주세요"
+                android:gravity="top"
+                android:padding="14dp"
+                android:background="@drawable/edit_text_box_img"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="30dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                    android:textStyle="normal"
+                    android:textSize="16sp"
+                    android:textColor="#000000"
+                    android:text="추천하는 대상"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/recommend_text_length"
+                    android:layout_width="wrap_content"
+                    android:layout_height="16dp"
+                    android:fontFamily="@font/spoqa_han_sans_neo"
+                    android:textStyle="normal"
+                    android:textSize="13sp"
+                    android:textColor="#9d9d9d"
+                    android:text="0/100"/>
+            </LinearLayout>
+            <EditText
+                android:maxLength="100"
+                android:id="@+id/recommend"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="17dp"
+                android:layout_width="match_parent"
+                android:layout_height="156dp"
+                android:fontFamily="@font/spoqa_han_sans_neo"
+                android:textStyle="normal"
+                android:textSize="13sp"
+                android:textColor="#000000"
+                android:letterSpacing="-0.02"
+                android:lineSpacingExtra="12sp"
+                android:hint="포스트를 추천하고싶은 대상을 적어주세요"
+                android:gravity="top"
+                android:padding="14dp"
+                android:background="@drawable/edit_text_box_img"/>
+            <TextView
                 android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -44,6 +146,7 @@
                 android:textColor="#000000"
                 android:text="포스트 설정"/>
             <RadioGroup
+                android:layout_marginBottom="30dp"
                 android:id="@+id/radio_group"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
@@ -78,6 +181,34 @@
                     android:textAlignment="center"
                     android:textSize="13sp"/>
             </RadioGroup>
+            <LinearLayout
+                android:id="@+id/premium_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                android:textStyle="normal"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:text="정산계좌 선택"/>
+            <Spinner
+                android:id="@+id/bank_spinner"
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/edit_text_box_img"/>
+            <EditText
+                android:inputType="number"
+                android:id="@+id/account"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:textSize="13sp"
+                android:background="@drawable/edit_text_box_img"
+                android:hint="정산받을 계좌번호를 입력해주세요"/>
             <TextView
                 android:layout_marginTop="35dp"
                 android:layout_width="wrap_content"
@@ -92,6 +223,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <EditText
+                    android:inputType="number"
                     android:id="@+id/price"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
@@ -119,54 +251,301 @@
                 android:text="판매가격을 100포인트 단위로 최대 20,000포인트까지 설정할 수 있습니다.
 카핑은 유료포스트의 판매 또는 환불에 대한 기능을 제공하지 않습니다."/>
             <TextView
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="35dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/spoqa_han_sans_neo_medium"
                 android:textStyle="normal"
                 android:textSize="16sp"
                 android:textColor="#000000"
-                android:text="포스트 소개"/>
-            <EditText
-                android:id="@+id/introduce"
-                android:layout_marginTop="17dp"
+                android:text="최종정산금"/>
+
+            <LinearLayout
+                android:weightSum="3"
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="156dp"
-                android:fontFamily="@font/spoqa_han_sans_neo"
-                android:textStyle="normal"
-                android:textSize="13sp"
-                android:textColor="#000000"
-                android:letterSpacing="-0.02"
-                android:lineSpacingExtra="12sp"
-                android:hint="포스트 메인에 보여드릴 소개글을 간단하게 적어주세요"
-                android:gravity="top"
-                android:padding="14dp"
-                android:background="@drawable/edit_text_box_img"/>
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/spoqa_han_sans_neo"
+                        android:textStyle="normal"
+                        android:textSize="12sp"
+                        android:textColor="#000000"
+                        android:text="판매금액"/>
+                    <RelativeLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/border_round">
+                        <TextView
+                            android:id="@+id/price_text"
+                            android:layout_marginVertical="16dp"
+                            android:layout_marginLeft="14dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                            android:textStyle="normal"
+                            android:textSize="13sp"
+                            android:textColor="#000000"
+                            android:text="0"/>
+                        <TextView
+                            android:layout_alignParentRight="true"
+                            android:layout_marginVertical="16dp"
+                            android:layout_marginRight="11dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                            android:textStyle="normal"
+                            android:textSize="12sp"
+                            android:textColor="#acb1b5"
+                            android:text="원"/>
+                    </RelativeLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginHorizontal="43dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/spoqa_han_sans_neo"
+                        android:textStyle="normal"
+                        android:textSize="12sp"
+                        android:textColor="#000000"
+                        android:text="거래 수수료"/>
+                    <RelativeLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/border_round">
+                        <TextView
+                            android:id="@+id/trade_fee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="16dp"
+                            android:layout_marginLeft="14dp"
+                            android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                            android:text="0"
+                            android:textColor="#000000"
+                            android:textSize="13sp"
+                            android:textStyle="normal" />
+                        <TextView
+                            android:layout_alignParentRight="true"
+                            android:layout_marginVertical="16dp"
+                            android:layout_marginRight="11dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                            android:textStyle="normal"
+                            android:textSize="12sp"
+                            android:textColor="#acb1b5"
+                            android:text="원"/>
+                    </RelativeLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:autoSizeTextType="uniform"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/spoqa_han_sans_neo"
+                        android:textStyle="normal"
+                        android:textSize="12sp"
+                        android:textColor="#000000"
+                        android:text="플랫폼 제공 수수료"/>
+                    <RelativeLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/border_round">
+                        <TextView
+                            android:id="@+id/platform_fee"
+                            android:layout_marginVertical="16dp"
+                            android:layout_marginLeft="14dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                            android:textStyle="normal"
+                            android:textSize="13sp"
+                            android:textColor="#000000"
+                            android:text="0"/>
+                        <TextView
+                            android:layout_alignParentRight="true"
+                            android:layout_marginVertical="16dp"
+                            android:layout_marginRight="11dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                            android:textStyle="normal"
+                            android:textSize="12sp"
+                            android:textColor="#acb1b5"
+                            android:text="원"/>
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:weightSum="3"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:autoSizeTextType="uniform"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/spoqa_han_sans_neo"
+                        android:textColor="#000000"
+                        android:textSize="12sp"
+                        android:textStyle="normal"
+                        android:text="소득세 원천징수 3.3%" />
+                    <RelativeLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/border_round">
+                        <TextView
+                            android:id="@+id/withholding_tax"
+                            android:layout_marginVertical="16dp"
+                            android:layout_marginLeft="14dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                            android:textStyle="normal"
+                            android:textSize="13sp"
+                            android:textColor="#000000"
+                            android:text="0"/>
+                        <TextView
+                            android:layout_alignParentRight="true"
+                            android:layout_marginVertical="16dp"
+                            android:layout_marginRight="11dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                            android:textStyle="normal"
+                            android:textSize="12sp"
+                            android:textColor="#acb1b5"
+                            android:text="원"/>
+                    </RelativeLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginHorizontal="43dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/spoqa_han_sans_neo"
+                        android:textStyle="normal"
+                        android:textSize="12sp"
+                        android:textColor="#000000"
+                        android:text="VAT 10%"/>
+                    <RelativeLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/border_round">
+                        <TextView
+                            android:id="@+id/vat"
+                            android:layout_marginVertical="16dp"
+                            android:layout_marginLeft="14dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                            android:textStyle="normal"
+                            android:textSize="13sp"
+                            android:textColor="#000000"
+                            android:text="0"/>
+                        <TextView
+                            android:layout_alignParentRight="true"
+                            android:layout_marginVertical="16dp"
+                            android:layout_marginRight="11dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                            android:textStyle="normal"
+                            android:textSize="12sp"
+                            android:textColor="#acb1b5"
+                            android:text="원"/>
+                    </RelativeLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/spoqa_han_sans_neo"
+                        android:textStyle="normal"
+                        android:textSize="12sp"
+                        android:textColor="#000000"
+                        android:text="최종정산금"/>
+                    <RelativeLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:background="@drawable/border_round">
+                        <TextView
+                            android:id="@+id/final_point"
+                            android:layout_marginVertical="16dp"
+                            android:layout_marginLeft="14dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                            android:textStyle="normal"
+                            android:textSize="13sp"
+                            android:textColor="#000000"
+                            android:text="0"/>
+                        <TextView
+                            android:layout_alignParentRight="true"
+                            android:layout_marginVertical="16dp"
+                            android:layout_marginRight="11dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                            android:textStyle="normal"
+                            android:textSize="12sp"
+                            android:textColor="#acb1b5"
+                            android:text="원"/>
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
             <TextView
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="35dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/spoqa_han_sans_neo_medium"
                 android:textStyle="normal"
                 android:textSize="16sp"
                 android:textColor="#000000"
-                android:text="추천하는 대상"/>
-            <EditText
-                android:id="@+id/recommend"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="17dp"
+                android:text="카핑의 수수료 정책을\n확인해주세요."/>
+            <ImageView
+                android:id="@+id/fee_terms"
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="156dp"
-                android:fontFamily="@font/spoqa_han_sans_neo"
-                android:textStyle="normal"
-                android:textSize="13sp"
-                android:textColor="#000000"
-                android:letterSpacing="-0.02"
-                android:lineSpacingExtra="12sp"
-                android:hint="포스트를 추천하고싶은 대상을 적어주세요"
-                android:gravity="top"
-                android:padding="14dp"
-                android:background="@drawable/edit_text_box_img"/>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

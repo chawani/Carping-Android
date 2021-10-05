@@ -15,35 +15,26 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.google.gson.Gson;
-import com.tourkakao.carping.Home.HomeViewModel.EcoViewModel;
 import com.tourkakao.carping.Home.HomeViewModel.MypageViewModel;
+import com.tourkakao.carping.Mypage.HelpListActivity;
 import com.tourkakao.carping.Mypage.PostApprovalActivity;
-import com.tourkakao.carping.Mypage.Profile;
+import com.tourkakao.carping.Mypage.DTO.Profile;
 import com.tourkakao.carping.Mypage.ProfileEditActivity;
+import com.tourkakao.carping.Mypage.TermsOfServiceActivity;
 import com.tourkakao.carping.MypageMainActivities.Activity.MypageCarpingActivity;
 import com.tourkakao.carping.MypageMainActivities.Activity.MypageEcoReviewActivity;
 import com.tourkakao.carping.MypageMainActivities.Activity.MypageFreeSharingActivity;
 import com.tourkakao.carping.MypageMainActivities.Activity.MypagePostActivity;
-import com.tourkakao.carping.NetworkwithToken.CommonClass;
-import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.Post.PostRegisterActivity;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 import com.tourkakao.carping.databinding.MypageFragmentBinding;
-
-import java.util.List;
-
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.observers.DisposableSingleObserver;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MypageFragment extends Fragment {
     private MypageFragmentBinding mypagebinding;
@@ -109,9 +100,28 @@ public class MypageFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        mypagebinding.help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context, HelpListActivity.class);
+                startActivity(intent);
+            }
+        });
+        mypagebinding.terms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context, TermsOfServiceActivity.class);
+                startActivity(intent);
+            }
+        });
         myViewModel.getProfileMutableLiveData().observe(this, new Observer<Profile>() {
             @Override
             public void onChanged(Profile profile) {
+                if(profile.getPhone()==null){
+                    SharedPreferenceManager.getInstance(context).setBoolean("phone",false);
+                }else{
+                    SharedPreferenceManager.getInstance(context).setBoolean("phone",true);
+                }
                 Glide.with(context).load(profile.getImage())
                         .transform(new CenterCrop(), new RoundedCorners(100))
                         .into(mypagebinding.profile);
@@ -152,9 +162,8 @@ public class MypageFragment extends Fragment {
         Glide.with(context).load(R.drawable.right_arrow).into(mypagebinding.arrow5);
         Glide.with(context).load(R.drawable.right_arrow).into(mypagebinding.arrow6);
         Glide.with(context).load(R.drawable.right_arrow).into(mypagebinding.arrow7);
-        Glide.with(context).load(R.drawable.right_arrow).into(mypagebinding.arrow8);
-        Glide.with(context).load(R.drawable.right_arrow).into(mypagebinding.arrow9);
         Glide.with(context).load(R.drawable.right_arrow).into(mypagebinding.arrow10);
+        Glide.with(context).load(R.drawable.right_arrow).into(mypagebinding.arrow11);
     }
 
     public int convertDp(int dp) {

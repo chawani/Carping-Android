@@ -84,6 +84,24 @@
             android:background="@drawable/edit_text_box_img"
             android:hint="내 채널에 대한 간단한 소개를 해주세요. (최대30자)"
             android:textSize="13sp"/>
+        <TextView
+            android:layout_marginTop="37dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/spoqa_han_sans_neo"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:textColor="#7d7d7d"
+            android:text="오픈 카카오채팅방 주소"/>
+        <EditText
+            android:id="@+id/openchat"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_box_img"
+            android:hint="1:1 문의에 사용할 오픈 카카오채팅방링크를 작성해주세요."
+            android:textSize="13sp"/>
+
         <LinearLayout
             android:layout_marginTop="35dp"
             android:layout_width="match_parent"
@@ -130,6 +148,7 @@
                 android:textColor="#666666"
                 android:text="이용약관에 동의합니다."/>
             <TextView
+                android:id="@+id/terms"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
@@ -138,7 +157,7 @@
                 android:textStyle="normal"
                 android:textSize="12sp"
                 android:textColor="#666666"
-                tools:text="자세히 보기"/>
+                android:text="자세히 보기"/>
         </LinearLayout>
         <LinearLayout
             android:layout_marginTop="19dp"

@@ -25,6 +25,7 @@ import com.tourkakao.carping.Home.ThemeFragmentAdapter.ThisWeekend_Adapter;
 import com.tourkakao.carping.NetworkwithToken.CommonClass;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.Post.PostDetailActivity;
+import com.tourkakao.carping.Post.PostInfoActivity;
 import com.tourkakao.carping.newcarping.Activity.Each_NewCarpingActivity;
 import com.tourkakao.carping.thisweekend.Activity.Each_ThisWeekendActivity;
 
@@ -111,8 +112,8 @@ public class ThemeViewModel extends ViewModel {
         az_adapter.setOnSelectItemCLickListener(new Az_Adapter.OnSelectItemClickListener() {
             @Override
             public void OnSelectItemClick(View v, int pos, int pk) {
-                Intent intent=new Intent(context, PostDetailActivity.class);
-                intent.putExtra("pk", Integer.toString(pk));
+                Intent intent=new Intent(context, PostInfoActivity.class);
+                intent.putExtra("pk", pk);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

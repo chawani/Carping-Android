@@ -1,19 +1,17 @@
 package com.tourkakao.carping.Mypage;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.tabs.TabLayout;
-import com.tourkakao.carping.MypageMainActivities.Fragment.LikeCarpingFragment;
-import com.tourkakao.carping.MypageMainActivities.Fragment.MyCarpingFragment;
+import com.tourkakao.carping.Mypage.Fragment.DepositPostFragment;
+import com.tourkakao.carping.Mypage.Fragment.ReviewCompleteFragment;
+import com.tourkakao.carping.Mypage.Fragment.UnderReviewPostFragment;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.databinding.ActivityMypageActivitiesBinding;
-import com.tourkakao.carping.databinding.ActivityProfileEditBinding;
 
 public class PostApprovalActivity extends AppCompatActivity {
     private ActivityMypageActivitiesBinding binding;
@@ -39,9 +37,11 @@ public class PostApprovalActivity extends AppCompatActivity {
     void settingTab(){
         Fragment underReviewPostFragment=new UnderReviewPostFragment();
         Fragment reviewCompleteFragment=new ReviewCompleteFragment();
+        Fragment depositPostFragment=new DepositPostFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.mypage_container,underReviewPostFragment).commit();
         binding.tabs.addTab(binding.tabs.newTab().setText("심사중"));
         binding.tabs.addTab(binding.tabs.newTab().setText("완료"));
+        binding.tabs.addTab(binding.tabs.newTab().setText("입금현황"));
 
         binding.tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -52,6 +52,9 @@ public class PostApprovalActivity extends AppCompatActivity {
                 }
                 if(pos==1){
                     selected=reviewCompleteFragment;
+                }
+                if(pos==2){
+                    selected=depositPostFragment;
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.mypage_container,selected).commit();
             }

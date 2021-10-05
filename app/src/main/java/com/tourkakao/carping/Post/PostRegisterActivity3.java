@@ -28,6 +28,10 @@ public class PostRegisterActivity3 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(context, PostWriteActivity.class);
+                String channel=getIntent().getStringExtra("channel");
+                String openchat=getIntent().getStringExtra("openchat");
+                intent.putExtra("channel",channel);
+                intent.putExtra("openchat",openchat);
                 startActivity(intent);
                 finish();
             }

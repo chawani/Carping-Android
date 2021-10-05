@@ -15,6 +15,7 @@ import com.tourkakao.carping.NetworkwithToken.CommonClass;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.Post.DTO.PostInfoDetail;
 import com.tourkakao.carping.Post.DTO.PostListItem;
+import com.tourkakao.carping.Post.DTO.PriceInfo;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,6 +34,7 @@ public class PostSearchViewModel extends ViewModel {
     private MutableLiveData<ArrayList<PostListItem>> searchList=new MutableLiveData<>();
     private MutableLiveData<ArrayList<String>> recentList=new MutableLiveData<>();
     private MutableLiveData<ArrayList<String>> popularList=new MutableLiveData<>();
+    private MutableLiveData<PriceInfo> priceInfoMutableLiveData=new MutableLiveData<>();
     private Gson gson=new Gson();
 
     public void setContext(Context context){
@@ -47,6 +49,7 @@ public class PostSearchViewModel extends ViewModel {
     public MutableLiveData<ArrayList<String>> getPopularList(){
         return popularList;
     }
+    public MutableLiveData<PriceInfo> getPriceInfoMutableLiveData() {return priceInfoMutableLiveData;}
 
     public void setPostListData(List data){
         String total=gson.toJson(data);
@@ -69,6 +72,18 @@ public class PostSearchViewModel extends ViewModel {
         stringArray=gson.fromJson(popularTotal,new TypeToken<ArrayList<String>>(){}.getType());
         popularList.setValue(stringArray);
         System.out.println("최근 검색어"+gson.toJson(data));
+    }
+
+    public void setPriceData(List data,int point){
+        String trade_fee_string=gson.toJson(data.get(0)).replace("{","").replace("}","");
+        String platform_fee_string=gson.toJson(data.get(1)).replace("{","").replace("}","");
+        String withholding_tax_string=gson.toJson(data.get(2)).replace("{","").replace("}","");
+        String vat_string=gson.toJson(data.get(3)).replace("{","").replace("}","");
+        String final_point_string=gson.toJson(data.get(4)).replace("{","").replace("}","");
+        String total="{\"price\":"+Integer.toString(point)+","+trade_fee_string+","+platform_fee_string+","
+                +withholding_tax_string+","+vat_string+","+final_point_string+"}";
+        PriceInfo priceInfo=gson.fromJson(total,new TypeToken<PriceInfo>(){}.getType());
+        priceInfoMutableLiveData.setValue(priceInfo);
     }
 
     public void searchInfo(String keyword){
@@ -132,6 +147,30 @@ public class PostSearchViewModel extends ViewModel {
                     public void onSuccess(@NonNull CommonClass commonClass) {
                         if(commonClass.getCode()==200) {
                             setKeywordData(commonClass.getData());
+                        }
+                        else {
+                            System.out.println("요청실패:"+commonClass.getCode()+commonClass.getError_message());
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        System.out.println("에러"+e.getMessage());
+                    }
+                });
+    }
+
+    public void loadCalcResult(int point){
+        HashMap<String,Object> map=new HashMap<>();
+        map.put("point",point);
+        TotalApiClient.getPostApiService(context).getCalcResult(map)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<CommonClass>() {
+                    @Override
+                    public void onSuccess(@NonNull CommonClass commonClass) {
+                        if(commonClass.getCode()==200) {
+                            setPriceData(commonClass.getData(),point);
                         }
                         else {
                             System.out.println("요청실패:"+commonClass.getCode()+commonClass.getError_message());

@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -15,34 +17,70 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.tourkakao.carping.Post.DTO.PostDetail;
 import com.tourkakao.carping.Post.ViewModel.PostDetailViewModel;
-import com.tourkakao.carping.Post.ViewModel.PostListViewModel;
 import com.tourkakao.carping.R;
+import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 import com.tourkakao.carping.databinding.ActivityPostDetailBinding;
-import com.tourkakao.carping.databinding.ActivityPostRegisterBinding;
 
 public class PostDetailActivity extends AppCompatActivity {
     private ActivityPostDetailBinding binding;
     private PostDetailViewModel viewModel;
     private Context context;
+    private int author_id;
+    private int post_id;
+    private PostInfoActivity postInfoActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding= ActivityPostDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         context=getApplicationContext();
+        postInfoActivity = (PostInfoActivity)PostInfoActivity.postInfoActivity;
 
         viewModel =new ViewModelProvider(this).get(PostDetailViewModel.class);
         viewModel.setContext(this);
 
         settingLayout();
+
+        binding.privateDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog();
+            }
+        });
+    }
+
+    void showDialog() {
+        AlertDialog.Builder msgBuilder = new AlertDialog.Builder(this)
+                .setTitle("삭제")
+                .setMessage("삭제하시겠습니까?")
+                .setPositiveButton("예", new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialogInterface, int i) {
+                        viewModel.deletePost(post_id);
+                        postInfoActivity.finish();
+                        finish();
+                    }
+                })
+                .setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        AlertDialog msgDlg = msgBuilder.create();
+        msgDlg.show();
     }
 
     void settingLayout(){
-        int pk=Integer.parseInt(getIntent().getStringExtra("pk"));
+        int current_user= SharedPreferenceManager.getInstance(getApplicationContext()).getInt("id",0);
+        int pk=getIntent().getIntExtra("pk",0);
         viewModel.loadPostDetail(pk);
         viewModel.getPost().observe(this, new Observer<PostDetail>() {
             @Override
             public void onChanged(PostDetail postDetail) {
+                post_id=postDetail.getId();
+                author_id =getIntent().getIntExtra("author_id",-1);
+                if(current_user!= author_id){
+                    binding.privateDeleteButton.setVisibility(View.GONE);
+                }
                 Glide.with(context).load(postDetail.getThumbnail()).into(binding.thumbnail);
                 binding.thumbnail.setColorFilter(Color.parseColor("#595959"), PorterDuff.Mode.MULTIPLY);
                 binding.title.setText(postDetail.getTitle());
