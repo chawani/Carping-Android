@@ -6,66 +6,70 @@
             name="themedetailviewmodel"
             type="com.tourkakao.carping.theme.viewmodel.ThemeDetailViewModel" />
     </data>
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <RelativeLayout
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="20dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="20dp">
+                <ImageView
+                    android:id="@+id/back"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/back"
+                    android:clickable="true"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{themedetailviewmodel.name}"
+                    android:textSize="18sp"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="#000000"
+                    android:fontFamily="@font/spoqa_han_sans_neo"
+                    android:textStyle="bold"/>
+            </RelativeLayout>
             <ImageView
-                android:id="@+id/back"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/back"
-                android:clickable="true"/>
+                android:id="@+id/theme_main_img"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginBottom="15dp"
+                android:scaleType="fitXY"/>
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:text="@{themedetailviewmodel.name}"
-                android:textSize="18sp"
-                android:layout_centerHorizontal="true"
-                android:textColor="#000000"
-                android:fontFamily="@font/spoqa_han_sans_neo"
-                android:textStyle="bold"/>
-        </RelativeLayout>
-        <ImageView
-            android:id="@+id/theme_main_img"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginBottom="15dp"
-            android:scaleType="fitXY"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:text="@{themedetailviewmodel.name}"
-            android:layout_marginLeft="15dp"/>
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/theme_detail_tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabIndicator="@color/black"
-            app:tabIndicatorColor="@color/black"
-            app:tabMode="scrollable">
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
+                android:layout_marginLeft="15dp"/>
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/theme_detail_tabs"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="정보"/>
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="추천"/>
-        </com.google.android.material.tabs.TabLayout>
-        <FrameLayout
-            android:id="@+id/theme_detail_frame"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+                app:tabIndicatorColor="@color/black"
+                app:tabMode="scrollable">
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="정보"/>
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="추천"/>
+            </com.google.android.material.tabs.TabLayout>
+            <FrameLayout
+                android:id="@+id/theme_detail_frame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 </layout>

@@ -91,6 +91,8 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
     }
 
     public void setting_tablayout(){
+        eachNewCarpingBinding.newcarpingTabs.addTab(eachNewCarpingBinding.newcarpingTabs.newTab().setText("정보"));
+        eachNewCarpingBinding.newcarpingTabs.addTab(eachNewCarpingBinding.newcarpingTabs.newTab().setText("리뷰"));
         eachNewCarpingBinding.newcarpingTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
