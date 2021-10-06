@@ -56,28 +56,28 @@ public class FixNewCarpingViewModel extends ViewModel {
     public void edit_newcarping(){
         if(f_uri.get(0)!=null) {
             file = new File(getPath(f_uri.get(0)));
-            body1 = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            body1 = RequestBody.create(MediaType.parse("image/*"), file);
             image1=MultipartBody.Part.createFormData("image1", "newcarping1.png", body1);
         }else{
             image1=null;
         }
         if(f_uri.get(1)!=null) {
             file2 = new File(getPath(f_uri.get(1)));
-            body2 = RequestBody.create(MediaType.parse("multipart/form-data"), file2);
+            body2 = RequestBody.create(MediaType.parse("image/*"), file2);
             image2=MultipartBody.Part.createFormData("image2", "newcarping2.png", body2);
         }else{
             image2=null;
         }
         if(f_uri.get(2)!=null) {
             file3 = new File(getPath(f_uri.get(2)));
-            body3 = RequestBody.create(MediaType.parse("multipart/form-data"), file3);
+            body3 = RequestBody.create(MediaType.parse("image/*"), file3);
             image3=MultipartBody.Part.createFormData("image3", "newcarping3.png", body3);
         }else{
             image3=null;
         }
         if(f_uri.get(3)!=null) {
             file4 = new File(getPath(f_uri.get(3)));
-            body4 = RequestBody.create(MediaType.parse("multipart/form-data"), file4);
+            body4 = RequestBody.create(MediaType.parse("image/*"), file4);
             image4=MultipartBody.Part.createFormData("image4", "newcarping4.png", body4);
         }else{
             image4=null;

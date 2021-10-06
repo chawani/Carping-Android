@@ -3,6 +3,7 @@ package com.tourkakao.carping.Home.Fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -23,6 +24,8 @@ import com.tourkakao.carping.Home.EcoDataClass.EcoRanking;
 import com.tourkakao.carping.Home.HomeViewModel.EcoViewModel;
 import com.tourkakao.carping.databinding.MainEcoTopFragmentBinding;
 
+import java.time.LocalDate;
+
 public class EcoTopFragment extends Fragment {
     private MainEcoTopFragmentBinding ecobinding;
     private Context context;
@@ -37,6 +40,8 @@ public class EcoTopFragment extends Fragment {
 
         ecoViewModel.ecoPercentage.observe(this,percentageObserver);
         ecoViewModel.currentUser.observe(this,userObserver);
+
+        setting_today_date();
 
         return ecobinding.getRoot();
     }
@@ -55,6 +60,36 @@ public class EcoTopFragment extends Fragment {
             ecobinding.level.setText("LV. "+ecoRanking.getLevel());
         }
     };
+
+    public void setting_today_date(){
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O) {
+            LocalDate now = LocalDate.now();
+            int month=now.getMonthValue();
+            int dayofmonth=now.getDayOfMonth();
+            int day=now.getDayOfWeek().getValue();
+            String daystr="";
+            if(day==1){
+                daystr="월요일";
+            }else if(day==2){
+                daystr="화요일";
+            }else if(day==3){
+                daystr="수요일";
+            }else if(day==4){
+                daystr="목요일";
+            }else if(day==5){
+                daystr="금요일";
+            }else if(day==6){
+                daystr="토요일";
+            }else if(day==7){
+                daystr="일요일";
+            }
+            ecobinding.date.setText(month+"월 "+dayofmonth+"일 "+daystr);
+
+        }else{
+            ecobinding.date.setVisibility(View.GONE);
+        }
+
+    }
 
     @Override
     public void onResume() {

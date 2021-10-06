@@ -1,9 +1,11 @@
 package com.tourkakao.carping.sharedetail.Activity;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,8 +14,11 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,9 +40,11 @@ public class ShareDetailActivity extends AppCompatActivity {
     ShareDetailViewModel detailViewModel;
     ShareImageAdapter shareImageAdapter;
     String chat_url=null;
+    InputMethodManager keyboard;
     int postpk;
     int userpk;
     int like=0;
+    int comment=0;
     boolean islike=false;
     boolean isshare=false;
     boolean firstshare=false;
@@ -49,13 +56,17 @@ public class ShareDetailActivity extends AppCompatActivity {
         context=this;
         postpk=getIntent().getIntExtra("pk", 0);
         userpk= SharedPreferenceManager.getInstance(context).getInt("id", 0);
+        keyboard=(InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
 
         detailViewModel=new ViewModelProvider(this).get(ShareDetailViewModel.class);
         detailViewModel.setContext(context);
         detailViewModel.get_share_detail(postpk);
+        detailViewModel.setUserpk(userpk);
 
 
         Glide.with(context).load(R.drawable.share_ask_img).into(shareDetailBinding.askBtn);
+        setting_comment();
+        setting_comment_btn();
         starting_observe_images();
         starting_observe_tags();
         starting_observe_detail();
@@ -76,6 +87,9 @@ public class ShareDetailActivity extends AppCompatActivity {
         detailViewModel.getTags().observe(this, new Observer<ArrayList<String>>() {
             @Override
             public void onChanged(ArrayList<String> strings) {
+                if(shareDetailBinding.tagArea.getChildAt(0)!=null){
+                    shareDetailBinding.tagArea.removeAllViews();
+                }
                 for(String t:strings){
                     TextView tag=new TextView(context);
                     tag.setText("#"+t);
@@ -99,6 +113,12 @@ public class ShareDetailActivity extends AppCompatActivity {
                     shareDetailBinding.shareDelete.setOnClickListener(v -> {
                         detailViewModel.share_delete(postpk);
                         shareDetailBinding.listLayout.setVisibility(View.GONE);
+                    });
+                    shareDetailBinding.shareFix.setOnClickListener(v -> {
+                        shareDetailBinding.listLayout.setVisibility(View.GONE);
+                        Intent fixintent=new Intent(context, FixShareActivity.class);
+                        fixintent.putExtra("pk", postpk);
+                        startActivityForResult(fixintent, 1001);
                     });
                     isshare=shareDetail.isIs_shared();
                     firstshare=isshare;
@@ -133,7 +153,8 @@ public class ShareDetailActivity extends AppCompatActivity {
                 shareDetailBinding.title.setText(shareDetail.getTitle());
                 shareDetailBinding.content.setText(shareDetail.getText());
                 like=shareDetail.getLike_count();
-                shareDetailBinding.likeComment.setText("좋아요"+like+" · 댓글"+"0");
+                comment=shareDetail.getComment().size();
+                shareDetailBinding.likeComment.setText("좋아요"+like+" · 댓글"+comment);
                 chat_url=shareDetail.getChat_addr();
                 Glide.with(context).load(shareDetail.getProfile()).transform(new RoundedCorners(100)).into(shareDetailBinding.profile);
                 shareDetailBinding.location.setText(shareDetail.getRegion());
@@ -144,6 +165,7 @@ public class ShareDetailActivity extends AppCompatActivity {
                     Glide.with(context).load(R.drawable.like_mark).into(shareDetailBinding.likeMark);
                 }
                 shareDetailBinding.likeCount.setText(Integer.toString(like));
+
             }
         });
     }
@@ -157,12 +179,14 @@ public class ShareDetailActivity extends AppCompatActivity {
                 shareDetailBinding.likeCount.setText(Integer.toString(like));
                 Glide.with(context).load(R.drawable.like_mark).into(shareDetailBinding.likeMark);
                 detailViewModel.share_release_like(postpk);
+                shareDetailBinding.likeComment.setText("좋아요"+like+" · 댓글"+comment);
             }else{
                 islike=true;
                 like++;
                 shareDetailBinding.likeCount.setText(Integer.toString(like));
                 Glide.with(context).load(R.drawable.is_pushed_like).into(shareDetailBinding.likeMark);
                 detailViewModel.share_like(postpk);
+                shareDetailBinding.likeComment.setText("좋아요"+like+" · 댓글"+comment);
             }
         });
     }
@@ -197,7 +221,42 @@ public class ShareDetailActivity extends AppCompatActivity {
             }
         });
     }
+    public void setting_comment(){
+        shareDetailBinding.commentView.setLayoutManager(new LinearLayoutManager(context));
+        shareDetailBinding.commentView.setAdapter(detailViewModel.setting_comment_adapter());
 
+        shareDetailBinding.completeComment.setOnClickListener(v -> {
+            String text=shareDetailBinding.commentEditView.getText().toString();
+            detailViewModel.send_comment(postpk, text);
+            shareDetailBinding.commentEditView.setText("");
+            keyboard.hideSoftInputFromWindow(shareDetailBinding.commentEditView.getWindowToken(), 0);
+            comment++;
+            shareDetailBinding.likeComment.setText("좋아요"+like+" · 댓글"+comment);
+        });
+
+    }
+    public void setting_comment_btn(){
+        shareDetailBinding.commentEditView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.toString().length()>0){
+                    shareDetailBinding.completeComment.setBackgroundColor(Color.parseColor("#5f51ef"));
+                    shareDetailBinding.completeComment.setTextColor(Color.parseColor("#FFFFFF"));
+                }else{
+                    shareDetailBinding.completeComment.setBackgroundColor(Color.parseColor("#22222222"));
+                    shareDetailBinding.completeComment.setTextColor(Color.parseColor("#999999"));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
     @Override
     public void onBackPressed() {
         Intent intent=new Intent();
@@ -209,5 +268,15 @@ public class ShareDetailActivity extends AppCompatActivity {
         setResult(RESULT_OK, intent);
         finish();
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==RESULT_OK){
+            if(requestCode==1001){
+                detailViewModel.get_share_detail(postpk);
+            }
+        }
     }
 }

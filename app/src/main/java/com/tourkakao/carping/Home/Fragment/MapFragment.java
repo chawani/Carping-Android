@@ -1,8 +1,11 @@
 package com.tourkakao.carping.Home.Fragment;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.tourkakao.carping.GpsLocation.GpsTracker;
+import com.tourkakao.carping.Location_setting.Location_setting;
 import com.tourkakao.carping.Map.Activity.MapSearchActivity;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.databinding.MapFragmentBinding;
@@ -28,7 +32,7 @@ import static android.app.Activity.RESULT_OK;
 public class MapFragment extends Fragment {
     MapFragmentBinding mapbinding;
     Context context;
-    MapView mapView=null;
+    MapView mapView;
     int to_another_page=0;
     int call_from_activityresult=0;
     double mylat, mylon;
@@ -36,11 +40,19 @@ public class MapFragment extends Fragment {
     GpsTracker gpsTracker;
     MapPoint nowpoint=null;
     MapPOIItem nowmarker=null;
+    Location_setting location_setting;
+    int permission_fine;
+    int permission_coarse;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mapbinding=MapFragmentBinding.inflate(inflater, container, false);
         context=getActivity().getApplicationContext();
+        location_setting=new Location_setting(context, getActivity());
+        if(Build.VERSION.SDK_INT>=23){
+            permission_fine=context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
+            permission_coarse=context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION);
+        }
 
         nowlat=37.5642135;
         nowlon=127.0016985;
@@ -49,8 +61,6 @@ public class MapFragment extends Fragment {
         Glide.with(context).load(R.drawable.conv_btn).into(mapbinding.conv);
         Glide.with(context).load(R.drawable.parking_btn).into(mapbinding.parking);
 
-        getting_my_locate();
-        setting_map();
         setting_btn();
 
         return mapbinding.getRoot();
@@ -63,7 +73,8 @@ public class MapFragment extends Fragment {
         gpsTracker.stopUsingGPS();
     }
     public void setting_map(){
-        if(mapView==null){
+        if(mapbinding.mapView.getChildAt(0)==null) {
+            mapView=null;
             mapView=new MapView(getContext());
             mapbinding.mapView.addView(mapView);
         }
@@ -81,67 +92,80 @@ public class MapFragment extends Fragment {
     }
     public void setting_btn(){
         mapbinding.bathroom.setOnClickListener(v -> {
-            Intent intent=new Intent(context, MapSearchActivity.class);
-            intent.putExtra("category", 1001);
-            intent.putExtra("lat", String.valueOf(mylat));
-            intent.putExtra("lon", String.valueOf(mylon));
-            startActivityForResult(intent, 1001);
+            if(Build.VERSION.SDK_INT>=23) {
+                if(permission_fine== PackageManager.PERMISSION_DENIED||permission_coarse==PackageManager.PERMISSION_DENIED){
+                    location_setting.check_locate_permission();
+                }
+            }else {
+                getting_my_locate();
+                Intent intent = new Intent(context, MapSearchActivity.class);
+                intent.putExtra("category", 1001);
+                intent.putExtra("lat", String.valueOf(mylat));
+                intent.putExtra("lon", String.valueOf(mylon));
+                startActivityForResult(intent, 1001);
+            }
         });
         mapbinding.conv.setOnClickListener(v -> {
-            Intent intent=new Intent(context, MapSearchActivity.class);
-            intent.putExtra("category", 1002);
-            intent.putExtra("lat", String.valueOf(mylat));
-            intent.putExtra("lon", String.valueOf(mylon));
-            startActivityForResult(intent, 1002);
+            if(Build.VERSION.SDK_INT>=23) {
+                if(permission_fine== PackageManager.PERMISSION_DENIED||permission_coarse==PackageManager.PERMISSION_DENIED){
+                    location_setting.check_locate_permission();
+                }
+            }else {
+                getting_my_locate();
+                Intent intent = new Intent(context, MapSearchActivity.class);
+                intent.putExtra("category", 1002);
+                intent.putExtra("lat", String.valueOf(mylat));
+                intent.putExtra("lon", String.valueOf(mylon));
+                startActivityForResult(intent, 1002);
+            }
         });
         mapbinding.parking.setOnClickListener(v -> {
-            Intent intent=new Intent(context, MapSearchActivity.class);
-            intent.putExtra("category", 1003);
-            intent.putExtra("lat", String.valueOf(mylat));
-            intent.putExtra("lon", String.valueOf(mylon));
-            startActivityForResult(intent, 1003);
+            if(Build.VERSION.SDK_INT>=23) {
+                if(permission_fine== PackageManager.PERMISSION_DENIED||permission_coarse==PackageManager.PERMISSION_DENIED){
+                    location_setting.check_locate_permission();
+                }
+            }else {
+                getting_my_locate();
+                Intent intent = new Intent(context, MapSearchActivity.class);
+                intent.putExtra("category", 1003);
+                intent.putExtra("lat", String.valueOf(mylat));
+                intent.putExtra("lon", String.valueOf(mylon));
+                startActivityForResult(intent, 1003);
+            }
         });
         mapbinding.carping.setOnClickListener(v -> {
-            Intent intent=new Intent(context, MapSearchActivity.class);
-            intent.putExtra("category", 1004);
-            intent.putExtra("lat", String.valueOf(mylat));
-            intent.putExtra("lon", String.valueOf(mylon));
-            startActivityForResult(intent, 1004);
+            if(Build.VERSION.SDK_INT>=23) {
+                if(permission_fine== PackageManager.PERMISSION_DENIED||permission_coarse==PackageManager.PERMISSION_DENIED){
+                    location_setting.check_locate_permission();
+                }
+            }else {
+                getting_my_locate();
+                Intent intent = new Intent(context, MapSearchActivity.class);
+                intent.putExtra("category", 1004);
+                intent.putExtra("lat", String.valueOf(mylat));
+                intent.putExtra("lon", String.valueOf(mylon));
+                startActivityForResult(intent, 1004);
+            }
         });
         mapbinding.searchText.setOnClickListener(v -> {
-            Intent intent=new Intent(context, MapSearchActivity.class);
-            intent.putExtra("category", 1005);
-            intent.putExtra("lat", String.valueOf(mylat));
-            intent.putExtra("lon", String.valueOf(mylon));
-            startActivityForResult(intent, 1005);
+            if(Build.VERSION.SDK_INT>=23) {
+                if(permission_fine== PackageManager.PERMISSION_DENIED||permission_coarse==PackageManager.PERMISSION_DENIED){
+                    location_setting.check_locate_permission();
+                }
+            }else {
+                getting_my_locate();
+                Intent intent = new Intent(context, MapSearchActivity.class);
+                intent.putExtra("category", 1005);
+                intent.putExtra("lat", String.valueOf(mylat));
+                intent.putExtra("lon", String.valueOf(mylon));
+                startActivityForResult(intent, 1005);
+            }
         });
     }
     public void setting_remove_map(){
-
-        if(mapView!=null) {
-            mapbinding.mapView.removeView(mapView);
-            mapView = null;
-        }
-        to_another_page=1;
-    }
-    @Override
-    public void onStop() {
-        System.out.println("mapfragment onstop");
-        super.onStop();
         mapbinding.mapView.removeView(mapView);
-        mapView=null;
-        to_another_page=1;
     }
 
-    @Override
-    public void onResume() {
-        System.out.println("mapfragment onresume");
-        super.onResume();
-        if(to_another_page==1){
-            setting_map();
-            to_another_page=0;
-        }
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

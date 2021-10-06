@@ -58,43 +58,15 @@
             android:textStyle="normal"
             android:textSize="14sp"
             android:textColor="#000000"/>
-        <LinearLayout
+        <TextView
+            android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:id="@+id/time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/spoqa_han_sans_neo"
-                android:textStyle="normal"
-                android:textSize="12sp"
-                android:textColor="#999999"
-                android:layout_marginRight="3dp"
-                android:layout_marginTop="8dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="."
-                android:layout_marginTop="4dp"
-                android:layout_marginRight="5dp"/>
-            <TextView
-                android:id="@+id/add_comment_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/spoqa_han_sans_neo"
-                android:textStyle="normal"
-                android:textSize="12sp"
-                android:textColor="#999999"
-                android:text="답글달기"
-                android:layout_marginTop="8dp"
-                android:clickable="true"/>
-        </LinearLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/comment_more_recyclerview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:visibility="gone"/>
+            android:fontFamily="@font/spoqa_han_sans_neo"
+            android:textStyle="normal"
+            android:textSize="12sp"
+            android:textColor="#999999"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="8dp"/>
     </LinearLayout>
 </LinearLayout>

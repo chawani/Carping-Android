@@ -297,8 +297,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="11dp"
-                android:background="@drawable/border_round_fill"
-                android:backgroundTint="#22222222"
+                android:background="#22222222"
                 android:paddingVertical="16dp"
                 android:paddingHorizontal="13dp"
                 android:clickable="true"/>

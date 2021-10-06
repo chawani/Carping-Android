@@ -21,6 +21,8 @@
         <activity android:name=".Mypage.TermsOfServiceActivity" />
         <activity android:name=".Mypage.HelpListActivity" />
         <activity android:name=".Post.PayActivity" />
+        <activity android:name=".sharedetail.Activity.FixShareActivity" />
+        <activity android:name=".MainSearch.Activity.MainSearchWith" />
         <activity android:name=".Post.PostReviewWriteActivity" />
         <activity android:name=".Post.PostReviewActivity" />
         <activity android:name=".Post.PostInfoActivity" />
@@ -41,7 +43,6 @@
         <activity android:name=".MypageMainActivities.Activity.MypageFreeSharingActivity" />
         <activity android:name=".MypageMainActivities.Activity.MypageCarpingActivity" />
         <activity android:name=".MypageMainActivities.Activity.MypagePostActivity" />
-        <activity android:name=".newcarping.Activity.Fix_newcarpingActivity" />
         <activity android:name=".Map.Activity.MapSearchActivity" />
         <activity android:name=".sharedetail.Activity.ShareTotalActivity" />
         <activity android:name=".registernewshare.Activity.LocateSelectActivity" />

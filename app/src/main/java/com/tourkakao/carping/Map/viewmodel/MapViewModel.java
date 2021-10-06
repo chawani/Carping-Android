@@ -112,7 +112,6 @@ public class MapViewModel extends ViewModel {
                                     }.getType();
                                     String result = new Gson().toJson(res.getData(), type);
                                     tours = new Gson().fromJson(result, type);
-                                    System.out.println(tours.size()+"개");
                                     touradapter.updateItem(tours);
                                 }
                             },
@@ -121,5 +120,6 @@ public class MapViewModel extends ViewModel {
                             }
                     );
         }
+
     }
 }

@@ -9,9 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp">
+        android:orientation="vertical">
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -26,24 +24,25 @@
             android:layout_height="wrap_content"
             android:text="등록자 리뷰"
             android:textColor="#000000"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:textStyle="bold"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="30dp"
             android:layout_marginBottom="20dp"/>
         <TextView
             android:id="@+id/newcarping_info_body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@{eachNewCarpingViewModel.info_review}"
-            android:textSize="15sp"
+            android:textSize="14sp"
+            android:layout_marginRight="16dp"
             android:textColor="#000000"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="30dp"/>
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="52dp">
             <LinearLayout
                 android:id="@+id/tags_layout"
                 android:layout_width="match_parent"

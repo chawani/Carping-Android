@@ -17,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 import com.tourkakao.carping.Home.Fragment.ThemeFragment;
 import com.tourkakao.carping.Home.ThemeDataClass.AZPost;
 import com.tourkakao.carping.Home.ThemeDataClass.NewCapringPlace;
+import com.tourkakao.carping.Home.ThemeDataClass.Popular;
 import com.tourkakao.carping.Home.ThemeDataClass.Thisweekend;
 import com.tourkakao.carping.Home.ThemeFragmentAdapter.Az_Adapter;
 import com.tourkakao.carping.Home.ThemeFragmentAdapter.NewCarpingPlace_Adapter;
@@ -27,6 +28,7 @@ import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.Post.PostDetailActivity;
 import com.tourkakao.carping.Post.PostInfoActivity;
 import com.tourkakao.carping.newcarping.Activity.Each_NewCarpingActivity;
+import com.tourkakao.carping.theme.Activity.ThemeDetailActivity;
 import com.tourkakao.carping.thisweekend.Activity.Each_ThisWeekendActivity;
 
 import java.lang.reflect.Type;
@@ -57,6 +59,7 @@ public class ThemeViewModel extends ViewModel {
     //for popular carping in main
     public MutableLiveData<Integer> main_popular_cnt=new MutableLiveData<>();
     PopularCarpingPlace_Adapter popularCarpingPlace_adapter;
+    ArrayList<Popular> populars=null;
 
     public ThemeViewModel(){
         main_thisweekends_post_cnt.setValue(-1);
@@ -186,8 +189,36 @@ public class ThemeViewModel extends ViewModel {
     }
 
     public PopularCarpingPlace_Adapter setting_popularcarping_place_adapter(){
-        popularCarpingPlace_adapter=new PopularCarpingPlace_Adapter(context);
+        populars=new ArrayList<>();
+        popularCarpingPlace_adapter=new PopularCarpingPlace_Adapter(context, populars);
+        popularCarpingPlace_adapter.setOnSelectItemCLickListener(new PopularCarpingPlace_Adapter.OnSelectItemClickListener() {
+            @Override
+            public void OnSelectItemClick(View v, int pos, int pk) {
+                Intent intent=new Intent(context, ThemeDetailActivity.class);
+                intent.putExtra("name", populars.get(pos).getName());
+                intent.putExtra("pk", populars.get(pos).getId());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        });
         return popularCarpingPlace_adapter;
     }
-    public void getPopularCarpingPlace(){}
+    public void getPopularCarpingPlace(String region){
+        TotalApiClient.getApiService(context).get_popular_place(region)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        res -> {
+                            if(res.isSuccess()){
+                                System.out.println(res.getData());
+                                Type type=new TypeToken<ArrayList<Popular>>(){}.getType();
+                                String result=new Gson().toJson(res.getData());
+                                populars=new Gson().fromJson(result, type);
+                                popularCarpingPlace_adapter.update_Item(populars);
+                                main_popular_cnt.setValue(populars.size());
+                            }
+                        },
+                        error -> {}
+                );
+    }
 }

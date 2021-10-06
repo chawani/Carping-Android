@@ -1,5 +1,6 @@
 package com.tourkakao.carping.NetworkwithToken;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import io.reactivex.rxjava3.core.Single;
@@ -10,6 +11,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
 import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
@@ -41,6 +43,16 @@ public interface CommunityInterface {
     @HTTP(method="DELETE", path="posts/share/{id}/", hasBody = true)
     Single<CommonClass> delete_share(@Path("id")int id);
 
+    @Multipart
+    @PATCH("posts/share/{id}/")
+    Single<CommonClass> edit_share(@Path("id")int id,
+                                   @Part MultipartBody.Part image1,
+                                   @Part MultipartBody.Part image2,
+                                   @Part MultipartBody.Part image3,
+                                   @Part MultipartBody.Part image4,
+                                   @PartMap HashMap<String, RequestBody> data,
+                                   @Part("is_null") ArrayList<Integer> is_null);
+
     @FormUrlEncoded
     @POST("posts/share/complete")
     Single<CommonClass> share_complete(@Field("share_to_complete")int share_to_complete);
@@ -60,4 +72,10 @@ public interface CommunityInterface {
     @POST("posts/share/search")
     Single<CommonClass> get_dong(@Field("sido")String sido, @Field("sigungu")String sigungu);
 
+    @FormUrlEncoded
+    @POST("comments/comment/")
+    Single<CommonClass> send_share_comment(@Field("user")int user, @Field("share")int share, @Field("text")String text);
+
+    @HTTP(method="DELETE", path="comments/comment/{id}/", hasBody = true)
+    Single<CommonClass> delete_share_comment(@Path("id")int id);
 }

@@ -48,7 +48,7 @@ public class Gallery_setting {
                     builder.create().show();
                 }else{
                     AlertDialog.Builder builder=new AlertDialog.Builder(context);
-                    builder.setTitle("위치 권한 설정 알림")
+                    builder.setTitle("갤러리 권한 설정 알림")
                             .setMessage("서비스 사용을 위해서는 갤러리 접근 권한 설정이 필요합니다.\n설정 화면으로 이동합니다.")
                             .setCancelable(false)
                             .setPositiveButton("확인", new DialogInterface.OnClickListener() {

@@ -59,6 +59,12 @@ public class Each_ThisWeekendActivity extends AppCompatActivity {
     }
 
     public void starting_observe_images(){
+        eachThisWeekendViewModel.thumbnail.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Glide.with(context).load(s).into(eachThisWeekendBinding.eachThumbnail);
+            }
+        });
         eachThisWeekendViewModel.image1.observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {

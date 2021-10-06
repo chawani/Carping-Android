@@ -353,8 +353,16 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        registerBinding.mapView.removeView(mapView);
+        mapView = null;
     }
 }

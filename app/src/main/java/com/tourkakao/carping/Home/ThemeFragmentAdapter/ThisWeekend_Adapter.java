@@ -56,7 +56,7 @@ public class ThisWeekend_Adapter extends RecyclerView.Adapter {
             binding.thisweekendTitle.setText(post.getTitle());
             String tags="";
             for(int i=0; i<post.getTags().size(); i++){
-                tags+="#"+post.getTags().get(i);
+                tags+="#"+post.getTags().get(i)+" ";
             }
             binding.thisweekendTags.setText(tags);
         }

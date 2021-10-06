@@ -16,19 +16,23 @@
         android:layout_marginTop="147dp"/>
     <ImageView
         android:id="@+id/kakao_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
         android:src="@drawable/kakao_login_large_wide"
         android:layout_above="@+id/google_btn"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitXY"
         android:clickable="true"/>
     <ImageView
         android:id="@+id/google_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
         android:layout_alignParentBottom="true"
         android:src="@drawable/google_login_large_wide"
-        android:layout_marginBottom="130dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="144dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="9dp"
+        android:scaleType="fitXY"
         android:clickable="true"/>
 
 </RelativeLayout>

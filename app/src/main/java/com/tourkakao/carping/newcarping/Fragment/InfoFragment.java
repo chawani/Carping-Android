@@ -103,9 +103,10 @@ public class InfoFragment extends Fragment {
                 for(int i=0; i<strings.size(); i++){
                     TextView tag=new TextView(context);
                     tag.setText("#"+strings.get(i));
+                    tag.setTextSize(12.0f);
                     tag.setBackgroundResource(R.drawable.purple_border_round);
                     tag.setPadding(60, 30, 60, 30);
-                    tag.setTextColor(Color.parseColor("#9F81F7"));
+                    tag.setTextColor(Color.parseColor("#5f51ef"));
                     infoFragmentBinding.tagsLayout.addView(tag);
                 }
             }

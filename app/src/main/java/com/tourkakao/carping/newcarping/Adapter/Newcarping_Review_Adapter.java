@@ -7,6 +7,7 @@ import android.util.AndroidException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +20,7 @@ import com.tourkakao.carping.newcarping.Activity.Fix_newcarping_reviewActivity;
 import com.tourkakao.carping.newcarping.DataClass.Newcarping_Review;
 import com.tourkakao.carping.newcarping.Fragment.ReviewFragment;
 import com.tourkakao.carping.newcarping.viewmodel.EachNewCarpingViewModel;
+import com.tourkakao.carping.theme.Adapter.ThemeAdapter;
 
 import java.util.ArrayList;
 
@@ -37,13 +39,21 @@ public class Newcarping_Review_Adapter extends RecyclerView.Adapter {
         this.userpk=userpk;
         this.postpk=pk;
     }
+    public interface OnSelectItemClickListener{
+        void OnSelectItemClick(View v, int pos, int pk);
+    }
+    private OnSelectItemClickListener mListener=null;
+
+    public void setOnSelectItemClickListener(OnSelectItemClickListener listener){
+        this.mListener=listener;
+    }
     public class Newcarping_Review_Viewholder extends RecyclerView.ViewHolder{
         private EachNewcarpingReviewBinding binding;
         public Newcarping_Review_Viewholder(EachNewcarpingReviewBinding binding){
             super(binding.getRoot());
             this.binding=binding;
         }
-        public void setItem(Newcarping_Review review){
+        public void setItem(Newcarping_Review review, int pos){
             Glide.with(context).load(review.getImage()).into(binding.image);
             Glide.with(context).load(review.getReview_profile()).circleCrop().into(binding.profile);
             binding.date.setText(review.getCreated_at());
@@ -73,8 +83,13 @@ public class Newcarping_Review_Adapter extends RecyclerView.Adapter {
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 });
+                binding.delete.setVisibility(View.VISIBLE);
+                binding.delete.setOnClickListener(v -> {
+                    mListener.OnSelectItemClick(v, pos, reviews.get(pos).getId());
+                });
             }else{
                 binding.fix.setVisibility(View.GONE);
+                binding.delete.setVisibility(View.GONE);
             }
             binding.likeImg.setOnClickListener(v -> {
                 if(review.isCheck_like()) {
@@ -117,7 +132,7 @@ public class Newcarping_Review_Adapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Newcarping_Review_Viewholder vh=(Newcarping_Review_Viewholder)holder;
-        vh.setItem(reviews.get(position));
+        vh.setItem(reviews.get(position), position);
     }
 
     @Override
