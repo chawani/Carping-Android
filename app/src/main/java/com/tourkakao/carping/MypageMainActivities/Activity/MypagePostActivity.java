@@ -5,7 +5,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.view.View;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.tourkakao.carping.MypageMainActivities.Fragment.LikePostFragment;
 import com.tourkakao.carping.MypageMainActivities.Fragment.LikeSharingFragment;
@@ -30,10 +32,15 @@ public class MypagePostActivity extends AppCompatActivity {
 
     void settingToolbar(){
         binding.toolbarTitle.setText("포스트");
-        Toolbar toolbar=binding.toolbar;
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Glide.with(getApplicationContext()).load(R.drawable.back).into(binding.back);
+        binding.back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     void settingTab(){
@@ -43,7 +50,7 @@ public class MypagePostActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.mypage_container,myFragment).commit();
         binding.tabs.addTab(binding.tabs.newTab().setText("발행"));
         binding.tabs.addTab(binding.tabs.newTab().setText("구매"));
-        binding.tabs.addTab(binding.tabs.newTab().setText("스크랩"));
+        binding.tabs.addTab(binding.tabs.newTab().setText("좋아요"));
 
         binding.tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

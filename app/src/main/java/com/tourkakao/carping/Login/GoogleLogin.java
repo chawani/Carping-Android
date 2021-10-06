@@ -11,6 +11,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.tourkakao.carping.BuildConfig;
+import com.tourkakao.carping.Home.MainActivity;
 import com.tourkakao.carping.LoginNetwork.ApiClient;
 import com.tourkakao.carping.LoginNetwork.ApiInterface;
 import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
@@ -54,7 +55,7 @@ public class GoogleLogin implements LoginContract.GoogleLogin{
     @Override
     public void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        ((LoginActivity)context).startActivityForResult(signInIntent, RC_SIGN_IN);
+        loginActivity.startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     @Override
@@ -84,6 +85,8 @@ public class GoogleLogin implements LoginContract.GoogleLogin{
                             Google_Access_Token data=response.body();
                             System.out.println(data.getAccess_token());
                             setting_googlelogin_callback(data.getAccess_token());
+                            loginActivity.startActivity(new Intent(context, MainActivity.class));
+                            loginActivity.finish();
                         }else{
                             System.out.println("응답 코드:"+response.code());
                         }

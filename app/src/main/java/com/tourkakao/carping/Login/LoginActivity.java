@@ -74,8 +74,6 @@ public class LoginActivity extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             googleLogin.handleSignInResult(task);
-            finish();
-            startActivity(new Intent(LoginActivity.this,MainActivity.class));
         }
     }
 }

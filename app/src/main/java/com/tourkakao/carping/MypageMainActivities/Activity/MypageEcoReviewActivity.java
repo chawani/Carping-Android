@@ -5,7 +5,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.view.View;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.tourkakao.carping.MypageMainActivities.Fragment.LikeEcoFragment;
 import com.tourkakao.carping.MypageMainActivities.Fragment.MyEcoFragment;
@@ -27,10 +29,15 @@ public class MypageEcoReviewActivity extends AppCompatActivity {
 
     void settingToolbar(){
         binding.toolbarTitle.setText("에코인증");
-        Toolbar toolbar=binding.toolbar;
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setSupportActionBar(binding.toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Glide.with(getApplicationContext()).load(R.drawable.back).into(binding.back);
+        binding.back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     void settingTab(){
