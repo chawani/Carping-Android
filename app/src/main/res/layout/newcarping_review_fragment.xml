@@ -13,15 +13,18 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp">
+            android:layout_marginBottom="40dp"
+            android:layout_gravity="center"
+            android:gravity="center">
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/newcarping_imagereview_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
             <ImageView
-                    android:id="@+id/no_review_img"
-                    android:layout_width="match_parent"
-                    android:layout_height="86dp"/>
+                android:id="@+id/no_review_img"
+                android:layout_width="142dp"
+                android:layout_height="46dp" />
 
         </RelativeLayout>
         <ImageView

@@ -1,20 +1,29 @@
 package com.tourkakao.carping.theme.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.tourkakao.carping.GpsLocation.GpsTracker;
+import com.tourkakao.carping.Location_setting.Location_setting;
+import com.tourkakao.carping.MainSearch.Activity.MainSearchWith;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.theme.viewmodel.ThemeViewModel;
 import com.tourkakao.carping.databinding.ActivityThemeBinding;
@@ -22,7 +31,7 @@ import com.tourkakao.carping.databinding.ActivityThemeBinding;
 public class ThemeActivity extends AppCompatActivity {
     private ActivityThemeBinding themeBinding;
     Context context;
-    ThemeViewModel themeViewModel;
+    ThemeViewModel themeViewModel=null;
     String theme;
     String sort="views";
     String select;
@@ -35,13 +44,15 @@ public class ThemeActivity extends AppCompatActivity {
     String[] nature=new String[]{"봄꽃여행", "여름물놀이", "가을단풍명소", "겨울눈꽃명소", "걷기길", "일몰명소", "일출명소"};
     String[] other=new String[]{"일반야영장", "글램핑", "카라반"};
     ListView listView;
+    Location_setting location_setting;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         themeBinding=ActivityThemeBinding.inflate(getLayoutInflater());
         setContentView(themeBinding.getRoot());
-        context=getApplicationContext();
+        context=this;
 
+        checking_locate_permission();
         themeViewModel=new ViewModelProvider(this).get(ThemeViewModel.class);
         themeViewModel.setContext(context);
 
@@ -51,8 +62,19 @@ public class ThemeActivity extends AppCompatActivity {
         setting_initial_tab();
         setting_tab();
         setting_sliding_up();
+        setting_back_button();
         getting_user_place();
         setting_recycleview();
+    }
+    public void checking_locate_permission(){
+        location_setting=new Location_setting(context, ThemeActivity.this);
+        if(Build.VERSION.SDK_INT>=23){
+            int permission_fine=context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
+            int permission_coarse=context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION);
+            if(permission_fine== PackageManager.PERMISSION_DENIED || permission_coarse==PackageManager.PERMISSION_DENIED){
+                location_setting.check_locate_permission();
+            }
+        }
     }
     public void setting_initial_tab(){
         switch(theme){
@@ -249,6 +271,11 @@ public class ThemeActivity extends AppCompatActivity {
             }
         });
     }
+    public void setting_back_button(){
+        themeBinding.back.setOnClickListener(v -> {
+            finish();
+        });
+    }
     public void getting_user_place(){
         GpsTracker gpsTracker=new GpsTracker(context);
         lat=gpsTracker.getLatitude();
@@ -268,6 +295,47 @@ public class ThemeActivity extends AppCompatActivity {
         }
         else{
             finish();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(grantResults.length==2){
+            boolean check_result = true;
+            for (int result : grantResults) {
+                if (result == PackageManager.PERMISSION_DENIED) {
+                    check_result = false;
+                    break;
+                }
+            }
+            if (check_result) {
+                Toast.makeText(this, "권한이 설정되었습니다.", Toast.LENGTH_SHORT).show();
+            } else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ThemeActivity.this);
+                builder.setTitle("위치 권한 설정 알림")
+                        .setMessage("서비스 사용을 위해서는 위치 접근 권한 설정이 필요합니다.\n[설정]->[앱]에서 권한을 승인해주세요")
+                        .setCancelable(false)
+                        .setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                finish();
+                            }
+                        });
+                builder.create().show();
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(themeViewModel!=null){
+            if(themeViewModel.to_detail==1){
+                themeViewModel.get_each_thema_carpingplace(theme, sort, select, lat, lon);
+                themeViewModel.to_detail=0;
+            }
         }
     }
 }

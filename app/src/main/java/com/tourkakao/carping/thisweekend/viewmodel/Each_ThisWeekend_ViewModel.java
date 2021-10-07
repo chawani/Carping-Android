@@ -1,6 +1,7 @@
 package com.tourkakao.carping.thisweekend.viewmodel;
 
 import android.content.Context;
+import android.content.Intent;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -64,6 +65,7 @@ public class Each_ThisWeekend_ViewModel extends ViewModel {
     public MutableLiveData<String> oper3=new MutableLiveData<>();
     public MutableLiveData<String> website3=new MutableLiveData<>();
     public MutableLiveData<String> facility3=new MutableLiveData<>();
+    public String web1, web2, web3;
 
     public Each_ThisWeekend_ViewModel(){
         count.setValue(0);
@@ -127,7 +129,8 @@ public class Each_ThisWeekend_ViewModel extends ViewModel {
                                 if(campsite1.getWebsite()==null){
                                     website1.setValue("정보 없음");
                                 }else {
-                                    website1.setValue(campsite1.getWebsite());
+                                    website1.setValue("바로 가기");
+                                    web1=campsite1.getWebsite();
                                 }
                                 if(campsite1.getSub_facility()==null){
                                     facility1.setValue("정보 없음");
@@ -162,7 +165,8 @@ public class Each_ThisWeekend_ViewModel extends ViewModel {
                                 if(campsite2.getWebsite()==null){
                                     website2.setValue("정보 없음");
                                 }else {
-                                    website2.setValue(campsite2.getWebsite());
+                                    website2.setValue("바로 가기");
+                                    web2=campsite2.getWebsite();
                                 }
                                 if(campsite2.getSub_facility()==null){
                                     facility2.setValue("정보 없음");
@@ -197,7 +201,8 @@ public class Each_ThisWeekend_ViewModel extends ViewModel {
                                 if(campsite3.getWebsite()==null){
                                     website3.setValue("정보 없음");
                                 }else {
-                                    website3.setValue(campsite3.getWebsite());
+                                    website3.setValue("바로 가기");
+                                    web3=campsite3.getWebsite();
                                 }
                                 if(campsite3.getSub_facility()==null){
                                     facility3.setValue("정보 없음");

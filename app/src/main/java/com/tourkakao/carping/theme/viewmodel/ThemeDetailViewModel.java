@@ -33,6 +33,9 @@ public class ThemeDetailViewModel extends ViewModel {
     public MutableLiveData<String> fire=new MutableLiveData<>();
     public MutableLiveData<Float> carping_lat=new MutableLiveData<>();
     public MutableLiveData<Float> carping_lon=new MutableLiveData<>();
+    public MutableLiveData<String> distance=new MutableLiveData<>();
+    public MutableLiveData<Boolean> is_bookmark=new MutableLiveData<>();
+    public MutableLiveData<String> cat=new MutableLiveData<>();
 
     public ThemeDetailViewModel(){}
     public void setContext(Context context){
@@ -52,10 +55,18 @@ public class ThemeDetailViewModel extends ViewModel {
                                 ArrayList<DetailTheme> d=new Gson().fromJson(res, type);
                                 DetailTheme detailTheme=d.get(0);
                                 image.setValue(detailTheme.getImage());
+                                String dd=detailTheme.getDistance()+"km";
+                                distance.setValue(dd);
+                                is_bookmark.setValue(detailTheme.isIs_bookmarked());
+                                cat.setValue(detailTheme.getType());
                                 if(detailTheme.getName()==null){
                                     name.setValue("정보없음");
                                 }else {
-                                    name.setValue(detailTheme.getName());
+                                    if(detailTheme.getName().length()>16){
+                                        name.setValue(detailTheme.getName().substring(0, 16)+"...");
+                                    }else {
+                                        name.setValue(detailTheme.getName());
+                                    }
                                 }
                                 if(detailTheme.getAddress()==null){
                                     address.setValue("정보없음");

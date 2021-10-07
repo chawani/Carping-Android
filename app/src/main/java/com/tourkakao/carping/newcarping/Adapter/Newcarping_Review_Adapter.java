@@ -92,7 +92,7 @@ public class Newcarping_Review_Adapter extends RecyclerView.Adapter {
                 binding.delete.setVisibility(View.GONE);
             }
             binding.likeImg.setOnClickListener(v -> {
-                if(review.isCheck_like()) {
+                if(!review.isCheck_like()) {
                     TotalApiClient.getApiService(context).set_like(review.getId())
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())

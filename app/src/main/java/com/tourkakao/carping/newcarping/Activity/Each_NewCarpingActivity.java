@@ -1,11 +1,13 @@
 package com.tourkakao.carping.newcarping.Activity;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -45,12 +47,13 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
     MapReverseGeoCoder reverseGeoCoder=null;
     MapPoint mapPoint=null;
     boolean to_edit=false;
+    boolean list_layout=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         eachNewCarpingBinding=ActivityEachNewCarpingBinding.inflate(getLayoutInflater());
         setContentView(eachNewCarpingBinding.getRoot());
-        context=getApplicationContext();
+        context=this;
         each_newCarpingActivity=this;
         reverseGeoCodingResultListener=this;
         Glide.with(context).load(R.drawable.newcarping_share_img).into(eachNewCarpingBinding.newcarpingShareImg);
@@ -60,7 +63,7 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
         eachNewCarpingViewModel.setContext(context);
         post_pk=getIntent().getIntExtra("pk", 0);
         eachNewCarpingViewModel.setPk(post_pk);
-        eachNewCarpingViewModel.setUserpk(SharedPreferenceManager.getInstance(context).getInt("id", 0));
+        eachNewCarpingViewModel.setUserpk(SharedPreferenceManager.getInstance(getApplicationContext()).getInt("id", 0));
         eachNewCarpingBinding.setLifecycleOwner(this);
         eachNewCarpingBinding.setEachNewCarpingViewModel(eachNewCarpingViewModel);
         //setting viewmodel & binding
@@ -81,6 +84,7 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
         starting_observe_map_and_address();
         starting_observe_userpk();
         starting_observe_delete_review();
+        setting_back();
     }
 
     public void setting_map(){
@@ -141,7 +145,9 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
                 MapPOIItem marker=new MapPOIItem();
                 marker.setItemName(eachNewCarpingViewModel.title.getValue());
                 marker.setMapPoint(mapPoint);
-                marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+                marker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+                marker.setCustomImageResourceId(R.drawable.nowmarker);
+                marker.setCustomImageAutoscale(false);
                 mapView.addPOIItem(marker);
 
                 reverseGeoCoder=new MapReverseGeoCoder(KAKAO_APPKEY, mapPoint, reverseGeoCodingResultListener, each_newCarpingActivity);
@@ -159,21 +165,38 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
                     eachNewCarpingBinding.listbtn.setVisibility(View.VISIBLE);
                     eachNewCarpingBinding.listbtn.setOnClickListener(v -> {
                         eachNewCarpingBinding.listLayout.setVisibility(View.VISIBLE);
+                        list_layout=true;
                         eachNewCarpingBinding.newcarpingDelete.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                TotalApiClient.getApiService(context).delete_newcarping(post_pk)
-                                        .subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(
-                                                res -> {
-                                                    if(res.isSuccess()){
-                                                        Toast.makeText(Each_NewCarpingActivity.this, "신규 차박지가 삭제되었어요", Toast.LENGTH_SHORT).show();
-                                                        finish();
-                                                    }
-                                                },
-                                                error -> {}
-                                        );
+                                AlertDialog.Builder builder=new AlertDialog.Builder(Each_NewCarpingActivity.this);
+                                builder.setCancelable(false)
+                                        .setTitle("신규 차박지 삭제 알림")
+                                        .setMessage("차박지를 삭제 할까요?")
+                                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        })
+                                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                TotalApiClient.getApiService(context).delete_newcarping(post_pk)
+                                                        .subscribeOn(Schedulers.io())
+                                                        .observeOn(AndroidSchedulers.mainThread())
+                                                        .subscribe(
+                                                                res -> {
+                                                                    if(res.isSuccess()){
+                                                                        Toast.makeText(Each_NewCarpingActivity.this, "신규 차박지가 삭제되었어요", Toast.LENGTH_SHORT).show();
+                                                                        finish();
+                                                                    }
+                                                                },
+                                                                error -> {}
+                                                        );
+                                            }
+                                        }).create().show();
+
                             }
                         });
                         eachNewCarpingBinding.newcarpingEdit.setOnClickListener(new View.OnClickListener() {
@@ -199,8 +222,8 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
                             }
                         });
                     });
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        eachNewCarpingBinding.imagenest.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                    /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        eachNewCarpingBinding.newcarpingFrame.setOnScrollChangeListener(new View.OnScrollChangeListener() {
                             @Override
                             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                                 eachNewCarpingBinding.listLayout.setVisibility(View.GONE);
@@ -230,7 +253,15 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
                         public void onClick(View v) {
                             eachNewCarpingBinding.listLayout.setVisibility(View.GONE);
                         }
-                    });
+                    });*/
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        eachNewCarpingBinding.parentLayout.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                            @Override
+                            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                                eachNewCarpingBinding.listLayout.setVisibility(View.GONE);
+                            }
+                        });
+                    }
                 }else if(integer==0){
                     eachNewCarpingBinding.listbtn.setVisibility(View.GONE);
                 }
@@ -245,6 +276,11 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
                     eachNewCarpingViewModel.get_newcarping_detail();
                 }
             }
+        });
+    }
+    public void setting_back(){
+        eachNewCarpingBinding.back.setOnClickListener(v -> {
+            finish();
         });
     }
     @Override
@@ -278,12 +314,24 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
             MapPOIItem marker=new MapPOIItem();
             marker.setItemName(eachNewCarpingViewModel.title.getValue());
             marker.setMapPoint(mapPoint);
-            marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+            marker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+            marker.setCustomImageResourceId(R.drawable.nowmarker);
+            marker.setCustomImageAutoscale(false);
             mapView.addPOIItem(marker);
         }
         if(SharedPreferenceManager.getInstance(context).getInt("newcarping_review_fix", 0)==1){
             eachNewCarpingViewModel.get_newcarping_detail();
             SharedPreferenceManager.getInstance(context).setInt("newcarping_review_fix", 0);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(list_layout){
+            eachNewCarpingBinding.listLayout.setVisibility(View.GONE);
+            list_layout=false;
+        }else{
+            super.onBackPressed();
         }
     }
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.gson.Gson;
@@ -24,11 +25,13 @@ public class ThemeViewModel extends ViewModel {
     private Context context;
     ArrayList<Theme> themes=null;
     ThemeAdapter themeAdapter;
+    public int to_detail;
     public ThemeViewModel(){
-
+        to_detail=0;
     }
     public void setContext(Context context){
         this.context=context;
+        to_detail=0;
     }
     public ThemeAdapter setting_theme_adapter(){
         themes=new ArrayList<>();
@@ -41,6 +44,7 @@ public class ThemeViewModel extends ViewModel {
                 intent.putExtra("pk", pk);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
+                to_detail=1;
             }
         });
         return themeAdapter;

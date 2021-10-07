@@ -166,31 +166,29 @@ public class MainSearchWith extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode==1001){
-            if(grantResults.length==2) {
-                boolean check_result = true;
-                for (int result : grantResults) {
-                    if (result == PackageManager.PERMISSION_DENIED) {
-                        check_result = false;
-                        break;
-                    }
+        if(grantResults.length==2) {
+            boolean check_result = true;
+            for (int result : grantResults) {
+                if (result == PackageManager.PERMISSION_DENIED) {
+                    check_result = false;
+                    break;
                 }
-                if (check_result) {
-                    Toast.makeText(this, "권한이 설정되었습니다.", Toast.LENGTH_SHORT).show();
-                } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainSearchWith.this);
-                    builder.setTitle("위치 권한 설정 알림")
-                            .setMessage("서비스 사용을 위해서는 위치 접근 권한 설정이 필요합니다.\n[설정]->[앱]에서 권한을 승인해주세요")
-                            .setCancelable(false)
-                            .setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                    finish();
-                                }
-                            });
-                    builder.create().show();
-                }
+            }
+            if (check_result) {
+                Toast.makeText(this, "권한이 설정되었습니다.", Toast.LENGTH_SHORT).show();
+            } else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainSearchWith.this);
+                builder.setTitle("위치 권한 설정 알림")
+                        .setMessage("서비스 사용을 위해서는 위치 접근 권한 설정이 필요합니다.\n[설정]->[앱]에서 권한을 승인해주세요")
+                        .setCancelable(false)
+                        .setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                finish();
+                            }
+                        });
+                builder.create().show();
             }
         }
     }

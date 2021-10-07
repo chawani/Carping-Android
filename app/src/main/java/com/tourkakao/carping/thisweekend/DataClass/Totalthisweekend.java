@@ -13,7 +13,7 @@ public class Totalthisweekend {
     String updated_at;
     @SerializedName("title")
     String title;
-    @SerializedName("thumbnail")
+    @SerializedName("thumbnail_with_text")
     String thumbnail;
     @SerializedName("views")
     int views;

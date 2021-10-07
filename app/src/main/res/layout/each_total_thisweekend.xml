@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="132dp"
         app:cardCornerRadius="5dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="9dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp">
         <ImageView
@@ -24,7 +24,6 @@
         android:textStyle="bold"
         android:textSize="10sp"
         android:textColor="#6651e9"
-        android:layout_marginTop="2dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="7dp"/>
@@ -38,13 +37,25 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="7dp"/>
-    <TextView
-        android:id="@+id/thisweekend_people"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="10sp"
-        android:textColor="#848484"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="22.7dp">
+        <ImageView
+            android:id="@+id/people_img"
+            android:layout_width="10dp"
+            android:layout_height="7.5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="2dp"/>
+        <TextView
+            android:id="@+id/thisweekend_people"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:textColor="#848484"
+            android:layout_toRightOf="@+id/people_img"/>
+    </RelativeLayout>
+
 </LinearLayout>

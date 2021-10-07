@@ -55,6 +55,7 @@ public class Fix_newcarping_reviewActivity extends AppCompatActivity {
         setting_review_edittext();
         setting_getting_review_image();
         setting_sending_button();
+        setting_cancel_button();
         starting_observe_send_review_ok();
     }
     public void setting_inital(){
@@ -227,7 +228,11 @@ public class Fix_newcarping_reviewActivity extends AppCompatActivity {
             }
         });
     }
-
+    public void setting_cancel_button(){
+        fixBinding.cancel.setOnClickListener(v -> {
+            finish();
+        });
+    }
     public void starting_observe_send_review_ok(){
         eachNewCarpingViewModel.fix_send_ok.observe(this, new Observer<Integer>() {
             @Override

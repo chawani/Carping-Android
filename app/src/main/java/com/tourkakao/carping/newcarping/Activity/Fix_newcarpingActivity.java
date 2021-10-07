@@ -76,7 +76,9 @@ public class Fix_newcarpingActivity extends AppCompatActivity {
         MapPOIItem marker=new MapPOIItem();
         marker.setItemName("위치");
         marker.setMapPoint(mapPoint);
-        marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+        marker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+        marker.setCustomImageResourceId(R.drawable.nowmarker);
+        marker.setCustomImageAutoscale(false);
         mapView.addPOIItem(marker);
     }
     public void initialize(){

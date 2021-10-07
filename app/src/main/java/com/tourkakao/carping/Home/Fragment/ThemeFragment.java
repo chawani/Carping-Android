@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.tourkakao.carping.Home.HomeContract;
 import com.tourkakao.carping.Home.HomeViewModel.ThemeViewModel;
+import com.tourkakao.carping.Location_setting.Location_setting;
 import com.tourkakao.carping.Post.PostTotalActivity;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.theme.Activity.ThemeActivity;

@@ -12,6 +12,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -72,6 +73,7 @@ public class MapSearchActivity extends AppCompatActivity {
         mapViewModel.setThis_activity(this);
 
         setting_data();
+        setting_back_button();
     }
     public void setting_data(){
         cat=intent.getIntExtra("category", 1001);
@@ -104,6 +106,7 @@ public class MapSearchActivity extends AppCompatActivity {
             searchBinding.searchToolbar.setVisibility(View.VISIBLE);
             setting_search_from_tour_recyclerview();
             setting_search_edittext();
+            setting_remove_search_text();
         }
     }
     public void search_bath_by_keyword(){
@@ -272,6 +275,20 @@ public class MapSearchActivity extends AppCompatActivity {
             }
             @Override
             public void afterTextChanged(Editable s) { }
+        });
+    }
+    public void setting_remove_search_text(){
+        Glide.with(context).load(R.drawable.search_remove_img).into(searchBinding.removeSearch);
+        searchBinding.removeSearch.setOnClickListener(v -> {
+            searchBinding.campingSearch.setText("");
+        });
+    }
+    public void setting_back_button(){
+        searchBinding.back.setOnClickListener(v -> {
+            finish();
+        });
+        searchBinding.back2.setOnClickListener(v -> {
+            finish();
         });
     }
 }

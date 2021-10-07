@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
+import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.newcarping.Fragment.InfoFragment;
 import com.tourkakao.carping.theme.Fragment.ThemeInfoFragment;
@@ -26,6 +27,7 @@ public class ThemeDetailActivity extends AppCompatActivity {
     ThemeInfoFragment infoFragment;
     ThemeRecommendFragment recommendFragment;
     String name; int pk;
+    boolean bookmark=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +55,9 @@ public class ThemeDetailActivity extends AppCompatActivity {
         setting_tablayout();
         starting_observe_image();
         starting_observe_lat_and_lon();
+        starting_observe_bookmark();
+        setting_bookmark();
+        setting_back_button();
     }
 
     public void setting_tablayout(){
@@ -87,7 +92,7 @@ public class ThemeDetailActivity extends AppCompatActivity {
                 if(s!=null) {
                     Glide.with(context).load(s).into(detailBinding.themeMainImg);
                 }else{
-                    Glide.with(context).load(R.drawable.thema_no_img).into(detailBinding.themeMainImg);
+                    Glide.with(context).load(R.drawable.theme_no_img).into(detailBinding.themeMainImg);
                 }
             }
         });
@@ -102,10 +107,43 @@ public class ThemeDetailActivity extends AppCompatActivity {
             }
         });
     }
+    public void starting_observe_bookmark(){
+        detailViewModel.is_bookmark.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean){
+                    bookmark=true;
+                    Glide.with(context).load(R.drawable.mybookmark_img).into(detailBinding.bookmark);
+                }else{
+                    bookmark=false;
+                    Glide.with(context).load(R.drawable.bookmark_img).into(detailBinding.bookmark);
+                }
+            }
+        });
+    }
+    public void setting_bookmark(){
+        detailBinding.bookmark.setOnClickListener(v -> {
+            if(bookmark){
+                TotalApiClient.getApiService(context).release_theme_bookmark(pk).subscribe();
+                Glide.with(context).load(R.drawable.bookmark_img).into(detailBinding.bookmark);
+                bookmark=false;
+            }else{
+                TotalApiClient.getApiService(context).set_theme_bookmark(pk).subscribe();
+                Glide.with(context).load(R.drawable.mybookmark_img).into(detailBinding.bookmark);
+                bookmark=true;
+            }
+        });
+    }
+    public void setting_back_button(){
+
+        detailBinding.back.setOnClickListener(v -> {
+            finish();
+        });
+    }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+    protected void onPause() {
+        super.onPause();
         infoFragment.infoFragmentBinding.mapView.removeView(infoFragment.mapView);
         infoFragment.mapView=null;
     }
