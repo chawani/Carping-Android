@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity{
                         getSupportFragmentManager().beginTransaction().hide(mypageFragment).commit();
                         break;
                     case R.id.upload:
+                        choose=2;
                         getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
                         getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
                         getSupportFragmentManager().beginTransaction().hide(communityFragment).commit();
@@ -165,6 +166,7 @@ public class MainActivity extends AppCompatActivity{
         super.onResume();
         switch(choose){
             case 0:
+            case 2:
                 getSupportFragmentManager().beginTransaction().show(homeFragment).commit();
                 getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
                 getSupportFragmentManager().beginTransaction().hide(communityFragment).commit();

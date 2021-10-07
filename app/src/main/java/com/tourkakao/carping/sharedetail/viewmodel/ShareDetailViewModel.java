@@ -36,8 +36,12 @@ public class ShareDetailViewModel extends ViewModel {
     private MutableLiveData<ShareDetail> detail=new MutableLiveData<>();
     public MutableLiveData<Integer> share_delete=new MutableLiveData<>();
     public MutableLiveData<Integer> share_complete=new MutableLiveData<>();
+    public int to_share_detail;
+    public boolean isdetail;
     public ShareDetailViewModel(){
         share_delete.setValue(0);
+        to_share_detail=0;
+        isdetail=false;
     }
     public void setContext(Context context){
         this.context=context;
@@ -52,6 +56,8 @@ public class ShareDetailViewModel extends ViewModel {
         shareAdapter.setOnSelectItemClickListener(new ShareAdapter.OnSelectItemClickListener() {
             @Override
             public void OnSelectItemClick(View v, int pos, int pk) {
+                to_share_detail=1;
+                isdetail=true;
                 Intent intent=new Intent(context, ShareDetailActivity.class);
                 intent.putExtra("pk", pk);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

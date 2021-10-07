@@ -82,4 +82,7 @@ dependencies {
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
     //cardview
     implementation "androidx.cardview:cardview:1.0.0"
+    //register newcarping animation
+    def lottieVersion = "3.4.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
 }

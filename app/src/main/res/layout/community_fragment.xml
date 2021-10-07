@@ -20,7 +20,7 @@
         android:id="@+id/community_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabIndicator="@color/black"
+        app:tabIndicatorColor="@color/black"
         app:tabMode="scrollable">
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"

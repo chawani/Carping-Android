@@ -8,7 +8,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -73,6 +76,7 @@ public class ShareDetailActivity extends AppCompatActivity {
         setting_like_btn();
         setting_ask_url_btn();
         starting_observe_setting();
+        setting_back_btn();
     }
     public void starting_observe_images(){
         detailViewModel.getImages().observe(this, new Observer<ArrayList<String>>() {
@@ -111,10 +115,26 @@ public class ShareDetailActivity extends AppCompatActivity {
                         shareDetailBinding.listLayout.setVisibility(View.VISIBLE);
                     });
                     shareDetailBinding.shareDelete.setOnClickListener(v -> {
-                        detailViewModel.share_delete(postpk);
-                        shareDetailBinding.listLayout.setVisibility(View.GONE);
+                        AlertDialog.Builder builder=new AlertDialog.Builder(context);
+                        builder.setTitle("무료나눔 삭제")
+                                .setMessage("무료나눔을 삭제할까요?")
+                                .setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        SharedPreferenceManager.getInstance(getApplicationContext()).setInt("change_isshare", 1);
+                                        detailViewModel.share_delete(postpk);
+                                        shareDetailBinding.listLayout.setVisibility(View.GONE);
+                                    }
+                                }).create().show();
                     });
                     shareDetailBinding.shareFix.setOnClickListener(v -> {
+                        SharedPreferenceManager.getInstance(getApplicationContext()).setInt("change_isshare", 1);
                         shareDetailBinding.listLayout.setVisibility(View.GONE);
                         Intent fixintent=new Intent(context, FixShareActivity.class);
                         fixintent.putExtra("pk", postpk);
@@ -123,6 +143,7 @@ public class ShareDetailActivity extends AppCompatActivity {
                     isshare=shareDetail.isIs_shared();
                     firstshare=isshare;
                     shareDetailBinding.shareComplete.setOnClickListener(v -> {
+                        SharedPreferenceManager.getInstance(getApplicationContext()).setInt("change_isshare", 1);
                         if(isshare==true){
                             detailViewModel.share_cancel_complete(postpk);
                         }else{
@@ -173,6 +194,7 @@ public class ShareDetailActivity extends AppCompatActivity {
 
     public void setting_like_btn(){
         shareDetailBinding.likeMark.setOnClickListener(v -> {
+            SharedPreferenceManager.getInstance(getApplicationContext()).setInt("change_isshare", 1);
             if(islike==true){
                 islike=false;
                 like--;
@@ -202,7 +224,7 @@ public class ShareDetailActivity extends AppCompatActivity {
             public void onChanged(Integer integer) {
                 if(integer==1){
                     Toast.makeText(context, "무료나눔이 삭제되었어요!", Toast.LENGTH_SHORT).show();
-                    SharedPreferenceManager.getInstance(context).setInt("share_delete", 1);
+                    SharedPreferenceManager.getInstance(context).setInt("change_isshare", 1);
                     finish();
                 }
             }
@@ -257,15 +279,13 @@ public class ShareDetailActivity extends AppCompatActivity {
             }
         });
     }
+    public void setting_back_btn(){
+        shareDetailBinding.back.setOnClickListener(v -> {
+            finish();
+        });
+    }
     @Override
     public void onBackPressed() {
-        Intent intent=new Intent();
-        if(firstshare!=isshare){
-            SharedPreferenceManager.getInstance(context).setInt("change_isshare", 1);
-        }else{
-            SharedPreferenceManager.getInstance(context).setInt("change_isshare", 0);
-        }
-        setResult(RESULT_OK, intent);
         finish();
 
     }

@@ -84,6 +84,7 @@ public class SearchNewCarpingActivity extends AppCompatActivity {
         setting_searchview();
         setting_location_recyclerview();
         setting_complete();
+        setting_back_button();
         starting_observe_isduplicate_carping_place();
     }
 
@@ -96,6 +97,7 @@ public class SearchNewCarpingActivity extends AppCompatActivity {
         marker.setItemName("기본");
         marker.setMapPoint(mapPoint);
         marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+        marker.setCustomImageAutoscale(false);
         mapView.addPOIItem(marker);
     }
     public void setting_searchview(){
@@ -189,7 +191,9 @@ public class SearchNewCarpingActivity extends AppCompatActivity {
         mapView.removePOIItem(marker);
         marker.setItemName(place.getPlace_name());
         marker.setMapPoint(mapPoint);
-        marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+        marker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+        marker.setCustomImageResourceId(R.drawable.mycarping_marker);
+        marker.setCustomImageAutoscale(false);
         mapView.addPOIItem(marker);
     }
     public void setting_complete(){
@@ -226,6 +230,11 @@ public class SearchNewCarpingActivity extends AppCompatActivity {
                     finish();
                 }
             }
+        });
+    }
+    public void setting_back_button(){
+        searchNewCarpingBinding.back.setOnClickListener(v -> {
+            finish();
         });
     }
     @Override

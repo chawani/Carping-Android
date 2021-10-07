@@ -28,6 +28,7 @@ public class ShareFragment extends Fragment {
     Context context;
     ShareViewModel shareViewModel;
     int share_new=0;
+    String username;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -40,6 +41,9 @@ public class ShareFragment extends Fragment {
 
         shareViewModel=new ViewModelProvider(this).get(ShareViewModel.class);
         shareViewModel.setContext(context);
+        username=SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).getString("username", "user");
+        sharebinding.username.setText(username);
+
 
         setting_share();
         setting_share_btn();
@@ -57,7 +61,7 @@ public class ShareFragment extends Fragment {
         sharebinding.shareWriteButton.setOnClickListener(v -> {
             Intent intent=new Intent(context, Register_ShareActivity.class);
             share_new=1;
-            startActivityForResult(intent, 1001);
+            startActivity(intent);
         });
     }
     public void starting_observe_share_count(){
@@ -71,23 +75,10 @@ public class ShareFragment extends Fragment {
     public void setting_total_btn(){
         sharebinding.shareTotal.setOnClickListener(v -> {
             Intent intent=new Intent(context, ShareTotalActivity.class);
-            startActivityForResult(intent, 1002);
+            startActivity(intent);
         });
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode== Activity.RESULT_OK){
-            if(requestCode==1001){
-                shareViewModel.get_share("recent", 10);
-            }else if(requestCode==1002){
-                if(data.getIntExtra("new", 0)==1){
-                    shareViewModel.get_share("recent", 10);
-                }
-            }
-        }
-    }
 
     @Override
     public void onResume() {
@@ -95,10 +86,6 @@ public class ShareFragment extends Fragment {
         if(SharedPreferenceManager.getInstance(context).getInt("change_isshare", 0)==1){
             shareViewModel.get_share("recent", 10);
             SharedPreferenceManager.getInstance(context).setInt("change_isshare", 0);
-        }
-        if(SharedPreferenceManager.getInstance(context).getInt("share_delete", 0)==1){
-            shareViewModel.get_share("recent", 10);
-            SharedPreferenceManager.getInstance(context).setInt("share_delete", 0);
         }
     }
 
