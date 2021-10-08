@@ -60,7 +60,7 @@ public class ReviewCompleteFragment extends Fragment {
                 else {
                     binding.mypageEmptyText.setVisibility(View.GONE);
                     binding.mypageRecycler.setVisibility(View.VISIBLE);
-                    adapter = new PostAdapter(context, items,0);
+                    adapter = new PostAdapter(context, items,2);
                     binding.mypageRecycler.setAdapter(adapter);
                 }
             }

@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +16,9 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -23,6 +26,7 @@ import com.tourkakao.carping.BuildConfig;
 import com.tourkakao.carping.EcoCarping.Adapter.LocationInfoAdapter;
 import com.tourkakao.carping.EcoCarping.DTO.ResultSearchKeyword;
 import com.tourkakao.carping.NetworkwithToken.EcoInterface;
+import com.tourkakao.carping.R;
 import com.tourkakao.carping.databinding.ActivityLocationSearchBinding;
 
 import net.daum.mf.map.api.MapPOIItem;
@@ -52,6 +56,7 @@ public class LocationSearchActivity extends AppCompatActivity {
     private MapView mapView;
     private MapPoint mapPoint;
     private String placeName;
+    private Toast myToast;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,9 +65,8 @@ public class LocationSearchActivity extends AppCompatActivity {
         ecobinding= ActivityLocationSearchBinding.inflate(getLayoutInflater());
         setContentView(ecobinding.getRoot());
 
-        ecobinding.searchBar.bringToFront();
-        //ecobinding.searchBar.setText(getIntent().getStringExtra("검색어"));
-        settingToolbar();
+        ecobinding.searchBarArea.bringToFront();
+        initLayout();
         settingMapView();
 
         settingLocationList();
@@ -81,6 +85,11 @@ public class LocationSearchActivity extends AppCompatActivity {
         ecobinding.completion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(ecobinding.searchBar.getText().length()==0){
+                    myToast = Toast.makeText(getApplicationContext(),"장소를 검색해주세요", Toast.LENGTH_SHORT);
+                    myToast.show();
+                    return;
+                }
                 Intent intent=getIntent();
                 intent.putExtra("place",placeName);
                 intent.putExtra("x",mapPoint.getMapPointGeoCoord().longitude);
@@ -92,11 +101,34 @@ public class LocationSearchActivity extends AppCompatActivity {
         });
     }
 
-    public void settingToolbar(){
-        Toolbar toolbar=ecobinding.toolbar;
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+    public void initLayout(){
+        Glide.with(getApplicationContext()).load(R.drawable.back).into(ecobinding.back);
+        Glide.with(getApplicationContext()).load(R.drawable.search_remove_img).into(ecobinding.deleteText);
+        ecobinding.back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=getIntent();
+                ecobinding.mapView.removeView(mapView);
+                setResult(3, intent);
+                finish();
+            }
+        });
+        ecobinding.deleteText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ecobinding.searchBar.setText("");
+                ecobinding.locationView.setAdapter(null);
+                mapView.removePOIItem(marker);
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent=getIntent();
+        ecobinding.mapView.removeView(mapView);
+        setResult(3, intent);
+        finish();
     }
 
     public void settingMapView(){
@@ -104,6 +136,11 @@ public class LocationSearchActivity extends AppCompatActivity {
         mapView.setDaumMapApiKey(KAKAO_KEY);
         ecobinding.mapView.addView(mapView);
         marker = new MapPOIItem();
+        mapPoint=MapPoint.mapPointWithGeoCoord(37.5642135, 127.0016985);
+        mapView.setMapCenterPoint(mapPoint,true);
+        marker.setMapPoint(mapPoint);
+        marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+        mapView.addPOIItem(marker);
     }
 
     public void searchKeyword(String keyword){
@@ -143,33 +180,36 @@ public class LocationSearchActivity extends AppCompatActivity {
     }
 
     public void settingLocationList(){
-
-        ecobinding.locationView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
-        PagerSnapHelper snapHelper=new PagerSnapHelper();
-        snapHelper.attachToRecyclerView(ecobinding.locationView);
+        ecobinding.locationView.setOffscreenPageLimit(3);
+        ecobinding.locationView.setClipToPadding(false);
+        ecobinding.locationView.setPadding(100,0,100,0);
         places.observe(this, new Observer<ArrayList<ResultSearchKeyword.Place>>() {
             @Override
             public void onChanged(ArrayList<ResultSearchKeyword.Place> places) {
+                if((places.size())==0){
+                    myToast = Toast.makeText(getApplicationContext(),"검색 결과가 없습니다", Toast.LENGTH_SHORT);
+                    myToast.show();
+                    return;
+                }
                 adapter=new LocationInfoAdapter(context,places);
                 ecobinding.locationView.setAdapter(adapter);
             }
         });
-        ecobinding.locationView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        ecobinding.locationView.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
-            public void onScrolled(@androidx.annotation.NonNull RecyclerView recyclerView, int dx, int dy) {
-                View view=snapHelper.findSnapView(ecobinding.locationView.getLayoutManager());
-                int position=ecobinding.locationView.getLayoutManager().getPosition(view);
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                mapView.removePOIItem(marker);
                 ResultSearchKeyword.Place place=adapter.getItem(position);
                 placeName=place.getPlace_name();
                 mapPoint=MapPoint.mapPointWithGeoCoord(Double.parseDouble(place.getY()),Double.parseDouble(place.getX()));
                 mapView.setMapCenterPoint(mapPoint,true);
                 marker.setItemName(place.getPlace_name());
                 marker.setMapPoint(mapPoint);
-                marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
-                marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
 
                 mapView.addPOIItem(marker);
             }
         });
+
     }
 }

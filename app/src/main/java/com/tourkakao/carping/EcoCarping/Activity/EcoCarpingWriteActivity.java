@@ -6,9 +6,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -34,12 +38,14 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.tourkakao.carping.BuildConfig;
+import com.tourkakao.carping.Gallerypermission.Gallery_setting;
 import com.tourkakao.carping.NetworkwithToken.CommonClass;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 import com.tourkakao.carping.databinding.ActivityEcoCarpingWriteBinding;
 import com.tourkakao.carping.databinding.ImageItemBinding;
+import com.tourkakao.carping.registernewcarping.Activity.RegisterActivity;
 
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
@@ -78,6 +84,9 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
     private boolean contentCheck=false;
     private boolean tagCheck=false;
     private boolean trashCheck=false;
+    private double x,y=0;
+    private Toast myToast;
+    private Gallery_setting gallery_setting;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,8 +94,8 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
         ecobinding=ActivityEcoCarpingWriteBinding.inflate(getLayoutInflater());
         setContentView(ecobinding.getRoot());
         context=getApplicationContext();
+        gallery_setting=new Gallery_setting(this, EcoCarpingWriteActivity.this);
 
-        settingToolbar();
         initLayout();
         selectPlace();
         selectImage();
@@ -97,7 +106,7 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(!checkAll()){
-                    Toast myToast = Toast.makeText(getApplicationContext(),"모두 입력해주세요", Toast.LENGTH_SHORT);
+                    myToast = Toast.makeText(getApplicationContext(),"모두 입력해주세요", Toast.LENGTH_SHORT);
                     myToast.show();
                     return;
                 }
@@ -106,14 +115,15 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
         });
     }
 
-    public void settingToolbar(){
-        Toolbar toolbar=ecobinding.toolbar;
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-    }
-
     public void initLayout(){
+        Glide.with(getApplicationContext()).load(R.drawable.locate_img).into(ecobinding.locateImg);
+        Glide.with(getApplicationContext()).load(R.drawable.cancel_img).into(ecobinding.back);
+        ecobinding.back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         Glide.with(this).load(R.drawable.write_add_img_button).into(ecobinding.addImage);
         ecobinding.locationText.setText("위치");
         tagListLiveData.setValue(tagList);
@@ -193,7 +203,45 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
             ecobinding.mapView.setVisibility(View.VISIBLE);
             placeName=data.getStringExtra("place");
             ecobinding.locationText.setText(placeName);
-            settingMapView(data.getDoubleExtra("x",0),data.getDoubleExtra("y",0));
+            x=data.getDoubleExtra("x",0);
+            y=data.getDoubleExtra("y",0);
+            settingMapView(x,y);
+        }
+        if(requestCode==2&&resultCode==3){
+            if(!(x==0&&y==0)) {
+                settingMapView(x, y);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @androidx.annotation.NonNull String[] permissions, @androidx.annotation.NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==gallery_setting.PERMISSION_GALLERY_REQUESTCODE){
+            if(grantResults.length==gallery_setting.REQUIRED_PERMISSIONS.length){
+                boolean check_result=true;
+                for(int result: grantResults){
+                    if(result== PackageManager.PERMISSION_DENIED){
+                        check_result=false;
+                        break;
+                    }
+                }
+                if(check_result){
+                    Toast.makeText(context, "갤러리 접근 권한이 설정되었습니다.", Toast.LENGTH_SHORT).show();
+                }else{
+                    AlertDialog.Builder builder=new AlertDialog.Builder(context);
+                    builder.setTitle("갤러리 접근 권한 설정 알림")
+                            .setMessage("서비스 사용을 위해서는 갤러리 접근 권한 설정이 필요합니다. [설정]->[앱]에서 갤러리 접근 권한을 승인해주세요")
+                            .setCancelable(false)
+                            .setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    builder.create().show();
+                }
+            }
         }
     }
 
@@ -203,11 +251,22 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
             if(!imgPossible){
                 return;
             }
-            Intent intent = new Intent();
-            //intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(intent, REQUEST_CODE);
+
+            if (Build.VERSION.SDK_INT >= 23) {
+                int permission_read = context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+                int permission_write = context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                if (permission_read == PackageManager.PERMISSION_DENIED || permission_write == PackageManager.PERMISSION_DENIED) {
+                    gallery_setting.check_gallery_permission();
+                } else {
+                    Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                    galleryintent.setType("image/*");
+                    startActivityForResult(galleryintent, REQUEST_CODE);
+                }
+            } else {
+                Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                galleryintent.setType("image/*");
+                startActivityForResult(galleryintent, REQUEST_CODE);
+            }
         }
     };
 
@@ -374,7 +433,6 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
         marker.setItemName(placeName);
         marker.setMapPoint(mapPoint);
         marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
-        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
         mapView.addPOIItem(marker);
     }
 
@@ -444,13 +502,12 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(@NonNull CommonClass commonClass) {
                         if(commonClass.getCode()==200) {
-                            Toast myToast = Toast.makeText(getApplicationContext(),"작성 완료", Toast.LENGTH_SHORT);
+                            myToast = Toast.makeText(getApplicationContext(),"작성 완료", Toast.LENGTH_SHORT);
                             myToast.show();
                             finish();
                         }
                         else{
-                            System.out.println(commonClass.getCode()+commonClass.getError_message());
-                            Toast myToast = Toast.makeText(getApplicationContext(),"작성 실패", Toast.LENGTH_SHORT);
+                            myToast = Toast.makeText(getApplicationContext(),"작성 실패. 카핑 채널로 문의해주세요", Toast.LENGTH_SHORT);
                             myToast.show();
                         }
                     }

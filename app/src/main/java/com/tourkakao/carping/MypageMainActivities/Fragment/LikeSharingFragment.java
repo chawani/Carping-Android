@@ -54,7 +54,7 @@ public class LikeSharingFragment extends Fragment {
         viewModel.getLikeShare().observe(this, new Observer<ArrayList<Share>>() {
             @Override
             public void onChanged(ArrayList<Share> shares) {
-                if(shares==null){
+                if(shares.size()==0){
                     binding.mypageEmptyText.setVisibility(View.VISIBLE);
                     binding.mypageRecycler.setVisibility(View.GONE);
                 }

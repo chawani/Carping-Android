@@ -13,6 +13,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.tourkakao.carping.MypageMainActivities.DTO.Autocamp;
 import com.tourkakao.carping.MypageMainActivities.DTO.MyCarpingPost;
+import com.tourkakao.carping.R;
 import com.tourkakao.carping.databinding.MypageCarpingApiListItemBinding;
 
 import java.util.ArrayList;
@@ -49,10 +50,17 @@ public class ScrapAutoAdapter extends RecyclerView.Adapter<ScrapAutoAdapter.View
             });
         }
         public void bind(MyCarpingPost autocamp){
-            Glide.with(context)
-                    .load(autocamp.getImage1())
-                    .transform(new CenterCrop(), new RoundedCorners(30))
-                    .into(binding.image);
+            if(autocamp.getImage1()==null){
+                Glide.with(context)
+                        .load(R.drawable.mypage_no_img)
+                        .transform(new CenterCrop(), new RoundedCorners(30))
+                        .into(binding.image);
+            }else {
+                Glide.with(context)
+                        .load(autocamp.getImage1())
+                        .transform(new CenterCrop(), new RoundedCorners(30))
+                        .into(binding.image);
+            }
             binding.title.setText(autocamp.getTitle());
             binding.bookmarkCount.setText("스크랩 "+autocamp.getBookmark_count());
         }

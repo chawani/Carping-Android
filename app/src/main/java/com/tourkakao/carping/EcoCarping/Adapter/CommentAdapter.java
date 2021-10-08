@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,14 +61,16 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     .load(comment.getProfile())
                     .transform(new CenterCrop(), new RoundedCorners(100))
                     .into(binding.image);
-            binding.level.setText(comment.getLevel());
+            binding.level.setText("LV."+comment.getLevel());
             binding.name.setText(comment.getUsername());
             binding.time.setText(comment.getCreated_at());
             binding.content.setText(comment.getText());
             binding.pk.setText(comment.getId());
             int user=(int)Double.parseDouble(comment.getUser());
-            if(!Integer.toString(user).equals(current_user))
+            if(current_user!=user)
                 binding.privateDeleteButton.setVisibility(View.GONE);
+            if(current_user==user)
+                binding.writerCheck.setVisibility(View.VISIBLE);
         }
     }
 
@@ -98,9 +101,8 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     void showDialog(int pk) {
         AlertDialog.Builder msgBuilder = new AlertDialog.Builder(activity)
-                .setTitle("삭제")
-                .setMessage("삭제하시겠습니까?")
-                .setPositiveButton("예", new DialogInterface.OnClickListener() {
+                .setMessage("정말 삭제하시겠습니까?")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override public void onClick(DialogInterface dialogInterface, int i) {
                         viewModel.deleteComment(pk);
                         Intent intent=activity.getIntent();
@@ -108,12 +110,18 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         activity.startActivity(intent);
                     }
                 })
-                .setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
                     @Override public void onClick(DialogInterface dialogInterface, int i) {
 
                     }
                 });
         AlertDialog msgDlg = msgBuilder.create();
+        msgDlg.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override public void onShow(DialogInterface arg0) {
+                msgDlg.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#5f51ef"));
+                msgDlg.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#5f51ef"));
+            }
+        });
         msgDlg.show();
     }
 }

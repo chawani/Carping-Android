@@ -60,7 +60,7 @@ public class UnderReviewPostFragment extends Fragment {
                 else {
                     binding.mypageEmptyText.setVisibility(View.GONE);
                     binding.mypageRecycler.setVisibility(View.VISIBLE);
-                    adapter = new PostAdapter(context, items,1);
+                    adapter = new PostAdapter(context, items,0);
                     binding.mypageRecycler.setAdapter(adapter);
                 }
             }

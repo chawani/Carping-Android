@@ -100,25 +100,6 @@ public class EcoDetailViewModel  extends ViewModel {
         comments.setValue(commentArray);
     }
 
-    public void updateComments(PostComment comment){
-        TotalApiClient.getEcoApiService(context).postComment(comment)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<CommonClass>() {
-                    @Override
-                    public void onSuccess(@NonNull CommonClass commonClass) {
-                        String totalString=new Gson().toJson(commonClass.getData().get(0));
-                        setCommentData(totalString);
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        System.out.println("post 실패"+e.getMessage());
-
-                    }
-                });
-    }
-
     public void setLikeDataPush(String total){
         Gson gson=new Gson();
         LikeResponse message=gson.fromJson(total, LikeResponse.class);

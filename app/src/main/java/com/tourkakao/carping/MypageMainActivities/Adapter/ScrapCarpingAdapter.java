@@ -49,10 +49,17 @@ public class ScrapCarpingAdapter extends RecyclerView.Adapter<ScrapCarpingAdapte
             });
         }
         public void bind(Campsite campsite){
-            Glide.with(context)
-                    .load(campsite.getImage())
-                    .transform(new CenterCrop(), new RoundedCorners(30))
-                    .into(binding.image);
+            if(campsite.getImage()==null){
+                Glide.with(context)
+                        .load(R.drawable.mypage_no_img)
+                        .transform(new CenterCrop(), new RoundedCorners(30))
+                        .into(binding.image);
+            }else {
+                Glide.with(context)
+                        .load(campsite.getImage())
+                        .transform(new CenterCrop(), new RoundedCorners(30))
+                        .into(binding.image);
+            }
             binding.name.setText(campsite.getName());
             binding.address.setText(campsite.getAddress());
             Glide.with(context).load(R.drawable.locate_img).into(binding.locateImg);

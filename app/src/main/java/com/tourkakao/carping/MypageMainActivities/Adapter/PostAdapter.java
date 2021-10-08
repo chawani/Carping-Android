@@ -37,6 +37,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             binding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(binding.pk.getText().toString().equals("is_not_approved")){
+                        return;
+                    }
                     Intent intent=new Intent(context, PostInfoActivity.class);
                     int pk=Integer.parseInt(binding.pk.getText().toString());
                     intent.putExtra("pk",pk);
@@ -46,7 +49,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             });
         }
         public void bind(Post item){
-            binding.pk.setText(Integer.toString(item.getId()));
+            if(item.isIs_approved()) {
+                binding.pk.setText(Integer.toString(item.getId()));
+            }else{
+                binding.pk.setText("is_not_approved");
+            }
             Glide.with(context)
                     .load(item.getProfile())
                     .transform(new CenterCrop(), new RoundedCorners(100))
@@ -58,13 +65,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
                 Glide.with(context).load(R.drawable.premium_mark).into(binding.premiumImage);
             }
             binding.thumbnail.setColorFilter(Color.parseColor("#595959"), PorterDuff.Mode.MULTIPLY);
-            if(pageType==0||item.isIs_approved()) {
+            if((pageType==0&&item.isIs_approved())||pageType==2) {
                 binding.examineText.setVisibility(View.GONE);
                 Glide.with(context).load(R.drawable.right_arrow_red).into(binding.arrowImg);
+                binding.payStatus.setVisibility(View.GONE);
             }
-            if(pageType==1||!item.isIs_approved()){
+            if(pageType==0&&!item.isIs_approved()){
                 binding.arrowImg.setVisibility(View.GONE);
                 binding.examineText.setVisibility(View.VISIBLE);
+                binding.payStatus.setVisibility(View.GONE);
+            }
+            if(pageType==1){
+                binding.examineText.setVisibility(View.GONE);
+                Glide.with(context).load(R.drawable.right_arrow_red).into(binding.arrowImg);
             }
             binding.title.setText(item.getTitle());
             binding.name.setText(item.getAuthor());

@@ -1,37 +1,60 @@
 package com.tourkakao.carping.EcoCarping.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.google.gson.Gson;
 import com.tourkakao.carping.EcoCarping.Adapter.CommentAdapter;
 import com.tourkakao.carping.EcoCarping.Adapter.DetailPagerAdapter;
+import com.tourkakao.carping.EcoCarping.Adapter.EcoTotalReviewAdapter;
 import com.tourkakao.carping.EcoCarping.DTO.Comment;
 import com.tourkakao.carping.EcoCarping.DTO.EcoPost;
 import com.tourkakao.carping.EcoCarping.DTO.PostComment;
 import com.tourkakao.carping.EcoCarping.ViewModel.EcoDetailViewModel;
+import com.tourkakao.carping.NetworkwithToken.CommonClass;
+import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 import com.tourkakao.carping.databinding.ActivityEcoCarpingDetailBinding;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.observers.DisposableSingleObserver;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class EcoCarpingDetailActivity extends AppCompatActivity {
     ActivityEcoCarpingDetailBinding binding;
@@ -43,7 +66,8 @@ public class EcoCarpingDetailActivity extends AppCompatActivity {
     private int likeCount;
     private int current_user;
     private int commentCount;
-
+    private int imageCount;
+    private boolean commentCheck=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,20 +77,15 @@ public class EcoCarpingDetailActivity extends AppCompatActivity {
         ecoDetailViewModel =new ViewModelProvider(this).get(EcoDetailViewModel.class);
         ecoDetailViewModel.setContext(this);
 
+        initLayout();
         getDetailInfo();
-
-        binding.commentView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
-        current_user=SharedPreferenceManager.getInstance(getApplicationContext()).getInt("id",0);
 
         ecoDetailViewModel.getPost().observe(this, new Observer<EcoPost>() {
             @Override
             public void onChanged(EcoPost ecoPost) {
                 int id=(int)Double.parseDouble(ecoPost.getUser());
                 if(current_user!=id){
-                    binding.privateEditButton.setVisibility(View.GONE);
-                    binding.privateDeleteButton.setVisibility(View.GONE);
+                    binding.menu.setVisibility(View.GONE);
                 }
                 binding.username.setText(ecoPost.getUsername());
                 binding.hour.setText(ecoPost.getCreated_at());
@@ -89,11 +108,40 @@ public class EcoCarpingDetailActivity extends AppCompatActivity {
                 binding.likeCount.setText(Integer.toString(likeCount));
             }
         });
+        binding.commentEditView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // 입력이 끝났을 때 호출된다.
+                if(binding.commentEditView.getText().toString().length()==0){
+                    commentCheck=false;
+                }
+                else{
+                    commentCheck=true;
+                }
+                changeButtonColor(commentCheck);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // 입력하기 전에 호출된다.
+            }
+        });
         ecoDetailViewModel.getImages().observe(this, new Observer<ArrayList<String>>() {
             @Override
             public void onChanged(ArrayList<String> strings) {
+                imageCount=strings.size();
                 detailPagerAdapter =new DetailPagerAdapter(getApplicationContext(),strings);
                 binding.imageViewPager.setAdapter(detailPagerAdapter);
+            }
+        });
+        binding.imageViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                binding.pageNumber.setText((position+1)+"/"+imageCount);
             }
         });
         ecoDetailViewModel.getTags().observe(this, new Observer<ArrayList<String>>() {
@@ -109,6 +157,7 @@ public class EcoCarpingDetailActivity extends AppCompatActivity {
                     textView.setPadding(convertDp(10),convertDp(5),convertDp(10),convertDp(5));
                     textView.setTextColor(Color.parseColor("#5f51ef"));
                     textView.setText("#"+tag);
+                    textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
                     binding.tagArea.addView(textView);
                 }
             }
@@ -126,10 +175,11 @@ public class EcoCarpingDetailActivity extends AppCompatActivity {
         binding.completeComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!commentCheck){
+                    return;
+                }
                 if(!binding.commentEditView.getText().toString().equals("")) {
                     setCommentMap();
-                    commentCount=commentCount+1;
-                    binding.likeComment.setText("좋아요"+likeCount+" · 댓글"+commentCount);
                 }
             }
         });
@@ -137,9 +187,11 @@ public class EcoCarpingDetailActivity extends AppCompatActivity {
             @Override
             public void onChanged(String s) {
                 if(s.equals("true")){
+                    binding.likeCount.setTextColor(Color.parseColor("#ff4e5e"));
                     Glide.with(getApplicationContext()).load(R.drawable.is_pushed_like).into(binding.likeMark);
                 }
                 if(s.equals("false")){
+                    binding.likeCount.setTextColor(Color.parseColor("#000000"));
                     Glide.with(getApplicationContext()).load(R.drawable.like_mark).into(binding.likeMark);
                 }
             }
@@ -161,43 +213,99 @@ public class EcoCarpingDetailActivity extends AppCompatActivity {
                 }
             }
         });
-        binding.privateEditButton.setOnClickListener(new View.OnClickListener() {
+        binding.menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getApplicationContext(), EcoCarpingEditActivity.class);
-                intent.putExtra("pk",postId);
-                startActivity(intent);
-            }
-        });
-        binding.privateDeleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialog();
+                registerForContextMenu(view);
+                view.showContextMenu();
+                unregisterForContextMenu(view);
             }
         });
     }
 
+    public void changeButtonColor(boolean check){
+        if(check) {
+            binding.completeComment.setBackground(ContextCompat.getDrawable(this, R.drawable.border_round_fill));
+            binding.completeComment.setTextColor(Color.parseColor("#ffffff"));
+        }
+        else {
+            binding.completeComment.setBackground(ContextCompat.getDrawable(this, R.drawable.border_round_fill_grey));
+            binding.completeComment.setTextColor(Color.parseColor("#999999"));
+        }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.detail_page_menu, menu);
+    }
+
+    public boolean onContextItemSelected(MenuItem item)
+    {
+        switch(item.getItemId())
+        {
+            case R.id.edit:
+                Intent intent=new Intent(getApplicationContext(), EcoCarpingEditActivity.class);
+                intent.putExtra("pk",postId);
+                startActivity(intent);
+                return true;
+            case R.id.delete:
+                showDialog();
+                return true;
+        }
+
+        return super.onContextItemSelected(item);
+    }
+
     void showDialog() {
         AlertDialog.Builder msgBuilder = new AlertDialog.Builder(this)
-                .setTitle("삭제")
-                .setMessage("삭제하시겠습니까?")
-                .setPositiveButton("예", new DialogInterface.OnClickListener() {
+                .setMessage("정말 삭제하시겠습니까?")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override public void onClick(DialogInterface dialogInterface, int i) {
                         ecoDetailViewModel.deletePost();
                         finish();
                     }
                 })
-                .setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
                     @Override public void onClick(DialogInterface dialogInterface, int i) {
 
                     }
                 });
         AlertDialog msgDlg = msgBuilder.create();
+        msgDlg.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override public void onShow(DialogInterface arg0) {
+                msgDlg.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#5f51ef"));
+                msgDlg.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#5f51ef"));
+            }
+        });
         msgDlg.show();
     }
 
+    public void scrollDown(){
+        binding.scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                binding.scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+            }
+        });
+    }
+
+    public void initLayout(){
+        binding.commentView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        Glide.with(getApplicationContext()).load(R.drawable.locate_img).into(binding.locateImg);
+        Glide.with(getApplicationContext()).load(R.drawable.back).into(binding.back);
+        binding.back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
 
     public void getDetailInfo(){
+        current_user=SharedPreferenceManager.getInstance(getApplicationContext()).getInt("id",0);
         Intent intent=getIntent();
         pk=(int)Float.parseFloat(intent.getStringExtra("pk"));
         ecoDetailViewModel.setPk(pk);
@@ -206,14 +314,37 @@ public class EcoCarpingDetailActivity extends AppCompatActivity {
     }
 
     public void setCommentMap(){
-        String userString= SharedPreferenceManager.getInstance(getApplicationContext()).getString("id","");
-        int userInteger=(int)Double.parseDouble(userString);
-        userString=Integer.toString(userInteger);
+        int userId= SharedPreferenceManager.getInstance(getApplicationContext()).getInt("id",0);
+        String userString=Integer.toString(userId);
         int postIdInteger=(int)Double.parseDouble(postId);
 
         PostComment comment=new PostComment(userString,Integer.toString(postIdInteger),binding.commentEditView.getText().toString());
-        ecoDetailViewModel.updateComments(comment);
-        binding.likeComment.setText("좋아요"+likeCount+" · 댓글"+ecoDetailViewModel.getComments().getValue().size());
+        updateComments(comment);
+    }
+
+    public void updateComments(PostComment comment){
+        TotalApiClient.getEcoApiService(getApplicationContext()).postComment(comment)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<CommonClass>() {
+                    @Override
+                    public void onSuccess(@NonNull CommonClass commonClass) {
+                        String totalString=new Gson().toJson(commonClass.getData().get(0));
+                        ecoDetailViewModel.setCommentData(totalString);
+                        commentCount=commentCount+1;
+                        binding.commentEditView.setText("");
+                        InputMethodManager keyboard=(InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                        keyboard.hideSoftInputFromWindow(binding.commentEditView.getWindowToken(), 0);
+                        binding.likeComment.setText("좋아요"+likeCount+" · 댓글"+commentCount);
+                        scrollDown();
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        System.out.println("post 실패"+e.getMessage());
+
+                    }
+                });
     }
 
     public int convertDp(int dp) {

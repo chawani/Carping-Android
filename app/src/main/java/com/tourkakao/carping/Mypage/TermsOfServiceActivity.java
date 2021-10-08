@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.tourkakao.carping.R;
@@ -20,6 +21,12 @@ public class TermsOfServiceActivity extends AppCompatActivity {
         context = getApplicationContext();
 
         //Glide.with(context).load(R.drawable.terms).into(binding.terms);
-        Glide.with(context).load(R.drawable.back).into(binding.back);
+        Glide.with(getApplicationContext()).load(R.drawable.back).into(binding.back);
+        binding.back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 }

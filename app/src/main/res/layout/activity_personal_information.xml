@@ -25,6 +25,12 @@
                 android:gravity="center_horizontal"
                 android:text="개인정보"
                 />
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="16dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:layout_gravity="left"/>
         </androidx.appcompat.widget.Toolbar>
 
         <TextView
@@ -38,6 +44,9 @@
             android:textColor="#000000"
             android:text="닉네임"/>
         <EditText
+            android:singleLine="true"
+            android:maxLength="10"
+            android:paddingHorizontal="16dp"
             android:id="@+id/nickname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,6 +68,8 @@
             android:textColor="#000000"
             android:text="한 줄 소개"/>
         <EditText
+            android:singleLine="true"
+            android:paddingHorizontal="16dp"
             android:id="@+id/bio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -253,8 +264,8 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_alignParentBottom="true"
-        android:background="#000000"
-        android:text="작성하기"
+        android:background="#999999"
+        android:text="완료"
         android:fontFamily="@font/spoqa_han_sans_neo"
         android:textStyle="bold"
         android:textSize="20sp"

@@ -129,23 +129,31 @@ public class MypageFragment extends Fragment {
                 Glide.with(context).load(profile.getBadge()).into(mypagebinding.badge);
                 int level=(int)Double.parseDouble(profile.getLevel());
                 mypagebinding.level.setText("LV."+Integer.toString(level));
-                mypagebinding.introduce.setText(profile.getBio());
+                if(profile.getBio()==null){
+                    mypagebinding.introduce.setVisibility(View.GONE);
+                }else {
+                    mypagebinding.introduce.setText(profile.getBio());
+                }
                 String interest=profile.getInterest().toString();
                 interest=interest.replace("[","");
                 interest=interest.replace("]","");
                 interest=interest.replace(" ","");
-                String[] tags=interest.split(",");
-                mypagebinding.tag.removeAllViews();
-                for(String tag:tags){
-                    TextView textView = new TextView(context);
-                    LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    params.rightMargin= convertDp(6);
-                    textView.setLayoutParams(params);
-                    textView.setBackgroundResource(R.drawable.tag_design);
-                    textView.setPadding(convertDp(10),convertDp(5),convertDp(10),convertDp(5));
-                    textView.setTextColor(Color.parseColor("#5f51ef"));
-                    textView.setText(tag);
-                    mypagebinding.tag.addView(textView);
+                if(interest.length()==0){
+                    mypagebinding.tag.setVisibility(View.GONE);
+                }else {
+                    String[] tags=interest.split(",");
+                    mypagebinding.tag.removeAllViews();
+                    for (String tag : tags) {
+                        TextView textView = new TextView(context);
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        params.rightMargin = convertDp(6);
+                        textView.setLayoutParams(params);
+                        textView.setBackgroundResource(R.drawable.tag_design);
+                        textView.setPadding(convertDp(10), convertDp(5), convertDp(10), convertDp(5));
+                        textView.setTextColor(Color.parseColor("#5f51ef"));
+                        textView.setText(tag);
+                        mypagebinding.tag.addView(textView);
+                    }
                 }
             }
         });

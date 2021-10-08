@@ -60,16 +60,16 @@ public class PostListViewModel extends ViewModel {
         ArrayList<PostListItem> listItems=gson.fromJson(total, new TypeToken<ArrayList<PostListItem>>(){}.getType());
         for(PostListItem item:listItems){
             int category=item.getCategory();
-            if(category==1){
+            if(category==4){
                 popular.add(item);
             }
-            if(category==2){
+            if(category==1){
                 beginner.add(item);
             }
-            if(category==3){
+            if(category==2){
                 allOf.add(item);
             }
-            if(category==4){
+            if(category==3){
                 car.add(item);
             }
         }

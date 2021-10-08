@@ -60,7 +60,7 @@ public class PurchasePostFragment extends Fragment {
                 else {
                     binding.mypageEmptyText.setVisibility(View.GONE);
                     binding.mypageRecycler.setVisibility(View.VISIBLE);
-                    adapter = new PostAdapter(context, items,0);
+                    adapter = new PostAdapter(context, items,1);
                     binding.mypageRecycler.setAdapter(adapter);
                 }
             }

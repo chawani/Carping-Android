@@ -16,6 +16,12 @@
             android:textColor="#191919"
             android:text="작성하기"
             android:layout_gravity="center"/>
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="16dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:layout_gravity="left"/>
     </androidx.appcompat.widget.Toolbar>
     <ScrollView
         android:layout_above="@id/completion_button"
@@ -34,9 +40,10 @@
                 android:orientation="horizontal"
                 android:layout_marginHorizontal="16dp">
                 <ImageView
+                    android:layout_gravity="center_vertical"
                     android:id="@+id/locate_img"
                     android:layout_width="10dp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="13dp"/>
                 <TextView
                     android:layout_marginLeft="3dp"
                     android:id="@+id/location_text"
@@ -61,10 +68,10 @@
                     android:textColor="#5f51ef"
                     android:gravity="end"
                     android:text="다시 선택"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="16dp"/>
+                    android:layout_alignParentRight="true"/>
             </LinearLayout>
             <EditText
+                android:paddingHorizontal="16dp"
                 android:id="@id/search_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -110,8 +117,7 @@
                     android:fontFamily="@font/spoqa_han_sans_neo"
                     android:textStyle="normal"
                     android:textSize="13sp"
-                    android:textColor="#9d9d9d"
-                    android:text="0/4"/>
+                    android:textColor="#000000"/>
             </LinearLayout>
             <ImageButton
                 android:id="@+id/insert_image"
@@ -157,6 +163,9 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="35dp"/>
             <EditText
+                android:maxLength="50"
+                android:singleLine="true"
+                android:paddingHorizontal="16dp"
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -191,15 +200,19 @@
                     android:fontFamily="@font/spoqa_han_sans_neo"
                     android:textStyle="normal"
                     android:textSize="13sp"
-                    android:textColor="#9d9d9d"
+                    android:textColor="#000000"
                     android:text="0/500"/>
             </LinearLayout>
             <EditText
+                android:textSize="13sp"
+                android:paddingVertical="16dp"
+                android:paddingHorizontal="16dp"
+                android:gravity="top"
                 android:maxLength="500"
                 android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="156dp"
-                android:background="@drawable/edit_text_box_img"
+                android:background="@drawable/edit_text_box_large"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="15dp"/>
@@ -270,7 +283,12 @@
                 android:textColor="#000000"
                 android:text="쓰레기가 몇리터나왔나요?"
                 android:layout_marginLeft="16dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
             <RadioGroup
+                android:layout_marginHorizontal="16dp"
                 android:id="@+id/radio_group"
                 android:layout_width="match_parent"
                 android:layout_height="39dp"
@@ -285,16 +303,17 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/selector_radio_button"
                     android:text="20L"
+                    android:textSize="15sp"
                     android:button="@null"
                     android:textColor="@drawable/selector_radio_text"
                     android:paddingVertical="10dp"
-                    android:paddingHorizontal="20dp"
+                    android:paddingHorizontal="10dp"
                     android:layout_weight="1"
                     android:textAlignment="center"
-                    android:layout_marginHorizontal="5.5dp"
                     android:autoSizeMinTextSize="1sp"
                     android:autoSizeMaxTextSize="100sp"
-                    android:autoSizeTextType="uniform"/>
+                    android:autoSizeTextType="uniform"
+                    android:layout_marginRight="11dp"/>
                 <RadioButton
                     android:id="@+id/onezeroL"
                     android:layout_width="wrap_content"
@@ -302,31 +321,33 @@
                     android:background="@drawable/selector_radio_button"
                     android:text="10L"
                     android:button="@null"
+                    android:textSize="15sp"
                     android:textColor="@drawable/selector_radio_text"
                     android:paddingVertical="10dp"
-                    android:paddingHorizontal="20dp"
+                    android:paddingHorizontal="10dp"
                     android:layout_weight="1"
                     android:textAlignment="center"
-                    android:layout_marginHorizontal="5.5dp"
                     android:autoSizeMinTextSize="1sp"
                     android:autoSizeMaxTextSize="100sp"
-                    android:autoSizeTextType="uniform"/>
+                    android:autoSizeTextType="uniform"
+                    android:layout_marginRight="11dp"/>
                 <RadioButton
                     android:id="@+id/fiveL"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/selector_radio_button"
                     android:text="5L"
+                    android:textSize="15sp"
                     android:button="@null"
                     android:textColor="@drawable/selector_radio_text"
                     android:paddingVertical="10dp"
-                    android:paddingHorizontal="20dp"
+                    android:paddingHorizontal="10dp"
                     android:layout_weight="1"
                     android:textAlignment="center"
-                    android:layout_marginHorizontal="5.5dp"
                     android:autoSizeMinTextSize="1sp"
                     android:autoSizeMaxTextSize="100sp"
-                    android:autoSizeTextType="uniform"/>
+                    android:autoSizeTextType="uniform"
+                    android:layout_marginRight="11dp"/>
                 <RadioButton
                     android:id="@+id/threeL"
                     android:layout_width="wrap_content"
@@ -334,15 +355,16 @@
                     android:background="@drawable/selector_radio_button"
                     android:text="3L"
                     android:button="@null"
+                    android:textSize="15sp"
                     android:textColor="@drawable/selector_radio_text"
                     android:paddingVertical="10dp"
-                    android:paddingHorizontal="20dp"
+                    android:paddingHorizontal="10dp"
                     android:layout_weight="1"
                     android:textAlignment="center"
-                    android:layout_marginHorizontal="5.5dp"
                     android:autoSizeMinTextSize="1sp"
                     android:autoSizeMaxTextSize="100sp"
-                    android:autoSizeTextType="uniform"/>
+                    android:autoSizeTextType="uniform"
+                    android:layout_marginRight="11dp"/>
                 <RadioButton
                     android:id="@+id/underthreeL"
                     android:layout_width="wrap_content"
@@ -352,15 +374,15 @@
                     android:button="@null"
                     android:textColor="@drawable/selector_radio_text"
                     android:paddingVertical="10dp"
-                    android:paddingHorizontal="20dp"
+                    android:textSize="15sp"
+                    android:paddingHorizontal="10dp"
                     android:layout_weight="1"
                     android:textAlignment="center"
-                    android:layout_marginHorizontal="5.5dp"
                     android:autoSizeMinTextSize="1sp"
                     android:autoSizeMaxTextSize="100sp"
                     android:autoSizeTextType="uniform"/>
             </RadioGroup>
-
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
     <Button

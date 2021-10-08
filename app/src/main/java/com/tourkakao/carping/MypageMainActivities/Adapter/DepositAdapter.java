@@ -30,12 +30,6 @@ public class DepositAdapter extends RecyclerView.Adapter<DepositAdapter.ViewHold
         public ViewHolder(DepositItemBinding binding){
             super(binding.getRoot());
             this.binding=binding;
-            binding.getRoot().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
         }
         public void bind(Post item){
             Glide.with(context)
@@ -43,7 +37,7 @@ public class DepositAdapter extends RecyclerView.Adapter<DepositAdapter.ViewHold
                     .transform(new CenterCrop(), new RoundedCorners(100))
                     .into(binding.profile);
             binding.price.setText(item.getPoint()+"원");
-            binding.title.setText(item.getTitle());
+            binding.title.setText("[유료포스트]-"+item.getTitle());
             binding.name.setText(item.getUsername());
             binding.date.setText(item.getPay_date());
         }

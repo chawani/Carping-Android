@@ -125,6 +125,12 @@ public class HelpListActivity extends AppCompatActivity {
 
     void initLayout(){
         Glide.with(context).load(R.drawable.kakao_channel_img).into(binding.channel);
-        Glide.with(context).load(R.drawable.back).into(binding.back);
+        Glide.with(getApplicationContext()).load(R.drawable.back).into(binding.back);
+        binding.back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 }

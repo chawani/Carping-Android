@@ -25,10 +25,9 @@
             />
         <ImageView
             android:id="@+id/back"
-            android:layout_width="32dp"
+            android:layout_width="16dp"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:layout_marginLeft="22dp"
             android:layout_gravity="left"/>
     </androidx.appcompat.widget.Toolbar>
 
@@ -36,7 +35,12 @@
         android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
         <ImageView
+            android:paddingBottom="30dp"
             android:layout_marginTop="30dp"
             android:layout_marginHorizontal="16dp"
             android:adjustViewBounds="true"
@@ -44,5 +48,6 @@
             android:id="@+id/terms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

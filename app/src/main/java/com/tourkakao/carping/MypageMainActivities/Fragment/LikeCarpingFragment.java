@@ -97,7 +97,7 @@ public class LikeCarpingFragment extends Fragment {
         viewModel.getCampsitesLiveData().observe(this, new Observer<ArrayList<Campsite>>() {
             @Override
             public void onChanged(ArrayList<Campsite> campsites) {
-                if(campsites==null){
+                if(campsites.size()==0){
                     binding.mypageRecycler2.setVisibility(View.GONE);
                 }
                 else{

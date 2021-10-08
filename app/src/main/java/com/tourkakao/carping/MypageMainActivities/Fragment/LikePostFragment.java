@@ -47,7 +47,7 @@ public class LikePostFragment extends Fragment {
     }
 
     void initLayout(){
-        binding.mypageEmptyText.setText("스크랩한 포스트가 없습니다.");
+        binding.mypageEmptyText.setText("좋아요한 포스트가 없습니다.");
         mLayoutManager = new LinearLayoutManager(getActivity());
         binding.mypageRecycler.setLayoutManager(mLayoutManager);
     }
@@ -62,7 +62,7 @@ public class LikePostFragment extends Fragment {
                 else {
                     binding.mypageEmptyText.setVisibility(View.GONE);
                     binding.mypageRecycler.setVisibility(View.VISIBLE);
-                    adapter = new PostAdapter(context, items,0);
+                    adapter = new PostAdapter(context, items,2);
                     binding.mypageRecycler.setAdapter(adapter);
                 }
             }

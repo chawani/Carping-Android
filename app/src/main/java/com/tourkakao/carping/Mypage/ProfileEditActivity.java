@@ -5,9 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -16,11 +20,14 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.google.gson.Gson;
+import com.tourkakao.carping.EcoCarping.Activity.EcoCarpingWriteActivity;
+import com.tourkakao.carping.Gallerypermission.Gallery_setting;
 import com.tourkakao.carping.Home.HomeViewModel.MypageViewModel;
 import com.tourkakao.carping.Mypage.DTO.Profile;
 import com.tourkakao.carping.NetworkwithToken.CommonClass;
@@ -43,6 +50,7 @@ public class ProfileEditActivity extends AppCompatActivity {
     private ActivityProfileEditBinding binding;
     private Context context;
     private MypageViewModel myViewModel;
+    private Gallery_setting gallery_setting;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +58,7 @@ public class ProfileEditActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         myViewModel =new ViewModelProvider(this).get(MypageViewModel.class);
         myViewModel.setContext(context);
+        gallery_setting=new Gallery_setting(this, ProfileEditActivity.this);
 
         context=getApplicationContext();
         settingImg();
@@ -74,10 +83,26 @@ public class ProfileEditActivity extends AppCompatActivity {
         binding.editImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent, 0);
+                if (Build.VERSION.SDK_INT >= 23) {
+                    int permission_read = context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+                    int permission_write = context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    if (permission_read == PackageManager.PERMISSION_DENIED || permission_write == PackageManager.PERMISSION_DENIED) {
+                        gallery_setting.check_gallery_permission();
+                    } else {
+                        Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                        galleryintent.setType("image/*");
+                        startActivityForResult(galleryintent, 0);
+                    }
+                } else {
+                    Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                    galleryintent.setType("image/*");
+                    startActivityForResult(galleryintent, 0);
+                }
+
+//                Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                intent.setType("image/*");
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//                startActivityForResult(intent, 0);
             }
         });
     }
@@ -88,8 +113,39 @@ public class ProfileEditActivity extends AppCompatActivity {
         Profile profile=gson.fromJson(totalString,Profile.class);
         Glide.with(context)
                 .load(profile.getImage())
-                .transform(new CenterCrop(), new RoundedCorners(100))
+                .transform(new CenterCrop(), new RoundedCorners(500))
                 .into(binding.profile);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @androidx.annotation.NonNull String[] permissions, @androidx.annotation.NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==gallery_setting.PERMISSION_GALLERY_REQUESTCODE){
+            if(grantResults.length==gallery_setting.REQUIRED_PERMISSIONS.length){
+                boolean check_result=true;
+                for(int result: grantResults){
+                    if(result== PackageManager.PERMISSION_DENIED){
+                        check_result=false;
+                        break;
+                    }
+                }
+                if(check_result){
+                    Toast.makeText(context, "갤러리 접근 권한이 설정되었습니다.", Toast.LENGTH_SHORT).show();
+                }else{
+                    AlertDialog.Builder builder=new AlertDialog.Builder(context);
+                    builder.setTitle("갤러리 접근 권한 설정 알림")
+                            .setMessage("서비스 사용을 위해서는 갤러리 접근 권한 설정이 필요합니다. [설정]->[앱]에서 갤러리 접근 권한을 승인해주세요")
+                            .setCancelable(false)
+                            .setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    builder.create().show();
+                }
+            }
+        }
     }
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -124,6 +180,13 @@ public class ProfileEditActivity extends AppCompatActivity {
     }
 
     public void settingImg(){
+        Glide.with(getApplicationContext()).load(R.drawable.back).into(binding.back);
+        binding.back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         Glide.with(context).load(R.drawable.right_arrow).into(binding.arrow1);
         Glide.with(context).load(R.drawable.right_arrow).into(binding.arrow2);
         Glide.with(context).load(R.drawable.right_arrow).into(binding.arrow3);
@@ -134,6 +197,7 @@ public class ProfileEditActivity extends AppCompatActivity {
             public void onChanged(Profile profile) {
                 Glide.with(context)
                         .load(profile.getImage())
+                        .transform(new CenterCrop(), new RoundedCorners(500))
                         .into(binding.profile);
                 Glide.with(context).load(R.drawable.profile_img_edit_button).into(binding.editImg);
                 Glide.with(context).load(profile.getBadge()).into(binding.badge);

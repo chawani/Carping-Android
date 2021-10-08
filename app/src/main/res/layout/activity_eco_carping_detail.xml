@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EcoCarping.Activity.EcoCarpingDetailActivity">
+    tools:context=".EcoCarping.Activity.EcoCarpingDetailActivity"
+    app:layout_constraintEnd_toEndOf="parent">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -22,6 +28,12 @@
             android:gravity="center_horizontal"
             android:text="에코카핑"
             />
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="16dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:layout_gravity="left"/>
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.core.widget.NestedScrollView
@@ -73,44 +85,64 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
-                <TextView
-                    android:id="@+id/private_edit_button"
+                <ImageView
+                    android:id="@+id/menu"
+                    android:clickable="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/spoqa_han_sans_neo"
-                    android:textStyle="normal"
-                    android:textSize="13sp"
-                    android:textColor="#5f51ef"
-                    android:gravity="end"
-                    android:text="수정"/>
-                <TextView
-                    android:id="@+id/private_delete_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/spoqa_han_sans_neo"
-                    android:textStyle="normal"
-                    android:textSize="13sp"
-                    android:textColor="#5f51ef"
-                    android:gravity="end"
-                    android:layout_marginLeft="16dp"
-                    android:text="삭제"/>
+                    android:layout_height="20dp"
+                    android:paddingLeft="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/list_show_btn"/>
             </LinearLayout>
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/image_view_pager"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
-            </androidx.viewpager2.widget.ViewPager2>
-            <TextView
-                android:id="@+id/location"
+            <RelativeLayout
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <androidx.viewpager2.widget.ViewPager2
+                    android:clipChildren="false"
+                    android:id="@+id/image_view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:id="@+id/page_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                    android:textStyle="normal"
+                    android:textSize="12sp"
+                    android:textColor="#ffffff"
+                    android:gravity="center_horizontal"
+                    android:background="@drawable/image_navigator"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="3dp"
+                    android:layout_alignRight="@id/image_view_pager"
+                    android:layout_alignBottom="@id/image_view_pager"/>
+            </RelativeLayout>
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/spoqa_han_sans_neo"
-                android:textStyle="normal"
-                android:textSize="12sp"
-                android:textColor="#666666"
-                android:lineSpacingExtra="6.6sp"
-                android:layout_marginTop="15dp"/>
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp">
+                <ImageView
+                    android:id="@+id/locate_img"
+                    android:layout_width="10dp"
+                    android:layout_height="13dp"
+                    android:layout_gravity="center_vertical"/>
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/spoqa_han_sans_neo"
+                    android:textStyle="normal"
+                    android:textSize="12sp"
+                    android:textColor="#666666"
+                    android:lineSpacingExtra="6.6sp"
+                    android:layout_gravity="center_vertical"
+                    />
+            </LinearLayout>
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
@@ -119,7 +151,6 @@
                 android:textStyle="normal"
                 android:textSize="20sp"
                 android:textColor="#000000"
-                tools:text="노지에 잠시 나들이갔다오며 주워왔네요"
                 android:layout_marginTop="11dp"/>
             <TextView
                 android:id="@+id/content"
@@ -130,9 +161,9 @@
                 android:textSize="14sp"
                 android:textColor="#000000"
                 android:lineSpacingExtra="9.8sp"
-                android:layout_marginTop="20dp"
-                tools:text="집 근처 계곡 노지에 갔다 종량제봉투에 쓰레기를 주워담아왔답니다~~ 담배꽁초 어마어마합니다."/>
+                android:layout_marginTop="20dp"/>
             <HorizontalScrollView
+                android:scrollbars="none"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
@@ -179,7 +210,7 @@
         </View>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="94dp">
             <LinearLayout
                 android:id="@+id/like"
                 android:layout_width="wrap_content"
@@ -204,14 +235,23 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="4dp"/>
             </LinearLayout>
-            <EditText
-                android:id="@+id/comment_edit_view"
+            <ImageView
                 android:layout_toLeftOf="@+id/complete_comment"
                 android:layout_toRightOf="@id/like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/edit_text_box_img"
-                android:layout_marginVertical="24dp"
+                android:scaleType="fitXY"
+                android:layout_marginVertical="23dp"
+                android:src="@drawable/edit_text_box_img"/>
+            <EditText
+                android:paddingHorizontal="16dp"
+                android:background="@null"
+                android:id="@+id/comment_edit_view"
+                android:layout_toLeftOf="@+id/complete_comment"
+                android:layout_toRightOf="@id/like"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingVertical="24dp"
                 android:hint="댓글을 입력해주세요."
                 android:textSize="13sp"/>
             <TextView
@@ -221,16 +261,17 @@
                 android:fontFamily="@font/spoqa_han_sans_neo_medium"
                 android:textStyle="normal"
                 android:textSize="13sp"
-                android:textColor="#ffffff"
+                android:textColor="#999999"
                 android:text="등록"
                 android:maxLines="1"
                 android:layout_marginRight="16dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="11dp"
-                android:background="@drawable/border_round_fill"
+                android:background="@drawable/border_round_fill_grey"
                 android:paddingVertical="16dp"
                 android:paddingHorizontal="13dp"/>
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

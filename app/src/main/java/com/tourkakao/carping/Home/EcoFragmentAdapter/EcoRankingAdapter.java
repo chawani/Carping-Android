@@ -38,7 +38,7 @@ public class EcoRankingAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             binding.name.setText(ecoRanking.getUsername());
             Glide.with(context).load(ecoRanking.getBadge()).into(binding.badge);
             binding.level.setText("LV."+Integer.toString(ecoRanking.getLevel()));
-            binding.ecoCount.setText("총 "+ ecoRanking.getEco_count()+"개의 에코카핑을 인증하셨어요");
+            binding.ecoCount.setText(ecoRanking.getEco_count()+"개");
         }
     }
 

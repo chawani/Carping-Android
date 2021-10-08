@@ -38,6 +38,7 @@ public class EcoCarpingListActivity extends AppCompatActivity {
    private LifecycleOwner lifecycleOwner;
     private Spinner spinner;
     private List<String> sort_list=new ArrayList<>();
+    private int sort=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +49,7 @@ public class EcoCarpingListActivity extends AppCompatActivity {
 
         ecoTotalViewModel =new ViewModelProvider(this).get(EcoTotalViewModel.class);
         ecoTotalViewModel.setContext(this);
-
-        initializeToolbar();
+        
         initializeImg();
         settingEchoReview();
         selectSinnerItem();
@@ -63,27 +63,14 @@ public class EcoCarpingListActivity extends AppCompatActivity {
         });
     }
 
-    public void initializeToolbar(){
-        Toolbar toolbar=ecobinding.toolbar;
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        //getSupportActionBar().setHomeAsUpIndicator(R.drawable);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:{
-                finish();
-                return true;
-            }
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     public void initializeImg(){
-        Glide.with(this).load(R.drawable.eco_carping_write_text).into(ecobinding.writeButton);
+        Glide.with(getApplicationContext()).load(R.drawable.back).into(ecobinding.back);
+        ecobinding.back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     public void selectSinnerItem(){
@@ -93,7 +80,7 @@ public class EcoCarpingListActivity extends AppCompatActivity {
         spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spinner_adapter);
         spinner.setOnItemSelectedListener(spinnerListener);
-        spinner.setSelection(1);
+        spinner.setSelection(sort);
     }
 
     public void settingEchoReview(){
@@ -108,10 +95,12 @@ public class EcoCarpingListActivity extends AppCompatActivity {
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             if(sort_list.get(i).equals("인기순")){
+                sort=1;
                 adapter=new EcoTotalReviewAdapter(getApplicationContext(),ecoTotalViewModel.getPopularOrderReviews().getValue());
                 ecobinding.totalReviewRecycler.setAdapter(adapter);
             }
             if(sort_list.get(i).equals("최신순")){
+                sort=0;
                 adapter=new EcoTotalReviewAdapter(getApplicationContext(),ecoTotalViewModel.getRecentOrderReviews().getValue());
                 ecobinding.totalReviewRecycler
                         .setAdapter(adapter);

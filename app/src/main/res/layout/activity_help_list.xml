@@ -14,10 +14,9 @@
         >
         <ImageView
             android:id="@+id/back"
-            android:layout_width="32dp"
+            android:layout_width="16dp"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:layout_marginRight="22dp"
             android:layout_gravity="left"/>
     </androidx.appcompat.widget.Toolbar>
 
