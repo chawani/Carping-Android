@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Mypage.HelpDetailActivity"></activity>
+        <activity android:name=".store.Activity.StoreDetailActivity"></activity>
+        <activity android:name=".Mypage.HelpDetailActivity" />
         <activity android:name=".Mypage.TermsOfServiceActivity" />
         <activity android:name=".Mypage.HelpListActivity" />
         <activity android:name=".Post.PayActivity" />

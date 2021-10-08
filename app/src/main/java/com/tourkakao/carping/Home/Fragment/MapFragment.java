@@ -194,26 +194,43 @@ public class MapFragment extends Fragment {
         builder.create().show();
     }
     public void setting_to_my(){
-        getting_my_locate();
-        if(mymarker!=null){
-            mapView.removePOIItem(mymarker);
-        }else{
-            mymarker=new MapPOIItem();
-        }
-        mypoint=MapPoint.mapPointWithGeoCoord(mylat, mylon);
         mapbinding.onlyMyLocate.setOnClickListener(v -> {
-            mapView.setMapCenterPointAndZoomLevel(mypoint, 1, true);
-            mymarker.setItemName("내위치");
-            mymarker.setMapPoint(mypoint);
-            mymarker.setMarkerType(MapPOIItem.MarkerType.BluePin);
-            mapView.addPOIItem(mymarker);
+            getting_locate_permission_state();
+            if(permission_coarse==PackageManager.PERMISSION_DENIED || permission_fine==PackageManager.PERMISSION_DENIED){
+                setting_locate_permission();
+            }else {
+                getting_my_locate();
+                if (mymarker != null) {
+                    mapView.removePOIItem(mymarker);
+                } else {
+                    mymarker = new MapPOIItem();
+                }
+                mypoint = MapPoint.mapPointWithGeoCoord(mylat, mylon);
+                mapView.setMapCenterPointAndZoomLevel(mypoint, 1, true);
+                mymarker.setItemName("내위치");
+                mymarker.setMapPoint(mypoint);
+                mymarker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+                mapView.addPOIItem(mymarker);
+            }
         });
         mapbinding.cardviewMyLocate.setOnClickListener(v -> {
-            mapView.setMapCenterPointAndZoomLevel(mypoint, 1, true);
-            mymarker.setItemName("내위치");
-            mymarker.setMapPoint(mypoint);
-            mymarker.setMarkerType(MapPOIItem.MarkerType.BluePin);
-            mapView.addPOIItem(mymarker);
+            getting_locate_permission_state();
+            if(permission_coarse==PackageManager.PERMISSION_DENIED || permission_fine==PackageManager.PERMISSION_DENIED){
+                setting_locate_permission();
+            }else {
+                getting_my_locate();
+                if (mymarker != null) {
+                    mapView.removePOIItem(mymarker);
+                } else {
+                    mymarker = new MapPOIItem();
+                }
+                mypoint = MapPoint.mapPointWithGeoCoord(mylat, mylon);
+                mapView.setMapCenterPointAndZoomLevel(mypoint, 1, true);
+                mymarker.setItemName("내위치");
+                mymarker.setMapPoint(mypoint);
+                mymarker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+                mapView.addPOIItem(mymarker);
+            }
         });
     }
     public void setting_to_search_place(){

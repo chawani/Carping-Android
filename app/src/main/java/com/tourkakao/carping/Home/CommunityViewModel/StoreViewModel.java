@@ -1,6 +1,7 @@
 package com.tourkakao.carping.Home.CommunityViewModel;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 
 import androidx.lifecycle.MutableLiveData;
@@ -11,6 +12,7 @@ import com.google.gson.reflect.TypeToken;
 import com.tourkakao.carping.Home.StoreDataClass.Product;
 import com.tourkakao.carping.Home.StoreFragmentAdapter.ProductAdapter;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
+import com.tourkakao.carping.store.Activity.StoreDetailActivity;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -31,6 +33,17 @@ public class StoreViewModel extends ViewModel {
     public ProductAdapter setting_product_adapter(){
         products=new ArrayList<>();
         productAdapter=new ProductAdapter(context, products);
+        productAdapter.setOnSelectItemClickListener(new ProductAdapter.OnSelectItemClickListener() {
+            @Override
+            public void OnSelectItemClick(View v, int pos, int pk) {
+                Intent intent=new Intent(context, StoreDetailActivity.class);
+                intent.putExtra("image", products.get(pos).getImage());
+                intent.putExtra("price", products.get(pos).getPrice());
+                intent.putExtra("name", products.get(pos).getName());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        });
         return productAdapter;
     }
     public void get_product(){
