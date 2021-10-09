@@ -14,9 +14,11 @@ import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 
+import java.util.List;
+
 public class GpsTracker extends Service implements LocationListener {
     private final Context mContext;
-    Location location;
+    public Location location;
     double latitude;
     double longitude;
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
@@ -64,6 +66,19 @@ public class GpsTracker extends Service implements LocationListener {
                             }
                         }
                     }
+                }
+                if(location==null){
+                    List<String> providers=locationManager.getProviders(true);
+                    for(String provider:providers){
+                        location=locationManager.getLastKnownLocation(provider);
+                        if(location==null){
+                            continue;
+                        }
+                    }
+                }
+                if(location==null){
+                    latitude=126.734086;
+                    longitude=127.269311;
                 }
             }
         }

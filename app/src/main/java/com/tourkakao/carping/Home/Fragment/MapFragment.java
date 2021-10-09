@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -42,6 +43,7 @@ public class MapFragment extends Fragment {
     double mylat, mylon;
     double nowlat, nowlon;
     GpsTracker gpsTracker;
+    LocationManager locationManager;
     MapPoint nowpoint=null;
     MapPOIItem nowmarker=null;
     MapPoint mypoint=null;
@@ -54,6 +56,7 @@ public class MapFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mapbinding=MapFragmentBinding.inflate(inflater, container, false);
         context=getContext();
+        locationManager=(LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
 
         nowlat=37.5642135;
         nowlon=127.0016985;
@@ -101,6 +104,7 @@ public class MapFragment extends Fragment {
     public void setting_btn(){
         mapbinding.bathroom.setOnClickListener(v -> {
             getting_locate_permission_state();
+
             if(permission_coarse==PackageManager.PERMISSION_DENIED || permission_fine==PackageManager.PERMISSION_DENIED){
                 setting_locate_permission();
             }else{
@@ -114,7 +118,18 @@ public class MapFragment extends Fragment {
         });
         mapbinding.conv.setOnClickListener(v -> {
             getting_locate_permission_state();
-            if(permission_coarse==PackageManager.PERMISSION_DENIED || permission_fine==PackageManager.PERMISSION_DENIED){
+            if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                AlertDialog.Builder builder=new AlertDialog.Builder(context);
+                builder.setTitle("위치 서비스 사용")
+                        .setMessage("서비스 사용을 위해서는 핸드폰 위치 서비스를 활성화해야 합니다. 설정으로 이동하겠습니다.")
+                        .setCancelable(false)
+                        .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                context.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                            }
+                        }).create().show();
+            }else if(permission_coarse==PackageManager.PERMISSION_DENIED || permission_fine==PackageManager.PERMISSION_DENIED){
                 setting_locate_permission();
             }else {
                 getting_my_locate();
@@ -127,7 +142,19 @@ public class MapFragment extends Fragment {
         });
         mapbinding.parking.setOnClickListener(v -> {
             getting_locate_permission_state();
-            if(permission_fine== PackageManager.PERMISSION_DENIED||permission_coarse==PackageManager.PERMISSION_DENIED){
+            if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                AlertDialog.Builder builder=new AlertDialog.Builder(context);
+                builder.setTitle("위치 서비스 사용")
+                        .setMessage("서비스 사용을 위해서는 핸드폰 위치 서비스를 활성화해야 합니다. 설정으로 이동하겠습니다.")
+                        .setCancelable(false)
+                        .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                context.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                            }
+                        }).create().show();
+            }
+            else if(permission_fine== PackageManager.PERMISSION_DENIED||permission_coarse==PackageManager.PERMISSION_DENIED){
                 setting_locate_permission();
             }else {
                 getting_my_locate();
@@ -140,7 +167,19 @@ public class MapFragment extends Fragment {
         });
         mapbinding.carping.setOnClickListener(v -> {
             getting_locate_permission_state();
-            if(permission_fine== PackageManager.PERMISSION_DENIED||permission_coarse==PackageManager.PERMISSION_DENIED){
+            if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                AlertDialog.Builder builder=new AlertDialog.Builder(context);
+                builder.setTitle("위치 서비스 사용")
+                        .setMessage("서비스 사용을 위해서는 핸드폰 위치 서비스를 활성화해야 합니다. 설정으로 이동하겠습니다.")
+                        .setCancelable(false)
+                        .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                context.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                            }
+                        }).create().show();
+            }
+            else if(permission_fine== PackageManager.PERMISSION_DENIED||permission_coarse==PackageManager.PERMISSION_DENIED){
                 setting_locate_permission();
             }else {
                 getting_my_locate();
@@ -153,7 +192,19 @@ public class MapFragment extends Fragment {
         });
         mapbinding.searchText.setOnClickListener(v -> {
             getting_locate_permission_state();
-            if(permission_fine== PackageManager.PERMISSION_DENIED||permission_coarse==PackageManager.PERMISSION_DENIED){
+            if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                AlertDialog.Builder builder=new AlertDialog.Builder(context);
+                builder.setTitle("위치 서비스 사용")
+                        .setMessage("서비스 사용을 위해서는 핸드폰 위치 서비스를 활성화해야 합니다. 설정으로 이동하겠습니다.")
+                        .setCancelable(false)
+                        .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                context.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                            }
+                        }).create().show();
+            }
+            else if(permission_fine== PackageManager.PERMISSION_DENIED||permission_coarse==PackageManager.PERMISSION_DENIED){
                 setting_locate_permission();
             }else {
                 getting_my_locate();
@@ -196,7 +247,19 @@ public class MapFragment extends Fragment {
     public void setting_to_my(){
         mapbinding.onlyMyLocate.setOnClickListener(v -> {
             getting_locate_permission_state();
-            if(permission_coarse==PackageManager.PERMISSION_DENIED || permission_fine==PackageManager.PERMISSION_DENIED){
+            if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                AlertDialog.Builder builder=new AlertDialog.Builder(context);
+                builder.setTitle("위치 서비스 사용")
+                        .setMessage("서비스 사용을 위해서는 핸드폰 위치 서비스를 활성화해야 합니다. 설정으로 이동하겠습니다.")
+                        .setCancelable(false)
+                        .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                context.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                            }
+                        }).create().show();
+            }
+            else if(permission_coarse==PackageManager.PERMISSION_DENIED || permission_fine==PackageManager.PERMISSION_DENIED){
                 setting_locate_permission();
             }else {
                 getting_my_locate();
@@ -215,7 +278,19 @@ public class MapFragment extends Fragment {
         });
         mapbinding.cardviewMyLocate.setOnClickListener(v -> {
             getting_locate_permission_state();
-            if(permission_coarse==PackageManager.PERMISSION_DENIED || permission_fine==PackageManager.PERMISSION_DENIED){
+            if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                AlertDialog.Builder builder=new AlertDialog.Builder(context);
+                builder.setTitle("위치 서비스 사용")
+                        .setMessage("서비스 사용을 위해서는 핸드폰 위치 서비스를 활성화해야 합니다. 설정으로 이동하겠습니다.")
+                        .setCancelable(false)
+                        .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                context.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                            }
+                        }).create().show();
+            }
+            else if(permission_coarse==PackageManager.PERMISSION_DENIED || permission_fine==PackageManager.PERMISSION_DENIED){
                 setting_locate_permission();
             }else {
                 getting_my_locate();

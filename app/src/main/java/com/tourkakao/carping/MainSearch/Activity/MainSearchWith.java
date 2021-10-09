@@ -13,8 +13,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -58,7 +60,7 @@ public class MainSearchWith extends AppCompatActivity {
         mainSearchViewModel=new ViewModelProvider(this).get(MainSearchViewModel.class);
         mainSearchViewModel.setContext(context);
 
-        checking_locate_permission();
+        checking_user_locate_setting();
         getting_mylocate();
         starting_observe_popular();
         setting_back_btn();
@@ -70,6 +72,24 @@ public class MainSearchWith extends AppCompatActivity {
         searchWithBinding.back.setOnClickListener(v -> {
             finish();
         });
+    }
+    public void checking_user_locate_setting(){
+        LocationManager locationManager=(LocationManager)context.getSystemService(LOCATION_SERVICE);
+        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            AlertDialog.Builder builder=new AlertDialog.Builder(context);
+            builder.setTitle("위치 서비스 사용")
+                    .setMessage("서비스 사용을 위해서는 핸드폰 위치 서비스를 활성화해야 합니다. 설정으로 이동하겠습니다.")
+                    .setCancelable(false)
+                    .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            context.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                            finish();
+                        }
+                    }).create().show();
+        }else{
+            checking_locate_permission();
+        }
     }
     public void checking_locate_permission(){
         location_setting=new Location_setting(context, MainSearchWith.this);
@@ -130,6 +150,7 @@ public class MainSearchWith extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                getting_mylocate();
                 keyword=s.toString();
                 if(keyword.length()==0){
                     searchWithBinding.mainSearchRecyclerview.setVisibility(View.GONE);

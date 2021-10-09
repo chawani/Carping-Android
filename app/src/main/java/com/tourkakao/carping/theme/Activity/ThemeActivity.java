@@ -9,9 +9,12 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -52,7 +55,7 @@ public class ThemeActivity extends AppCompatActivity {
         setContentView(themeBinding.getRoot());
         context=this;
 
-        checking_locate_permission();
+        checking_user_locate_setting();
         themeViewModel=new ViewModelProvider(this).get(ThemeViewModel.class);
         themeViewModel.setContext(context);
 
@@ -63,8 +66,25 @@ public class ThemeActivity extends AppCompatActivity {
         setting_tab();
         setting_sliding_up();
         setting_back_button();
-        getting_user_place();
         setting_recycleview();
+    }
+    public void checking_user_locate_setting(){
+        LocationManager locationManager=(LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            AlertDialog.Builder builder=new AlertDialog.Builder(context);
+            builder.setTitle("위치 서비스 사용")
+                    .setMessage("서비스 사용을 위해서는 핸드폰 위치 서비스를 활성화해야 합니다. 설정으로 이동하겠습니다.")
+                    .setCancelable(false)
+                    .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            context.startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                            finish();
+                        }
+                    }).create().show();
+        }else{
+            checking_locate_permission();
+        }
     }
     public void checking_locate_permission(){
         location_setting=new Location_setting(context, ThemeActivity.this);
@@ -73,6 +93,8 @@ public class ThemeActivity extends AppCompatActivity {
             int permission_coarse=context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION);
             if(permission_fine== PackageManager.PERMISSION_DENIED || permission_coarse==PackageManager.PERMISSION_DENIED){
                 location_setting.check_locate_permission();
+            }else{
+                getting_user_place();
             }
         }
     }
@@ -218,6 +240,7 @@ public class ThemeActivity extends AppCompatActivity {
     }
     public void setting_sliding_up(){
         themeBinding.firstSelect.setOnClickListener(v -> {
+            getting_user_place();
             first_or_second_select=0;
             switch(select_position){
                 case 3:
@@ -251,6 +274,7 @@ public class ThemeActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                getting_user_place();
                 String select_str=parent.getItemAtPosition(position).toString();
                 themeBinding.slidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
                 if(first_or_second_select==1){
@@ -278,6 +302,9 @@ public class ThemeActivity extends AppCompatActivity {
     }
     public void getting_user_place(){
         GpsTracker gpsTracker=new GpsTracker(context);
+        if(gpsTracker.location==null) {
+            Toast.makeText(context, "GPS 파악이 어려워 서울특별시 중심으로 거리가 측정됩니다. ", Toast.LENGTH_SHORT).show();
+        }
         lat=gpsTracker.getLatitude();
         lon=gpsTracker.getLongitude();
         gpsTracker.stopUsingGPS();

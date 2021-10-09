@@ -201,6 +201,9 @@ public class MapSearchActivity extends AppCompatActivity {
         String total=gson.toJson(data);
         Type type=new TypeToken<ArrayList<MapSearch.Place>>(){}.getType();
         list=gson.fromJson(total, type);
+        for(int i=0; i<list.size(); i++){
+            System.out.println(list.get(i).getPlace_name()+" "+list.get(i).getDistance()+" "+"test");
+        }
         if(list.size()!=0) {
             Collections.sort(list);
             setting_search_recyclerview(list);

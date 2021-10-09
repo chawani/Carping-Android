@@ -226,6 +226,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onChanged(Integer integer) {
                 if(integer==1){
+                    SharedPreferenceManager.getInstance(getApplicationContext()).setInt("newcarping", 1);
                     Dialog dialog=new Dialog(context);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setCancelable(false);
@@ -271,7 +272,7 @@ public class RegisterActivity extends AppCompatActivity {
                 marker.setCustomImageResourceId(R.drawable.mycarping_marker);
                 marker.setCustomImageAutoscale(false);
                 mapView.addPOIItem(marker);
-                send_locate_ok=true;
+
             }
         });
     }
@@ -343,9 +344,14 @@ public class RegisterActivity extends AppCompatActivity {
                 registerBinding.afterSearchLayout.setVisibility(View.VISIBLE);
                 registerBinding.locateTextview.setVisibility(View.GONE);
                 registerBinding.mapView.setVisibility(View.VISIBLE);
-                registerBinding.searchText.setText(data.getStringExtra("place"));
+                String return_place=data.getStringExtra("place");
+                if(return_place.length()>=15){
+                    return_place=return_place.substring(0, 16)+"..";
+                }
+                registerBinding.searchText.setText(return_place);
                 registerViewmodel.n_latitude.setValue(Float.parseFloat(data.getStringExtra("lat")));
                 registerViewmodel.n_longitude.setValue(Float.parseFloat(data.getStringExtra("lon")));
+                send_locate_ok=true;
             }else if(requestCode==1004){
                 String tag=data.getStringExtra("tag");
                 registerViewmodel.n_tags.add(tag);
@@ -356,6 +362,17 @@ public class RegisterActivity extends AppCompatActivity {
                 newtag.setTextColor(Color.parseColor("#5f51ef"));
                 newtag.setPadding(60, 30, 60, 30);
                 registerBinding.tagLayout.addView(newtag);
+            }
+        }else if(resultCode==RESULT_CANCELED && send_locate_ok){
+            if(requestCode==1003){
+                registerBinding.beforeSearchLayout.setVisibility(View.GONE);
+                registerBinding.afterSearchLayout.setVisibility(View.VISIBLE);
+                registerBinding.locateTextview.setVisibility(View.GONE);
+                registerBinding.mapView.setVisibility(View.VISIBLE);
+                float tmp_lat=registerViewmodel.n_latitude.getValue();
+                float tmp_lon=registerViewmodel.n_longitude.getValue();
+                registerViewmodel.n_latitude.setValue(tmp_lat);
+                registerViewmodel.n_longitude.setValue(tmp_lon);
             }
         }
     }

@@ -23,6 +23,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.tourkakao.carping.Gallerypermission.Gallery_setting;
 import com.tourkakao.carping.R;
+import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 import com.tourkakao.carping.databinding.ActivityFixNewcarpingBinding;
 import com.tourkakao.carping.databinding.EachImageBinding;
 import com.tourkakao.carping.newcarping.viewmodel.FixNewCarpingViewModel;
@@ -251,6 +252,7 @@ public class Fix_newcarpingActivity extends AppCompatActivity {
             @Override
             public void onChanged(Integer integer) {
                 if(integer==1){
+                    SharedPreferenceManager.getInstance(getApplicationContext()).setInt("newcarping", 1);
                     fixNewcarpingBinding.mapView.removeView(mapView);
                     mapView=null;
                     Toast.makeText(context, "수정되었어요!", Toast.LENGTH_SHORT).show();
