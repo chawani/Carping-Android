@@ -34,6 +34,15 @@ public class PostInfoDetail implements Serializable {
     private String kakao_openchat_url;
     private boolean is_approved;
     int author_id;
+    private ArrayList<PostListItem> recommend_psots;
+
+    public ArrayList<PostListItem> getRecommend_psots() {
+        return recommend_psots;
+    }
+
+    public void setRecommend_psots(ArrayList<PostListItem> recommend_psots) {
+        this.recommend_psots = recommend_psots;
+    }
 
     public int getAuthor_id() {
         return author_id;

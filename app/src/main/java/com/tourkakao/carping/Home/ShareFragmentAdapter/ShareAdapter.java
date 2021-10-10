@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.tourkakao.carping.Home.ShareDataClass.Share;
 import com.tourkakao.carping.R;
@@ -50,7 +51,9 @@ public class ShareAdapter extends RecyclerView.Adapter {
             });
         }
         public void setItem(Share share){
-            Glide.with(context).load(share.getImage()).transform(new RoundedCorners(50)).into(binding.image);
+            Glide.with(context).load(share.getImage())
+                    .transform(new CenterCrop(), new RoundedCorners(50))
+                    .into(binding.image);
             Glide.with(context).load(R.drawable.heart).into(binding.heart);
             if(share.getName().length()<=16) {
                 binding.name.setText(share.getName());

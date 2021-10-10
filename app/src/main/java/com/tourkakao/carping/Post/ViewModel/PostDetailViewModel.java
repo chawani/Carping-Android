@@ -47,6 +47,7 @@ public class PostDetailViewModel extends ViewModel {
 
     public void setInfoData(List data){
         String total=gson.toJson(data.get(0));
+        System.out.println(total);
         PostInfoDetail item =gson.fromJson(total,PostInfoDetail.class);
         postInfo.setValue(item);
         likeStatus.setValue(item.getIs_liked());

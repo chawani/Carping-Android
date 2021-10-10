@@ -57,18 +57,6 @@ public class LikeCarpingFragment extends Fragment {
         binding.mypageEmptyText.setText("스크랩한 차박지가 없습니다.");
     }
     void initDatas(){
-        viewModel.getPostSize().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                if(integer==0){
-                    binding.mypageEmptyText.setVisibility(View.VISIBLE);
-                    binding.mypageRecycler.setVisibility(View.GONE);
-                    binding.mypageRecycler2.setVisibility(View.GONE);
-                }else{
-                    binding.mypageEmptyText.setVisibility(View.GONE);
-                }
-            }
-        });
         viewModel.getAutocampsLiveData().observe(this, new Observer<ArrayList<MyCarpingPost>>() {
             @Override
             public void onChanged(ArrayList<MyCarpingPost> autocamps) {
