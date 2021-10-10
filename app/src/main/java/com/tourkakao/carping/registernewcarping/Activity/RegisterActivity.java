@@ -420,18 +420,33 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        System.out.println("newcarping onstop");
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         if(page_to_search) {
             registerBinding.mapView.removeView(mapView);
             mapView = null;
         }
+        System.out.println("newcarping onpause");
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.out.println("newcarping ondestroy");
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
+        System.out.println("newcarping onresume");
+        System.out.println(image_count);
+
     }
 
     @Override

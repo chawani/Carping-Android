@@ -2,6 +2,7 @@ package com.tourkakao.carping.theme.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -48,6 +49,7 @@ public class ThemeActivity extends AppCompatActivity {
     String[] other=new String[]{"일반야영장", "글램핑", "카라반"};
     ListView listView;
     Location_setting location_setting;
+    GpsTracker gpsTracker=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,6 +156,7 @@ public class ThemeActivity extends AppCompatActivity {
         themeBinding.themeTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                getting_user_place();
                 int position=tab.getPosition();
                 switch(position){
                     case 0:
@@ -301,10 +304,24 @@ public class ThemeActivity extends AppCompatActivity {
         });
     }
     public void getting_user_place(){
-        GpsTracker gpsTracker=new GpsTracker(context);
+        if(gpsTracker==null) {
+            gpsTracker = new GpsTracker(context);
+            starting_observe_gps();
+        }
         lat=gpsTracker.getLatitude();
         lon=gpsTracker.getLongitude();
         gpsTracker.stopUsingGPS();
+
+    }
+    public void starting_observe_gps(){
+        gpsTracker.can_get_gps.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if(integer==1){
+                    themeViewModel.get_each_thema_carpingplace(theme, sort, select, gpsTracker.getLatitude(), gpsTracker.getLongitude());
+                }
+            }
+        });
     }
     public void setting_recycleview(){
         themeBinding.themeRecyclerview.setLayoutManager(new LinearLayoutManager(context));
