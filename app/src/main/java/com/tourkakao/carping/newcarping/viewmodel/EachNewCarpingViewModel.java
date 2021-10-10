@@ -1,7 +1,9 @@
 package com.tourkakao.carping.newcarping.viewmodel;
 
+import android.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -109,7 +111,22 @@ public class EachNewCarpingViewModel extends ViewModel {
         newcarping_review_adapter.setOnSelectItemClickListener(new Newcarping_Review_Adapter.OnSelectItemClickListener() {
             @Override
             public void OnSelectItemClick(View v, int pos, int pk) {
-                deleting_review(pk, pos);
+                AlertDialog.Builder builder=new AlertDialog.Builder(context);
+                builder.setTitle("리뷰 삭제 알림")
+                        .setMessage("리뷰를 삭제할까요?")
+                        .setCancelable(false)
+                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                deleting_review(pk, pos);
+                            }
+                        })
+                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).create().show();
             }
         });
         return newcarping_review_adapter;
@@ -133,7 +150,6 @@ public class EachNewCarpingViewModel extends ViewModel {
                                     NewCarping newCarping = new Gson().fromJson(result, type);
 
                                     pk=newCarping.getId();
-                                    System.out.println(pk+"pk----------------");
                                     title.setValue(newCarping.getTitle());
                                     total_star.setValue(newCarping.getTotal_star());
                                     review_cnt_num.setValue(newCarping.getReview_count());

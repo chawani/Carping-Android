@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.tourkakao.carping.Loading.CustomLoadingDialog;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 
 import java.io.File;
@@ -54,6 +55,7 @@ public class FixNewCarpingViewModel extends ViewModel {
         this.context = context;
     }
     public void edit_newcarping(){
+        CustomLoadingDialog.getInstance(context, "수정 중입니다..").show();
         if(f_uri.get(0)!=null) {
             file = new File(getPath(f_uri.get(0)));
             body1 = RequestBody.create(MediaType.parse("image/*"), file);
@@ -117,6 +119,7 @@ public class FixNewCarpingViewModel extends ViewModel {
                             if(result.isSuccess()){
                                 System.out.println("fix success");
                                 newcarping_edit_ok.setValue(1);
+                                CustomLoadingDialog.getInstance(context, null).dismiss();
                             }else{
                                 System.out.println("error "+result.getError_message());
                                 newcarping_edit_ok.setValue(-1);

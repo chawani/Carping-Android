@@ -34,8 +34,8 @@ public class ReviewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         reviewFragmentBinding=NewcarpingReviewFragmentBinding.inflate(inflater, container, false);
-        context=getActivity().getApplicationContext();
-        userpk= SharedPreferenceManager.getInstance(context).getInt("id", 0);
+        context=getContext();
+        userpk= SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).getInt("id", 0);
         reviewFragmentBinding.setLifecycleOwner(this);
         reviewFragmentBinding.setEachnewcarpingviewmodel(eachNewCarpingViewModel);
 

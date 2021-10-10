@@ -62,6 +62,7 @@ public class Register_ShareActivity extends AppCompatActivity {
         registerShareViewmodel.setContext(context);
         registerShareViewmodel.setUserpk(SharedPreferenceManager.getInstance(context).getInt("id", 0));
 
+        setting_images();
         setting_title();
         setting_locate_btn();
         setting_body();
@@ -70,7 +71,15 @@ public class Register_ShareActivity extends AppCompatActivity {
         setting_sending_button();
         setting_initial_tags();
         setting_remove_tags();
+        setting_cancel_btn();
         starting_observe_send_ok();
+    }
+    public void setting_images(){
+        Glide.with(context).load(R.drawable.locate_img).into(shareBinding.locateImg);
+        Glide.with(context).load(R.drawable.photo_insert_button).into(shareBinding.addImage2);
+        shareBinding.noImageLayout.setVisibility(View.VISIBLE);
+        shareBinding.yesImageLayout.setVisibility(View.GONE);
+
     }
     public void setting_title(){
         shareBinding.titleEdittext.addTextChangedListener(new TextWatcher() {
@@ -171,6 +180,23 @@ public class Register_ShareActivity extends AppCompatActivity {
                 Toast.makeText(context, "4장까지 첨부 가능해요", Toast.LENGTH_SHORT).show();
             }
         });
+        shareBinding.addImage2.setOnClickListener(v -> {
+            if (Build.VERSION.SDK_INT >= 23) {
+                int permission_read = context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+                int permission_write = context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                if (permission_read == PackageManager.PERMISSION_DENIED || permission_write == PackageManager.PERMISSION_DENIED) {
+                    gallery_setting.check_gallery_permission();
+                } else {
+                    Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                    galleryintent.setType("image/*");
+                    startActivityForResult(galleryintent, gallery_setting.GALLERY_CODE);
+                }
+            } else {
+                Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                galleryintent.setType("image/*");
+                startActivityForResult(galleryintent, gallery_setting.GALLERY_CODE);
+            }
+        });
     }
     public void changeing_register_button(){
         if(send_image_ok && send_text_ok && send_locate_ok && send_title_ok && send_chat_ok){
@@ -224,11 +250,15 @@ public class Register_ShareActivity extends AppCompatActivity {
             @Override
             public void onChanged(Integer integer) {
                 if(integer==1){
-                    Intent intent=new Intent();
-                    setResult(RESULT_OK, intent);
+                    SharedPreferenceManager.getInstance(getApplicationContext()).setInt("change_isshare", 1);
                     finish();
                 }
             }
+        });
+    }
+    public void setting_cancel_btn(){
+        shareBinding.cancel.setOnClickListener(v -> {
+            finish();
         });
     }
     @Override
@@ -246,6 +276,10 @@ public class Register_ShareActivity extends AppCompatActivity {
                         }
                     }
                     image_count++;
+                    if(image_count==1){
+                        shareBinding.noImageLayout.setVisibility(View.GONE);
+                        shareBinding.yesImageLayout.setVisibility(View.VISIBLE);
+                    }
                     shareBinding.imageCnt.setText(image_count+"/4");
                     EachImageBinding binding=EachImageBinding.inflate(getLayoutInflater());
                     ImageView addimage=binding.addEachImage;
@@ -261,6 +295,8 @@ public class Register_ShareActivity extends AppCompatActivity {
                         shareBinding.imageCnt.setText(image_count+"/4");
                         if(image_count==0){
                             send_image_ok=false;
+                            shareBinding.yesImageLayout.setVisibility(View.GONE);
+                            shareBinding.noImageLayout.setVisibility(View.VISIBLE);
                         }
                         changeing_register_button();
                     });
@@ -284,7 +320,7 @@ public class Register_ShareActivity extends AppCompatActivity {
                 TextView newtag=new TextView(context);
                 newtag.setText("#"+tag);
                 newtag.setBackgroundResource(R.drawable.purple_border_round);
-                newtag.setTextColor(Color.parseColor("#9F81F7"));
+                newtag.setTextColor(Color.parseColor("#5f51ef"));
                 newtag.setPadding(60, 30, 60, 30);
                 shareBinding.tagLayout.addView(newtag);
             }

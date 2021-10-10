@@ -8,7 +8,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ import com.tourkakao.carping.Home.Fragment.ThemeFragment;
 import com.tourkakao.carping.Home.Fragment.ThemeTopFragment;
 import com.tourkakao.carping.Permission.Permission_setting;
 import com.tourkakao.carping.R;
+import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 import com.tourkakao.carping.registernewcarping.Activity.RegisterActivity;
 
 public class MainActivity extends AppCompatActivity{
@@ -35,18 +38,40 @@ public class MainActivity extends AppCompatActivity{
     CommunityFragment communityFragment;
     MypageFragment mypageFragment;
     int choose=0;
+    long pressedTime=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setting_getdata_sharedpreferences();
         initialize_permission();
+        initialize_user_locate_setting();
         initialize_fragment();
         init_bottomnavigationview();
+    }
+    public void setting_getdata_sharedpreferences(){
+        SharedPreferenceManager.getInstance(getApplicationContext()).setInt("newcarping", 1);
+        SharedPreferenceManager.getInstance(getApplicationContext()).setInt("thisweekend", 1);
     }
     public void initialize_permission(){
         permission_setting=new Permission_setting(this, MainActivity.this);
         permission_setting.check_permission();
+    }
+    public void initialize_user_locate_setting(){
+        LocationManager locationManager=(LocationManager)getSystemService(LOCATION_SERVICE);
+        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            AlertDialog.Builder builder=new AlertDialog.Builder(this);
+            builder.setTitle("위치 서비스 사용")
+                    .setMessage("서비스 사용을 위해서는 핸드폰 위치 서비스를 활성화해야 합니다. 설정으로 이동하겠습니다.")
+                    .setCancelable(false)
+                    .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        }
+                    }).create().show();
+        }
     }
     public void initialize_fragment(){
         homeFragment=new HomeFragment();
@@ -119,6 +144,7 @@ public class MainActivity extends AppCompatActivity{
                         getSupportFragmentManager().beginTransaction().hide(mypageFragment).commit();
                         break;
                     case R.id.upload:
+                        choose=2;
                         getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
                         getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
                         getSupportFragmentManager().beginTransaction().hide(communityFragment).commit();
@@ -154,7 +180,15 @@ public class MainActivity extends AppCompatActivity{
     @Override
     public void onBackPressed() {
         if(homeFragment.homebinding.slidingLayout.getPanelState()== SlidingUpPanelLayout.PanelState.COLLAPSED){
-            super.onBackPressed();
+            //super.onBackPressed();
+            if(System.currentTimeMillis()>pressedTime+2000){
+                pressedTime=System.currentTimeMillis();
+                Toast.makeText(this, "한번 더 누르면 종료됩니다", Toast.LENGTH_SHORT).show();
+            }else{
+                moveTaskToBack(true);
+                finish();
+                android.os.Process.killProcess(android.os.Process.myPid());
+            }
         }else if(homeFragment.homebinding.slidingLayout.getPanelState()== SlidingUpPanelLayout.PanelState.EXPANDED){
             homeFragment.homebinding.slidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
         }
@@ -165,6 +199,7 @@ public class MainActivity extends AppCompatActivity{
         super.onResume();
         switch(choose){
             case 0:
+            case 2:
                 getSupportFragmentManager().beginTransaction().show(homeFragment).commit();
                 getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
                 getSupportFragmentManager().beginTransaction().hide(communityFragment).commit();
@@ -195,4 +230,5 @@ public class MainActivity extends AppCompatActivity{
                 break;
         }
     }
+
 }

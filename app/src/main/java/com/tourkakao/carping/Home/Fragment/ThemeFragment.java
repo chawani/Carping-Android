@@ -18,8 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.tourkakao.carping.Home.HomeContract;
 import com.tourkakao.carping.Home.HomeViewModel.ThemeViewModel;
+import com.tourkakao.carping.Location_setting.Location_setting;
 import com.tourkakao.carping.Post.PostTotalActivity;
 import com.tourkakao.carping.R;
+import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 import com.tourkakao.carping.theme.Activity.ThemeActivity;
 import com.tourkakao.carping.thisweekend.Activity.ThisWeekend_totalActivity;
 import com.tourkakao.carping.databinding.MainThemeFragmentBinding;
@@ -243,9 +245,15 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
     @Override
     public void onResume() {
         super.onResume();
-        themeViewModel.getMain_thisweekends();
+        if(SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).getInt("newcarping", 1)==1){
+            themeViewModel.getNewCarpingPlace();
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("newcarping", 0);
+        }
+        if(SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).getInt("thisweekend", 1)==1){
+            themeViewModel.getMain_thisweekends();
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("thisweekend", 0);
+        }
         themeViewModel.getAz();
-        themeViewModel.getNewCarpingPlace();
         themeViewModel.getPopularCarpingPlace(region);
     }
 }

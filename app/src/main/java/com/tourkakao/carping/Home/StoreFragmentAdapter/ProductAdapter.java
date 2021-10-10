@@ -28,12 +28,27 @@ public class ProductAdapter extends RecyclerView.Adapter {
         this.context=context;
         this.products=products;
     }
-
+    public interface OnSelectItemClickListener{
+        void OnSelectItemClick(View v, int pos, int pk);
+    }
+    private OnSelectItemClickListener mListener=null;
+    public void setOnSelectItemClickListener(OnSelectItemClickListener listener){
+        this.mListener=listener;
+    }
     public class Product_ViewHolder extends RecyclerView.ViewHolder{
         private EachProductBinding binding;
         public Product_ViewHolder(EachProductBinding binding){
             super(binding.getRoot());
             this.binding=binding;
+            binding.getRoot().setOnClickListener(v -> {
+                int pos=getAdapterPosition();
+                int pk=products.get(pos).getPk();
+                if(pos!=RecyclerView.NO_POSITION){
+                    if(mListener!=null){
+                        mListener.OnSelectItemClick(v, pos, pk);
+                    }
+                }
+            });
         }
         public void setItem(Product product){
             binding.productName.setText(product.getName());

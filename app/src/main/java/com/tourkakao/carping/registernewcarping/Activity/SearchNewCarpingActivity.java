@@ -65,6 +65,7 @@ public class SearchNewCarpingActivity extends AppCompatActivity {
     private MapPoint mapPoint;
     Point size;
     int screen_width;
+    String place_name=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +85,7 @@ public class SearchNewCarpingActivity extends AppCompatActivity {
         setting_searchview();
         setting_location_recyclerview();
         setting_complete();
+        setting_back_button();
         starting_observe_isduplicate_carping_place();
     }
 
@@ -96,6 +98,7 @@ public class SearchNewCarpingActivity extends AppCompatActivity {
         marker.setItemName("기본");
         marker.setMapPoint(mapPoint);
         marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+        marker.setCustomImageAutoscale(false);
         mapView.addPOIItem(marker);
     }
     public void setting_searchview(){
@@ -188,8 +191,11 @@ public class SearchNewCarpingActivity extends AppCompatActivity {
         mapView.setMapCenterPointAndZoomLevel(mapPoint, 4, true);
         mapView.removePOIItem(marker);
         marker.setItemName(place.getPlace_name());
+        place_name=place.getPlace_name();
         marker.setMapPoint(mapPoint);
-        marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+        marker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+        marker.setCustomImageResourceId(R.drawable.mycarping_marker);
+        marker.setCustomImageAutoscale(false);
         mapView.addPOIItem(marker);
     }
     public void setting_complete(){
@@ -219,7 +225,7 @@ public class SearchNewCarpingActivity extends AppCompatActivity {
                     dialog.show();
                 }else if(integer==0){
                     Intent intent = new Intent();
-                    intent.putExtra("place", search_text);
+                    intent.putExtra("place", place_name);
                     intent.putExtra("lat", Double.toString(mapPoint.getMapPointGeoCoord().latitude));
                     intent.putExtra("lon", Double.toString(mapPoint.getMapPointGeoCoord().longitude));
                     setResult(RESULT_OK, intent);
@@ -228,6 +234,22 @@ public class SearchNewCarpingActivity extends AppCompatActivity {
             }
         });
     }
+    public void setting_back_button(){
+        searchNewCarpingBinding.back.setOnClickListener(v -> {
+            Intent intent=new Intent();
+            setResult(RESULT_CANCELED, intent);
+            finish();
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent=new Intent();
+        setResult(RESULT_CANCELED, intent);
+        finish();
+    }
+
     @Override
     protected void onPause() {
         super.onPause();

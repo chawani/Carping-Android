@@ -65,6 +65,7 @@ public class FixShareActivity extends AppCompatActivity {
         setting_title();
         setting_text();
         setting_getting_image();
+        setting_cancel_btn();
         setting_editing_button();
         starting_observe_edit_ok();
     }
@@ -136,6 +137,10 @@ public class FixShareActivity extends AppCompatActivity {
         }
     }
     public void setting_initial_images(){
+        Glide.with(context).load(R.drawable.locate_img).into(fixShareBinding.locateImg);
+        Glide.with(context).load(R.drawable.picture_btn_img).into(fixShareBinding.addImage2);
+        fixShareBinding.yesImageLayout.setVisibility(View.VISIBLE);
+        fixShareBinding.noImageLayout.setVisibility(View.GONE);
         fixShareBinding.imageCnt.setText(image_count+"/4");
         for(int i=0; i<fixViewModel.f_images.size(); i++){
             if(fixViewModel.f_images.get(i)==null){
@@ -154,6 +159,8 @@ public class FixShareActivity extends AppCompatActivity {
                 image_count--;
                 fixShareBinding.imageCnt.setText(image_count+"/4");
                 if(image_count==0){
+                    fixShareBinding.yesImageLayout.setVisibility(View.GONE);
+                    fixShareBinding.noImageLayout.setVisibility(View.VISIBLE);
                     send_image_ok=false;
                 }
                 changeing_register_button();
@@ -208,10 +215,10 @@ public class FixShareActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) { }
         });
     }
-    public void setting_getting_image(){
+    public void setting_getting_image() {
         fixShareBinding.addImage.setOnClickListener(v -> {
-            if(image_count<4){
-                if(Build.VERSION.SDK_INT>=23){
+            if (image_count < 4) {
+                if (Build.VERSION.SDK_INT >= 23) {
                     int permission_read = context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
                     int permission_write = context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
                     if (permission_read == PackageManager.PERMISSION_DENIED || permission_write == PackageManager.PERMISSION_DENIED) {
@@ -221,14 +228,36 @@ public class FixShareActivity extends AppCompatActivity {
                         galleryintent.setType("image/*");
                         startActivityForResult(galleryintent, gallery_setting.GALLERY_CODE);
                     }
-                }else{
+                } else {
                     Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
                     galleryintent.setType("image/*");
                     startActivityForResult(galleryintent, gallery_setting.GALLERY_CODE);
                 }
-            }else{
+            } else {
                 Toast.makeText(context, "4장까지 첨부 가능해요", Toast.LENGTH_SHORT).show();
             }
+        });
+        fixShareBinding.addImage2.setOnClickListener(v -> {
+            if (Build.VERSION.SDK_INT >= 23) {
+                int permission_read = context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+                int permission_write = context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                if (permission_read == PackageManager.PERMISSION_DENIED || permission_write == PackageManager.PERMISSION_DENIED) {
+                    gallery_setting.check_gallery_permission();
+                } else {
+                    Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                    galleryintent.setType("image/*");
+                    startActivityForResult(galleryintent, gallery_setting.GALLERY_CODE);
+                }
+            } else {
+                Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                galleryintent.setType("image/*");
+                startActivityForResult(galleryintent, gallery_setting.GALLERY_CODE);
+            }
+        });
+    }
+    public void setting_cancel_btn(){
+        fixShareBinding.cancel.setOnClickListener(v -> {
+            finish();
         });
     }
     public void setting_editing_button(){
@@ -269,7 +298,7 @@ public class FixShareActivity extends AppCompatActivity {
                 TextView newtag = new TextView(context);
                 newtag.setText("#" + tag);
                 newtag.setBackgroundResource(R.drawable.purple_border_round);
-                newtag.setTextColor(Color.parseColor("#9F81F7"));
+                newtag.setTextColor(Color.parseColor("#5f51ef"));
                 newtag.setPadding(60, 30, 60, 30);
                 fixShareBinding.tagLayout.addView(newtag);
             }else if(requestCode==gallery_setting.GALLERY_CODE){
@@ -283,6 +312,8 @@ public class FixShareActivity extends AppCompatActivity {
                             break;
                         }
                     }
+                    fixShareBinding.noImageLayout.setVisibility(View.GONE);
+                    fixShareBinding.yesImageLayout.setVisibility(View.VISIBLE);
                     image_count++;
                     fixShareBinding.imageCnt.setText(image_count+"/4");
                     EachImageBinding binding=EachImageBinding.inflate(getLayoutInflater());
@@ -299,6 +330,8 @@ public class FixShareActivity extends AppCompatActivity {
                         image_count--;
                         fixShareBinding.imageCnt.setText(image_count+"/4");
                         if(image_count==0){
+                            fixShareBinding.noImageLayout.setVisibility(View.VISIBLE);
+                            fixShareBinding.yesImageLayout.setVisibility(View.GONE);
                             send_image_ok=false;
                         }
                         changeing_register_button();

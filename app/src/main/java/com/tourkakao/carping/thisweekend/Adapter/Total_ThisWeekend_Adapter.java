@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.tourkakao.carping.Home.ThemeDataClass.Thisweekend;
+import com.tourkakao.carping.R;
 import com.tourkakao.carping.databinding.EachTotalThisweekendBinding;
 
 import java.util.ArrayList;
+
 
 public class Total_ThisWeekend_Adapter extends RecyclerView.Adapter {
     Context context;
@@ -54,6 +56,7 @@ public class Total_ThisWeekend_Adapter extends RecyclerView.Adapter {
             for(int i=0; i<post.getTags().size(); i++){
                 tags+="#"+post.getTags().get(i)+" ";
             }
+            Glide.with(context).load(R.drawable.group).into(binding.peopleImg);
             binding.thisweekendTags.setText(tags);
             binding.thisweekendPeople.setText(Integer.toString(post.getViews()));
         }

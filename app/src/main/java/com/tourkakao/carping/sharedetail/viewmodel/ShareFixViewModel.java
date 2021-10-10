@@ -13,6 +13,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.gson.Gson;
+import com.tourkakao.carping.Loading.CustomLoadingDialog;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.sharedetail.DataClass.ShareDetail;
 
@@ -102,6 +103,7 @@ public class ShareFixViewModel extends ViewModel {
                 );
     }
     public void edit_share(boolean locate){
+        CustomLoadingDialog.getInstance(context, "수정중입니다..").show();
         if(f_uri.get(0)!=null) {
             file = new File(getPath(f_uri.get(0)));
             body1 = RequestBody.create(MediaType.parse("multipart/form-data"), file);
@@ -170,6 +172,7 @@ public class ShareFixViewModel extends ViewModel {
                         res -> {
                             if(res.isSuccess()){
                                 share_edit_ok.setValue(1);
+                                CustomLoadingDialog.getInstance(context, null).dismiss();
                             }else{
                                 share_edit_ok.setValue(-1);
                             }

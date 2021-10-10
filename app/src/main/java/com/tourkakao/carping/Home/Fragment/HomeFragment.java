@@ -22,6 +22,7 @@ import com.tourkakao.carping.Home.SearchAdapter.SearchAdapter;
 import com.tourkakao.carping.Home.SearchViewModel.SearchViewModel;
 import com.tourkakao.carping.MainSearch.Activity.MainSearchWith;
 import com.tourkakao.carping.R;
+import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 import com.tourkakao.carping.databinding.HomeFragmentBinding;
 
 import java.util.ArrayList;
@@ -82,6 +83,8 @@ public class HomeFragment extends Fragment {
                 Fragment top_selected=null;
                 Fragment selected = null;
                 if(position == 0) {
+                    SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("newcarping", 1);
+                    SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("thisweekend", 1);
                     top_selected = theme_top_fragment;
                     selected = theme_fragment;
                     can_see_popular=1;

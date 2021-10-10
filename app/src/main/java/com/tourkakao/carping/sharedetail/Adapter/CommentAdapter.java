@@ -1,6 +1,8 @@
 package com.tourkakao.carping.sharedetail.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +41,7 @@ public class CommentAdapter extends RecyclerView.Adapter {
         }
         public void setItem(Comment comment, int pos){
             binding.content.setText(comment.getText());
-            binding.level.setText("LV."+comment.getLevel());
+            binding.level.setText("LV."+(int)Float.parseFloat(comment.getLevel()));
             binding.name.setText(comment.getUsername());
             Glide.with(context).load(comment.getBadge()).transform(new RoundedCorners(100)).into(binding.badge);
             Glide.with(context).load(comment.getProfile()).transform(new RoundedCorners(100)).into(binding.image);
@@ -47,22 +49,38 @@ public class CommentAdapter extends RecyclerView.Adapter {
             if(comment.getUser()==userpk){
                 binding.privateDeleteButton.setVisibility(View.VISIBLE);
                 binding.privateDeleteButton.setOnClickListener(v -> {
-                    TotalApiClient.getCommunityApiService(context).delete_share_comment(comment.getId())
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                    res -> {
-                                        if(res.isSuccess()){
-                                            comments.remove(pos);
-                                            updateItem(comments);
-                                        }else{
-                                            System.out.println(res.getError_message());
-                                        }
-                                    },
-                                    error -> {
-                                        System.out.println(error+"error");
-                                    }
-                            );
+                    AlertDialog.Builder builder=new AlertDialog.Builder(context);
+                    builder.setTitle("댓글 삭제")
+                            .setMessage("댓글을 삭제할까요?")
+                            .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    TotalApiClient.getCommunityApiService(context).delete_share_comment(comment.getId())
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(
+                                                    res -> {
+                                                        if(res.isSuccess()){
+                                                            comments.remove(pos);
+                                                            updateItem(comments);
+                                                        }else{
+                                                            System.out.println(res.getError_message());
+                                                        }
+                                                    },
+                                                    error -> {
+                                                        System.out.println(error+"error");
+                                                    }
+                                            );
+                                }
+                            })
+                            .setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            }).create().show();
+
                 });
             }else{
                 binding.privateDeleteButton.setVisibility(View.GONE);

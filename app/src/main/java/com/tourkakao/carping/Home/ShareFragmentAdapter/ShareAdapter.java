@@ -50,13 +50,17 @@ public class ShareAdapter extends RecyclerView.Adapter {
             });
         }
         public void setItem(Share share){
-            Glide.with(context).load(share.getImage()).transform(new RoundedCorners(20)).into(binding.image);
+            Glide.with(context).load(share.getImage()).transform(new RoundedCorners(50)).into(binding.image);
             Glide.with(context).load(R.drawable.heart).into(binding.heart);
-            binding.name.setText(share.getName());
+            if(share.getName().length()<=16) {
+                binding.name.setText(share.getName());
+            }else{
+                binding.name.setText(share.getName().substring(0, 17)+"..");
+            }
             if(share.getBody().length()<=20) {
                 binding.body.setText(share.getBody());
             }else{
-                binding.body.setText(share.getBody()+"..");
+                binding.body.setText(share.getBody().substring(0, 21)+"..");
             }
             if(share.isIs_shared()==true){
                 binding.shareComplete.setVisibility(View.VISIBLE);

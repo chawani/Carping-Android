@@ -68,6 +68,7 @@ public class Write_newcarping_reviewActivity extends AppCompatActivity {
         setting_review_edittext();
         setting_getting_review_image();
         setting_sending_button();
+        setting_cancel_button();
         starting_observe_send_review_ok();
     }
 
@@ -87,7 +88,7 @@ public class Write_newcarping_reviewActivity extends AppCompatActivity {
                 if(send_image_ok && send_text_ok){
                     reviewBinding.reviewBtn.setBackgroundColor(Color.BLACK);
                 }else{
-                    reviewBinding.reviewBtn.setBackgroundColor(Color.parseColor("#A4A4A4"));
+                    reviewBinding.reviewBtn.setBackgroundColor(Color.parseColor("#999999"));
                 }
             }
             @Override
@@ -179,7 +180,7 @@ public class Write_newcarping_reviewActivity extends AppCompatActivity {
                             reviewBinding.pictureBtn.setVisibility(View.VISIBLE);
                             reviewBinding.selectPictureLayout.setVisibility(View.GONE);
                             send_image_ok=false;
-                            reviewBinding.reviewBtn.setBackgroundColor(Color.parseColor("#A4A4A4"));
+                            reviewBinding.reviewBtn.setBackgroundColor(Color.parseColor("#999999"));
                         }
                     })
                     .setNegativeButton("아니요", new DialogInterface.OnClickListener() {
@@ -215,7 +216,11 @@ public class Write_newcarping_reviewActivity extends AppCompatActivity {
             }
         });
     }
-
+    public void setting_cancel_button(){
+        reviewBinding.cancel.setOnClickListener(v -> {
+            finish();
+        });
+    }
     public void starting_observe_send_review_ok(){
         eachNewCarpingViewModel.review_send_ok.observe(this, new Observer<Integer>() {
             @Override
@@ -275,7 +280,7 @@ public class Write_newcarping_reviewActivity extends AppCompatActivity {
                     if(send_image_ok && send_text_ok) {
                         reviewBinding.reviewBtn.setBackgroundColor(Color.BLACK);
                     }else{
-                        reviewBinding.reviewBtn.setBackgroundColor(Color.parseColor("#A4A4A4"));
+                        reviewBinding.reviewBtn.setBackgroundColor(Color.parseColor("#999999"));
                     }
                     /*if(Build.VERSION.SDK_INT<28){
                         try {

@@ -2,6 +2,7 @@ package com.tourkakao.carping.sharedetail.Activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -24,9 +25,6 @@ public class ShareTotalActivity extends AppCompatActivity {
     String[] items={"최신순", "인기순"};
     int share_new=0;
     int spinner_pos=0;
-    boolean make_new_share=false;
-    boolean isshare=false;
-    boolean isdelete=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +38,7 @@ public class ShareTotalActivity extends AppCompatActivity {
         setting_share();
         setting_spinner();
         setting_share_btn();
+        setting_back_btn();
     }
     public void setting_share(){
         shareTotalBinding.shareRecyclerview.setLayoutManager(new LinearLayoutManager(context));
@@ -79,7 +78,6 @@ public class ShareTotalActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode==RESULT_OK){
             if(requestCode==1001){
-                make_new_share=true;
                 if(spinner_pos==0){
                     shareDetailViewModel.get_total_share("recent", 0);
                 }else{
@@ -91,20 +89,12 @@ public class ShareTotalActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent=new Intent();
-        if(make_new_share){
-            intent.putExtra("new", 1);
-        }else{
-            intent.putExtra("new", 0);
-        }
-        if(isshare){
-            SharedPreferenceManager.getInstance(context).setInt("change_isshare", 1);
-        }
-        if(isdelete){
-            SharedPreferenceManager.getInstance(context).setInt("share_delete", 1);
-        }
-        setResult(RESULT_OK, intent);
         finish();
+    }
+    public void setting_back_btn(){
+        shareTotalBinding.back.setOnClickListener(v -> {
+            finish();
+        });
     }
 
     @Override
@@ -116,17 +106,6 @@ public class ShareTotalActivity extends AppCompatActivity {
             }else{
                 shareDetailViewModel.get_total_share("popular", 0);
             }
-            isshare=true;
-            SharedPreferenceManager.getInstance(context).setInt("change_isshare", 0);
-        }
-        if(SharedPreferenceManager.getInstance(context).getInt("share_delete", 0)==1){
-            if(spinner_pos==0){
-                shareDetailViewModel.get_total_share("recent", 0);
-            }else{
-                shareDetailViewModel.get_total_share("popular", 0);
-            }
-            isdelete=true;
-            SharedPreferenceManager.getInstance(context).setInt("share_delete", 0);
         }
     }
 }

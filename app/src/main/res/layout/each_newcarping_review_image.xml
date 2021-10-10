@@ -6,8 +6,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="86dp"
         android:layout_height="86dp"
-        app:cardCornerRadius="10dp"
-        android:layout_marginRight="5dp">
+        app:cardCornerRadius="5dp"
+        android:layout_marginRight="7dp">
         <ImageView
             android:id="@+id/newcarping_review_img"
             android:layout_width="match_parent"

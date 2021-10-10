@@ -31,6 +31,7 @@ public class ThisWeekend_totalActivity extends AppCompatActivity {
 
         setting_total_thisweekend_posts();
         starting_observe_total_thisweekend();
+        setting_back_button();
     }
 
     public void setting_total_thisweekend_posts(){
@@ -52,6 +53,11 @@ public class ThisWeekend_totalActivity extends AppCompatActivity {
                     thisWeekendTotalBinding.thisWeekendRecyclerview.setVisibility(View.VISIBLE);
                 }
             }
+        });
+    }
+    public void setting_back_button(){
+        thisWeekendTotalBinding.back.setOnClickListener(v -> {
+            finish();
         });
     }
 }

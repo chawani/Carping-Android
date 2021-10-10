@@ -155,7 +155,9 @@ public class ThemeInfoFragment extends Fragment {
                 MapPOIItem marker=new MapPOIItem();
                 marker.setItemName(name);
                 marker.setMapPoint(mapPoint);
-                marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+                marker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+                marker.setCustomImageResourceId(R.drawable.nowmarker);
+                marker.setCustomImageAutoscale(false);
                 mapView.addPOIItem(marker);
             }
         });

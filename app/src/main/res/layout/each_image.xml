@@ -9,11 +9,10 @@
         android:id="@+id/add_each_image"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginRight="12dp"/>
     <ImageView
         android:id="@+id/cancel_image"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginLeft="63dp"/>
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginLeft="65dp"/>
 </RelativeLayout>

@@ -22,15 +22,22 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class ShareViewModel extends ViewModel {
     private Context context;
+    public String username;
     ShareAdapter shareAdapter;
     ArrayList<Share> shares=null;
     public MutableLiveData<String> share_count=new MutableLiveData<>();
+    public MutableLiveData<Integer> my_share_count=new MutableLiveData<>();
     public ShareViewModel(){
         share_count.setValue("0개 나눔글이 있습니다");
     }
     public void setContext(Context context){
         this.context=context;
     }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public ShareAdapter setting_share_adapter(){
         shares=new ArrayList<>();
         shareAdapter=new ShareAdapter(context, shares);
@@ -58,7 +65,6 @@ public class ShareViewModel extends ViewModel {
                                 share_count.setValue(shares.get(0).getTotal_share()+"개 나눔글이 있습니다");
                                 shares.remove(0);
                                 shareAdapter.update_Item(shares);
-
                             }else{
                                 System.out.println(lists.getError_message());
                             }

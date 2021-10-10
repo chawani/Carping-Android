@@ -59,7 +59,10 @@ public class TourSearch {
 
         @Override
         public int compareTo(Place o) {
-            return Integer.parseInt(getDistance())-Integer.parseInt(o.getDistance());
+            if (o.getDistance().trim() != "" && o.getDistance() != null && !o.getDistance().isEmpty()) {
+                return Integer.parseInt(getDistance()) - Integer.parseInt(o.getDistance());
+            }
+            return 0;
         }
     }
 }

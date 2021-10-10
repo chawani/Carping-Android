@@ -55,9 +55,13 @@ public class MapSearchAdapter extends RecyclerView.Adapter {
             Glide.with(context).load(R.drawable.locate_img).into(binding.locateImg);
             binding.name.setText(search.getPlace_name());
             binding.address.setText(search.getAddress_name());
-            float d=Float.parseFloat(search.getDistance());
-            d=d/1000;
-            binding.distance.setText(d + "km");
+            if(search.getDistance().isEmpty() || search.getDistance().trim()=="" || search.getDistance()==null){
+                binding.distance.setVisibility(View.GONE);
+            }else {
+                float d = Float.parseFloat(search.getDistance());
+                d = d / 1000;
+                binding.distance.setText(d + "km");
+            }
         }
 
     }

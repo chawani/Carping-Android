@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,6 +25,8 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -78,6 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
         registerViewmodel.setContext(context);
         registerViewmodel.setUserpk(SharedPreferenceManager.getInstance(context).getInt("id", 0));
 
+        setting_image_initial();
         setting_locate();
         setting_title();
         setting_review_edittext();
@@ -85,8 +89,35 @@ public class RegisterActivity extends AppCompatActivity {
         setting_initial_tags();
         setting_remove_tags();
         setting_sending_button();
+        setting_cancel_button();
         starting_observe_send_newcarping_ok();
         starting_observe_lat_and_lon();
+    }
+    public void setting_image_initial(){
+        Glide.with(context).load(R.drawable.locate_img).into(registerBinding.locateImg);
+        Glide.with(context).load(R.drawable.photo_insert_button).into(registerBinding.imageBtn);
+        registerBinding.imageBtn.setOnClickListener(v -> {
+            if (Build.VERSION.SDK_INT >= 23) {
+                int permission_read = context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+                int permission_write = context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                if (permission_read == PackageManager.PERMISSION_DENIED || permission_write == PackageManager.PERMISSION_DENIED) {
+                    gallery_setting.check_gallery_permission();
+                } else {
+                    Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                    galleryintent.setType("image/*");
+                    startActivityForResult(galleryintent, gallery_setting.GALLERY_CODE);
+                        /*Intent galleryintent=new Intent();
+                        galleryintent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        galleryintent.setType("image/*");
+                        galleryintent.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(galleryintent, gallery_setting.GALLERY_CODE);*/
+                }
+            } else {
+                Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                galleryintent.setType("image/*");
+                startActivityForResult(galleryintent, gallery_setting.GALLERY_CODE);
+            }
+        });
     }
     public void setting_locate(){
         if(mapView==null){
@@ -195,7 +226,22 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onChanged(Integer integer) {
                 if(integer==1){
-                    finish();
+                    SharedPreferenceManager.getInstance(getApplicationContext()).setInt("newcarping", 1);
+                    Dialog dialog=new Dialog(context);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setCancelable(false);
+                    dialog.setContentView(R.layout.success_register_newcarping_dialog);
+                    Button ok=dialog.findViewById(R.id.okbtn);
+                    ImageView img=dialog.findViewById(R.id.success_img);
+                    TextView text=dialog.findViewById(R.id.success_text);
+                    String username=SharedPreferenceManager.getInstance(getApplicationContext()).getString("username", "사용자");
+                    text.setText(username+"님의 새로운 차박지가 성공적으로 등록되었습니다!");
+                    Glide.with(context).load(R.drawable.newcarping_alarm).into(img);
+                    ok.setOnClickListener(v -> {
+                        dialog.dismiss();
+                        finish();
+                    });
+                    dialog.show();
                 }else if(integer==-1){
                     Toast.makeText(context, "10M 이하의 이미지로 선택해주세요!", Toast.LENGTH_SHORT).show();
                 }
@@ -222,9 +268,11 @@ public class RegisterActivity extends AppCompatActivity {
                 marker=new MapPOIItem();
                 marker.setItemName("검색 위치");
                 marker.setMapPoint(mapPoint);
-                marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
+                marker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+                marker.setCustomImageResourceId(R.drawable.mycarping_marker);
+                marker.setCustomImageAutoscale(false);
                 mapView.addPOIItem(marker);
-                send_locate_ok=true;
+
             }
         });
     }
@@ -263,6 +311,10 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                     image_count++;
+                    if(image_count==1){
+                        registerBinding.noImageLayout.setVisibility(View.GONE);
+                        registerBinding.yesImageLayout.setVisibility(View.VISIBLE);
+                    }
                     registerBinding.imageCnt.setText(image_count+"/4");
                     EachImageBinding binding=EachImageBinding.inflate(getLayoutInflater());
                     ImageView addimage=binding.addEachImage;
@@ -278,6 +330,8 @@ public class RegisterActivity extends AppCompatActivity {
                         registerBinding.imageCnt.setText(image_count+"/4");
                         if(image_count==0){
                             send_image_ok=false;
+                            registerBinding.yesImageLayout.setVisibility(View.GONE);
+                            registerBinding.noImageLayout.setVisibility(View.VISIBLE);
                         }
                         changeing_register_button();
                     });
@@ -290,9 +344,14 @@ public class RegisterActivity extends AppCompatActivity {
                 registerBinding.afterSearchLayout.setVisibility(View.VISIBLE);
                 registerBinding.locateTextview.setVisibility(View.GONE);
                 registerBinding.mapView.setVisibility(View.VISIBLE);
-                registerBinding.searchText.setText(data.getStringExtra("place"));
+                String return_place=data.getStringExtra("place");
+                if(return_place.length()>=15){
+                    return_place=return_place.substring(0, 16)+"..";
+                }
+                registerBinding.searchText.setText(return_place);
                 registerViewmodel.n_latitude.setValue(Float.parseFloat(data.getStringExtra("lat")));
                 registerViewmodel.n_longitude.setValue(Float.parseFloat(data.getStringExtra("lon")));
+                send_locate_ok=true;
             }else if(requestCode==1004){
                 String tag=data.getStringExtra("tag");
                 registerViewmodel.n_tags.add(tag);
@@ -300,9 +359,20 @@ public class RegisterActivity extends AppCompatActivity {
                 TextView newtag=new TextView(context);
                 newtag.setText("#"+tag);
                 newtag.setBackgroundResource(R.drawable.purple_border_round);
-                newtag.setTextColor(Color.parseColor("#9F81F7"));
+                newtag.setTextColor(Color.parseColor("#5f51ef"));
                 newtag.setPadding(60, 30, 60, 30);
                 registerBinding.tagLayout.addView(newtag);
+            }
+        }else if(resultCode==RESULT_CANCELED && send_locate_ok){
+            if(requestCode==1003){
+                registerBinding.beforeSearchLayout.setVisibility(View.GONE);
+                registerBinding.afterSearchLayout.setVisibility(View.VISIBLE);
+                registerBinding.locateTextview.setVisibility(View.GONE);
+                registerBinding.mapView.setVisibility(View.VISIBLE);
+                float tmp_lat=registerViewmodel.n_latitude.getValue();
+                float tmp_lon=registerViewmodel.n_longitude.getValue();
+                registerViewmodel.n_latitude.setValue(tmp_lat);
+                registerViewmodel.n_longitude.setValue(tmp_lon);
             }
         }
     }
@@ -312,6 +382,11 @@ public class RegisterActivity extends AppCompatActivity {
         }else{
             registerBinding.registerBtn.setBackgroundColor(Color.parseColor("#A4A4A4"));
         }
+    }
+    public void setting_cancel_button(){
+        registerBinding.cancel.setOnClickListener(v -> {
+            finish();
+        });
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
