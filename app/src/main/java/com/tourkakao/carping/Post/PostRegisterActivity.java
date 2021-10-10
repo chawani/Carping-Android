@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,15 +14,19 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.tourkakao.carping.NetworkwithToken.CommonClass;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
+import com.tourkakao.carping.R;
 import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 import com.tourkakao.carping.databinding.ActivityPostRegisterBinding;
 
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.observers.DisposableSingleObserver;
@@ -31,6 +37,10 @@ public class PostRegisterActivity extends AppCompatActivity {
     private Context context;
     private boolean phone_check=false;
     private boolean phoneRecordCheck=false;
+    private Toast myToast;
+    private int minute, second;
+    private boolean timerCheck=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,9 +56,9 @@ public class PostRegisterActivity extends AppCompatActivity {
         binding.numberPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String phoneNumber=binding.phoneNumber.getText().toString();
-                if(phoneNumber.equals("")||!phoneNumber.matches("[+-]?\\d*(\\.\\d+)?")) {
-                    Toast myToast = Toast.makeText(getApplicationContext(),"숫자만 입력하세요", Toast.LENGTH_SHORT);
+                if(phone_check) return;
+                if(binding.phoneNumber.getText().length()!=11){
+                    Toast myToast = Toast.makeText(getApplicationContext(),"휴대폰 번호가 11자리인지 확인해주세요", Toast.LENGTH_SHORT);
                     myToast.show();
                     return;
                 }
@@ -61,15 +71,15 @@ public class PostRegisterActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull CommonClass commonClass) {
                                 if(commonClass.getCode()==200) {
-                                    Gson gson=new Gson();
-                                    String dataString=gson.toJson(commonClass.getData().get(0));
-                                    System.out.println(dataString);
-                                    Toast myToast = Toast.makeText(getApplicationContext(),"요청 완료", Toast.LENGTH_SHORT);
+                                    myToast = Toast.makeText(getApplicationContext(),"요청 완료", Toast.LENGTH_SHORT);
                                     myToast.show();
                                     binding.phoneCertificationArea.setVisibility(View.VISIBLE);
+                                    timerCheck=false;
+                                    timer();
                                 }
                                 else {
-                                    System.out.println("요청실패:"+commonClass.getCode()+commonClass.getError_message());
+                                    Toast myToast = Toast.makeText(getApplicationContext(),"요청 실패. 카핑 채널로 문의해주세요", Toast.LENGTH_SHORT);
+                                    myToast.show();
                                 }
                             }
 
@@ -83,9 +93,14 @@ public class PostRegisterActivity extends AppCompatActivity {
         binding.certificationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String authNumber=binding.certificationNumber.getText().toString();
-                if(authNumber.equals("")||!authNumber.matches("[+-]?\\d*(\\.\\d+)?")) {
-                    Toast myToast = Toast.makeText(getApplicationContext(),"숫자만 입력하세요", Toast.LENGTH_SHORT);
+                if(phone_check) return;
+                if(binding.certificationNumber.getText().length()==0){
+                    myToast = Toast.makeText(getApplicationContext(),"인증번호를 입력하세요", Toast.LENGTH_SHORT);
+                    myToast.show();
+                    return;
+                }
+                if(timerCheck){
+                    myToast = Toast.makeText(getApplicationContext(),"인증번호를 다시 요청해주세요", Toast.LENGTH_SHORT);
                     myToast.show();
                     return;
                 }
@@ -108,8 +123,7 @@ public class PostRegisterActivity extends AppCompatActivity {
                                         myToast.show();
                                     }
                                     if(message.equals("인증 완료")){
-                                        Toast myToast = Toast.makeText(getApplicationContext(),"인증 완료", Toast.LENGTH_SHORT);
-                                        myToast.show();
+                                        showDialog();
                                         binding.certificationButton.setClickable(false);
                                         binding.numberPostButton.setClickable(false);
                                         phone_check=true;
@@ -153,6 +167,13 @@ public class PostRegisterActivity extends AppCompatActivity {
     }
 
     public void initLayout(){
+        Glide.with(context).load(R.drawable.back).into(binding.back);
+        binding.back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         if(phoneRecordCheck==true){
             binding.phone.setVisibility(View.GONE);
             phone_check=true;
@@ -182,6 +203,24 @@ public class PostRegisterActivity extends AppCompatActivity {
             binding.completionButton.setBackgroundColor(Color.parseColor("#999999"));
     }
 
+    void showDialog() {
+        AlertDialog.Builder msgBuilder = new AlertDialog.Builder(this)
+                .setTitle("알림")
+                .setMessage("번호 인증에 성공하였습니다.")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        AlertDialog msgDlg = msgBuilder.create();
+        msgDlg.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override public void onShow(DialogInterface arg0) {
+                msgDlg.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#5f51ef"));
+            }
+        });
+        msgDlg.show();
+    }
+
     public void observeChanges(){
         binding.check1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,4 +247,53 @@ public class PostRegisterActivity extends AppCompatActivity {
             }
         });
     }
+
+    void timer() {
+        minute = 5;
+        second = 0;
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                // 반복실행할 구문
+                runOnUiThread(new Runnable(){
+                    @Override
+                    public void run() {
+                        if (second != 0) { // 0초 이상이면
+                            second--;
+                        } else if (minute != 0) { // 0분 이상이면
+                            // 1분 = 60초
+                            second = 60;
+                            second--;
+                            minute--;
+                        }
+                        //시, 분, 초가 10이하(한자리수) 라면
+                        // 숫자 앞에 0을 붙인다 ( 8 -> 08 )
+                        if (second <= 9) {
+                            binding.second.setText("0" + second);
+                        } else {
+                            binding.second.setText(Integer.toString(second));
+                        }
+
+                        if (minute <= 9) {
+                            binding.minute.setText("0" + minute);
+                        } else {
+                            binding.minute.setText(Integer.toString(minute));
+                        }
+
+                        // 시분초가 다 0이라면 toast를 띄우고 타이머를 종료한다..
+                        if (minute == 0 && second == 0) {
+                            timer.cancel();//타이머 종료
+                            timerCheck=true;
+                        }
+
+                    }
+                });
+
+
+            }
+        };
+        timer.schedule(timerTask,0,1000); //Timer 실행
+    }
+
 }

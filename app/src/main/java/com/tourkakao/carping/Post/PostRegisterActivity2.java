@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -23,6 +24,7 @@ import com.tourkakao.carping.NetworkwithToken.CommonClass;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.Post.DTO.ChannelInfo;
 import com.tourkakao.carping.Post.DTO.PostInfoDetail;
+import com.tourkakao.carping.R;
 import com.tourkakao.carping.databinding.ActivityPostRegister2Binding;
 import com.tourkakao.carping.databinding.ActivityPostRegisterBinding;
 
@@ -53,6 +55,13 @@ public class PostRegisterActivity2 extends AppCompatActivity {
         settingInfo();
         observeChanges();
 
+        Glide.with(context).load(R.drawable.back).into(binding.back);
+        binding.back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         binding.completionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,14 +140,14 @@ public class PostRegisterActivity2 extends AppCompatActivity {
                     binding.check1.setChecked(true);
                     binding.check2.setChecked(true);
                     binding.check3.setChecked(true);
-                    binding.check4.setChecked(true);
+                    //binding.check4.setChecked(true);
                     changeButtonColor(checkAll());
                 }
                 else{
                     binding.check1.setChecked(false);
                     binding.check2.setChecked(false);
                     binding.check3.setChecked(false);
-                    binding.check4.setChecked(false);
+                    //binding.check4.setChecked(false);
                     changeButtonColor(checkAll());
                 }
             }
@@ -191,7 +200,7 @@ public class PostRegisterActivity2 extends AppCompatActivity {
         if(binding.check1.isChecked()
                 &&binding.check2.isChecked()
                 &&binding.check3.isChecked()
-                &&binding.check4.isChecked())
+                /*&&binding.check4.isChecked()*/)
             return true;
         return false;
     }
@@ -228,11 +237,11 @@ public class PostRegisterActivity2 extends AppCompatActivity {
                 changeButtonColor(checkAll());
             }
         });
-        binding.check4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeButtonColor(checkAll());
-            }
-        });
+//        binding.check4.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                changeButtonColor(checkAll());
+//            }
+//        });
     }
 }

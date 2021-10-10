@@ -34,6 +34,7 @@ import com.tourkakao.carping.Post.Fragment.ReviewFragment;
 import com.tourkakao.carping.Post.ViewModel.PostDetailViewModel;
 import com.tourkakao.carping.Post.ViewModel.PostListViewModel;
 import com.tourkakao.carping.R;
+import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 import com.tourkakao.carping.databinding.ActivityPostCategoryBinding;
 import com.tourkakao.carping.databinding.ActivityPostInfoBinding;
 import com.tourkakao.carping.databinding.ActivityPostInfoBinding;
@@ -81,10 +82,13 @@ public class PostInfoActivity extends AppCompatActivity {
     }
 
     void settingToolbar(){
-        Toolbar toolbar=binding.toolbar;
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        Glide.with(getApplicationContext()).load(R.drawable.back).into(binding.back);
+        binding.back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     void settingTab(){
@@ -130,14 +134,15 @@ public class PostInfoActivity extends AppCompatActivity {
     }
 
     public void settingInfo(){
+        int current_user= SharedPreferenceManager.getInstance(getApplicationContext()).getInt("id",0);
         viewModel.getPostInfo().observe(this, new Observer<PostInfoDetail>() {
             @Override
             public void onChanged(PostInfoDetail postInfoDetail) {
-                if(postInfoDetail.isIs_approved()){
+                author_id=postInfoDetail.getAuthor_id();
+                if(postInfoDetail.isIs_approved()||author_id==current_user){
                     is_approved=postInfoDetail.isIs_approved();
                     binding.paymentButton.setText("포스트 보기");
                 }
-                author_id=postInfoDetail.getAuthor_id();
                 id=postInfoDetail.getUserpost_id();
                 point=postInfoDetail.getPoint();
                 Glide.with(context).load(postInfoDetail.getAuthor_profile())
@@ -203,7 +208,7 @@ public class PostInfoActivity extends AppCompatActivity {
         binding.paymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(is_approved==true){
+                if(binding.paymentButton.getText().equals("포스트 보기")){
                     Intent intent=new Intent(context, PostDetailActivity.class);
                     intent.putExtra("pk",id);
                     intent.putExtra("author_id",author_id);
@@ -211,7 +216,7 @@ public class PostInfoActivity extends AppCompatActivity {
                     return;
                 }
                 if(point==0){
-                    showDialog();
+                    questionDialog();
                     return;
                 }else {
                     Intent intent = new Intent(context, PayActivity.class);
@@ -223,16 +228,44 @@ public class PostInfoActivity extends AppCompatActivity {
         });
     }
 
-    void showDialog() {
+    public void questionDialog() {
         AlertDialog.Builder msgBuilder = new AlertDialog.Builder(this)
-                .setTitle("결제")
-                .setMessage("0원 결제가 완료되었습니다.")
+                .setTitle("무료 결제")
+                .setMessage("0원 결제를 진행하시겠습니까?")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialogInterface, int i) {
+                        completeDialog();
+                    }
+                })
+                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        AlertDialog msgDlg = msgBuilder.create();
+        msgDlg.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override public void onShow(DialogInterface arg0) {
+                msgDlg.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#5f51ef"));
+                msgDlg.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#5f51ef"));
+            }
+        });
+        msgDlg.show();
+    }
+
+    void completeDialog() {
+        AlertDialog.Builder msgBuilder = new AlertDialog.Builder(this)
+                .setMessage("완료되었습니다.")
                 .setPositiveButton("예", new DialogInterface.OnClickListener() {
                     @Override public void onClick(DialogInterface dialogInterface, int i) {
                         payFree();
                     }
                 });
         AlertDialog msgDlg = msgBuilder.create();
+        msgDlg.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override public void onShow(DialogInterface arg0) {
+                msgDlg.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#5f51ef"));
+            }
+        });
         msgDlg.show();
     }
 

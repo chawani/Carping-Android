@@ -1,58 +1,58 @@
 package com.tourkakao.carping.Post.DTO;
 
 public class PriceInfo {
-    private String price;
-    private String trade_fee;
-    private String platform_fee;
-    private String withholding_tax;
-    private String vat;
-    private String final_point;
+    private int price;
+    private int trade_fee;
+    private int platform_fee;
+    private int withholding_tax;
+    private int vat;
+    private int final_point;
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
-    public String getTrade_fee() {
+    public int getTrade_fee() {
         return trade_fee;
     }
 
-    public void setTrade_fee(String trade_fee) {
+    public void setTrade_fee(int trade_fee) {
         this.trade_fee = trade_fee;
     }
 
-    public String getPlatform_fee() {
+    public int getPlatform_fee() {
         return platform_fee;
     }
 
-    public void setPlatform_fee(String platform_fee) {
+    public void setPlatform_fee(int platform_fee) {
         this.platform_fee = platform_fee;
     }
 
-    public String getWithholding_tax() {
+    public int getWithholding_tax() {
         return withholding_tax;
     }
 
-    public void setWithholding_tax(String withholding_tax) {
+    public void setWithholding_tax(int withholding_tax) {
         this.withholding_tax = withholding_tax;
     }
 
-    public String getVat() {
+    public int getVat() {
         return vat;
     }
 
-    public void setVat(String vat) {
+    public void setVat(int vat) {
         this.vat = vat;
     }
 
-    public String getFinal_point() {
+    public int getFinal_point() {
         return final_point;
     }
 
-    public void setFinal_point(String final_point) {
+    public void setFinal_point(int final_point) {
         this.final_point = final_point;
     }
 }

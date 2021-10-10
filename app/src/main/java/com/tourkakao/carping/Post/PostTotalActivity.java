@@ -64,6 +64,13 @@ public class PostTotalActivity extends AppCompatActivity {
         Glide.with(context).load(R.drawable.right_arrow_black).into(binding.allOfArrow);
         Glide.with(context).load(R.drawable.right_arrow_black).into(binding.beginnerArrow);
         Glide.with(context).load(R.drawable.right_arrow_black).into(binding.carArrow);
+        Glide.with(getApplicationContext()).load(R.drawable.back).into(binding.back);
+        binding.back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
     public void initPopular() {
         LinearLayoutManager layoutManager=new LinearLayoutManager(context);

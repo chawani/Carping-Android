@@ -1,6 +1,7 @@
 package com.tourkakao.carping.Post.ViewModel;
 
 import android.content.Context;
+import android.content.Intent;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -147,6 +148,31 @@ public class PostSearchViewModel extends ViewModel {
                     public void onSuccess(@NonNull CommonClass commonClass) {
                         if(commonClass.getCode()==200) {
                             setKeywordData(commonClass.getData());
+                        }
+                        else {
+                            System.out.println("요청실패:"+commonClass.getCode()+commonClass.getError_message());
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        System.out.println("에러"+e.getMessage());
+                    }
+                });
+    }
+
+    public void deleteKeyword(String keyword){
+        HashMap<String,Object> map=new HashMap<>();
+        map.put("keyword",keyword);
+        map.put("type","post");
+        TotalApiClient.getPostApiService(context).deleteKeyword(map)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<CommonClass>() {
+                    @Override
+                    public void onSuccess(@NonNull CommonClass commonClass) {
+                        if(commonClass.getCode()==200) {
+                            loadKeyword();
                         }
                         else {
                             System.out.println("요청실패:"+commonClass.getCode()+commonClass.getError_message());

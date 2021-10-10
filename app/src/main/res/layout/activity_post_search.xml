@@ -17,11 +17,16 @@
             android:layout_width="16dp"
             android:layout_height="16dp"/>
         <EditText
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:maxLength="50"
             android:singleLine="true"
             android:id="@+id/search_text"
             android:background="@null"
             android:layout_marginLeft="24.5dp"
             android:layout_toRightOf="@id/back"
+            android:layout_toLeftOf="@id/delete_text"
+            android:layout_marginRight="16dp"
             android:layout_centerVertical="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,6 +34,13 @@
             android:textStyle="normal"
             android:textSize="16sp"
             android:hint="어떤 포스트를 보고싶으신가요?"/>
+        <ImageView
+            android:id="@+id/delete_text"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginRight="49dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
         <ImageView
             android:id="@+id/search_img"
             android:layout_alignParentRight="true"
@@ -66,13 +78,18 @@
             android:textStyle="normal"
             android:textSize="16sp"
             android:textColor="#000000"
-            android:text="최근 검색어"/>
+            android:text="인기 검색어"/>
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recent_keyword"
+            android:id="@+id/popular_keyword"
             android:layout_marginTop="25dp"
             android:layout_marginHorizontal="18dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#e0e0e0">
+        </View>
         <TextView
             android:layout_marginTop="30dp"
             android:layout_marginHorizontal="18dp"
@@ -82,9 +99,9 @@
             android:textStyle="normal"
             android:textSize="16sp"
             android:textColor="#000000"
-            android:text="인기 검색어"/>
+            android:text="최근 검색어" />
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/popular_keyword"
+            android:id="@+id/recent_keyword"
             android:layout_marginTop="25dp"
             android:layout_marginHorizontal="18dp"
             android:layout_width="match_parent"

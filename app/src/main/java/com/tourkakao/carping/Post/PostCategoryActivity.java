@@ -10,9 +10,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.bumptech.glide.Glide;
 import com.tourkakao.carping.Post.Adapter.PostCategoryAdapter;
 import com.tourkakao.carping.Post.DTO.PostListItem;
 import com.tourkakao.carping.Post.ViewModel.PostListViewModel;
+import com.tourkakao.carping.R;
 import com.tourkakao.carping.databinding.ActivityPostCategoryBinding;
 
 import java.util.ArrayList;
@@ -49,10 +51,17 @@ public class PostCategoryActivity extends AppCompatActivity {
         if(category.equals("car")){
             initCar();
         }
+        Glide.with(getApplicationContext()).load(R.drawable.back_white).into(binding.back);
+        binding.back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     public void initBeginner(){
-        binding.title.setText("초보에게 딱 맞아!");
+        binding.title.setText("초보 차박러를 위한 포스트");
         viewModel.loadCategoryList(1);
         viewModel.getCategoryData().observe(this, new Observer<ArrayList<PostListItem>>() {
             @Override

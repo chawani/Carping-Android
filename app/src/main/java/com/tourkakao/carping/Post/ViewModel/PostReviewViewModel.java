@@ -14,6 +14,7 @@ import com.tourkakao.carping.Home.EcoDataClass.EcoReview;
 import com.tourkakao.carping.NetworkwithToken.CommonClass;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.Post.DTO.Review;
+import com.tourkakao.carping.Post.DTO.Star;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +30,7 @@ public class PostReviewViewModel extends ViewModel {
     private Gson gson=new Gson();
     private MutableLiveData<ArrayList<Review>> recentOrderReviews=new MutableLiveData<>();
     private MutableLiveData<ArrayList<Review>> popularOrderReviews=new MutableLiveData<>();
+    private MutableLiveData<Star> starMutableLiveData=new MutableLiveData<>();
 
     public void setContext(Context context){
         this.context=context;
@@ -36,9 +38,12 @@ public class PostReviewViewModel extends ViewModel {
 
     public MutableLiveData<ArrayList<Review>> getRecentOrderReviews(){return recentOrderReviews;}
     public MutableLiveData<ArrayList<Review>> getPopularOrderReviews(){return popularOrderReviews;}
+    public MutableLiveData<Star> getStarMutableLiveData(){return starMutableLiveData;}
 
     public void setReviewsData(String sort,List data){
-        String totalDataString=gson.toJson(data);
+        String starInfoString=gson.toJson(data.get(0));
+        Star star=gson.fromJson(starInfoString,Star.class);
+        String totalDataString=gson.toJson(data.get(1));
         ArrayList<Review> reviews=gson.fromJson(totalDataString,new TypeToken<ArrayList<Review>>(){}.getType());
         if(sort.equals("recent")){
             recentOrderReviews.setValue(reviews);
@@ -46,6 +51,7 @@ public class PostReviewViewModel extends ViewModel {
         if(sort.equals("popular")){
             popularOrderReviews.setValue(reviews);
         }
+        starMutableLiveData.setValue(star);
     }
 
     public void postReview(HashMap<String,Object> map){

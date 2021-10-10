@@ -46,16 +46,12 @@ public class MypageCarpingViewModel extends ViewModel {
 
     public void setScarpPostData(ArrayList data) {
         postSize.setValue(0);
-        ScrapData scrapData=gson.fromJson(gson.toJson(data.get(0)),ScrapData.class);
-        String autocampString=gson.toJson(scrapData.getAutocamp());
-        ArrayList<MyCarpingPost> autocamps
-                =gson.fromJson(autocampString, new TypeToken<ArrayList<Autocamp>>(){}.getType());
-        scrapData=gson.fromJson(gson.toJson(data.get(0)),ScrapData.class);
-        String campsiteString=gson.toJson(scrapData.getCampsite());
-        ArrayList<Campsite> campsites
-                =gson.fromJson(campsiteString, new TypeToken<ArrayList<Campsite>>(){}.getType());
+        String total=gson.toJson(data);System.out.println("스끄랩"+total);
+        ScrapData campsiteData=gson.fromJson(gson.toJson(data.get(0)),ScrapData.class);
+        ArrayList<Campsite> campsites=campsiteData.getCampsite();
+        ScrapData autocampsData=gson.fromJson(gson.toJson(data.get(1)),ScrapData.class);
+        ArrayList<MyCarpingPost> autocamps=autocampsData.getAutocamp();
 
-        System.out.println(campsiteString);
         campsitesLiveData.setValue(campsites);
         autocampsLiveData.setValue(autocamps);
         if(campsites!=null){

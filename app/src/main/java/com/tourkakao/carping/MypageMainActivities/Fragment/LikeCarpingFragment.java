@@ -72,7 +72,7 @@ public class LikeCarpingFragment extends Fragment {
         viewModel.getAutocampsLiveData().observe(this, new Observer<ArrayList<MyCarpingPost>>() {
             @Override
             public void onChanged(ArrayList<MyCarpingPost> autocamps) {
-                if(autocamps==null){
+                if(autocamps.size()==0){
                     binding.mypageRecycler.setVisibility(View.GONE);
                 }
                 else{

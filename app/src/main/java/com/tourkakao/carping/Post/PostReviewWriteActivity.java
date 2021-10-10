@@ -11,7 +11,9 @@ import android.view.View;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.tourkakao.carping.Post.ViewModel.PostReviewViewModel;
+import com.tourkakao.carping.R;
 import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 import com.tourkakao.carping.databinding.ActivityPostReviewWriteBinding;
 import com.tourkakao.carping.databinding.ActivityPostWriteBinding;
@@ -44,6 +46,13 @@ public class PostReviewWriteActivity extends AppCompatActivity {
                 finish();
             }
         });
+        Glide.with(getApplicationContext()).load(R.drawable.cancel_img).into(binding.cancelButton);
+        binding.cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     public void writeReview(){
@@ -69,6 +78,30 @@ public class PostReviewWriteActivity extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 // 입력하기 전에 호출된다.
+            }
+        });
+        binding.totalRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                if(rating==0){
+                    binding.reviewComment.setText("이 포스트를 평가해주세요!");
+                    binding.reviewComment.setTextColor(Color.LTGRAY);
+                } else if(rating<=1){
+                    binding.reviewComment.setText("안좋았어요");
+                    binding.reviewComment.setTextColor(Color.BLACK);
+                }else if(rating<=2){
+                    binding.reviewComment.setText("나쁘지 않아요");
+                    binding.reviewComment.setTextColor(Color.BLACK);
+                }else if(rating<=3){
+                    binding.reviewComment.setText("보통이에요");
+                    binding.reviewComment.setTextColor(Color.BLACK);
+                }else if(rating<=4){
+                    binding.reviewComment.setText("맘에 들어요!");
+                    binding.reviewComment.setTextColor(Color.BLACK);
+                }else{
+                    binding.reviewComment.setText("최고예요!");
+                    binding.reviewComment.setTextColor(Color.BLACK);
+                }
             }
         });
     }

@@ -22,6 +22,14 @@
             android:gravity="center_horizontal"
             android:text="포스트 등록"
             />
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="16dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:layout_gravity="left"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"/>
     </androidx.appcompat.widget.Toolbar>
     <LinearLayout
         android:id="@+id/bar"
@@ -33,7 +41,7 @@
         <View
             android:layout_width="0dp"
             android:layout_height="5dp"
-            android:background="#000000"
+            android:background="@color/black"
             android:layout_weight="2">
         </View>
         <View
@@ -77,6 +85,9 @@
             android:textColor="#7d7d7d"
             android:text="채널 소개"/>
         <EditText
+            android:maxLength="30"
+            android:singleLine="true"
+            android:paddingHorizontal="16dp"
             android:id="@+id/channel"
             android:layout_marginTop="15dp"
             android:layout_width="match_parent"
@@ -94,6 +105,8 @@
             android:textColor="#7d7d7d"
             android:text="오픈 카카오채팅방 주소"/>
         <EditText
+            android:singleLine="true"
+            android:paddingHorizontal="16dp"
             android:id="@+id/openchat"
             android:layout_marginTop="15dp"
             android:layout_width="match_parent"
@@ -225,29 +238,29 @@
                 android:textColor="#666666"
                 tools:text="자세히 보기"/>
         </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="19dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <CheckBox
-                android:layout_marginRight="10.5dp"
-                android:id="@+id/check4"
-                android:layout_width="21dp"
-                android:layout_height="21dp"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/selector_purple_check"
-                android:button="@android:color/transparent"/>
-            <TextView
-                android:layout_gravity="center_vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/spoqa_han_sans_neo"
-                android:textStyle="normal"
-                android:textSize="12sp"
-                android:textColor="#666666"
-                android:text="[선택] 카핑 소식, 이벤트 등 마케팅 홍보수신에 동의합니다."/>
-        </LinearLayout>
+<!--        <LinearLayout-->
+<!--            android:layout_marginTop="19dp"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
+<!--            <CheckBox-->
+<!--                android:layout_marginRight="10.5dp"-->
+<!--                android:id="@+id/check4"-->
+<!--                android:layout_width="21dp"-->
+<!--                android:layout_height="21dp"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:background="@drawable/selector_purple_check"-->
+<!--                android:button="@android:color/transparent"/>-->
+<!--            <TextView-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:fontFamily="@font/spoqa_han_sans_neo"-->
+<!--                android:textStyle="normal"-->
+<!--                android:textSize="12sp"-->
+<!--                android:textColor="#666666"-->
+<!--                android:text="[선택] 카핑 소식, 이벤트 등 마케팅 홍보수신에 동의합니다."/>-->
+<!--        </LinearLayout>-->
     </LinearLayout>
     <TextView
         android:id="@+id/completion_button"

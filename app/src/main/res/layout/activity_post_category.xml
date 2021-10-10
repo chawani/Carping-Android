@@ -12,10 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="170dp">
         <ImageView
+            android:id="@+id/back"
             android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="16dp"/>
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:layout_gravity="left"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"/>
         <TextView
             android:id="@+id/title"
             android:layout_marginLeft="18dp"
@@ -26,8 +29,7 @@
             android:fontFamily="@font/spoqa_han_sans_neo"
             android:textStyle="bold"
             android:textSize="24sp"
-            android:textColor="#ffffff"
-            android:text="초보에게 딱 맞아!"/>
+            android:textColor="#ffffff"/>
         <TextView
             android:id="@+id/post_count"
             android:layout_marginLeft="18dp"
@@ -38,8 +40,7 @@
             android:fontFamily="@font/spoqa_han_sans_neo"
             android:textStyle="bold"
             android:textSize="13sp"
-            android:textColor="#ffffff"
-            android:text="전체포스트 64개"/>
+            android:textColor="#ffffff"/>
     </RelativeLayout>
     <GridView
         android:scrollbars="none"
@@ -50,5 +51,6 @@
         android:id="@+id/gridview"
         android:numColumns="2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="35dp"/>
 </LinearLayout>

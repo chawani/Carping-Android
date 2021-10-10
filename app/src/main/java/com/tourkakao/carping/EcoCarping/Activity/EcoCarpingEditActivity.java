@@ -7,9 +7,13 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -37,6 +41,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.tourkakao.carping.BuildConfig;
 import com.tourkakao.carping.EcoCarping.DTO.EcoPost;
 import com.tourkakao.carping.EcoCarping.ViewModel.EcoDetailViewModel;
+import com.tourkakao.carping.Gallerypermission.Gallery_setting;
 import com.tourkakao.carping.NetworkwithToken.CommonClass;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.R;
@@ -72,16 +77,18 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
     private String KAKAO_KEY="KakaoAK "+ BuildConfig.KAKAO_REST_API_KEY;
     private ArrayList<String> tags=new ArrayList<>();
     private MutableLiveData<ArrayList<String>> tagsLiveData=new MutableLiveData<>();
-    private ArrayList<String> images=new ArrayList<>();
-    private MutableLiveData<ArrayList<String>> imagesLiveData=new MutableLiveData<>();
     private Context context;
     private boolean imgCheck=false;
     private boolean titleCheck=false;
     private boolean contentCheck=false;
     private boolean tagCheck=false;
     private ArrayList<Integer> is_null=new ArrayList<>();
-    private int[] initialImgCheck={0,0,0,0};
-
+    private String[] imageArray={null,null,null,null};
+    private MutableLiveData<String[]> imageArrayLiveData=new MutableLiveData<>();
+    private String[] initArray={null,null,null,null};
+    private int imageCount;
+    private double x,y=0;
+    private Gallery_setting gallery_setting;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,11 +97,11 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
 
         ecoDetailViewModel =new ViewModelProvider(this).get(EcoDetailViewModel.class);
         ecoDetailViewModel.setContext(this);
+        gallery_setting=new Gallery_setting(this, EcoCarpingEditActivity.this);
 
         context=getApplicationContext();
 
         settingLayout();
-        settingToolbar();
         getDetailInfo();
         selectImage();
         selectPlace();
@@ -130,23 +137,36 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
             @Override
             public void onChanged(ArrayList<String> strings) {
                 for(int i=0;i<strings.size();i++){
-                    initialImgCheck[i]=1;
+                    imageArray[i]=strings.get(i);
+                    initArray[i]=strings.get(i);
                 }
-                images=strings;
-                imagesLiveData.setValue(images);
+                imageArrayLiveData.setValue(imageArray);
             }
         });
         ecobinding.addImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                //intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent, 0);
+                if(imageCount>=4){
+                    return;
+                }
+                if (Build.VERSION.SDK_INT >= 23) {
+                    int permission_read = context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+                    int permission_write = context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    if (permission_read == PackageManager.PERMISSION_DENIED || permission_write == PackageManager.PERMISSION_DENIED) {
+                        gallery_setting.check_gallery_permission();
+                    } else {
+                        Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                        galleryintent.setType("image/*");
+                        startActivityForResult(galleryintent, 0);
+                    }
+                } else {
+                    Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                    galleryintent.setType("image/*");
+                    startActivityForResult(galleryintent, 0);
+                }
             }
         });
-        imagesLiveData.observe(this, imgObserver);
+        imageArrayLiveData.observe(this,imageArrayObserver);
     }
 
     public void tag(){
@@ -182,11 +202,21 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
             ecobinding.locationText.setText(placeName);
             settingMapView(data.getDoubleExtra("x",0),data.getDoubleExtra("y",0));
         }
+        if(requestCode==2&&resultCode==3){
+            if(!(x==0&&y==0)) {
+                settingMapView(x, y);
+            }
+        }
         if(requestCode==0&&resultCode==RESULT_OK){
             Uri uri = data.getData();
             String path=getPath(uri);
-            images.add(path);
-            imagesLiveData.setValue(images);
+            for(int i=0;i<imageArray.length;i++){
+                if(imageArray[i]==null) {
+                    imageArray[i] = path;
+                    break;
+                }
+            }
+            imageArrayLiveData.setValue(imageArray);
         }
         if(requestCode==1&&resultCode==1){
             String tag = data.getStringExtra("tag");
@@ -195,15 +225,16 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
         }
     }
 
-    public void settingToolbar(){
-        ecobinding.toolbarText.setText("수정하기");
-        Toolbar toolbar=ecobinding.toolbar;
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-    }
-
     public void settingLayout(){
+        ecobinding.toolbarText.setText("수정하기");
+        Glide.with(getApplicationContext()).load(R.drawable.cancel_img).into(ecobinding.back);
+        ecobinding.back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        Glide.with(this).load(R.drawable.locate_img).into(ecobinding.locateImg);
         Glide.with(this).load(R.drawable.write_add_img_button).into(ecobinding.addImage);
         ecobinding.insertImage.setVisibility(View.GONE);
         ecobinding.scrollview.setVisibility(View.VISIBLE);
@@ -215,12 +246,46 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
         ecoDetailViewModel.getPost().observe(this, new Observer<EcoPost>() {
             @Override
             public void onChanged(EcoPost post) {
+                placeName=post.getPlace();
                 ecobinding.locationText.setText(post.getPlace());
                 ecobinding.title.setText(post.getTitle());
                 ecobinding.content.setText(post.getText());
-                settingMapView(Double.parseDouble(post.getLongitude()),Double.parseDouble(post.getLatitude()));
+                x=post.getLongitude();
+                y=post.getLatitude();
+                settingMapView(post.getLongitude(),post.getLatitude());
             }
         });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @androidx.annotation.NonNull String[] permissions, @androidx.annotation.NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==gallery_setting.PERMISSION_GALLERY_REQUESTCODE){
+            if(grantResults.length==gallery_setting.REQUIRED_PERMISSIONS.length){
+                boolean check_result=true;
+                for(int result: grantResults){
+                    if(result== PackageManager.PERMISSION_DENIED){
+                        check_result=false;
+                        break;
+                    }
+                }
+                if(check_result){
+                    Toast.makeText(context, "갤러리 접근 권한이 설정되었습니다.", Toast.LENGTH_SHORT).show();
+                }else{
+                    AlertDialog.Builder builder=new AlertDialog.Builder(context);
+                    builder.setTitle("갤러리 접근 권한 설정 알림")
+                            .setMessage("서비스 사용을 위해서는 갤러리 접근 권한 설정이 필요합니다. [설정]->[앱]에서 갤러리 접근 권한을 승인해주세요")
+                            .setCancelable(false)
+                            .setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    builder.create().show();
+                }
+            }
+        }
     }
 
     public Observer<ArrayList<String>> tagObserver=new Observer<ArrayList<String>>() {
@@ -264,13 +329,12 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
         mapView=new MapView(this);
         mapView.setDaumMapApiKey(KAKAO_KEY);
         marker = new MapPOIItem();
-        mapPoint= MapPoint.mapPointWithGeoCoord(y,x);
+        mapPoint=MapPoint.mapPointWithGeoCoord(y,x);
         ecobinding.mapView.addView(mapView);
         mapView.setMapCenterPoint(mapPoint,true);
         marker.setItemName(placeName);
         marker.setMapPoint(mapPoint);
         marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
-        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
         mapView.addPOIItem(marker);
     }
 
@@ -324,46 +388,49 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
         });
     }
 
-    public Observer<ArrayList<String>> imgObserver=new Observer<ArrayList<String>>() {
+    public Observer<String[]> imageArrayObserver=new Observer<String[]>() {
         @Override
-        public void onChanged(ArrayList<String> strings) {
-            ecobinding.imageCount.setText(strings.size()+"/4");
-            if (strings.size()==0){
+        public void onChanged(String[] strings) {
+            imageCount=0;
+            for(int i=0;i<strings.length;i++){
+                if(strings[i]!=null){
+                    imageCount++;
+                }
+            }
+            ecobinding.imageCount.setText(imageCount+"/4");
+            if (imageCount==0){
                 imgCheck=false;
-                changeButtonColor(checkAll());
             }
             else{
                 imgCheck=true;
-                changeButtonColor(checkAll());
             }
+            changeButtonColor(checkAll());
             ecobinding.imageArea.removeAllViews();
-            for(int i=0;i<strings.size();i++) {
-                int index=i;
-                ImageItemBinding imageItemBinding=ImageItemBinding.inflate(getLayoutInflater());
-                ImageView iv = imageItemBinding.addImage;
-                ImageView iv2 = imageItemBinding.minusImage;
+            for(int i=0;i<strings.length;i++) {
+                if(strings[i]!=null) {
+                    int index = i;
+                    ImageItemBinding imageItemBinding = ImageItemBinding.inflate(getLayoutInflater());
+                    ImageView iv = imageItemBinding.addImage;
+                    ImageView iv2 = imageItemBinding.minusImage;
 
-                Glide.with(getApplicationContext()).load(strings.get(i))
-                        .transform(new CenterCrop(), new RoundedCorners(30))
-                        .into(iv);
+                    Glide.with(getApplicationContext()).load(strings[i])
+                            .transform(new CenterCrop(), new RoundedCorners(30))
+                            .into(iv);
 
-                Glide.with(getApplicationContext()).load(R.drawable.cancel_image)
-                        .transform(new CenterCrop(), new RoundedCorners(30))
-                        .into(iv2);
+                    Glide.with(getApplicationContext()).load(R.drawable.cancel_image)
+                            .transform(new CenterCrop(), new RoundedCorners(30))
+                            .into(iv2);
 
-                iv2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if(initialImgCheck[index]==1){
-                            initialImgCheck[index]=0;
-                            is_null.add(index+1);
+                    iv2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            imageItemBinding.getRoot().removeView(view);
+                            imageItemBinding.getRoot().removeView(iv);
+                            deleteURI(index);
                         }
-                        imageItemBinding.getRoot().removeView(view);
-                        imageItemBinding.getRoot().removeView(iv);
-                        deleteURI(index);
-                    }
-                });
-                ecobinding.imageArea.addView(imageItemBinding.getRoot());
+                    });
+                    ecobinding.imageArea.addView(imageItemBinding.getRoot());
+                }
             }
         }
     };
@@ -413,31 +480,34 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
         MultipartBody.Part image3=null;
         MultipartBody.Part image4=null;
 
-        if(images.size()>=1&&initialImgCheck[0]==0) {
-                File file = new File(images.get(0));
+        if(imageArray[0]!=null) {
+            if(initArray[0]!=imageArray[0]) {
+                File file = new File(imageArray[0]);
                 RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                 image1 = MultipartBody.Part.createFormData("image1", file.getName(), requestBody);
+            }
         }
-        if(images.size()>=2&&initialImgCheck[1]==0) {
-                File file = new File(images.get(1));
+        if(imageArray[1]!=null){
+            if(initArray[1]!=imageArray[1]) {
+                File file = new File(imageArray[1]);
                 RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                 image2 = MultipartBody.Part.createFormData("image2", file.getName(), requestBody);
+            }
         }
-        if(images.size()>=3&&initialImgCheck[2]==0) {
-                File file = new File(images.get(2));
+        if(imageArray[2]!=null){
+            if(initArray[2]!=imageArray[2]) {
+                File file = new File(imageArray[2]);
                 RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                 image3 = MultipartBody.Part.createFormData("image3", file.getName(), requestBody);
+            }
         }
-        if(images.size()>=4&&initialImgCheck[3]==0) {
-                File file = new File(images.get(3));
+        if(imageArray[3]!=null){
+            if(initArray[3]!=imageArray[3]) {
+                File file = new File(imageArray[3]);
                 RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                 image4 = MultipartBody.Part.createFormData("image4", file.getName(), requestBody);
+            }
         }
-
-        for(int i:is_null) {
-            System.out.println("지울것" +i);
-        }
-        System.out.println("이미지 수"+images.size());
 
         TotalApiClient.getEcoApiService(getApplicationContext()).editPost(pk,image1,image2,image3,image4,map,is_null)
                 .subscribeOn(Schedulers.io())
@@ -463,8 +533,13 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
     }
 
     public void deleteURI(int i){
-        images.remove(i);
-        imagesLiveData.setValue(images);
+        for(int j=0;j<initArray.length;j++){
+            if(imageArray[i]==initArray[j]){
+                is_null.add(j+1);
+            }
+        }
+        imageArray[i]=null;
+        imageArrayLiveData.setValue(imageArray);
     }
 
     public int convertDp(int dp) {

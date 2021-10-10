@@ -8,6 +8,8 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
 import retrofit2.http.Multipart;
@@ -81,4 +83,7 @@ public interface PostInterface {
 
     @POST("/posts/user-post/{id}/deactivate")
     Single<CommonClass> deactivatePost(@Path("id")int id);
+
+    @HTTP(method="DELETE", path="search/keyword", hasBody = true)
+    Single<CommonClass> deleteKeyword(@Body HashMap<String,Object> map);
 }

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,6 +20,7 @@ import com.tourkakao.carping.EcoCarping.Adapter.EcoTotalReviewAdapter;
 import com.tourkakao.carping.Post.Adapter.ReviewAdapter;
 import com.tourkakao.carping.Post.DTO.PostInfoDetail;
 import com.tourkakao.carping.Post.DTO.Review;
+import com.tourkakao.carping.Post.DTO.Star;
 import com.tourkakao.carping.Post.ViewModel.PostListViewModel;
 import com.tourkakao.carping.Post.ViewModel.PostReviewViewModel;
 import com.tourkakao.carping.R;
@@ -34,7 +36,6 @@ public class PostReviewActivity extends AppCompatActivity {
     private PostReviewViewModel viewModel;
     private Spinner spinner;
     private List<String> sort_list=new ArrayList<>();
-    private PostInfoDetail post;
     private LinearLayoutManager mLayoutManager;
     private String postId;
     private ReviewAdapter adapter;
@@ -47,8 +48,7 @@ public class PostReviewActivity extends AppCompatActivity {
         viewModel =new ViewModelProvider(this).get(PostReviewViewModel.class);
         viewModel.setContext(this);
 
-        post = (PostInfoDetail) getIntent().getSerializableExtra("post");
-        postId=Integer.toString(post.getId());
+        postId=Integer.toString(getIntent().getIntExtra("postId",0));
 
         settingLayout();
         selectSinnerItem();
@@ -61,17 +61,12 @@ public class PostReviewActivity extends AppCompatActivity {
         binding.recyclerview.setLayoutManager(mLayoutManager);
         Glide.with(getApplicationContext()).load(R.drawable.eco_carping_write_text).into(binding.writeButton);
         Glide.with(getApplicationContext()).load(R.drawable.cancel_img).into(binding.cancelButton);
-        binding.reviewCount.setText("리뷰 "+post.getReview_count());
-        binding.reviewAvg.setText(Float.toString(post.getTotal_star_avg()));
-        binding.totalStar.setRating(post.getTotal_star_avg());
-        binding.star1.setText(Float.toString(post.getStar1_avg()));
-        binding.star2.setText(Float.toString(post.getStar2_avg()));
-        binding.star3.setText(Float.toString(post.getStar3_avg()));
-        binding.star4.setText(Float.toString(post.getStar4_avg()));
-        binding.start1Star.setRating(post.getStar1_avg());
-        binding.start2Star.setRating(post.getStar2_avg());
-        binding.start3Star.setRating(post.getStar3_avg());
-        binding.start4Star.setRating(post.getStar4_avg());
+        binding.cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     public void selectSinnerItem(){
@@ -107,7 +102,8 @@ public class PostReviewActivity extends AppCompatActivity {
         viewModel.getRecentOrderReviews().observe(this, new Observer<ArrayList<Review>>() {
             @Override
             public void onChanged(ArrayList<Review> reviews) {
-                if(reviews!=null){
+                binding.reviewCount.setText("리뷰 "+reviews.size());
+                if(reviews.size()!=0){
                     adapter=new ReviewAdapter(getApplicationContext(),reviews);
                     binding.recyclerview.setAdapter(adapter);
                     clickReview();
@@ -117,11 +113,26 @@ public class PostReviewActivity extends AppCompatActivity {
         viewModel.getPopularOrderReviews().observe(this, new Observer<ArrayList<Review>>() {
             @Override
             public void onChanged(ArrayList<Review> reviews) {
-                if(reviews!=null){
+                if(reviews.size()!=0){
                     adapter=new ReviewAdapter(getApplicationContext(),reviews);
                     binding.recyclerview.setAdapter(adapter);
                     clickReview();
                 }
+            }
+        });
+        viewModel.getStarMutableLiveData().observe(this, new Observer<Star>() {
+            @Override
+            public void onChanged(Star star) {
+                binding.reviewAvg.setText(Float.toString(star.getTotal_star_avg()));
+                binding.totalStar.setRating(star.getTotal_star_avg());
+                binding.star1.setText(Float.toString(star.getStar1_avg()));
+                binding.star2.setText(Float.toString(star.getStar2_avg()));
+                binding.star3.setText(Float.toString(star.getStar3_avg()));
+                binding.star4.setText(Float.toString(star.getStar4_avg()));
+                binding.start1Star.setRating(star.getStar1_avg());
+                binding.start2Star.setRating(star.getStar2_avg());
+                binding.start3Star.setRating(star.getStar3_avg());
+                binding.start4Star.setRating(star.getStar4_avg());
             }
         });
     }
@@ -161,21 +172,26 @@ public class PostReviewActivity extends AppCompatActivity {
 
     public void dialog(int pk) {
         AlertDialog.Builder msgBuilder = new AlertDialog.Builder(this)
-                .setTitle("삭제")
-                .setMessage("삭제하시겠습니까?")
-                .setPositiveButton("예", new DialogInterface.OnClickListener() {
+                .setMessage("정말 삭제하시겠습니까?")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override public void onClick(DialogInterface dialogInterface, int i) {
                         viewModel.deleteComment(pk);
                         viewModel.loadReviews(postId,"recent");
                         viewModel.loadReviews(postId,"popular");
                     }
                 })
-                .setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
                     @Override public void onClick(DialogInterface dialogInterface, int i) {
 
                     }
                 });
         AlertDialog msgDlg = msgBuilder.create();
+        msgDlg.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override public void onShow(DialogInterface arg0) {
+                msgDlg.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#5f51ef"));
+                msgDlg.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#5f51ef"));
+            }
+        });
         msgDlg.show();
     }
 

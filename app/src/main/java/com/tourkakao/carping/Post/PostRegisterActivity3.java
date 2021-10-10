@@ -24,19 +24,28 @@ public class PostRegisterActivity3 extends AppCompatActivity {
 
         initLayout();
 
-        binding.completionButton.setOnClickListener(new View.OnClickListener() {
+        binding.completionButton.setOnClickListener(clickListener);
+        binding.rightArrow.setOnClickListener(clickListener);
+        binding.cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(context, PostWriteActivity.class);
-                String channel=getIntent().getStringExtra("channel");
-                String openchat=getIntent().getStringExtra("openchat");
-                intent.putExtra("channel",channel);
-                intent.putExtra("openchat",openchat);
-                startActivity(intent);
                 finish();
             }
         });
     }
+
+    public View.OnClickListener clickListener=new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent=new Intent(context, PostWriteActivity.class);
+            String channel=getIntent().getStringExtra("channel");
+            String openchat=getIntent().getStringExtra("openchat");
+            intent.putExtra("channel",channel);
+            intent.putExtra("openchat",openchat);
+            startActivity(intent);
+            finish();
+        }
+    };
 
     public void initLayout(){
         Glide.with(context).load(R.drawable.cancel_img).into(binding.cancel);

@@ -7,18 +7,24 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -56,6 +62,8 @@ public class PostSettingActivity extends AppCompatActivity {
     private boolean addCheck;
     private int price;
     private PostSearchViewModel viewModel;
+    private PostWriteActivity postWriteActivity;
+    private  Toast myToast;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +73,7 @@ public class PostSettingActivity extends AppCompatActivity {
 
         viewModel =new ViewModelProvider(this).get(PostSearchViewModel.class);
         viewModel.setContext(this);
+        postWriteActivity = (PostWriteActivity)PostWriteActivity.postWriteActivity;
 
         Glide.with(context).load(R.drawable.fee_terms).into(binding.feeTerms);
         binding.premiumArea.setVisibility(View.GONE);
@@ -72,34 +81,38 @@ public class PostSettingActivity extends AppCompatActivity {
         checkWriteAll();
         selectSinnerItem();
 
+        Glide.with(context).load(R.drawable.cancel_img).into(binding.back);
+        binding.back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog();
+            }
+        });
         binding.completionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(addCheck&&!((price>0&&price<=20000)&&price%100==0)){
-                    Toast myToast = Toast.makeText(getApplicationContext(),"포인트는 0포인트 초과 20000포인트 이하 100단위로 입력해주세요", Toast.LENGTH_SHORT);
+                if(addCheck&&!(price%100==0)){
+                    myToast = Toast.makeText(getApplicationContext(),"가격은 100단위로 입력해주세요", Toast.LENGTH_SHORT);
                     myToast.show();
                     return;
                 }
                 if(!checkAll()){
-                    Toast myToast = Toast.makeText(getApplicationContext(),"모든 항목을 입력해주세요", Toast.LENGTH_SHORT);
+                    myToast = Toast.makeText(getApplicationContext(),"모든 항목을 입력해주세요", Toast.LENGTH_SHORT);
                     myToast.show();
                     return;
                 }
                 post();
-                //Intent intent=new Intent(context, PostDetailActivity.class);
-                //startActivity(intent);
-                finish();
             }
         });
         viewModel.getPriceInfoMutableLiveData().observe(this, new Observer<PriceInfo>() {
             @Override
             public void onChanged(PriceInfo priceInfo) {
-                binding.priceText.setText(priceInfo.getPrice());
-                binding.tradeFee.setText(priceInfo.getTrade_fee());
-                binding.platformFee.setText(priceInfo.getPlatform_fee());
-                binding.withholdingTax.setText(priceInfo.getWithholding_tax());
-                binding.vat.setText(priceInfo.getVat());
-                binding.finalPoint.setText(priceInfo.getFinal_point());
+                binding.priceText.setText(priceInfo.getPrice()+"");
+                binding.tradeFee.setText(priceInfo.getTrade_fee()+"");
+                binding.platformFee.setText(priceInfo.getPlatform_fee()+"");
+                binding.withholdingTax.setText(priceInfo.getWithholding_tax()+"");
+                binding.vat.setText(priceInfo.getVat()+"");
+                binding.finalPoint.setText(priceInfo.getFinal_point()+"");
             }
         });
     }
@@ -107,14 +120,14 @@ public class PostSettingActivity extends AppCompatActivity {
     public void selectSinnerItem(){
         categorySpinner=binding.categorySpinner;
         bankSpinner=binding.bankSpinner;
-        categoryList= Arrays.asList(getResources().getStringArray(R.array.post_category));
-        ArrayAdapter<String> spinner_adapter=new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,categoryList);
+        ArrayAdapter<?> spinner_adapter = ArrayAdapter.createFromResource(
+                this, R.array.post_category, R.layout.spinner_item);
         spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(spinner_adapter);
         categorySpinner.setOnItemSelectedListener(categorySpinnerListener);
         categorySpinner.setSelection(0);
-        bankList= Arrays.asList(getResources().getStringArray(R.array.bank));
-        ArrayAdapter<String> spinner_adapter2=new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,bankList);
+        ArrayAdapter<?> spinner_adapter2 = ArrayAdapter.createFromResource(
+                this, R.array.bank, R.layout.spinner_item);
         spinner_adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         bankSpinner.setAdapter(spinner_adapter2);
         bankSpinner.setOnItemSelectedListener(bankSpinnerListener);
@@ -191,6 +204,10 @@ public class PostSettingActivity extends AppCompatActivity {
                 }
                 else{
                     price=Integer.parseInt(binding.price.getText().toString());
+                    if(price>20000){
+                        price=20000;
+                        binding.price.setText("20000");
+                    }
                     viewModel.loadCalcResult(price);
                     priceCheck=true;
                 }
@@ -275,6 +292,31 @@ public class PostSettingActivity extends AppCompatActivity {
         });
     }
 
+    public void dialog() {
+        AlertDialog.Builder msgBuilder = new AlertDialog.Builder(this)
+                .setTitle("정말 나가시겠습니까?")
+                .setMessage("작성한 포스트는 저장되지 않습니다")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialogInterface, int i) {
+                        postWriteActivity.finish();
+                        finish();
+                    }
+                })
+                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        AlertDialog msgDlg = msgBuilder.create();
+        msgDlg.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override public void onShow(DialogInterface arg0) {
+                msgDlg.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#5f51ef"));
+                msgDlg.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#5f51ef"));
+            }
+        });
+        msgDlg.show();
+    }
+
     public boolean checkAll(){
         if(!addCheck) {
             if (categoryCheck && introCheck && recommendCheck && radioCheck)
@@ -282,7 +324,7 @@ public class PostSettingActivity extends AppCompatActivity {
         }
         else{
             if (categoryCheck && introCheck && recommendCheck && radioCheck
-            && bankCheck && accountCheck && priceCheck)
+                    && bankCheck && accountCheck && priceCheck)
                 return true;
         }
         return false;
@@ -395,20 +437,45 @@ public class PostSettingActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(@NonNull CommonClass commonClass) {
                         if(commonClass.getCode()==200) {
-                            Toast myToast = Toast.makeText(getApplicationContext(),"작성 완료", Toast.LENGTH_SHORT);
-                            myToast.show();
-                            finish();
+//                            myToast = Toast.makeText(getApplicationContext(),"작성 성공", Toast.LENGTH_SHORT);
+//                            myToast.show();
+                            completeDialog();
                         }
                         else{
-                            System.out.println(commonClass.getCode()+commonClass.getError_message());
-                            Toast myToast = Toast.makeText(getApplicationContext(),"작성 실패", Toast.LENGTH_SHORT);
+                            System.out.println("포스트 작성 실패"+commonClass.getCode()+commonClass.getError_message());
+                            myToast = Toast.makeText(getApplicationContext(),"작성 실패. 문의해주세요", Toast.LENGTH_SHORT);
                             myToast.show();
+                            postWriteActivity.finish();
+                            finish();
                         }
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
+                        postWriteActivity.finish();
+                        finish();
+                        System.out.println("작성하기 오류"+e.getMessage());
+                        myToast = Toast.makeText(getApplicationContext(),"작성 오류. 문의해주세요", Toast.LENGTH_SHORT);
+                        myToast.show();
                     }
                 });
+    }
+
+    public void completeDialog(){
+        Dialog dialog = new Dialog(this); // Dialog 초기화
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // 타이틀 제거
+        dialog.setContentView(R.layout.post_dialog); // xml 레이아웃 파일과 연결
+        dialog.show();
+        TextView positive = dialog.findViewById(R.id.post_positive);
+        ImageView background=dialog.findViewById(R.id.post_background);
+        Glide.with(context).load(R.drawable.post_alert_background).into(background);
+        positive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                postWriteActivity.finish();
+                finish();
+            }
+        });
     }
 }

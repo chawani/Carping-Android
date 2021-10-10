@@ -44,7 +44,7 @@ public class Az_Adapter extends RecyclerView.Adapter {
             super(binding.getRoot());
             this.binding=binding;
 
-            binding.getRoot().setOnClickListener(new View.OnClickListener() {
+            binding.view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int pos=getAdapterPosition();

@@ -90,8 +90,14 @@
                         android:textSize="13sp"
                         android:textColor="#000000"
                         android:lineSpacingExtra="9.1sp"
-                        android:text="카핑앱이 무엇인가요?"/>
+                        android:text="포스트 정산금은 어떻게 받게 되나요?"/>
                 </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginHorizontal="29dp"
+                    android:text="포스트 정산금은 카핑 내부 검토 후, 거래일 기준 7영업일 이내에 신청해주신 계좌로 입금됩니다."/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
@@ -120,8 +126,14 @@
                         android:textSize="13sp"
                         android:textColor="#000000"
                         android:lineSpacingExtra="9.1sp"
-                        android:text="무료나눔 운영정책"/>
+                        android:text="포스트 발행신청은 누구나 할 수 있나요?"/>
                 </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginHorizontal="29dp"
+                    android:text="최초 가입시, 본인 인증을 해주신 분에 한하여 포스트 발행 신청이 가능합니다."/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
@@ -150,8 +162,14 @@
                         android:textSize="13sp"
                         android:textColor="#000000"
                         android:lineSpacingExtra="9.1sp"
-                        android:text="카핑스토어에서 주문하고 싶어요"/>
+                        android:text="포스트 발행신청 후 절차가 어떻게 되나요?"/>
                 </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginHorizontal="29dp"
+                    android:text="판매자의 발행 신청 후 구매자의 결제가 이루어지면 카핑 내부 검토 후에 판매자의 계좌로 각종 수수료를 제한 금액이 입금됩니다."/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
@@ -182,6 +200,12 @@
                         android:lineSpacingExtra="9.1sp"
                         android:text="에코지수가 궁금해요"/>
                 </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginHorizontal="29dp"
+                    android:text="에코지수란, 환경친화적 차박을 독려하기 위한 카핑만의 서비스로 유저의 환경친화 서비스 참여도를 수치화하여 나타낸 지수입니다. 유저들은 카핑 내부 기준에 따라 Level1에서 Level3까지의 세 단계를 부여받을 수 있습니다."/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
@@ -210,8 +234,20 @@
                         android:textSize="13sp"
                         android:textColor="#000000"
                         android:lineSpacingExtra="9.1sp"
-                        android:text="에코카핑에 대해 알려주세요"/>
+                        android:text="스토어 이용정책"/>
                 </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginHorizontal="29dp"
+                    android:text="결제\n\n1. 통장 입금 후 2시간 이내에 입금 확인 메시지를 받지 못하신 경우에는 카핑앱 카카오채널 고객센터로 연락주시기 바랍니다.\n2.통장 입금 시, 주문 금액과 입금 금액이 다른 경우, 주문 시 기재한 입금자 성함과 실제 입금자 성함이 다른 경우 등에는 배송이 지연됩니다. 이러한 경우에는 빠른 배송을 위해 카핑앱 카카오채널 고객센터로 연락주시기 바랍니다.\n3.주문 후 24시간 이내에 결제가 확인되지 않을 경우, 주문은 자동 취소됩니다."/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginHorizontal="29dp"
+                    android:text="주문 취소, 교환 및 환불\n\n1. 배송 전 주문 취소 및 변경은 불가합니다. 신중히 주문해주시기를 바랍니다.\n2. 제품 수령 후 교환은 불가하나, 환불은 제품에 하자 및 분량이 있는 경우에만 가능합니다. 단순 변심에 의한 환불은 불가합니다.\n3. 카핑앱 고객센터에서 반품 신청 승인 후 {택배수거신청}은 카핑앱에서 해드립니다.\n4. 상품의 마감 처리가 미흡한 경우 (예: 실밥, 본드자국, 초크자국, 박음질 불균형, 지퍼의 퍽퍽함, 단추 구멍이 완벽히 뚫리지 않은 경우 등)은 상품의 하자 또는 불량에 해당되지 않습니다.\n5. 컴퓨터 모니터 및 스마트폰 화면 등의 차이로 인해 실물과 차이가 있을 수 있기 때문에 상품의 하자 또는 불량에 해당되지 않습니다.\n6. 상품과 관계없는 케이스, 포장지 등의 파손은 상품의 하자 또는 불량에 해당되지 않습니다.\n\n상품문의, 결제 외 주문관련 문의: 카핑앱 고객센터\n*운영시간: 00:00~24:00 연중무휴\n*대표번호: 010-6630-2492\n*카카오톡 채널(플러스친구): http://pf.kakao.com/_Cnxdvs"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
@@ -240,159 +276,14 @@
                         android:textSize="13sp"
                         android:textColor="#000000"
                         android:lineSpacingExtra="9.1sp"
-                        android:text="스토어 이용정책"/>
+                        android:text="유료포스트 환불정책"/>
                 </LinearLayout>
-                <View
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="#e3e3e3"/>
-                <LinearLayout
-                    android:id="@+id/q7"
-                    android:paddingVertical="15dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/spoqa_han_sans_neo"
-                        android:textStyle="normal"
-                        android:textSize="13sp"
-                        android:textColor="#9a9a9a"
-                        android:lineSpacingExtra="9.1sp"
-                        android:text="Q."/>
-                    <TextView
-                        android:layout_marginLeft="16dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/spoqa_han_sans_neo"
-                        android:textStyle="normal"
-                        android:textSize="13sp"
-                        android:textColor="#000000"
-                        android:lineSpacingExtra="9.1sp"
-                        android:text="포스트 발행 신청 후 절차가 어떻게 되나요?"/>
-                </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="#e3e3e3"/>
-                <LinearLayout
-                    android:id="@+id/q8"
-                    android:paddingVertical="15dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/spoqa_han_sans_neo"
-                        android:textStyle="normal"
-                        android:textSize="13sp"
-                        android:textColor="#9a9a9a"
-                        android:lineSpacingExtra="9.1sp"
-                        android:text="Q."/>
-                    <TextView
-                        android:layout_marginLeft="16dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/spoqa_han_sans_neo"
-                        android:textStyle="normal"
-                        android:textSize="13sp"
-                        android:textColor="#000000"
-                        android:lineSpacingExtra="9.1sp"
-                        android:text="스토어 결제방식은 어떻게 되나요?"/>
-                </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="#e3e3e3"/>
-                <LinearLayout
-                    android:id="@+id/q9"
-                    android:paddingVertical="15dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/spoqa_han_sans_neo"
-                        android:textStyle="normal"
-                        android:textSize="13sp"
-                        android:textColor="#9a9a9a"
-                        android:lineSpacingExtra="9.1sp"
-                        android:text="Q."/>
-                    <TextView
-                        android:layout_marginLeft="16dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/spoqa_han_sans_neo"
-                        android:textStyle="normal"
-                        android:textSize="13sp"
-                        android:textColor="#000000"
-                        android:lineSpacingExtra="9.1sp"
-                        android:text="포스트 발행신청은 누구나 할 수 있나요?"/>
-                </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="#e3e3e3"/>
-                <LinearLayout
-                    android:id="@+id/q10"
-                    android:paddingVertical="15dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/spoqa_han_sans_neo"
-                        android:textStyle="normal"
-                        android:textSize="13sp"
-                        android:textColor="#9a9a9a"
-                        android:lineSpacingExtra="9.1sp"
-                        android:text="Q."/>
-                    <TextView
-                        android:layout_marginLeft="16dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/spoqa_han_sans_neo"
-                        android:textStyle="normal"
-                        android:textSize="13sp"
-                        android:textColor="#000000"
-                        android:lineSpacingExtra="9.1sp"
-                        android:text="포스트 정산금은 어떻게 받게되나요?"/>
-                </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="#e3e3e3"/>
-                <LinearLayout
-                    android:id="@+id/q11"
+                    android:layout_height="match_parent"
                     android:layout_marginBottom="57dp"
-                    android:paddingVertical="15dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/spoqa_han_sans_neo"
-                        android:textStyle="normal"
-                        android:textSize="13sp"
-                        android:textColor="#9a9a9a"
-                        android:lineSpacingExtra="9.1sp"
-                        android:text="Q."/>
-                    <TextView
-                        android:layout_marginLeft="16dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/spoqa_han_sans_neo"
-                        android:textStyle="normal"
-                        android:textSize="13sp"
-                        android:textColor="#000000"
-                        android:lineSpacingExtra="9.1sp"
-                        android:text="카핑에서 지켜야 할 매너"/>
-                </LinearLayout>
+                    android:layout_marginHorizontal="29dp"
+                    android:text="해당 포스트는 결제시 영구히 열람하실 수 있으나, 1회 이상 열람시 환불되지 않습니다."/>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <RatingBar
+                    android:progressTint="#5f51ef"
                     android:id="@+id/star"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -109,9 +110,9 @@
                     android:fontFamily="@font/spoqa_han_sans_neo"
                     android:textStyle="normal"
                     android:textSize="10sp"
-                    android:textColor="#5f51ef"
+                    android:textColor="#bab9ba"
                     android:gravity="end"
-                    android:layout_marginLeft="16dp"
+                    android:layout_marginLeft="20dp"
                     android:text="삭제"/>
             </LinearLayout>
 

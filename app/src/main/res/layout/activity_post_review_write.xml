@@ -27,15 +27,15 @@
                 android:text="리뷰 쓰기"
                 />
             <ImageView
-                android:id="@+id/write_button"
-                android:layout_width="19dp"
+                android:id="@+id/cancel_button"
+                android:layout_width="16dp"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:layout_marginRight="22dp"
                 android:layout_gravity="left"/>
         </androidx.appcompat.widget.Toolbar>
 
         <RatingBar
+            android:progressTint="#5f51ef"
             android:id="@+id/total_rating"
             android:layout_marginTop="18dp"
             android:layout_width="wrap_content"
@@ -46,13 +46,14 @@
             style="@style/Widget.AppCompat.RatingBar.Indicator"
             android:layout_gravity="center"/>
         <TextView
+            android:id="@+id/review_comment"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/spoqa_han_sans_neo"
             android:textStyle="bold"
             android:textSize="15sp"
-            android:textColor="#000000"
+            android:textColor="#999999"
             android:lineSpacingExtra="8.3sp"
             android:gravity="center_horizontal"
             android:text="이 포스트를 평가해주세요!"
@@ -77,6 +78,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
             <RatingBar
+                android:progressTint="#5f51ef"
                 android:id="@+id/star1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -104,6 +106,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
             <RatingBar
+                android:progressTint="#5f51ef"
                 android:id="@+id/star2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -131,6 +134,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
             <RatingBar
+                android:progressTint="#5f51ef"
                 android:id="@+id/star3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -158,6 +162,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
             <RatingBar
+                android:progressTint="#5f51ef"
                 android:id="@+id/star4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -192,8 +197,8 @@
                 android:fontFamily="@font/spoqa_han_sans_neo"
                 android:textStyle="normal"
                 android:textSize="13sp"
-                android:textColor="#999999"
-                tools:text="0/300"/>
+                android:textColor="@color/black"
+                android:text="0/300"/>
         </LinearLayout>
         <EditText
             android:maxLength="300"
@@ -210,7 +215,7 @@
             android:lineSpacingExtra="12sp"
             android:hint="다른분들에게 도움이 될 수 있는 클린한 리뷰를 작성해주세요!"
             android:gravity="top"
-            android:padding="14dp"
+            android:padding="16dp"
             android:background="@drawable/edit_text_box_img"/>
     </LinearLayout>
     <TextView

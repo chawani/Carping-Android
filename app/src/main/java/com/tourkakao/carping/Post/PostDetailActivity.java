@@ -7,14 +7,19 @@ import androidx.lifecycle.ViewModelProvider;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.tourkakao.carping.EcoCarping.Activity.EcoCarpingEditActivity;
 import com.tourkakao.carping.Post.DTO.PostDetail;
 import com.tourkakao.carping.Post.ViewModel.PostDetailViewModel;
 import com.tourkakao.carping.R;
@@ -28,6 +33,7 @@ public class PostDetailActivity extends AppCompatActivity {
     private int author_id;
     private int post_id;
     private PostInfoActivity postInfoActivity;
+    private int otherPostId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,33 +45,80 @@ public class PostDetailActivity extends AppCompatActivity {
         viewModel =new ViewModelProvider(this).get(PostDetailViewModel.class);
         viewModel.setContext(this);
 
+        initLayout();
         settingLayout();
 
-        binding.privateDeleteButton.setOnClickListener(new View.OnClickListener() {
+        binding.other.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialog();
+                Intent intent=new Intent(context, PostInfoActivity.class);
+                intent.putExtra("pk",otherPostId);
+                startActivity(intent);
             }
         });
     }
 
+    void initLayout(){
+        Glide.with(context).load(R.drawable.back).into(binding.back);
+        binding.back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        binding.privateDeleteButton.setVisibility(View.GONE);
+        Glide.with(context).load(R.drawable.list_show_btn).into(binding.privateDeleteButton);
+        binding.privateDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                registerForContextMenu(view);
+                view.showContextMenu();
+                unregisterForContextMenu(view);
+            }
+        });
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.detail_page_delete, menu);
+    }
+
+    public boolean onContextItemSelected(MenuItem item)
+    {
+        switch(item.getItemId())
+        {
+            case R.id.delete:
+                showDialog();
+                return true;
+        }
+
+        return super.onContextItemSelected(item);
+    }
+
     void showDialog() {
         AlertDialog.Builder msgBuilder = new AlertDialog.Builder(this)
-                .setTitle("삭제")
-                .setMessage("삭제하시겠습니까?")
-                .setPositiveButton("예", new DialogInterface.OnClickListener() {
+                .setMessage("정말 삭제하시겠습니까?")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override public void onClick(DialogInterface dialogInterface, int i) {
                         viewModel.deletePost(post_id);
                         postInfoActivity.finish();
                         finish();
                     }
                 })
-                .setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
                     @Override public void onClick(DialogInterface dialogInterface, int i) {
 
                     }
                 });
         AlertDialog msgDlg = msgBuilder.create();
+        msgDlg.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override public void onShow(DialogInterface arg0) {
+                msgDlg.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#5f51ef"));
+                msgDlg.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#5f51ef"));
+            }
+        });
         msgDlg.show();
     }
 
@@ -78,8 +131,8 @@ public class PostDetailActivity extends AppCompatActivity {
             public void onChanged(PostDetail postDetail) {
                 post_id=postDetail.getId();
                 author_id =getIntent().getIntExtra("author_id",-1);
-                if(current_user!= author_id){
-                    binding.privateDeleteButton.setVisibility(View.GONE);
+                if(current_user== author_id){
+                    binding.privateDeleteButton.setVisibility(View.VISIBLE);
                 }
                 Glide.with(context).load(postDetail.getThumbnail()).into(binding.thumbnail);
                 binding.thumbnail.setColorFilter(Color.parseColor("#595959"), PorterDuff.Mode.MULTIPLY);
@@ -164,11 +217,11 @@ public class PostDetailActivity extends AppCompatActivity {
                         .into(binding.bottomProfile);
                 binding.bottomName.setText(postDetail.getAuthor_name());
                 binding.channelIntroduce.setText(postDetail.getAuthor_comment());
+                otherPostId=postDetail.getOther_post().getId();
                 Glide.with(context).load(postDetail.getOther_post().getThumbnail())
                         .transform(new CenterCrop(), new RoundedCorners(30))
                         .into(binding.recommend);
                 binding.recommend.setColorFilter(Color.parseColor("#595959"), PorterDuff.Mode.MULTIPLY);
-                System.out.println("페이 타입"+postDetail.getOther_post().getPay_type());
                 if(postDetail.getOther_post().getPay_type()==0){
                     Glide.with(context).load(R.drawable.free_mark).into(binding.payTypeImg);
                 }

@@ -85,8 +85,6 @@ public class GoogleLogin implements LoginContract.GoogleLogin{
                             Google_Access_Token data=response.body();
                             System.out.println(data.getAccess_token());
                             setting_googlelogin_callback(data.getAccess_token());
-                            loginActivity.startActivity(new Intent(context, MainActivity.class));
-                            loginActivity.finish();
                         }else{
                             System.out.println("응답 코드:"+response.code());
                         }
@@ -118,6 +116,8 @@ public class GoogleLogin implements LoginContract.GoogleLogin{
                     SharedPreferenceManager.getInstance(context).setString("profile", response.body().getUser().getProfile().getImage());
                     SharedPreferenceManager.getInstance(context).setString("email", response.body().getUser().getEmail());
                     SharedPreferenceManager.getInstance(context).setString("username", response.body().getUser().getUsername());
+                    loginActivity.finish();
+                    context.startActivity(new Intent(context, MainActivity.class));
                 }else{
                     System.out.println("응답 코드:"+response.code());
                 }

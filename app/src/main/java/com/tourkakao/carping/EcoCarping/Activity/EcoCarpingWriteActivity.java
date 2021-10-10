@@ -507,7 +507,7 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
                             finish();
                         }
                         else{
-                            myToast = Toast.makeText(getApplicationContext(),"작성 실패. 카핑 채널로 문의해주세요", Toast.LENGTH_SHORT);
+                            myToast = Toast.makeText(getApplicationContext(),"작성 실패. 문의해주세요", Toast.LENGTH_SHORT);
                             myToast.show();
                         }
                     }

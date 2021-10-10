@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,24 +20,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.tourkakao.carping.EcoCarping.Activity.EcoCarpingDetailActivity;
-import com.tourkakao.carping.EcoCarping.Adapter.CommentAdapter;
 import com.tourkakao.carping.Post.Adapter.ReviewAdapter;
 import com.tourkakao.carping.Post.DTO.PostInfoDetail;
-import com.tourkakao.carping.Post.DTO.PostListItem;
-import com.tourkakao.carping.Post.DTO.Review;
-import com.tourkakao.carping.Post.PostDetailActivity;
 import com.tourkakao.carping.Post.PostReviewActivity;
 import com.tourkakao.carping.Post.ViewModel.PostDetailViewModel;
+import com.tourkakao.carping.Post.ViewModel.PostReviewViewModel;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
-import com.tourkakao.carping.databinding.PostIntroduceFragmentBinding;
 import com.tourkakao.carping.databinding.PostReviewFragmentBinding;
 
 public class ReviewFragment extends Fragment {
     private PostReviewFragmentBinding binding;
     private Context context;
-    private PostDetailViewModel viewModel;
+    private PostDetailViewModel detailViewModel;
+    private PostReviewViewModel reviewViewModel;
     private ReviewAdapter reviewAdapter;
     private PostInfoDetail post;
     @Nullable
@@ -45,8 +42,10 @@ public class ReviewFragment extends Fragment {
         binding = PostReviewFragmentBinding.inflate(inflater, container, false);
         context = getActivity().getApplicationContext();
 
-        viewModel =new ViewModelProvider(requireActivity()).get(PostDetailViewModel.class);
-        viewModel.setContext(context);
+        detailViewModel =new ViewModelProvider(requireActivity()).get(PostDetailViewModel.class);
+        detailViewModel.setContext(context);
+        reviewViewModel=new ViewModelProvider(requireActivity()).get(PostReviewViewModel.class);
+        reviewViewModel.setContext(context);
 
         binding.reviews.setLayoutManager(new LinearLayoutManager(context));
         Glide.with(context).load(R.drawable.review_more_button).into(binding.reviewMore);
@@ -63,7 +62,7 @@ public class ReviewFragment extends Fragment {
                 .transform(new CenterCrop(), new RoundedCorners(100))
                 .into(binding.profile);
         binding.currentUser.setText(userName);
-        viewModel.getPostInfo().observe(this, new Observer<PostInfoDetail>() {
+        detailViewModel.getPostInfo().observe(this, new Observer<PostInfoDetail>() {
             @Override
             public void onChanged(PostInfoDetail postInfoDetail) {
                 post=postInfoDetail;
@@ -87,6 +86,7 @@ public class ReviewFragment extends Fragment {
                         }
                     });
                     binding.reviews.setAdapter(reviewAdapter);
+                    likeReview();
                 }
             }
         });
@@ -97,28 +97,49 @@ public class ReviewFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(context, PostReviewActivity.class);
-                intent.putExtra("post", post);
+                intent.putExtra("postId", post.getId());
                 startActivity(intent);
+            }
+        });
+    }
+
+    void likeReview(){
+        reviewAdapter.setOnItemLikeClickListener(new ReviewAdapter.OnLikeItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                if(reviewAdapter.getLike(position)){
+                    reviewViewModel.cancelLike(reviewAdapter.getId(position));
+                    reviewAdapter.cancelLike(position);
+                }else{
+                    reviewViewModel.pushLike(reviewAdapter.getId(position));
+                    reviewAdapter.setLike(position);
+                }
+                reviewAdapter.notifyDataSetChanged();
             }
         });
     }
 
     void showDialog(int pk) {
         AlertDialog.Builder msgBuilder = new AlertDialog.Builder(getActivity())
-                .setTitle("삭제")
-                .setMessage("삭제하시겠습니까?")
-                .setPositiveButton("예", new DialogInterface.OnClickListener() {
+                .setMessage("정말 삭제하시겠습니까?")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override public void onClick(DialogInterface dialogInterface, int i) {
-                        viewModel.deleteComment(pk);
-                        viewModel.loadInfoDetail();
+                        detailViewModel.deleteComment(pk);
+                        detailViewModel.loadInfoDetail();
                     }
                 })
-                .setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
                     @Override public void onClick(DialogInterface dialogInterface, int i) {
 
                     }
                 });
         AlertDialog msgDlg = msgBuilder.create();
+        msgDlg.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override public void onShow(DialogInterface arg0) {
+                msgDlg.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#5f51ef"));
+                msgDlg.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#5f51ef"));
+            }
+        });
         msgDlg.show();
     }
 }

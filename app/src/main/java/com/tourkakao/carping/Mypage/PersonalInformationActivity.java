@@ -187,6 +187,7 @@ public class PersonalInformationActivity extends AppCompatActivity implements Co
                             finish();
                         }
                         else {
+                            System.out.println("프로필 수정"+commonClass.getCode()+commonClass.getError_message());
                             myToast = Toast.makeText(getApplicationContext(),"수정 실패. 카핑 채널로 문의해주세요", Toast.LENGTH_SHORT);
                             myToast.show();
                             finish();

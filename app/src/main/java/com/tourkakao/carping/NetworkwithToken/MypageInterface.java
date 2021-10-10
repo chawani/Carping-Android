@@ -44,4 +44,7 @@ public interface MypageInterface {
 
     @POST("mypage/post-status")
     Single<CommonClass> getPostStatus(@Body HashMap<String,Object> map);
+
+    @POST("accounts/withdrawal")
+    Single<CommonClass> withdrawAccount();
 }

@@ -1,24 +1,25 @@
 package com.tourkakao.carping.MypageMainActivities.DTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ScrapData {
-    List campsite;
-    List autocamp;
+    ArrayList<Campsite> campsite;
+    ArrayList<MyCarpingPost> autocamp;
 
-    public List getCampsite() {
+    public ArrayList<Campsite> getCampsite() {
         return campsite;
     }
 
-    public void setCampsite(List campsite) {
+    public void setCampsite(ArrayList<Campsite> campsite) {
         this.campsite = campsite;
     }
 
-    public List getAutocamp() {
+    public ArrayList<MyCarpingPost> getAutocamp() {
         return autocamp;
     }
 
-    public void setAutocamp(List autocamp) {
+    public void setAutocamp(ArrayList<MyCarpingPost> autocamp) {
         this.autocamp = autocamp;
     }
 }

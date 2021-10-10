@@ -25,6 +25,14 @@ public class KeywordAdapter extends RecyclerView.Adapter<KeywordAdapter.ViewHold
     private String type="";
     private ActivityPostSearchBinding parentBinding;
 
+    public interface OnItemClickListener {
+        void onItemClick(View v, int position) ;
+    }
+    private KeywordAdapter.OnItemClickListener listener = null ;
+    public void setOnItemClickListener(KeywordAdapter.OnItemClickListener listener) {
+        this.listener = listener ;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder{
         private PostSearchKeywordItemBinding binding;
         public ViewHolder(PostSearchKeywordItemBinding binding){
@@ -42,6 +50,17 @@ public class KeywordAdapter extends RecyclerView.Adapter<KeywordAdapter.ViewHold
                 @Override
                 public void onClick(View view) {
                     parentBinding.searchText.setText(binding.keyword.getText());
+                }
+            });
+            binding.delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int pos = getAdapterPosition() ;
+                    if (pos != RecyclerView.NO_POSITION) {
+                        if (listener != null) {
+                            listener.onItemClick(view, pos);
+                        }
+                    }
                 }
             });
         }
@@ -68,5 +87,9 @@ public class KeywordAdapter extends RecyclerView.Adapter<KeywordAdapter.ViewHold
     @Override
     public int getItemCount() {
         return items==null?0:items.size();
+    }
+
+    public String getItem(int pos){
+        return  items.get(pos);
     }
 }

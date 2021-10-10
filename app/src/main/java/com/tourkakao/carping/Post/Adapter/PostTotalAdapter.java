@@ -63,7 +63,7 @@ public class PostTotalAdapter extends RecyclerView.Adapter<PostTotalAdapter.View
             if (item.isIs_liked()) {
                 Glide.with(context).load(R.drawable.is_pushed_like).into(binding.like);
             }else{
-                Glide.with(context).load(R.drawable.like_mark).into(binding.like);
+                Glide.with(context).load(R.drawable.like_mark_white).into(binding.like);
             }
             Glide.with(context).load(item.getThumbnail()).into(binding.image);
             binding.title.setText(item.getTitle());

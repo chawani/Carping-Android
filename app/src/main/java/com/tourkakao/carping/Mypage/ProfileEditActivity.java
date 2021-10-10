@@ -2,6 +2,7 @@ package com.tourkakao.carping.Mypage;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -11,8 +12,10 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,6 +32,7 @@ import com.google.gson.Gson;
 import com.tourkakao.carping.EcoCarping.Activity.EcoCarpingWriteActivity;
 import com.tourkakao.carping.Gallerypermission.Gallery_setting;
 import com.tourkakao.carping.Home.HomeViewModel.MypageViewModel;
+import com.tourkakao.carping.Login.LoginActivity;
 import com.tourkakao.carping.Mypage.DTO.Profile;
 import com.tourkakao.carping.NetworkwithToken.CommonClass;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
@@ -40,6 +44,7 @@ import java.io.File;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.observers.DisposableSingleObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.MediaType;
@@ -69,6 +74,13 @@ public class ProfileEditActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent=new Intent(context, PersonalInformationActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        binding.breakAway.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                breakDialog();
             }
         });
 
@@ -105,6 +117,83 @@ public class ProfileEditActivity extends AppCompatActivity {
 //                startActivityForResult(intent, 0);
             }
         });
+    }
+
+    void breakDialog() {
+        AlertDialog.Builder msgBuilder = new AlertDialog.Builder(this)
+                .setMessage("정말 탈퇴하시겠습니까?")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialogInterface, int i) {
+                        reconfirmDialog();
+                    }
+                })
+                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        AlertDialog msgDlg = msgBuilder.create();
+        msgDlg.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override public void onShow(DialogInterface arg0) {
+                msgDlg.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#5f51ef"));
+                msgDlg.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#5f51ef"));
+            }
+        });
+        msgDlg.show();
+    }
+
+    void reconfirmDialog() {
+        AlertDialog.Builder msgBuilder = new AlertDialog.Builder(this)
+                .setMessage("탈퇴하게 되면 본인이 작성했던 모든 글들에 대한 수정,삭제 권한은 없어지게됩니다.\n개인정보는 카핑에서 영구 삭제됩니다.\n그래도 탈퇴하시겠습니까?")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialogInterface, int i) {
+                        TotalApiClient.getMypageApiService(context).withdrawAccount()
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribeWith(new DisposableSingleObserver<CommonClass>() {
+                                    @Override
+                                    public void onSuccess(@NonNull CommonClass commonClass) {
+                                        if(commonClass.getCode()==200) {
+                                            finishActivities();
+                                        }
+                                        else {
+                                            System.out.println("탈퇴 오류"+commonClass.getCode()+commonClass.getError_message());
+                                            Toast myToast = Toast.makeText(getApplicationContext(),"탈퇴 실패. 문의해주세요", Toast.LENGTH_SHORT);
+                                            myToast.show();
+                                            return;
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(@NonNull Throwable e) {
+
+                                    }
+                                });
+                    }
+                })
+                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        AlertDialog msgDlg = msgBuilder.create();
+        msgDlg.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override public void onShow(DialogInterface arg0) {
+                msgDlg.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#5f51ef"));
+                msgDlg.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#5f51ef"));
+            }
+        });
+        msgDlg.show();
+    }
+
+    void finishActivities(){
+        SharedPreferences pref = getSharedPreferences("carping", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.clear();
+        editor.commit();
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     public void updateProfileImg(List datas){

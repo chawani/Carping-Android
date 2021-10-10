@@ -69,7 +69,7 @@ public class PostCategoryAdapter extends BaseAdapter {
         if (item.isIs_liked()) {
             Glide.with(context).load(R.drawable.is_pushed_like).into(binding.like);
         }else{
-            Glide.with(context).load(R.drawable.like_mark).into(binding.like);
+            Glide.with(context).load(R.drawable.like_mark_white).into(binding.like);
         }
         if(item.getPay_type()==0) {
             Glide.with(context).load(R.drawable.free_mark).into(binding.premiumImage);

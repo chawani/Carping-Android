@@ -96,6 +96,7 @@ public class PhoneCertificationActivity extends AppCompatActivity {
                                     binding.certificationArea.setVisibility(View.VISIBLE);
                                     Toast myToast = Toast.makeText(getApplicationContext(),"요청 완료", Toast.LENGTH_SHORT);
                                     myToast.show();
+                                    timerCheck=false;
                                     timer();
                                 }
                                 else {

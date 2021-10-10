@@ -5,9 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -21,9 +26,12 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.tourkakao.carping.EcoCarping.Activity.EcoCarpingWriteActivity;
+import com.tourkakao.carping.Gallerypermission.Gallery_setting;
 import com.tourkakao.carping.NetworkwithToken.CommonClass;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.R;
@@ -54,12 +62,16 @@ public class PostWriteActivity extends AppCompatActivity {
     private Toast myToast;
     private String[] uriList={"","","","","",""};
     private HashMap<String, String> map=new HashMap<>();
+    private Gallery_setting gallery_setting;
+    public static Activity postWriteActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding= ActivityPostWriteBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         context=getApplicationContext();
+        gallery_setting=new Gallery_setting(this, PostWriteActivity.this);
+        postWriteActivity=PostWriteActivity.this;
 
         initLayout();
         addImage();
@@ -75,15 +87,23 @@ public class PostWriteActivity extends AppCompatActivity {
             public void onChanged(Integer integer) {
                 if(integer==1){
                     binding.contentArea2.setVisibility(View.VISIBLE);
+                    scrollDown();
+                    changeButtonColor(checkAll());
                 }
                 if(integer==2){
                     binding.contentArea3.setVisibility(View.VISIBLE);
+                    scrollDown();
+                    changeButtonColor(checkAll());
                 }
                 if(integer==3){
                     binding.contentArea4.setVisibility(View.VISIBLE);
+                    scrollDown();
+                    changeButtonColor(checkAll());
                 }
                 if(integer==4){
                     binding.contentArea5.setVisibility(View.VISIBLE);
+                    scrollDown();
+                    changeButtonColor(checkAll());
                 }
                 if(integer>4){
                     myToast = Toast.makeText(getApplicationContext(),"더 이상 추가 할 수 없습니다", Toast.LENGTH_SHORT);
@@ -134,6 +154,37 @@ public class PostWriteActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @androidx.annotation.NonNull String[] permissions, @androidx.annotation.NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==gallery_setting.PERMISSION_GALLERY_REQUESTCODE){
+            if(grantResults.length==gallery_setting.REQUIRED_PERMISSIONS.length){
+                boolean check_result=true;
+                for(int result: grantResults){
+                    if(result== PackageManager.PERMISSION_DENIED){
+                        check_result=false;
+                        break;
+                    }
+                }
+                if(check_result){
+                    Toast.makeText(context, "갤러리 접근 권한이 설정되었습니다.", Toast.LENGTH_SHORT).show();
+                }else{
+                    AlertDialog.Builder builder=new AlertDialog.Builder(context);
+                    builder.setTitle("갤러리 접근 권한 설정 알림")
+                            .setMessage("서비스 사용을 위해서는 갤러리 접근 권한 설정이 필요합니다. [설정]->[앱]에서 갤러리 접근 권한을 승인해주세요")
+                            .setCancelable(false)
+                            .setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    builder.create().show();
+                }
+            }
+        }
+    }
+
     public boolean checkAll(){
         boolean checkTotal=true;
         if(subtitleCheck[0]) {
@@ -163,6 +214,10 @@ public class PostWriteActivity extends AppCompatActivity {
         }
         if(!titleCheck||!thumbnailCheck)
             checkTotal=false;
+        for(int i=0;i<=addCount.getValue();i++){
+            if(!subtitleCheck[i])
+                checkTotal=false;
+        }
         return checkTotal;
     }
 
@@ -176,6 +231,15 @@ public class PostWriteActivity extends AppCompatActivity {
             binding.completionButton.setBackgroundColor(Color.BLACK);
         else
             binding.completionButton.setBackgroundColor(Color.parseColor("#999999"));
+    }
+
+    public void scrollDown(){
+        binding.scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                binding.scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+            }
+        });
     }
 
     void checkChangeText(){
@@ -453,46 +517,101 @@ public class PostWriteActivity extends AppCompatActivity {
     View.OnClickListener image1Listener=new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(intent, 1);
+            if (Build.VERSION.SDK_INT >= 23) {
+                int permission_read = context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+                int permission_write = context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                if (permission_read == PackageManager.PERMISSION_DENIED || permission_write == PackageManager.PERMISSION_DENIED) {
+                    gallery_setting.check_gallery_permission();
+                } else {
+                    Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                    galleryintent.setType("image/*");
+                    startActivityForResult(galleryintent, 1);
+                }
+            } else {
+                Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                galleryintent.setType("image/*");
+                startActivityForResult(galleryintent, 1);
+            }
         }
     };
     View.OnClickListener image2Listener=new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(intent, 2);
+            if (Build.VERSION.SDK_INT >= 23) {
+                int permission_read = context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+                int permission_write = context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                if (permission_read == PackageManager.PERMISSION_DENIED || permission_write == PackageManager.PERMISSION_DENIED) {
+                    gallery_setting.check_gallery_permission();
+                } else {
+                    Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                    galleryintent.setType("image/*");
+                    startActivityForResult(galleryintent, 2);
+                }
+            } else {
+                Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                galleryintent.setType("image/*");
+                startActivityForResult(galleryintent, 2);
+            }
         }
     };
     View.OnClickListener image3Listener=new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(intent, 3);
+            if (Build.VERSION.SDK_INT >= 23) {
+                int permission_read = context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+                int permission_write = context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                if (permission_read == PackageManager.PERMISSION_DENIED || permission_write == PackageManager.PERMISSION_DENIED) {
+                    gallery_setting.check_gallery_permission();
+                } else {
+                    Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                    galleryintent.setType("image/*");
+                    startActivityForResult(galleryintent, 3);
+                }
+            } else {
+                Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                galleryintent.setType("image/*");
+                startActivityForResult(galleryintent, 3);
+            }
         }
     };
     View.OnClickListener image4Listener=new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(intent, 4);
+            if (Build.VERSION.SDK_INT >= 23) {
+                int permission_read = context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+                int permission_write = context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                if (permission_read == PackageManager.PERMISSION_DENIED || permission_write == PackageManager.PERMISSION_DENIED) {
+                    gallery_setting.check_gallery_permission();
+                } else {
+                    Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                    galleryintent.setType("image/*");
+                    startActivityForResult(galleryintent, 4);
+                }
+            } else {
+                Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                galleryintent.setType("image/*");
+                startActivityForResult(galleryintent, 4);
+            }
         }
     };
     View.OnClickListener image5Listener=new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(intent, 5);
+            if (Build.VERSION.SDK_INT >= 23) {
+                int permission_read = context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+                int permission_write = context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                if (permission_read == PackageManager.PERMISSION_DENIED || permission_write == PackageManager.PERMISSION_DENIED) {
+                    gallery_setting.check_gallery_permission();
+                } else {
+                    Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                    galleryintent.setType("image/*");
+                    startActivityForResult(galleryintent, 5);
+                }
+            } else {
+                Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                galleryintent.setType("image/*");
+                startActivityForResult(galleryintent, 5);
+            }
         }
     };
 
@@ -503,6 +622,7 @@ public class PostWriteActivity extends AppCompatActivity {
             Uri uri = data.getData();
             uriList[0]=getPath(uri);
             Glide.with(context).load(uri).into(binding.thumbnail);
+            changeButtonColor(checkAll());
         }
         if(requestCode==1&&resultCode==RESULT_OK){
             image1Check=true;
@@ -510,6 +630,7 @@ public class PostWriteActivity extends AppCompatActivity {
             uriList[1]=getPath(uri);
             binding.image1.setVisibility(View.GONE);
             Glide.with(context).load(uri).into(binding.imageChange1);
+            changeButtonColor(checkAll());
         }
         if(requestCode==2&&resultCode==RESULT_OK){
             image2Check=true;
@@ -517,6 +638,7 @@ public class PostWriteActivity extends AppCompatActivity {
             uriList[2]=getPath(uri);
             binding.image2.setVisibility(View.GONE);
             Glide.with(context).load(uri).into(binding.imageChange2);
+            changeButtonColor(checkAll());
         }
         if(requestCode==3&&resultCode==RESULT_OK){
             image3Check=true;
@@ -524,6 +646,7 @@ public class PostWriteActivity extends AppCompatActivity {
             uriList[3]=getPath(uri);
             binding.image3.setVisibility(View.GONE);
             Glide.with(context).load(uri).into(binding.imageChange3);
+            changeButtonColor(checkAll());
         }
         if(requestCode==4&&resultCode==RESULT_OK){
             image4Check=true;
@@ -531,6 +654,7 @@ public class PostWriteActivity extends AppCompatActivity {
             uriList[4]=getPath(uri);
             binding.image4.setVisibility(View.GONE);
             Glide.with(context).load(uri).into(binding.imageChange4);
+            changeButtonColor(checkAll());
         }
         if(requestCode==5&&resultCode==RESULT_OK){
             image5Check=true;
@@ -538,28 +662,11 @@ public class PostWriteActivity extends AppCompatActivity {
             uriList[5]=getPath(uri);
             binding.image5.setVisibility(View.GONE);
             Glide.with(context).load(uri).into(binding.imageChange5);
+            changeButtonColor(checkAll());
         }
     }
 
     public void settingPostData(){
-        RequestBody author_comment = RequestBody.create(MediaType.parse("text/plain"),getIntent().getStringExtra("channel"));
-        RequestBody kakao_openchat_url = RequestBody.create(MediaType.parse("text/plain"),getIntent().getStringExtra("openchat"));
-        RequestBody title = RequestBody.create(MediaType.parse("text/plain"),binding.title.getText().toString());
-        RequestBody sub_title1 = RequestBody.create(MediaType.parse("text/plain"),binding.subheading1.getText().toString());
-        RequestBody text1=RequestBody.create(MediaType.parse("text/plain"),binding.content1.getText().toString());
-        RequestBody sub_title2 = RequestBody.create(MediaType.parse("text/plain"),binding.subheading2.getText().toString());
-        RequestBody text2 = RequestBody.create(MediaType.parse("text/plain"),binding.content2.getText().toString());
-        RequestBody sub_title3 = RequestBody.create(MediaType.parse("text/plain"),binding.subheading3.getText().toString());
-        RequestBody text3=RequestBody.create(MediaType.parse("text/plain"),binding.content3.getText().toString());
-        RequestBody sub_title4 = RequestBody.create(MediaType.parse("text/plain"),binding.subheading4.getText().toString());
-        RequestBody text4 = RequestBody.create(MediaType.parse("text/plain"),binding.content4.getText().toString());
-        RequestBody sub_title5 = RequestBody.create(MediaType.parse("text/plain"),binding.subheading5.getText().toString());
-        RequestBody text5=RequestBody.create(MediaType.parse("text/plain"),binding.content5.getText().toString());
-//        RequestBody pay_type = RequestBody.create(MediaType.parse("text/plain"),);
-//        RequestBody point = RequestBody.create(MediaType.parse("text/plain"),);
-//        RequestBody info = RequestBody.create(MediaType.parse("text/plain"), );
-//        RequestBody recommend_to = RequestBody.create(MediaType.parse("text/plain"), );
-
         map.put("author_comment", getIntent().getStringExtra("channel"));
         map.put("kakao_openchat_url", getIntent().getStringExtra("openchat"));
         map.put("title", binding.title.getText().toString());
@@ -573,72 +680,6 @@ public class PostWriteActivity extends AppCompatActivity {
         map.put("text4", binding.content4.getText().toString());
         map.put("sub_title5",binding.subheading5.getText().toString());
         map.put("text5", binding.content5.getText().toString());
-//        map.put("pay_type", pay_type);
-//        map.put("point", point);
-//        map.put("info", info);
-//        map.put("recommend_to", recommend_to);
-
-//        MultipartBody.Part thumbnail=null;
-//        MultipartBody.Part image1=null;
-//        MultipartBody.Part image2=null;
-//        MultipartBody.Part image3=null;
-//        MultipartBody.Part image4=null;
-//        MultipartBody.Part image5=null;
-//
-//
-//        if(!uriList[0].equals("")) {
-//            File file = new File(uriList[0]);
-//            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-//            thumbnail = MultipartBody.Part.createFormData("thumbnail", file.getName(), requestBody);
-//        }
-//        if(!uriList[1].equals("")) {
-//            File file = new File(uriList[1]);
-//            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-//            image1 = MultipartBody.Part.createFormData("image1", file.getName(), requestBody);
-//        }
-//        if(!uriList[2].equals("")) {
-//            File file = new File(uriList[2]);
-//            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-//            image2=MultipartBody.Part.createFormData("image2", file.getName(), requestBody);
-//        }
-//        if(!uriList[3].equals("")) {
-//            File file = new File(uriList[3]);
-//            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-//            image3 = MultipartBody.Part.createFormData("image3", file.getName(), requestBody);
-//        }
-//        if(!uriList[4].equals("")) {
-//            File file = new File(uriList[4]);
-//            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-//            image4 = MultipartBody.Part.createFormData("image4", file.getName(), requestBody);
-//        }
-//        if(!uriList[5].equals("")) {
-//            File file = new File(uriList[5]);
-//            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-//            image5 = MultipartBody.Part.createFormData("image5", file.getName(), requestBody);
-//        }
-
-//        TotalApiClient.getPostApiService(getApplicationContext()).writePost(thumbnail,image1,image2,image3,image4,image5,map)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeWith(new DisposableSingleObserver<CommonClass>() {
-//                    @Override
-//                    public void onSuccess(@NonNull CommonClass commonClass) {
-//                        if(commonClass.getCode()==200) {
-//                            Toast myToast = Toast.makeText(getApplicationContext(),"작성 완료", Toast.LENGTH_SHORT);
-//                            myToast.show();
-//                            finish();
-//                        }
-//                        else{
-//                            System.out.println(commonClass.getCode()+commonClass.getError_message());
-//                            Toast myToast = Toast.makeText(getApplicationContext(),"작성 실패", Toast.LENGTH_SHORT);
-//                            myToast.show();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(@NonNull Throwable e) {
-//                    }
-//                });
     }
 
     public void initLayout(){
@@ -658,16 +699,34 @@ public class PostWriteActivity extends AppCompatActivity {
         binding.contentArea4.setVisibility(View.GONE);
         binding.contentArea5.setVisibility(View.GONE);
         addCount.setValue(0);
+        Glide.with(context).load(R.drawable.back).into(binding.back);
+        binding.back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     public void addImage(){
         binding.thumbnail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent, 0);
+                if (Build.VERSION.SDK_INT >= 23) {
+                    int permission_read = context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+                    int permission_write = context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                    if (permission_read == PackageManager.PERMISSION_DENIED || permission_write == PackageManager.PERMISSION_DENIED) {
+                        gallery_setting.check_gallery_permission();
+                    } else {
+                        Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                        galleryintent.setType("image/*");
+                        startActivityForResult(galleryintent, 0);
+                    }
+                } else {
+                    Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                    galleryintent.setType("image/*");
+                    startActivityForResult(galleryintent, 0);
+                }
             }
         });
         binding.image1.setOnClickListener(image1Listener);

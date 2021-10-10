@@ -29,8 +29,15 @@
             android:layout_height="16.7dp"
             android:layout_marginRight="16dp"
             android:layout_gravity="right"/>
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="16dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:layout_gravity="left"/>
     </androidx.appcompat.widget.Toolbar>
     <ScrollView
+        android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
@@ -50,12 +57,12 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_marginHorizontal="9dp"
                 android:id="@+id/popular_recycler"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <LinearLayout
                 android:id="@+id/beginner_total"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginHorizontal="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -67,7 +74,7 @@
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:textColor="#000000"
-                    android:text="초보에게 딱 맞아!"/>
+                    android:text="초보 차박러를 위한 포스트"/>
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -81,12 +88,12 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_marginHorizontal="9dp"
                 android:id="@+id/beginner_recycler"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <LinearLayout
                 android:id="@+id/all_of_total"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginHorizontal="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -112,12 +119,12 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_marginHorizontal="9dp"
                 android:id="@+id/all_of_recycler"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <LinearLayout
                 android:id="@+id/car_total"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginHorizontal="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -144,7 +151,7 @@
                 android:layout_marginHorizontal="9dp"
                 android:id="@+id/car_recycler"
                 android:layout_marginBottom="30dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
