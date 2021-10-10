@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.tourkakao.carping.Loading.CustomLoadingDialog;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 
 import java.io.File;
@@ -54,6 +55,7 @@ public class RegisterViewmodel extends ViewModel {
         this.userpk=userpk;
     }
     public void sending_newcarping(){
+        CustomLoadingDialog.getInstance(context, "등록 중입니다..").show();
         if(n_uri.get(0)!=null) {
             file = new File(getPath(n_uri.get(0)));
             body1 = RequestBody.create(MediaType.parse("multipart/form-data"), file);
@@ -107,6 +109,7 @@ public class RegisterViewmodel extends ViewModel {
                         result -> {
                             if(result.isSuccess()) {
                                 newcarping_send_ok.setValue(1);
+                                CustomLoadingDialog.getInstance(context, null).dismiss();
                             }else{
                                 System.out.println(result.getError_message());
                                 newcarping_send_ok.setValue(-1);

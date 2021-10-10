@@ -85,4 +85,6 @@ dependencies {
     //register newcarping animation
     def lottieVersion = "3.4.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
+    //for location
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
 }

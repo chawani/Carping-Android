@@ -302,9 +302,6 @@ public class ThemeActivity extends AppCompatActivity {
     }
     public void getting_user_place(){
         GpsTracker gpsTracker=new GpsTracker(context);
-        if(gpsTracker.location==null) {
-            Toast.makeText(context, "GPS 파악이 어려워 서울특별시 중심으로 거리가 측정됩니다. ", Toast.LENGTH_SHORT).show();
-        }
         lat=gpsTracker.getLatitude();
         lon=gpsTracker.getLongitude();
         gpsTracker.stopUsingGPS();

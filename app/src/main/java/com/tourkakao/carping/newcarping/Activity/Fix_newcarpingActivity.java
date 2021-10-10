@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,8 +33,6 @@ import com.tourkakao.carping.registernewcarping.Activity.TagsActivity;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
-
-import java.util.ArrayList;
 
 public class Fix_newcarpingActivity extends AppCompatActivity {
     ActivityFixNewcarpingBinding fixNewcarpingBinding;
@@ -54,6 +53,8 @@ public class Fix_newcarpingActivity extends AppCompatActivity {
         setContentView(fixNewcarpingBinding.getRoot());
         context=this;
         gallery_setting=new Gallery_setting(context, Fix_newcarpingActivity.this);
+        Glide.with(context).load(R.drawable.locate_img).into(fixNewcarpingBinding.locateImg);
+        Glide.with(context).load(R.drawable.picture_btn_img).into(fixNewcarpingBinding.imageBtn);
 
         viewModel=new ViewModelProvider(this).get(FixNewCarpingViewModel.class);
         viewModel.setContext(context);
@@ -66,6 +67,7 @@ public class Fix_newcarpingActivity extends AppCompatActivity {
         setting_remove_tags();
         setting_title();
         setting_review_edittext();
+        setting_cancel_btn();
         starting_observe_edit_ok();
         setting_editing_button();
     }
@@ -129,6 +131,8 @@ public class Fix_newcarpingActivity extends AppCompatActivity {
         fixNewcarpingBinding.tagLayout.addView(addtag);
     }
     public void setting_initial_images(){
+        fixNewcarpingBinding.noImageLayout.setVisibility(View.GONE);
+        fixNewcarpingBinding.yesImageLayout.setVisibility(View.VISIBLE);
         fixNewcarpingBinding.imageCnt.setText(image_count+"/4");
         for(int i=0; i<viewModel.f_images.size(); i++){
             if(viewModel.f_images.get(i)==null){
@@ -145,6 +149,10 @@ public class Fix_newcarpingActivity extends AppCompatActivity {
                 fixNewcarpingBinding.imageAreaLayout.removeView(binding.getRoot());
                 viewModel.f_images.set(finalI, null);
                 image_count--;
+                if(image_count==0){
+                    fixNewcarpingBinding.noImageLayout.setVisibility(View.VISIBLE);
+                    fixNewcarpingBinding.yesImageLayout.setVisibility(View.GONE);
+                }
                 fixNewcarpingBinding.imageCnt.setText(image_count+"/4");
                 if(image_count==0){
                     send_image_ok=false;
@@ -178,6 +186,23 @@ public class Fix_newcarpingActivity extends AppCompatActivity {
                 Toast.makeText(context, "4장까지 첨부 가능해요", Toast.LENGTH_SHORT).show();
             }
         });
+        fixNewcarpingBinding.imageBtn.setOnClickListener(v -> {
+            if (Build.VERSION.SDK_INT >= 23) {
+                int permission_read = context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+                int permission_write = context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                if (permission_read == PackageManager.PERMISSION_DENIED || permission_write == PackageManager.PERMISSION_DENIED) {
+                    gallery_setting.check_gallery_permission();
+                } else {
+                    Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                    galleryintent.setType("image/*");
+                    startActivityForResult(galleryintent, gallery_setting.GALLERY_CODE);
+                }
+            } else {
+                Intent galleryintent = new Intent(Intent.ACTION_GET_CONTENT);
+                galleryintent.setType("image/*");
+                startActivityForResult(galleryintent, gallery_setting.GALLERY_CODE);
+            }
+        });
     }
     public void setting_remove_tags(){
         fixNewcarpingBinding.tagsRemove.setOnClickListener(v-> {
@@ -191,7 +216,7 @@ public class Fix_newcarpingActivity extends AppCompatActivity {
             TextView newtag=new TextView(context);
             newtag.setText("#"+viewModel.f_tags.get(i));
             newtag.setBackgroundResource(R.drawable.purple_border_round);
-            newtag.setTextColor(Color.parseColor("#9F81F7"));
+            newtag.setTextColor(Color.parseColor("#5f51ef"));
             newtag.setPadding(60, 30, 60, 30);
             fixNewcarpingBinding.tagLayout.addView(newtag);
         }
@@ -279,6 +304,13 @@ public class Fix_newcarpingActivity extends AppCompatActivity {
             }
         });
     }
+    public void setting_cancel_btn(){
+        fixNewcarpingBinding.cancel.setOnClickListener(v -> {
+            fixNewcarpingBinding.mapView.removeView(mapView);
+            mapView=null;
+            finish();
+        });
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -289,7 +321,7 @@ public class Fix_newcarpingActivity extends AppCompatActivity {
                 TextView newtag = new TextView(context);
                 newtag.setText("#" + tag);
                 newtag.setBackgroundResource(R.drawable.purple_border_round);
-                newtag.setTextColor(Color.parseColor("#9F81F7"));
+                newtag.setTextColor(Color.parseColor("#5f51ef"));
                 newtag.setPadding(60, 30, 60, 30);
                 fixNewcarpingBinding.tagLayout.addView(newtag);
             }else if(requestCode==gallery_setting.GALLERY_CODE){
@@ -304,6 +336,10 @@ public class Fix_newcarpingActivity extends AppCompatActivity {
                         }
                     }
                     image_count++;
+                    if(image_count==1){
+                        fixNewcarpingBinding.yesImageLayout.setVisibility(View.VISIBLE);
+                        fixNewcarpingBinding.noImageLayout.setVisibility(View.GONE);
+                    }
                     fixNewcarpingBinding.imageCnt.setText(image_count+"/4");
                     EachImageBinding binding=EachImageBinding.inflate(getLayoutInflater());
                     ImageView addimage=binding.addEachImage;
@@ -317,6 +353,10 @@ public class Fix_newcarpingActivity extends AppCompatActivity {
                         viewModel.f_uri.set(finalIdx, null);
                         viewModel.f_images.set(finalIdx, null);
                         image_count--;
+                        if(image_count==0){
+                            fixNewcarpingBinding.yesImageLayout.setVisibility(View.GONE);
+                            fixNewcarpingBinding.noImageLayout.setVisibility(View.VISIBLE);
+                        }
                         fixNewcarpingBinding.imageCnt.setText(image_count+"/4");
                         if(image_count==0){
                             send_image_ok=false;

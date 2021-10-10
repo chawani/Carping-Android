@@ -14,6 +14,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.gson.JsonParser;
+import com.tourkakao.carping.Loading.CustomLoadingDialog;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 
 import java.io.File;
@@ -60,6 +61,7 @@ public class RegisterShareViewmodel extends ViewModel {
         this.userpk=userpk;
     }
     public void sending_newshare(){
+        CustomLoadingDialog.getInstance(context, "등록 중입니다..").show();
         if(s_uri.get(0)!=null) {
             file = new File(getPath(s_uri.get(0)));
             body1 = RequestBody.create(MediaType.parse("multipart/form-data"), file);
@@ -118,6 +120,7 @@ public class RegisterShareViewmodel extends ViewModel {
                         lists -> {
                             if(lists.isSuccess()){
                                 send_ok.setValue(1);
+                                CustomLoadingDialog.getInstance(context, null).dismiss();
                             }else{
                                 send_ok.setValue(-1);
                                 if(lists.getError_message().contains("chat_addr")){
