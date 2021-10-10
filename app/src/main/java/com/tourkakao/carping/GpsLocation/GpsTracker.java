@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -45,9 +46,11 @@ public class GpsTracker extends Service implements LocationListener {
     private FusedLocationProviderClient fusedLocationProviderClient;
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
+    public MutableLiveData<Integer> can_get_gps=new MutableLiveData<>();
 
     public GpsTracker(Context context) {
         this.mContext = context;
+        can_get_gps.setValue(0);
         getLocation();
 
     }
@@ -72,8 +75,10 @@ public class GpsTracker extends Service implements LocationListener {
                     if (locationManager != null) {
                         location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                         if (location != null) {
+                            can_get_gps.setValue(1);
                             latitude = location.getLatitude();
                             longitude = location.getLongitude();
+                            can_get_gps.setValue(0);
                         }
                     }
                 }
@@ -83,45 +88,40 @@ public class GpsTracker extends Service implements LocationListener {
                         if (locationManager != null) {
                             location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                             if (location != null) {
+                                can_get_gps.setValue(1);
                                 latitude = location.getLatitude();
                                 longitude = location.getLongitude();
+                                can_get_gps.setValue(0);
                             }
                         }
                     }
                 }
                 if (location == null) {
                     CustomLoadingDialog.getInstance(mContext, "사용자 위치 파악중입니다..").show();
-                    fusedLocationProviderClient=LocationServices.getFusedLocationProviderClient(this);
+                    fusedLocationProviderClient=LocationServices.getFusedLocationProviderClient(mContext);
                     locationCallback=new LocationCallback() {
                         @Override
                         public void onLocationResult(@NonNull LocationResult locationResult) {
                             super.onLocationResult(locationResult);
                             location=locationResult.getLastLocation();
-                            System.out.println("here"+location);
                             if(location!=null){
+                                can_get_gps.setValue(1);
                                 latitude=location.getLatitude();
                                 longitude=location.getLongitude();
                                 fusedLocationProviderClient.removeLocationUpdates(locationCallback);
                                 CustomLoadingDialog.getInstance(mContext, "사용자 위치 파악중입니다..").dismiss();
+                                can_get_gps.setValue(0);
                             }
                         }
                     };
                     locationRequest=LocationRequest.create()
                             .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                            .setInterval(100)
-                            .setFastestInterval(100)
+                            .setInterval(1000)
+                            .setFastestInterval(1000)
                             .setMaxWaitTime(100);
                     LocationSettingsRequest.Builder builder=new LocationSettingsRequest.Builder();
                     builder.addLocationRequest(locationRequest);
-                    if(Build.VERSION.SDK_INT>=23){
-                        if(ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED&&
-                                ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED){
-                            fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
-                        }
-                    }
-                    else{
-                        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
-                    }
+                    fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
                 }
             }
         }

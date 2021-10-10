@@ -71,14 +71,6 @@
                     android:clickable="true"
                     android:layout_alignParentRight="true"/>
             </RelativeLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/purple_text"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                android:text="@{themedetailviewmodel.distance}"
-                android:layout_marginBottom="35dp"/>
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/theme_detail_tabs"
                 android:layout_width="match_parent"
