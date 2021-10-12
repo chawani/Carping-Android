@@ -124,6 +124,7 @@ public class RegisterShareViewmodel extends ViewModel {
                             }else{
                                 send_ok.setValue(-1);
                                 if(lists.getError_message().contains("chat_addr")){
+                                    CustomLoadingDialog.getInstance(context, null).dismiss();
                                     Toast.makeText(context, "주소 형식에 맞게 작성해주세요!", Toast.LENGTH_SHORT).show();
                                 };
                             }

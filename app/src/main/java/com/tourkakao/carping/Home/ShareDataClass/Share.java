@@ -3,6 +3,8 @@ package com.tourkakao.carping.Home.ShareDataClass;
 import com.google.gson.annotations.SerializedName;
 
 public class Share {
+    @SerializedName("monthly_share_count")
+    int monthly_share_count;
     @SerializedName("total_share")
     int total_share;
     @SerializedName("id")
@@ -22,7 +24,8 @@ public class Share {
     @SerializedName("is_shared")
     boolean is_shared;
 
-    public Share(int total_share, int pk, String image, String locate, String name, String body, int heart, String time, boolean is_shared) {
+    public Share(int monthly_share_count, int total_share, int pk, String image, String locate, String name, String body, int heart, String time, boolean is_shared) {
+        this.monthly_share_count = monthly_share_count;
         this.total_share = total_share;
         this.pk = pk;
         this.image = image;
@@ -32,6 +35,14 @@ public class Share {
         this.heart = heart;
         this.time = time;
         this.is_shared = is_shared;
+    }
+
+    public int getMonthly_share_count() {
+        return monthly_share_count;
+    }
+
+    public void setMonthly_share_count(int monthly_share_count) {
+        this.monthly_share_count = monthly_share_count;
     }
 
     public int getTotal_share() {

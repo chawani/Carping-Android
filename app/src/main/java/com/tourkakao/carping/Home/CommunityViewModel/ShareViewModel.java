@@ -63,6 +63,7 @@ public class ShareViewModel extends ViewModel {
                                 String result=new Gson().toJson(lists.getData());
                                 shares=new Gson().fromJson(result, type);
                                 share_count.setValue(shares.get(0).getTotal_share()+"개 나눔글이 있습니다");
+                                my_share_count.setValue(shares.get(0).getMonthly_share_count());
                                 shares.remove(0);
                                 shareAdapter.update_Item(shares);
                             }else{
