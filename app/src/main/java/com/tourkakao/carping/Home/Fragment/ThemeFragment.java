@@ -68,11 +68,6 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
 
     @Override
     public void initialize_img() {
-        Glide.with(this).load(R.drawable.new_carping_place_title_img).into(themebinding.newCarpingPlaceTitleImg);
-        Glide.with(this).load(R.drawable.thema_title_img).into(themebinding.themeTitleImg);
-        Glide.with(this).load(R.drawable.this_weekend_title_img).into(themebinding.thisWeekendTitleImg);
-        Glide.with(this).load(R.drawable.az_title_img).into(themebinding.azImg);
-        Glide.with(this).load(R.drawable.popular_carping_title_img).into(themebinding.popularCarpingImg);
         Glide.with(this).load(R.drawable.theme_culture_img).into(themebinding.themeCulture);
         Glide.with(this).load(R.drawable.theme_fire_img).into(themebinding.themeFire);
         Glide.with(this).load(R.drawable.theme_pet_img).into(themebinding.themePet);
