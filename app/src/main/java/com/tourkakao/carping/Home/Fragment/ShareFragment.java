@@ -48,6 +48,7 @@ public class ShareFragment extends Fragment {
         setting_share();
         setting_share_btn();
         starting_observe_share_count();
+        starting_observe_my_share_count();
         setting_total_btn();
 
         return sharebinding.getRoot();
@@ -72,6 +73,14 @@ public class ShareFragment extends Fragment {
             }
         });
     }
+    public void starting_observe_my_share_count(){
+        shareViewModel.my_share_count.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                sharebinding.monthWrite.setText("최근 1개월 간\n무료나눔 "+ integer+"개 작성");
+            }
+        });
+    }
     public void setting_total_btn(){
         sharebinding.shareTotal.setOnClickListener(v -> {
             Intent intent=new Intent(context, ShareTotalActivity.class);
@@ -85,6 +94,7 @@ public class ShareFragment extends Fragment {
         super.onResume();
         if(SharedPreferenceManager.getInstance(context).getInt("change_isshare", 0)==1){
             shareViewModel.get_share("recent", 10);
+            shareViewModel.my_share_count.setValue(shareViewModel.my_share_count.getValue()+1);
             SharedPreferenceManager.getInstance(context).setInt("change_isshare", 0);
         }
     }
