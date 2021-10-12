@@ -58,7 +58,7 @@ public class PostRegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(phone_check) return;
                 if(binding.phoneNumber.getText().length()!=11){
-                    Toast myToast = Toast.makeText(getApplicationContext(),"휴대폰 번호가 11자리인지 확인해주세요", Toast.LENGTH_SHORT);
+                    myToast = Toast.makeText(getApplicationContext(),"휴대폰 번호가 11자리인지 확인해주세요", Toast.LENGTH_SHORT);
                     myToast.show();
                     return;
                 }
@@ -78,14 +78,15 @@ public class PostRegisterActivity extends AppCompatActivity {
                                     timer();
                                 }
                                 else {
-                                    Toast myToast = Toast.makeText(getApplicationContext(),"요청 실패. 카핑 채널로 문의해주세요", Toast.LENGTH_SHORT);
+                                    myToast = Toast.makeText(getApplicationContext(),"요청 실패. 문의해주세요", Toast.LENGTH_SHORT);
                                     myToast.show();
                                 }
                             }
 
                             @Override
                             public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-
+                                myToast = Toast.makeText(getApplicationContext(),"서버 오류. 문의해주세요", Toast.LENGTH_SHORT);
+                                myToast.show();
                             }
                         });
             }
@@ -135,13 +136,15 @@ public class PostRegisterActivity extends AppCompatActivity {
                                     }
                                 }
                                 else {
-                                    System.out.println("요청실패:"+commonClass.getCode()+commonClass.getError_message());
+                                    myToast = Toast.makeText(getApplicationContext(),"인증 오류. 문의해주세요", Toast.LENGTH_SHORT);
+                                    myToast.show();
                                 }
                             }
 
                             @Override
                             public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-
+                                myToast = Toast.makeText(getApplicationContext(),"서버 오류. 문의해주세요", Toast.LENGTH_SHORT);
+                                myToast.show();
                             }
                         });
             }

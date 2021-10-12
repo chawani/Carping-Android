@@ -60,6 +60,7 @@ public class KakaoLogin implements LoginContract.Kakaologin{
                                 SharedPreferenceManager.getInstance(context).setString("profile", response.body().getUser().getProfile().getImage());
                                 SharedPreferenceManager.getInstance(context).setString("email", response.body().getUser().getEmail());
                                 SharedPreferenceManager.getInstance(context).setString("username", response.body().getUser().getUserkname());
+                                SharedPreferenceManager.getInstance(context).setString("login", "kakao");
                                 loginActivity.finish();
                                 context.startActivity(new Intent(context, MainActivity.class));
                             }else{

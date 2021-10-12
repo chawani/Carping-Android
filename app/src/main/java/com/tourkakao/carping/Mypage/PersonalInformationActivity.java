@@ -204,33 +204,32 @@ public class PersonalInformationActivity extends AppCompatActivity implements Co
     public String sendCheck(){
         String checked="";
         if(binding.interest1.isChecked()){
-            checked+=(binding.interest1.getText().toString()+",");
+            checked+=("0,");
         }
         if(binding.interest2.isChecked()){
-            checked+=(binding.interest2.getText().toString()+",");
+            checked+=("1,");
         }
         if(binding.interest3.isChecked()){
-            checked+=(binding.interest3.getText().toString()+",");
+            checked+=("2,");
         }
         if(binding.interest4.isChecked()){
-            checked+=(binding.interest4.getText().toString()+",");
+            checked+=("3,");
         }
         if(binding.interest5.isChecked()){
-            checked+=(binding.interest5.getText().toString()+",");
+            checked+=("4,");
         }
         if(binding.interest6.isChecked()){
-            checked+=(binding.interest6.getText().toString()+",");
+            checked+=("5,");
         }
         if(binding.interest7.isChecked()){
-            checked+=(binding.interest7.getText().toString()+",");
+            checked+=("6,");
         }
         if(binding.interest8.isChecked()){
-            checked+=(binding.interest8.getText().toString()+",");
+            checked+=("7,");
         }
         if(binding.interest9.isChecked()){
-            checked+=(binding.interest9.getText().toString()+",");
+            checked+=("8");
         }
-        checked=checked.substring(0,checked.length()-1);
         return checked;
     }
 }

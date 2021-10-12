@@ -62,15 +62,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>
-    <LinearLayout
+    <RelativeLayout
         android:layout_marginTop="45dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <LinearLayout
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/star_area"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
@@ -95,9 +97,10 @@
                 android:layout_gravity="center"/>
         </LinearLayout>
         <LinearLayout
+            android:layout_alignParentRight="true"
+            android:id="@+id/star_area"
             android:layout_marginRight="16dp"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <LinearLayout
@@ -240,7 +243,7 @@
                     android:textColor="#5f51ef"/>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_marginTop="30.5dp"

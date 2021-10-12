@@ -44,6 +44,7 @@ public class PhoneCertificationActivity extends AppCompatActivity {
     private boolean number,phone=false;
     private int minute, second;
     private boolean timerCheck=false;
+    private Toast myToast;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +80,7 @@ public class PhoneCertificationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(binding.phoneNumber.getText().length()!=11){
-                    Toast myToast = Toast.makeText(getApplicationContext(),"휴대폰 번호가 11자리인지 확인해주세요", Toast.LENGTH_SHORT);
+                    myToast = Toast.makeText(getApplicationContext(),"휴대폰 번호가 11자리인지 확인해주세요", Toast.LENGTH_SHORT);
                     myToast.show();
                     return;
                 }
@@ -94,20 +95,21 @@ public class PhoneCertificationActivity extends AppCompatActivity {
                             public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull CommonClass commonClass) {
                                 if(commonClass.getCode()==200) {
                                     binding.certificationArea.setVisibility(View.VISIBLE);
-                                    Toast myToast = Toast.makeText(getApplicationContext(),"요청 완료", Toast.LENGTH_SHORT);
+                                    myToast = Toast.makeText(getApplicationContext(),"요청 완료", Toast.LENGTH_SHORT);
                                     myToast.show();
                                     timerCheck=false;
                                     timer();
                                 }
                                 else {
-                                    Toast myToast = Toast.makeText(getApplicationContext(),"요청 실패. 카핑 채널로 문의해주세요", Toast.LENGTH_SHORT);
+                                    myToast = Toast.makeText(getApplicationContext(),"요청 실패. 문의해주세요", Toast.LENGTH_SHORT);
                                     myToast.show();
                                 }
                             }
 
                             @Override
                             public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-
+                                myToast = Toast.makeText(getApplicationContext(),"서버 오류. 문의해주세요", Toast.LENGTH_SHORT);
+                                myToast.show();
                             }
                         });
             }
@@ -158,13 +160,15 @@ public class PhoneCertificationActivity extends AppCompatActivity {
                                     }
                                 }
                                 else {
-                                    System.out.println("요청실패:"+commonClass.getCode()+commonClass.getError_message());
+                                    Toast myToast = Toast.makeText(getApplicationContext(),"인증 오류. 문의해주세요", Toast.LENGTH_SHORT);
+                                    myToast.show();
                                 }
                             }
 
                             @Override
                             public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
-
+                                Toast myToast = Toast.makeText(getApplicationContext(),"서버 오류. 문의해주세요", Toast.LENGTH_SHORT);
+                                myToast.show();
                             }
                         });
             }

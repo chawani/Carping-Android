@@ -1,6 +1,8 @@
 package com.tourkakao.carping.Home.Fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -22,6 +24,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.tourkakao.carping.Home.HomeViewModel.MypageViewModel;
+import com.tourkakao.carping.Login.GoogleLogin;
+import com.tourkakao.carping.Login.GoogleLogout;
+import com.tourkakao.carping.Login.LoginActivity;
 import com.tourkakao.carping.Mypage.HelpListActivity;
 import com.tourkakao.carping.Mypage.PostApprovalActivity;
 import com.tourkakao.carping.Mypage.DTO.Profile;
@@ -114,6 +119,12 @@ public class MypageFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        mypagebinding.logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logoutDialog();
+            }
+        });
         myViewModel.getProfileMutableLiveData().observe(this, new Observer<Profile>() {
             @Override
             public void onChanged(Profile profile) {
@@ -151,7 +162,8 @@ public class MypageFragment extends Fragment {
                         textView.setBackgroundResource(R.drawable.tag_design);
                         textView.setPadding(convertDp(10), convertDp(5), convertDp(10), convertDp(5));
                         textView.setTextColor(Color.parseColor("#5f51ef"));
-                        textView.setText(tag);
+                        String convertedText=convertText(tag);
+                        textView.setText(convertedText);
                         mypagebinding.tag.addView(textView);
                     }
                 }
@@ -159,6 +171,67 @@ public class MypageFragment extends Fragment {
         });
 
         return mypagebinding.getRoot();
+    }
+
+    String convertText(String s){
+        if(s.equals("0")){
+            return "\uD83D\uDE97 차크닉";
+        }
+        if(s.equals("1")){
+            return "⛺혼차박";
+        }
+        if(s.equals("2")){
+            return "\uD83C\uDF03 퇴근박";
+        }
+        if(s.equals("3")){
+            return "\uD83D\uDD25 불멍";
+        }
+        if(s.equals("4")){
+            return "\uD83C\uDF56 바베큐";
+        }
+        if(s.equals("5")){
+            return "\uD83C\uDFD5 오지캠핑";
+        }
+        if(s.equals("6")){
+            return "\uD83D\uDEA4 레저";
+        }
+        if(s.equals("7")){
+            return "\uD83C\uDFA3 낚시";
+        }
+        if(s.equals("8")){
+            return "\uD83C\uDF31 클린 차박";
+        }
+        return "";
+    }
+
+    void logoutDialog(){
+        AlertDialog.Builder msgBuilder = new AlertDialog.Builder(getActivity())
+                .setMessage("로그아웃 하시겠습니까?")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialogInterface, int i) {
+                        String loginType=SharedPreferenceManager.getInstance(context).getString("login","");
+                        if(loginType.equals("kakao")){
+
+                        }
+                        if(loginType.equals("google")) {
+                            GoogleLogout googleLogout = new GoogleLogout(context, getActivity());
+                            googleLogout.signOut();
+                        }
+                    }
+                })
+                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        AlertDialog msgDlg = msgBuilder.create();
+        msgDlg.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override public void onShow(DialogInterface arg0) {
+                msgDlg.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#5f51ef"));
+                msgDlg.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#5f51ef"));
+            }
+        });
+        msgDlg.show();
     }
 
     public void settingImg(){
