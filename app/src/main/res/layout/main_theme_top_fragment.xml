@@ -24,7 +24,8 @@
         android:fontFamily="@font/spoqa_han_sans_neo_medium"
         android:text="6월 14일 월요일"
         android:textColor="#000000"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:layout_marginRight="5dp"/>
 
     <ImageView
         android:layout_width="12dp"
