@@ -36,6 +36,7 @@
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:textSize="15sp"
+                android:fontFamily="@font/spoqa_han_sans_neo_medium"
                 android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@id/date"/>
             <TextView
@@ -57,6 +58,7 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:ellipsize="end"
+            android:fontFamily="@font/spoqa_han_sans_neo_medium"
             android:layout_marginTop="7dp"
             android:textSize="12sp"/>
 

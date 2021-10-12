@@ -31,7 +31,6 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"></FrameLayout>
 
-
                 <TextView
                     android:id="@+id/search_bar"
                     android:layout_width="379dp"
@@ -42,6 +41,8 @@
                     android:layout_marginTop="212dp"
                     android:layout_marginRight="16dp"
                     android:gravity="center_vertical"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/spoqa_han_sans_neo_bold"
                     android:background="@drawable/search_border_round"
                     android:paddingLeft="23.6dp"
                     android:clickable="true"/>

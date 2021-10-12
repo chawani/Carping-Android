@@ -6,7 +6,7 @@
     <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:fontFamily="@font/spoqa_han_sans_neo"
+    android:fontFamily="@font/spoqa_han_sans_neo_bold"
     android:textStyle="bold"
     android:textSize="20sp"
     android:textColor="#000000"
@@ -38,7 +38,7 @@
                     android:id="@+id/username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/spoqa_han_sans_neo"
+                    android:fontFamily="@font/spoqa_han_sans_neo_bold"
                     android:textStyle="bold"
                     android:textSize="18sp"
                     android:textColor="#000000"/>
@@ -81,7 +81,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/spoqa_han_sans_neo"
+                android:fontFamily="@font/spoqa_han_sans_neo_bold"
                 android:text="실시간 에코리뷰🌱"
                 android:textColor="#000000"
                 android:textSize="20sp"
@@ -132,7 +132,7 @@
             android:id="@+id/eco_ranking_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/spoqa_han_sans_neo"
+            android:fontFamily="@font/spoqa_han_sans_neo_bold"
             android:text="에코랭킹 🌍"
             android:textColor="#000000"
             android:textSize="20sp"
