@@ -26,6 +26,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.tourkakao.carping.Home.HomeViewModel.MypageViewModel;
 import com.tourkakao.carping.Login.GoogleLogin;
 import com.tourkakao.carping.Login.GoogleLogout;
+import com.tourkakao.carping.Login.KakaoLogout;
 import com.tourkakao.carping.Login.LoginActivity;
 import com.tourkakao.carping.Mypage.HelpListActivity;
 import com.tourkakao.carping.Mypage.PostApprovalActivity;
@@ -211,7 +212,8 @@ public class MypageFragment extends Fragment {
                     @Override public void onClick(DialogInterface dialogInterface, int i) {
                         String loginType=SharedPreferenceManager.getInstance(context).getString("login","");
                         if(loginType.equals("kakao")){
-
+                            KakaoLogout kakaoLogout=new KakaoLogout(context, getActivity());
+                            kakaoLogout.signOut();
                         }
                         if(loginType.equals("google")) {
                             GoogleLogout googleLogout = new GoogleLogout(context, getActivity());
