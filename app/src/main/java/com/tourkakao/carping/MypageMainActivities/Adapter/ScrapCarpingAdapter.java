@@ -63,7 +63,7 @@ public class ScrapCarpingAdapter extends RecyclerView.Adapter<ScrapCarpingAdapte
             binding.name.setText(campsite.getName());
             binding.address.setText(campsite.getAddress());
             Glide.with(context).load(R.drawable.locate_img).into(binding.locateImg);
-            binding.distance.setText(campsite.getDistance()+"km");
+            //binding.distance.setText(campsite.getDistance()+"km");
             binding.bookmarkCount.setText("스크랩 "+campsite.getBookmark_count());
         }
     }

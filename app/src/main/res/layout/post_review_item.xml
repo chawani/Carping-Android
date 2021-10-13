@@ -58,11 +58,10 @@
                 android:layout_marginTop="7.1dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/spoqa_han_sans_neo"
+                android:fontFamily="@font/spoqa_han_sans_neo_bold"
                 android:textStyle="bold"
                 android:textSize="13sp"
-                android:textColor="#000000"
-                android:text="user_02"/>
+                android:textColor="#000000"/>
             <TextView
                 android:id="@+id/content"
                 android:layout_marginRight="8dp"
@@ -72,9 +71,7 @@
                 android:fontFamily="@font/spoqa_han_sans_neo"
                 android:textStyle="normal"
                 android:textSize="13sp"
-                android:textColor="#000000"
-                android:text="차박에 대해서 아예 모르고 시작했는데 포스트에 유익한 정보
-( 특히 꿀팁...👍 )가 가득 담겨있어서 놀랐어요!"/>
+                android:textColor="#000000"/>
             <LinearLayout
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"

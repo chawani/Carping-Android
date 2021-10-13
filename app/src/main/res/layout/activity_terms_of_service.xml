@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/spoqa_han_sans_neo"
+            android:fontFamily="@font/spoqa_han_sans_neo_bold"
             android:textStyle="bold"
             android:textSize="18sp"
             android:textColor="#191919"

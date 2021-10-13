@@ -24,6 +24,7 @@ import com.tourkakao.carping.Post.DTO.Star;
 import com.tourkakao.carping.Post.ViewModel.PostListViewModel;
 import com.tourkakao.carping.Post.ViewModel.PostReviewViewModel;
 import com.tourkakao.carping.R;
+import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 import com.tourkakao.carping.databinding.ActivityPostRegisterBinding;
 import com.tourkakao.carping.databinding.ActivityPostReviewBinding;
 
@@ -138,14 +139,39 @@ public class PostReviewActivity extends AppCompatActivity {
     }
 
     public void clickWriteButton(){
+        int currentUser=SharedPreferenceManager.getInstance(getApplicationContext()).getInt("id",0);
+        int authorId=getIntent().getIntExtra("authorId",0);
+        boolean isApproved=getIntent().getBooleanExtra("isApproved",true);
         binding.writeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getApplicationContext(), PostReviewWriteActivity.class);
-                intent.putExtra("postId",postId);
-                startActivity(intent);
+                if(isApproved||(authorId==currentUser)){
+                    Intent intent=new Intent(getApplicationContext(), PostReviewWriteActivity.class);
+                    intent.putExtra("postId",postId);
+                    startActivity(intent);
+                }
+                else{
+                    showDialog();
+                }
             }
         });
+    }
+
+    void showDialog() {
+        AlertDialog.Builder msgBuilder = new AlertDialog.Builder(this)
+                .setMessage("포스트 구매자만 리뷰를 작성할 수 있습니다")
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        AlertDialog msgDlg = msgBuilder.create();
+        msgDlg.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override public void onShow(DialogInterface arg0) {
+                msgDlg.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#5f51ef"));
+            }
+        });
+        msgDlg.show();
     }
 
     public void clickReview(){

@@ -68,7 +68,7 @@
         android:layout_alignParentBottom="true"
         android:background="@color/black"
         android:text="시작하기"
-        android:fontFamily="@font/spoqa_han_sans_neo"
+        android:fontFamily="@font/spoqa_han_sans_neo_bold"
         android:textStyle="bold"
         android:textSize="20sp"
         android:textColor="#ffffff"

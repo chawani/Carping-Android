@@ -51,7 +51,7 @@
             android:layout_below="@id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/spoqa_han_sans_neo"
+            android:fontFamily="@font/spoqa_han_sans_neo_bold"
             android:textStyle="bold"
             android:textSize="11sp"
             android:textColor="#5f51ef"/>
@@ -69,7 +69,7 @@
             android:layout_marginTop="14dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/spoqa_han_sans_neo_medium"
+            android:fontFamily="@font/spoqa_han_sans_neo_bold"
             android:textStyle="normal"
             android:textSize="14sp"
             android:textColor="#000000"/>

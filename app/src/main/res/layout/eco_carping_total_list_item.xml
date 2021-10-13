@@ -27,7 +27,7 @@
         android:id="@+id/title"
         android:layout_width="219dp"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/spoqa_han_sans_neo"
+        android:fontFamily="@font/spoqa_han_sans_neo_bold"
         android:textColor="#ffffff"
         android:textSize="20sp"
         android:textStyle="bold"

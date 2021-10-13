@@ -13,7 +13,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/spoqa_han_sans_neo"
+            android:fontFamily="@font/spoqa_han_sans_neo_bold"
             android:textStyle="bold"
             android:textSize="18sp"
             android:textColor="#191919"
@@ -53,6 +53,7 @@
             android:id="@id/search_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/spoqa_han_sans_neo_medium"
             android:background="@drawable/edit_text_box_search"
             android:hint="어디서 에코캠핑을 하셨나요?"
             android:textSize="13sp"

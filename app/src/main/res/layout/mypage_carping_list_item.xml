@@ -51,24 +51,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/distance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/spoqa_han_sans_neo"
-                    android:textStyle="normal"
-                    android:textSize="11sp"
-                    android:textColor="#000000"/>
-                <View
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="6dp"
-                    android:layout_width="0.699999988079071dp"
-                    android:layout_height="10dp"
-                    android:background="#cecece">
-                </View>
+<!--                <TextView-->
+<!--                    android:id="@+id/distance"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:fontFamily="@font/spoqa_han_sans_neo"-->
+<!--                    android:textStyle="normal"-->
+<!--                    android:textSize="11sp"-->
+<!--                    android:textColor="#000000"/>-->
+<!--                <View-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:layout_marginLeft="6dp"-->
+<!--                    android:layout_width="0.699999988079071dp"-->
+<!--                    android:layout_height="10dp"-->
+<!--                    android:background="#cecece">-->
+<!--                </View>-->
                 <TextView
                     android:id="@+id/bookmark_count"
-                    android:layout_marginLeft="6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/spoqa_han_sans_neo"

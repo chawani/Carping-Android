@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/spoqa_han_sans_neo"
+            android:fontFamily="@font/spoqa_han_sans_neo_bold"
             android:textStyle="bold"
             android:textSize="18sp"
             android:textColor="#191919"
@@ -91,7 +91,7 @@
                     android:fontFamily="@font/spoqa_han_sans_neo"
                     android:textStyle="normal"
                     android:textSize="13sp"
-                    android:textColor="#9d9d9d"
+                    android:textColor="#000000"
                     android:text="0/100"/>
             </LinearLayout>
             <EditText
@@ -100,7 +100,7 @@
                 android:layout_marginTop="17dp"
                 android:layout_width="match_parent"
                 android:layout_height="156dp"
-                android:fontFamily="@font/spoqa_han_sans_neo"
+                android:fontFamily="@font/spoqa_han_sans_neo_medium"
                 android:textStyle="normal"
                 android:textSize="13sp"
                 android:textColor="#000000"
@@ -134,7 +134,7 @@
                     android:fontFamily="@font/spoqa_han_sans_neo"
                     android:textStyle="normal"
                     android:textSize="13sp"
-                    android:textColor="#9d9d9d"
+                    android:textColor="#000000"
                     android:text="0/100"/>
             </LinearLayout>
             <EditText
@@ -144,7 +144,7 @@
                 android:layout_marginTop="17dp"
                 android:layout_width="match_parent"
                 android:layout_height="156dp"
-                android:fontFamily="@font/spoqa_han_sans_neo"
+                android:fontFamily="@font/spoqa_han_sans_neo_medium"
                 android:textStyle="normal"
                 android:textSize="13sp"
                 android:textColor="#000000"
@@ -178,6 +178,7 @@
                     android:background="@drawable/selector_radio_button_square_ver"
                     android:text="유료"
                     android:button="@null"
+                    android:fontFamily="@font/spoqa_han_sans_neo_bold"
                     android:textColor="@drawable/selector_radio_text"
                     android:paddingVertical="16dp"
                     android:layout_weight="1"
@@ -192,6 +193,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/selector_radio_button_square_ver"
                     android:text="무료"
+                    android:fontFamily="@font/spoqa_han_sans_neo_bold"
                     android:button="@null"
                     android:textColor="@drawable/selector_radio_text"
                     android:paddingVertical="16dp"
@@ -258,6 +260,8 @@
                         android:maxLength="5"
                         android:inputType="number"
                         android:id="@+id/price"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/spoqa_han_sans_neo_medium"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:background="@drawable/edit_text_box_purple"/>
@@ -611,7 +615,7 @@
         android:layout_alignParentBottom="true"
         android:background="#999999"
         android:text="등록하기"
-        android:fontFamily="@font/spoqa_han_sans_neo"
+        android:fontFamily="@font/spoqa_han_sans_neo_bold"
         android:textStyle="bold"
         android:textSize="20sp"
         android:textColor="#ffffff"

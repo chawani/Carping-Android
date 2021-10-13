@@ -14,7 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/spoqa_han_sans_neo"
+            android:fontFamily="@font/spoqa_han_sans_neo_bold"
             android:textStyle="bold"
             android:textSize="18sp"
             android:textColor="#191919"
@@ -57,6 +57,7 @@
                 android:id="@+id/nickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/spoqa_han_sans_neo"
                 android:background="@drawable/edit_text_box_img"
                 android:layout_marginHorizontal="16dp"
                 android:hint="닉네임을 입력해주세요"
@@ -84,6 +85,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:textSize="13sp"
                 android:maxLines="1"
+                android:fontFamily="@font/spoqa_han_sans_neo"
                 android:hint="다른사람에게 소개하고 싶은 내용을 적어주세요"
                 android:layout_marginTop="15dp"/>
 
@@ -322,7 +324,7 @@
         android:layout_alignParentBottom="true"
         android:background="#999999"
         android:text="완료"
-        android:fontFamily="@font/spoqa_han_sans_neo"
+        android:fontFamily="@font/spoqa_han_sans_neo_bold"
         android:textStyle="bold"
         android:textSize="20sp"
         android:textColor="#ffffff"/>

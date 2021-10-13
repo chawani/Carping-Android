@@ -36,6 +36,8 @@ public class ReviewFragment extends Fragment {
     private PostReviewViewModel reviewViewModel;
     private ReviewAdapter reviewAdapter;
     private PostInfoDetail post;
+    private boolean isApproved;
+    private int authorId;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,6 +68,8 @@ public class ReviewFragment extends Fragment {
             @Override
             public void onChanged(PostInfoDetail postInfoDetail) {
                 post=postInfoDetail;
+                isApproved=postInfoDetail.isIs_approved();
+                authorId=postInfoDetail.getAuthor_id();
                 binding.reviewCount.setText("리뷰 "+postInfoDetail.getReview_count());
                 binding.reviewAvg.setText(Float.toString(postInfoDetail.getTotal_star_avg()));
                 binding.totalStar.setRating(postInfoDetail.getTotal_star_avg());
@@ -98,6 +102,8 @@ public class ReviewFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent=new Intent(context, PostReviewActivity.class);
                 intent.putExtra("postId", post.getId());
+                intent.putExtra("authorId",authorId);
+                intent.putExtra("isApproved",isApproved);
                 startActivity(intent);
             }
         });
