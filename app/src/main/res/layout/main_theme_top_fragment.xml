@@ -28,11 +28,11 @@
         android:layout_marginRight="5dp"/>
 
     <ImageView
+        android:id="@+id/main_right"
         android:layout_width="12dp"
         android:layout_height="12dp"
-        android:layout_marginLeft="103dp"
-        android:layout_marginTop="86dp"
-        android:src="@drawable/main_date_right_arrow"></ImageView>
+        android:layout_toRightOf="@+id/date"
+        android:layout_marginTop="86dp"></ImageView>
 
     <TextView
         android:id="@+id/title_massage"
@@ -63,7 +63,7 @@
             android:id="@+id/text1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/spoqa_han_sans_neo"
+            android:fontFamily="@font/spoqa_han_sans_neo_bold"
             android:lineSpacingExtra="10sp"
             android:textColor="#5f51ef"
             android:textSize="25sp"
@@ -72,7 +72,7 @@
             android:id="@+id/text2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/spoqa_han_sans_neo"
+            android:fontFamily="@font/spoqa_han_sans_neo_bold"
             android:lineSpacingExtra="10sp"
             android:textColor="#5f51ef"
             android:textSize="25sp"
@@ -81,7 +81,7 @@
             android:id="@+id/text3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/spoqa_han_sans_neo"
+            android:fontFamily="@font/spoqa_han_sans_neo_bold"
             android:lineSpacingExtra="10sp"
             android:textColor="#5f51ef"
             android:textSize="25sp"
@@ -90,7 +90,7 @@
             android:id="@+id/text4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/spoqa_han_sans_neo"
+            android:fontFamily="@font/spoqa_han_sans_neo_bold"
             android:lineSpacingExtra="10sp"
             android:textColor="#5f51ef"
             android:textSize="25sp"
@@ -99,7 +99,7 @@
             android:id="@+id/text5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/spoqa_han_sans_neo"
+            android:fontFamily="@font/spoqa_han_sans_neo_bold"
             android:lineSpacingExtra="10sp"
             android:textColor="#5f51ef"
             android:textSize="25sp"

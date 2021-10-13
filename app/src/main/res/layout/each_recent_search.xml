@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:textSize="15sp"
         android:textColor="#000000"
+        android:fontFamily="@font/spoqa_han_sans_neo_regular"
         android:textStyle="bold"/>
     <TextView
         android:id="@+id/delete"

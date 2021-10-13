@@ -13,7 +13,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/spoqa_han_sans_neo"
+            android:fontFamily="@font/spoqa_han_sans_neo_bold"
             android:textStyle="bold"
             android:textSize="18sp"
             android:textColor="#191919"
@@ -41,6 +41,7 @@
                 android:layout_marginBottom="11dp"
                 android:layout_marginTop="16dp"
                 android:background="#FFFFFF"
+                android:fontFamily="@font/spoqa_han_sans_neo_medium"
                 android:text="관광명소를 검색해주세요"
                 android:textSize="16sp"
                 android:textColor="#999999"
@@ -139,6 +140,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="#a1a1a1"
+                            android:fontFamily="@font/spoqa_han_sans_neo_medium"
                             android:background="#cccccccc"
                             android:layout_marginBottom="7dp"
                             android:layout_marginTop="20dp"
@@ -149,6 +151,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="#000000"
                             android:textStyle="bold"
+                            android:fontFamily="@font/spoqa_han_sans_neo_bold"
                             android:textSize="17sp"
                             android:layout_marginBottom="7dp"
                             android:layout_marginLeft="20dp"/>
@@ -158,6 +161,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="#000000"
                             android:textSize="12sp"
+                            android:fontFamily="@font/spoqa_han_sans_neo_regular"
                             android:layout_marginBottom="7dp"
                             android:layout_marginLeft="20dp"/>
                         <TextView
@@ -165,6 +169,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="#5f51ef"
+                            android:fontFamily="@font/spoqa_han_sans_neo_bold"
                             android:textSize="13sp"
                             android:textStyle="bold"
                             android:layout_marginBottom="20dp"
@@ -194,6 +199,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#a1a1a1"
+                        android:fontFamily="@font/spoqa_han_sans_neo_medium"
                         android:background="#cccccccc"
                         android:layout_marginBottom="7dp"
                         android:layout_marginTop="20dp"
@@ -205,6 +211,7 @@
                         android:textColor="#000000"
                         android:textStyle="bold"
                         android:textSize="17sp"
+                        android:fontFamily="@font/spoqa_han_sans_neo_bold"
                         android:layout_marginBottom="7dp"
                         android:layout_marginLeft="20dp"/>
                     <TextView
@@ -213,6 +220,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
                         android:textSize="12sp"
+                        android:fontFamily="@font/spoqa_han_sans_neo_regular"
                         android:layout_marginBottom="7dp"
                         android:layout_marginLeft="20dp"/>
                     <TextView
@@ -222,6 +230,7 @@
                         android:textColor="#5f51ef"
                         android:textSize="13sp"
                         android:textStyle="bold"
+                        android:fontFamily="@font/spoqa_han_sans_neo_bold"
                         android:layout_marginBottom="20dp"
                         android:layout_marginLeft="20dp" />
                 </LinearLayout>

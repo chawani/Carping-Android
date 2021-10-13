@@ -32,6 +32,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/spoqa_han_sans_neo_regular"
                     android:text="@{themedetailviewmodel.address}"
                     android:textSize="12sp"
                     android:textColor="@color/black"/>
@@ -46,12 +47,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
+                    android:fontFamily="@font/spoqa_han_sans_neo_regular"
                     android:text="운영요일"/>
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="8"
                     android:textColor="#000000"
+                    android:fontFamily="@font/spoqa_han_sans_neo_regular"
                     android:text="@{themedetailviewmodel.day}"/>
             </LinearLayout>
             <LinearLayout
@@ -64,12 +67,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
+                    android:fontFamily="@font/spoqa_han_sans_neo_regular"
                     android:text="여행시기"/>
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="8"
                     android:textColor="#000000"
+                    android:fontFamily="@font/spoqa_han_sans_neo_regular"
                     android:text="@{themedetailviewmodel.season}"/>
             </LinearLayout>
             <LinearLayout
@@ -82,6 +87,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
+                    android:fontFamily="@font/spoqa_han_sans_neo_regular"
                     android:text="전화번호"/>
                 <TextView
                     android:id="@+id/phone"
@@ -89,6 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="8"
                     android:textColor="@color/purple_text"
+                    android:fontFamily="@font/spoqa_han_sans_neo_regular"
                     android:text="@{themedetailviewmodel.phone}"
                     android:clickable="true"/>
             </LinearLayout>
@@ -102,6 +109,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
+                    android:fontFamily="@font/spoqa_han_sans_neo_regular"
                     android:text="웹사이트"/>
                 <TextView
                     android:id="@+id/website"
@@ -109,6 +117,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="8"
                     android:textColor="@color/purple_text"
+                    android:fontFamily="@font/spoqa_han_sans_neo_regular"
                     android:text="@{themedetailviewmodel.website}"
                     android:clickable="true"/>
             </LinearLayout>
@@ -116,6 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="캠핑장 정보"
+                android:fontFamily="@font/spoqa_han_sans_neo_bold"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -131,11 +141,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
+                    android:fontFamily="@font/spoqa_han_sans_neo_regular"
                     android:text="운영정보"/>
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="8"
+                    android:fontFamily="@font/spoqa_han_sans_neo_regular"
                     android:textColor="#000000"
                     android:text="@{themedetailviewmodel.oper_info}"/>
             </LinearLayout>
@@ -149,10 +161,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
+                    android:fontFamily="@font/spoqa_han_sans_neo_regular"
                     android:text="주요시설"/>
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/spoqa_han_sans_neo_regular"
                     android:layout_weight="8"
                     android:textColor="#000000"
                     android:text="@{themedetailviewmodel.major}"/>
@@ -166,12 +180,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
+                    android:fontFamily="@font/spoqa_han_sans_neo_regular"
                     android:text="부대시설"/>
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="8"
                     android:textColor="#000000"
+                    android:fontFamily="@font/spoqa_han_sans_neo_regular"
                     android:text="@{themedetailviewmodel.sub}"/>
             </LinearLayout>
             <TextView
@@ -179,6 +195,7 @@
                 android:layout_height="wrap_content"
                 android:text="상세정보"
                 android:textColor="#000000"
+                android:fontFamily="@font/spoqa_han_sans_neo_bold"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:layout_marginTop="30dp"
@@ -199,6 +216,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="9.5"
+                    android:fontFamily="@font/spoqa_han_sans_neo_regular"
                     android:textColor="#000000"
                     android:layout_marginLeft="8dp"
                     android:text="@{themedetailviewmodel.reserve}"/>
@@ -220,6 +238,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="9.5"
                     android:textColor="#000000"
+                    android:fontFamily="@font/spoqa_han_sans_neo_regular"
                     android:layout_marginLeft="8dp"
                     android:text="@{themedetailviewmodel.pet}"/>
             </LinearLayout>
@@ -240,6 +259,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="9.5"
                     android:textColor="#000000"
+                    android:fontFamily="@font/spoqa_han_sans_neo_regular"
                     android:layout_marginLeft="8dp"
                     android:text="@{themedetailviewmodel.fire}"/>
             </LinearLayout>
@@ -250,6 +270,7 @@
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:fontFamily="@font/spoqa_han_sans_neo_bold"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="30dp"/>
             <androidx.recyclerview.widget.RecyclerView

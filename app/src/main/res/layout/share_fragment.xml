@@ -10,7 +10,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/spoqa_han_sans_neo"
+            android:fontFamily="@font/spoqa_han_sans_neo_bold"
             android:textStyle="bold"
             android:textSize="20sp"
             android:textColor="#000000"
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20.5dp"
             android:layout_marginTop="50dp"
-            android:fontFamily="@font/spoqa_han_sans_neo"
+            android:fontFamily="@font/spoqa_han_sans_neo_bold"
             android:textStyle="bold"
             android:textSize="18sp"
             android:textColor="#000000"
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="0.5dp"
             android:layout_marginTop="79dp"
-            android:fontFamily="@font/spoqa_han_sans_neo"
+            android:fontFamily="@font/spoqa_han_sans_neo_regular"
             android:textStyle="normal"
             android:textSize="13sp"
             android:textColor="#666666"
@@ -74,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="전체나눔"
-            android:fontFamily="@font/spoqa_han_sans_neo"
+            android:fontFamily="@font/spoqa_han_sans_neo_bold"
             android:textStyle="bold"
             android:textSize="20sp"
             android:textColor="#000000"/>
@@ -83,6 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="전체보기"
+            android:fontFamily="@font/spoqa_han_sans_neo_regular"
             android:layout_alignParentRight="true"
             android:gravity="center"
             android:textColor="#848484"
@@ -94,6 +95,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="0개 나눔글이 있습니다"
+        android:fontFamily="@font/spoqa_han_sans_neo_medium"
         android:textColor="#999999"
         android:layout_marginBottom="20dp"/>
     <androidx.recyclerview.widget.RecyclerView
