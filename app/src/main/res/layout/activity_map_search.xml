@@ -55,7 +55,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="40.5dp"
                 android:background="@null"
-                android:fontFamily="@font/spoqa_han_sans_neo"
+                android:fontFamily="@font/spoqa_han_sans_neo_medium"
                 android:hint="관광지를 검색해주세요"
                 android:inputType="text"
                 android:maxLines="1"

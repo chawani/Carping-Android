@@ -34,7 +34,7 @@
                     android:textSize="18sp"
                     android:layout_centerHorizontal="true"
                     android:textColor="#000000"
-                    android:fontFamily="@font/spoqa_han_sans_neo"
+                    android:fontFamily="@font/spoqa_han_sans_neo_bold"
                     android:textStyle="bold"/>
             </RelativeLayout>
             <RatingBar
@@ -52,6 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="이 캠핑장을 평가해주세요!"
+                android:fontFamily="@font/spoqa_han_sans_neo_medium"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:textColor="#acb1b5"
@@ -67,6 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="청결"
+                    android:fontFamily="@font/spoqa_han_sans_neo_medium"
                     android:textSize="14sp"
                     android:layout_gravity="center"
                     android:textColor="#666666"/>
@@ -95,6 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="주차장"
+                    android:fontFamily="@font/spoqa_han_sans_neo_medium"
                     android:textSize="14sp"
                     android:layout_gravity="center"
                     android:textColor="#666666"/>
@@ -123,6 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="편의"
+                    android:fontFamily="@font/spoqa_han_sans_neo_medium"
                     android:textSize="14sp"
                     android:layout_gravity="center"
                     android:textColor="#666666"/>
@@ -152,6 +156,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="위치"
+                    android:fontFamily="@font/spoqa_han_sans_neo_medium"
                     android:textSize="14sp"
                     android:layout_gravity="center"
                     android:textColor="#666666"/>
@@ -174,6 +179,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="사진첨부"
+                android:fontFamily="@font/spoqa_han_sans_neo_medium"
                 android:textSize="16sp"
                 android:textColor="#000000"
                 android:textStyle="bold"
@@ -220,6 +226,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="리뷰내용"
+                    android:fontFamily="@font/spoqa_han_sans_neo_medium"
                     android:textSize="16sp"
                     android:textColor="#000000"
                     android:textStyle="bold"/>
@@ -229,6 +236,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textSize="13sp"
+                    android:fontFamily="@font/spoqa_han_sans_neo_regular"
                     android:text="0/300"
                     android:textColor="#000000"
                     android:gravity="right"/>
@@ -239,6 +247,7 @@
                 android:layout_height="156dp"
                 android:hint="다른분들에게 도움이 될 수 있는 클린한 리뷰를 작성해주세요!"
                 android:textColorHint="#d7d7d7"
+                android:fontFamily="@font/spoqa_han_sans_neo_medium"
                 android:background="@drawable/border_round"
                 android:textSize="14sp"
                 android:inputType="textMultiLine"
@@ -258,6 +267,7 @@
         android:layout_alignParentBottom="true"
         android:clickable="true"
         android:text="작성하기"
+        android:fontFamily="@font/spoqa_han_sans_neo_bold"
         android:textSize="20sp"
         android:textStyle="bold"
         android:background="#999999"
