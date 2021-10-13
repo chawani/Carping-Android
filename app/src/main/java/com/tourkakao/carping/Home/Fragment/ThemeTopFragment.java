@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.tourkakao.carping.Home.ThemeDataClass.Search;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.databinding.MainThemeTopFragmentBinding;
@@ -28,6 +29,7 @@ public class ThemeTopFragment extends Fragment {
         themebinding=MainThemeTopFragmentBinding.inflate(inflater, container, false);
         context=getContext();
 
+        Glide.with(context).load(R.drawable.main_right).into(themebinding.mainRight);
         setting_today_date();
 
         return themebinding.getRoot();

@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="카테"
+        android:fontFamily="@font/spoqa_han_sans_neo_medium"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:textSize="11sp"/>
@@ -22,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="이름"
+        android:fontFamily="@font/spoqa_han_sans_neo_bold"
         android:layout_marginTop="5dp"
         android:paddingLeft="10dp"
         android:textSize="17sp"
@@ -32,6 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:paddingLeft="10dp"
+        android:fontFamily="@font/spoqa_han_sans_neo_regular"
         android:paddingBottom="10dp"
         android:text="주소"
         android:textSize="11sp"
