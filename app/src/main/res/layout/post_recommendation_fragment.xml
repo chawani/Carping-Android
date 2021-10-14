@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:layout_marginTop="28.5dp"
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -12,7 +13,7 @@
         android:textStyle="bold"
         android:textSize="20sp"
         android:textColor="#000000"
-        android:text="이 포스트는 어때요?"/>
+        android:text="추천 포스트"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginHorizontal="16dp"

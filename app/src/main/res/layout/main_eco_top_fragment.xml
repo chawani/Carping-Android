@@ -67,6 +67,7 @@
             android:textStyle="normal" />
     </LinearLayout>
     <TextView
+        android:id="@+id/eco_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
@@ -81,7 +82,8 @@
         android:id="@+id/percent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="112dp"
+        android:layout_marginLeft="4dp"
+        android:layout_toRightOf="@id/eco_text"
         android:layout_marginTop="144dp"
         android:fontFamily="@font/spoqa_han_sans_neo_bold"
         android:textStyle="bold"

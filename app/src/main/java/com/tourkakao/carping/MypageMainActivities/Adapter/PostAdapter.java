@@ -64,7 +64,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             }else{
                 Glide.with(context).load(R.drawable.premium_mark).into(binding.premiumImage);
             }
-            binding.thumbnail.setColorFilter(Color.parseColor("#595959"), PorterDuff.Mode.MULTIPLY);
+            binding.thumbnail.setColorFilter(Color.parseColor("#75000000"));
             if((pageType==0&&item.isIs_approved())||pageType==2) {
                 binding.examineText.setVisibility(View.GONE);
                 Glide.with(context).load(R.drawable.right_arrow_red).into(binding.arrowImg);

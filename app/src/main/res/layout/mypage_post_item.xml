@@ -14,8 +14,9 @@
         android:layout_width="380dp"
         android:layout_height="248dp"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:cardElevation="5dp"
-        app:cardCornerRadius="20dp">
+        app:cardElevation="1dp"
+        android:elevation="@dimen/cardview_default_elevation"
+        app:cardCornerRadius="10dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

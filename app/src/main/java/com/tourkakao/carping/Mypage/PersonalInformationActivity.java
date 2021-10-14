@@ -149,6 +149,10 @@ public class PersonalInformationActivity extends AppCompatActivity implements Co
     }
 
     public void setInfo(){
+        String loginType=SharedPreferenceManager.getInstance(context).getString("login","");
+        if(loginType.equals("kakao")) {
+            Glide.with(getApplicationContext()).load(R.drawable.kakao_small_icon).into(binding.kakaoIcon);
+        }
         Glide.with(getApplicationContext()).load(R.drawable.back).into(binding.back);
         binding.back.setOnClickListener(new View.OnClickListener() {
             @Override

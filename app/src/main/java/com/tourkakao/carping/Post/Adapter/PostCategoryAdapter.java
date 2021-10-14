@@ -81,7 +81,7 @@ public class PostCategoryAdapter extends BaseAdapter {
         binding.star.setText("★ "+item.getTotal_star_avg());
         binding.name.setText(item.getAuthor());
         binding.pk.setText(Integer.toString(item.getId()));
-        binding.image.setColorFilter(Color.parseColor("#595959"), PorterDuff.Mode.MULTIPLY);
+        binding.image.setColorFilter(Color.parseColor("#75000000"));
 
         binding.like.setOnClickListener(new View.OnClickListener() {
             @Override

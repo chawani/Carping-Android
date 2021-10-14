@@ -69,7 +69,7 @@ public class PostTotalAdapter extends RecyclerView.Adapter<PostTotalAdapter.View
             binding.title.setText(item.getTitle());
             binding.pk.setText(Integer.toString(item.getId()));
             binding.star.setText("★ "+item.getTotal_star_avg());
-            binding.image.setColorFilter(Color.parseColor("#595959"), PorterDuff.Mode.MULTIPLY);
+            binding.image.setColorFilter(Color.parseColor("#75000000"));
         }
     }
 

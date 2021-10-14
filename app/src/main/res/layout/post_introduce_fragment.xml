@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:layout_marginTop="35.5dp"
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -146,7 +147,7 @@
         android:textStyle="normal"
         android:textSize="13sp"
         android:textColor="#666666"
-        android:lineSpacingExtra="7.2sp"/>
+        android:lineSpacingExtra="12sp"/>
     <TextView
         android:layout_marginLeft="16dp"
         android:layout_marginTop="50dp"
@@ -167,13 +168,13 @@
         android:textStyle="normal"
         android:textSize="13sp"
         android:textColor="#666666"
-        android:lineSpacingExtra="7.2sp"/>
+        android:lineSpacingExtra="12sp"/>
     <TextView
         android:layout_marginLeft="16dp"
         android:layout_marginTop="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/spoqa_han_sans_neo"
+        android:fontFamily="@font/spoqa_han_sans_neo_bold"
         android:textStyle="bold"
         android:textSize="20sp"
         android:textColor="#000000"
@@ -189,5 +190,5 @@
         android:textStyle="normal"
         android:textSize="13sp"
         android:textColor="#666666"
-        android:lineSpacingExtra="7.2sp"/>
+        android:lineSpacingExtra="12sp"/>
 </LinearLayout>

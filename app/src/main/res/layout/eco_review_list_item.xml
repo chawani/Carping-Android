@@ -36,6 +36,7 @@
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:textSize="15sp"
+                android:textColor="#000000"
                 android:fontFamily="@font/spoqa_han_sans_neo_medium"
                 android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@id/date"/>

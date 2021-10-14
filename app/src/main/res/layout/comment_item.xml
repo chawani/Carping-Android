@@ -53,7 +53,7 @@
                     android:textSize="12sp"
                     android:textColor="#5f51ef"
                     android:layout_marginLeft="4.1dp"
-                    android:gravity="center_vertical"/>
+                    android:layout_gravity="center_vertical"/>
                 <TextView
                     android:visibility="gone"
                     android:id="@+id/writer_check"

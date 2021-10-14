@@ -47,7 +47,7 @@ public class EcoTotalReviewAdapter extends RecyclerView.Adapter<EcoTotalReviewAd
                     .load(ecoReview.getImage1())
                     .transform(new CenterCrop(), new RoundedCorners(30))
                     .into(binding.image);
-            binding.image.setColorFilter(Color.parseColor("#595959"), PorterDuff.Mode.MULTIPLY);
+            binding.image.setColorFilter(Color.parseColor("#75000000"));
             binding.pk.setText(ecoReview.getId());
             binding.title.setText(ecoReview.getTitle());
             binding.content.setText(ecoReview.getText());

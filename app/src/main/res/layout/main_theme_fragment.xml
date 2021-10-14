@@ -2,12 +2,13 @@
 <LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="35dp">
     <LinearLayout
+        android:layout_marginHorizontal="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="3"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="2dp"
         android:layout_marginBottom="20dp"
         android:orientation="horizontal">
@@ -21,6 +22,7 @@
             android:text="신규 차박지✨"/>
     </LinearLayout>
     <RelativeLayout
+        android:layout_marginHorizontal="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp">
@@ -49,6 +51,7 @@
             android:visibility="gone"/>
     </RelativeLayout>
     <TextView
+        android:layout_marginHorizontal="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/spoqa_han_sans_neo_bold"
@@ -57,6 +60,7 @@
         android:textColor="#000000"
         android:text="테마별로 떠나는 차박여행"/>
     <LinearLayout
+        android:layout_marginHorizontal="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="4"
@@ -93,6 +97,7 @@
             android:clickable="true"/>
     </LinearLayout>
     <LinearLayout
+        android:layout_marginHorizontal="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="4"
@@ -128,6 +133,7 @@
             android:clickable="true"/>
     </LinearLayout>
     <LinearLayout
+        android:layout_marginHorizontal="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -159,9 +165,10 @@
 
     </LinearLayout>
     <RelativeLayout
+        android:layout_marginHorizontal="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp">
+        android:layout_marginBottom="11dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -185,7 +192,14 @@
             android:layout_height="wrap_content"
             android:visibility="gone"/>
     </RelativeLayout>
+    <ImageView
+        android:layout_marginBottom="35dp"
+        android:scaleType="fitXY"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/banner"/>
     <LinearLayout
+        android:layout_marginHorizontal="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -212,6 +226,8 @@
             android:clickable="true"/>
     </LinearLayout>
     <RelativeLayout
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <LinearLayout
@@ -238,6 +254,7 @@
             android:visibility="gone"/>
     </RelativeLayout>
     <TextView
+        android:layout_marginHorizontal="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/spoqa_han_sans_neo_bold"
@@ -248,6 +265,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginBottom="20dp"/>
     <RelativeLayout
+        android:layout_marginHorizontal="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <LinearLayout
