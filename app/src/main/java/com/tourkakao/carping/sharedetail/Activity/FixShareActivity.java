@@ -16,6 +16,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -131,14 +132,18 @@ public class FixShareActivity extends AppCompatActivity {
             TextView newtag=new TextView(context);
             newtag.setText("#"+fixViewModel.stags.get(i));
             newtag.setBackgroundResource(R.drawable.purple_border_round);
-            newtag.setTextColor(Color.parseColor("#9F81F7"));
+            newtag.setTextColor(Color.parseColor("#5f51ef"));
             newtag.setPadding(60, 30, 60, 30);
+            LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.leftMargin=25;
+            newtag.setLayoutParams(params);
             fixShareBinding.tagLayout.addView(newtag);
         }
     }
     public void setting_initial_images(){
         Glide.with(context).load(R.drawable.locate_img).into(fixShareBinding.locateImg);
         Glide.with(context).load(R.drawable.picture_btn_img).into(fixShareBinding.addImage2);
+        Glide.with(context).load(R.drawable.write_add_img_button).into(fixShareBinding.addImage);
         fixShareBinding.yesImageLayout.setVisibility(View.VISIBLE);
         fixShareBinding.noImageLayout.setVisibility(View.GONE);
         fixShareBinding.imageCnt.setText(image_count+"/4");
@@ -300,6 +305,9 @@ public class FixShareActivity extends AppCompatActivity {
                 newtag.setBackgroundResource(R.drawable.purple_border_round);
                 newtag.setTextColor(Color.parseColor("#5f51ef"));
                 newtag.setPadding(60, 30, 60, 30);
+                LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.leftMargin=25;
+                newtag.setLayoutParams(params);
                 fixShareBinding.tagLayout.addView(newtag);
             }else if(requestCode==gallery_setting.GALLERY_CODE){
                 if(data.getData()!=null){

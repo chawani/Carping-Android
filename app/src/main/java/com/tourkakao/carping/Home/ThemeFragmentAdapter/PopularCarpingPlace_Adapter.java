@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -82,11 +83,15 @@ public class PopularCarpingPlace_Adapter extends RecyclerView.Adapter {
             for(int i=0; i<tags.length; i++){
                 TextView textView=new TextView(context);
                 textView.setText(tags[i]);
-                textView.setTextSize(9.0f);
-                textView.setTextColor(Color.parseColor("#a4a4a4"));
-                textView.setPadding(5, 2, 3, 5);
-                textView.setBackgroundColor(Color.parseColor("#f2f2f2"));
+                textView.setTextSize(11.0f);
+                textView.setTextColor(Color.parseColor("#a1a1a1"));
+                textView.setPadding(15, 5, 15, 5);
+                LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.rightMargin=15;
+                textView.setLayoutParams(params);
+                textView.setBackgroundResource(R.drawable.border_round_tag);
                 binding.typeLayout.addView(textView);
+
             }
             if(tags.length==0){
                 binding.typeLayout.setVisibility(View.GONE);

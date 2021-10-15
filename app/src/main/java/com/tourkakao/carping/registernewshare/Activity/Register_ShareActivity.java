@@ -19,6 +19,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -77,6 +78,7 @@ public class Register_ShareActivity extends AppCompatActivity {
     public void setting_images(){
         Glide.with(context).load(R.drawable.locate_img).into(shareBinding.locateImg);
         Glide.with(context).load(R.drawable.photo_insert_button).into(shareBinding.addImage2);
+        Glide.with(context).load(R.drawable.write_add_img_button).into(shareBinding.addImage);
         shareBinding.noImageLayout.setVisibility(View.VISIBLE);
         shareBinding.yesImageLayout.setVisibility(View.GONE);
 
@@ -232,6 +234,7 @@ public class Register_ShareActivity extends AppCompatActivity {
         addtag.setClickable(true);
         addtag.setBackgroundResource(R.drawable.purple_border_round);
         addtag.setPadding(60, 30, 60, 30);
+        addtag.setTextColor(Color.parseColor("#5f51ef"));
         addtag.setOnClickListener(v -> {
             Intent intent=new Intent(context, TagsActivity.class);
             startActivityForResult(intent, 1003);
@@ -322,6 +325,9 @@ public class Register_ShareActivity extends AppCompatActivity {
                 newtag.setBackgroundResource(R.drawable.purple_border_round);
                 newtag.setTextColor(Color.parseColor("#5f51ef"));
                 newtag.setPadding(60, 30, 60, 30);
+                LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.leftMargin=25;
+                newtag.setLayoutParams(params);
                 shareBinding.tagLayout.addView(newtag);
             }
         }

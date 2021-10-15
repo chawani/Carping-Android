@@ -16,6 +16,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -121,6 +122,7 @@ public class Fix_newcarpingActivity extends AppCompatActivity {
     public void setting_add_tags(){
         addtag=new TextView(context);
         addtag.setText("+");
+        addtag.setTextColor(Color.parseColor("#5f51ef"));
         addtag.setClickable(true);
         addtag.setBackgroundResource(R.drawable.purple_border_round);
         addtag.setPadding(60, 30, 60, 30);
@@ -131,6 +133,7 @@ public class Fix_newcarpingActivity extends AppCompatActivity {
         fixNewcarpingBinding.tagLayout.addView(addtag);
     }
     public void setting_initial_images(){
+        Glide.with(context).load(R.drawable.write_add_img_button).into(fixNewcarpingBinding.addImage);
         fixNewcarpingBinding.noImageLayout.setVisibility(View.GONE);
         fixNewcarpingBinding.yesImageLayout.setVisibility(View.VISIBLE);
         fixNewcarpingBinding.imageCnt.setText(image_count+"/4");
@@ -218,6 +221,9 @@ public class Fix_newcarpingActivity extends AppCompatActivity {
             newtag.setBackgroundResource(R.drawable.purple_border_round);
             newtag.setTextColor(Color.parseColor("#5f51ef"));
             newtag.setPadding(60, 30, 60, 30);
+            LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.leftMargin=25;
+            newtag.setLayoutParams(params);
             fixNewcarpingBinding.tagLayout.addView(newtag);
         }
     }
@@ -323,6 +329,9 @@ public class Fix_newcarpingActivity extends AppCompatActivity {
                 newtag.setBackgroundResource(R.drawable.purple_border_round);
                 newtag.setTextColor(Color.parseColor("#5f51ef"));
                 newtag.setPadding(60, 30, 60, 30);
+                LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.leftMargin=25;
+                newtag.setLayoutParams(params);
                 fixNewcarpingBinding.tagLayout.addView(newtag);
             }else if(requestCode==gallery_setting.GALLERY_CODE){
                 if(data.getData()!=null){

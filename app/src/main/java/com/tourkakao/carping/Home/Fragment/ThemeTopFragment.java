@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,7 +32,7 @@ public class ThemeTopFragment extends Fragment {
 
         Glide.with(context).load(R.drawable.main_right).into(themebinding.mainRight);
         setting_today_date();
-
+        System.out.println("oncreateview");
         return themebinding.getRoot();
     }
     public void setting_today_date(){
@@ -64,7 +65,7 @@ public class ThemeTopFragment extends Fragment {
 
     }
     public void changing_region(String region, ArrayList<Search> populars){
-        themebinding.titleMassage.setText("현재 "+region+"에서 인기있는");
+        themebinding.titleMessage.setText(region);
         if(populars.get(0).getName().length()>13){
             themebinding.text1.setText(populars.get(0).getName().substring(0, 12)+"...");
         }else {

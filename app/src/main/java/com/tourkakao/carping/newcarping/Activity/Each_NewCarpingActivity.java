@@ -56,7 +56,6 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
         context=this;
         each_newCarpingActivity=this;
         reverseGeoCodingResultListener=this;
-        Glide.with(context).load(R.drawable.newcarping_share_img).into(eachNewCarpingBinding.newcarpingShareImg);
         Glide.with(context).load(R.drawable.locate_img).into(eachNewCarpingBinding.locateImg);
 
         eachNewCarpingViewModel=new ViewModelProvider(this).get(EachNewCarpingViewModel.class);

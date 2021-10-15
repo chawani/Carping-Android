@@ -5,12 +5,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="1">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center">
+            android:layout_weight="0.7"
+            android:orientation="vertical">
             <TextView
                 android:id="@+id/name"
                 android:layout_width="match_parent"
@@ -74,7 +75,7 @@
                 android:textSize="12sp"
                 android:textColor="@color/purple_text"
                 android:fontFamily="@font/spoqa_han_sans_neo_medium"
-                android:textStyle="bold"
+                android:textStyle="normal"
                 android:layout_marginBottom="5dp"/>
             <HorizontalScrollView
                 android:layout_width="match_parent"
@@ -87,29 +88,24 @@
             </HorizontalScrollView>
 
         </LinearLayout>
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
         <RelativeLayout
-            android:layout_width="106dp"
+            android:layout_width="0dp"
             android:layout_height="106dp"
-            android:layout_gravity="right"
-            android:gravity="right"
+            android:layout_weight="0.3"
+            android:layout_marginLeft="10dp"
             android:orientation="vertical">
             <ImageView
                 android:id="@+id/image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="10dp"
                 android:scaleType="fitXY"/>
             <ImageView
                 android:id="@+id/bookmark"
                 android:layout_width="12dp"
                 android:layout_height="15dp"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="18dp"
-                android:layout_marginTop="18dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
                 android:scaleType="fitXY"
                 android:clickable="true"/>
         </RelativeLayout>

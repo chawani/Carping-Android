@@ -6,94 +6,115 @@
             name="themedetailviewmodel"
             type="com.tourkakao.carping.theme.viewmodel.ThemeDetailViewModel" />
     </data>
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:layout_height="56dp"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:gravity="center_vertical">
-                <ImageView
-                    android:id="@+id/back"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/back"
-                    android:clickable="true"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{themedetailviewmodel.name}"
-                    android:textSize="18sp"
-                    android:layout_centerHorizontal="true"
-                    android:textColor="#000000"
-                    android:fontFamily="@font/spoqa_han_sans_neo_bold"
-                    android:textStyle="bold"/>
-            </RelativeLayout>
+            android:layout_marginRight="16dp"
+            android:gravity="center_vertical">
             <ImageView
-                android:id="@+id/theme_main_img"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginBottom="22dp"
-                android:scaleType="fitXY"/>
+                android:id="@+id/back"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/back"
+                android:clickable="true"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="2.5dp"
-                android:paddingRight="2.5dp"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:background="#fafafa"
-                android:textColor="#a1a1a1"
-                android:textSize="11sp"
-                android:fontFamily="@font/spoqa_han_sans_neo_medium"
-                android:text="@{themedetailviewmodel.cat}"
-                android:layout_marginBottom="8dp"/>
-            <RelativeLayout
+                android:text="@{themedetailviewmodel.name}"
+                android:textSize="18sp"
+                android:layout_centerHorizontal="true"
+                android:textColor="#000000"
+                android:fontFamily="@font/spoqa_han_sans_neo_bold"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="7dp">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/theme_main_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginBottom="22dp"
+                    android:scaleType="fitXY"/>
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="2dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:paddingTop="2dp"
+                    android:background="@drawable/border_round_tag"
+                    android:textColor="#a1a1a1"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/spoqa_han_sans_neo_medium"
+                    android:text="@{themedetailviewmodel.cat}"
+                    android:layout_marginBottom="7dp"/>
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="25sp"
-                    android:textColor="@color/black"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="25dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="25sp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/spoqa_han_sans_neo_bold"
+                        android:text="@{themedetailviewmodel.name}"/>
+                    <ImageView
+                        android:id="@+id/bookmark"
+                        android:layout_width="13dp"
+                        android:layout_height="16dp"
+                        android:clickable="true"
+                        android:scaleType="fitXY"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"/>
+                </RelativeLayout>
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/theme_detail_tabs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:tabIndicatorColor="@color/black"
+                    app:tabIndicatorHeight="3dp"
+                    android:textColor="#000000"
+                    android:textSize="15sp"
                     android:textStyle="bold"
-                    android:fontFamily="@font/spoqa_han_sans_neo_bold"
-                    android:text="@{themedetailviewmodel.name}"/>
-                <ImageView
-                    android:id="@+id/bookmark"
-                    android:layout_width="13dp"
-                    android:layout_height="16dp"
-                    android:clickable="true"
-                    android:layout_alignParentRight="true"/>
-            </RelativeLayout>
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/theme_detail_tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tabIndicatorColor="@color/black"
-                android:layout_marginBottom="30dp"
-                app:tabMode="scrollable">
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
+                    app:tabTextAppearance="@style/tab_text"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="30dp">
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="정보"/>
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="추천"/>
+                </com.google.android.material.tabs.TabLayout>
+                <FrameLayout
+                    android:id="@+id/theme_detail_frame"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="정보"/>
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="추천"/>
-            </com.google.android.material.tabs.TabLayout>
-            <FrameLayout
-                android:id="@+id/theme_detail_frame"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"/>
+            </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
 </layout>

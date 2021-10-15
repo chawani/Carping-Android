@@ -13,6 +13,7 @@
         android:layout_height="23dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="17dp"
+        android:clickable="false"
         android:src="@drawable/carping_logo_no_letter" />
 
     <TextView
@@ -33,23 +34,44 @@
         android:layout_height="12dp"
         android:layout_toRightOf="@+id/date"
         android:layout_marginTop="86dp"></ImageView>
-
-    <TextView
-        android:id="@+id/title_massage"
+    <LinearLayout
+        android:id="@+id/title_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="115dp"
-        android:fontFamily="@font/spoqa_han_sans_neo"
-        android:text="현재 에서 인기있는"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        android:textStyle="normal" />
+        android:layout_marginTop="115dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="현재 "
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:fontFamily="@font/spoqa_han_sans_neo_regular"
+            android:textStyle="normal"/>
+        <TextView
+            android:id="@+id/title_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/spoqa_han_sans_neo_bold"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:textSize="20sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="에서 인기있는"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:fontFamily="@font/spoqa_han_sans_neo_regular"
+            android:textStyle="normal"/>
+    </LinearLayout>
+
 
     <ImageView
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:layout_toRightOf="@+id/title_massage"
+        android:layout_toRightOf="@+id/title_layout"
         android:layout_marginTop="104dp"
         android:layout_marginLeft="5dp"
         android:src="@drawable/main_house_image"></ImageView>
@@ -58,7 +80,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="144dp">
+        android:layout_marginTop="144dp"
+        android:clickable="true">
         <TextView
             android:id="@+id/text1"
             android:layout_width="wrap_content"
@@ -108,11 +131,13 @@
 
 
     <ImageView
+        android:id="@+id/search_arrow"
         android:layout_width="12dp"
         android:layout_height="7dp"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="161dp"
+        android:layout_marginTop="160dp"
         android:layout_marginRight="16dp"
+        android:clickable="true"
         android:src="@drawable/main_down_arrow"></ImageView>
 
 

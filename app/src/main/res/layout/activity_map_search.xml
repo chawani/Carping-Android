@@ -74,8 +74,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.30000001192092896dp"
-        android:background="#cecece"
-        android:layout_marginBottom="35.8dp"/>
+        android:background="#cecece"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mapsearch_recyclerview"
         android:layout_width="match_parent"

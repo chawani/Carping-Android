@@ -92,6 +92,7 @@ public class ThemeInfoFragment extends Fragment {
         if(mapView==null) {
             mapView = new MapView(context);
             infoFragmentBinding.mapView.addView(mapView);
+            mapView.setOnDragListener(null);
         }
     }
     public void searchblog(){
@@ -159,6 +160,7 @@ public class ThemeInfoFragment extends Fragment {
                 marker.setCustomImageResourceId(R.drawable.nowmarker);
                 marker.setCustomImageAutoscale(false);
                 mapView.addPOIItem(marker);
+                mapView.clearFocus();
             }
         });
     }

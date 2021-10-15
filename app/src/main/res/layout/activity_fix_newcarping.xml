@@ -60,7 +60,7 @@
                         android:fontFamily="@font/spoqa_han_sans_neo_medium"
                         android:textSize="16sp"
                         android:textColor="#000000"
-                        android:textStyle="bold"/>
+                        android:textStyle="normal"/>
                 </LinearLayout>
                 <RelativeLayout
                     android:id="@+id/map_view"
@@ -84,7 +84,7 @@
                         android:textSize="16sp"
                         android:fontFamily="@font/spoqa_han_sans_neo_medium"
                         android:textColor="#000000"
-                        android:textStyle="bold"
+                        android:textStyle="normal"
                         android:layout_marginBottom="15dp"/>
                     <ImageView
                         android:id="@+id/image_btn"
@@ -109,7 +109,7 @@
                             android:textSize="16sp"
                             android:fontFamily="@font/spoqa_han_sans_neo_medium"
                             android:textColor="#000000"
-                            android:textStyle="bold"/>
+                            android:textStyle="normal"/>
                         <TextView
                             android:id="@+id/image_cnt"
                             android:layout_width="wrap_content"
@@ -128,18 +128,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
-                            <TextView
+                            <ImageView
                                 android:id="@+id/add_image"
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:text="+"
-                                android:textSize="35sp"
-                                android:textColor="#000000"
-                                android:gravity="center"
-                                android:backgroundTint="#E6E6E6"
-                                android:background="@drawable/border_round"
-                                android:clickable="true"
-                                android:layout_marginRight="12dp"/>
+                                android:layout_width="86dp"
+                                android:layout_height="86dp"
+                                android:layout_marginRight="12dp"
+                                android:clickable="true"/>
                         </LinearLayout>
                     </HorizontalScrollView>
                 </LinearLayout>
@@ -153,7 +147,7 @@
                 android:textSize="16sp"
                 android:fontFamily="@font/spoqa_han_sans_neo_medium"
                 android:textColor="#000000"
-                android:textStyle="bold"
+                android:textStyle="normal"
                 android:layout_marginBottom="14dp"/>
             <EditText
                 android:id="@+id/title_edittext"
@@ -185,7 +179,7 @@
                     android:fontFamily="@font/spoqa_han_sans_neo_medium"
                     android:textSize="16sp"
                     android:textColor="#000000"
-                    android:textStyle="bold"/>
+                    android:textStyle="normal"/>
                 <TextView
                     android:id="@+id/text_count"
                     android:layout_width="0dp"
@@ -224,7 +218,7 @@
                     android:fontFamily="@font/spoqa_han_sans_neo_medium"
                     android:textSize="16sp"
                     android:textColor="#000000"
-                    android:textStyle="bold"
+                    android:textStyle="normal"
                     android:layout_marginBottom="10dp"/>
                 <TextView
                     android:id="@+id/tags_remove"

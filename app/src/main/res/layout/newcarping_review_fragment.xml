@@ -23,8 +23,8 @@
 
             <ImageView
                 android:id="@+id/no_review_img"
-                android:layout_width="142dp"
-                android:layout_height="46dp" />
+                android:layout_width="380dp"
+                android:layout_height="86dp" />
 
         </RelativeLayout>
         <ImageView
@@ -33,40 +33,51 @@
             android:layout_height="50dp"
             android:layout_marginBottom="18dp"
             android:layout_gravity="center"/>
-        <RatingBar
+        <LinearLayout
+            android:id="@+id/review_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:rating="@{eachnewcarpingviewmodel.my_star_avg}"
-            android:stepSize="0.1"
-            android:progressTint="#5f51ef"
-            style="@style/Widget.AppCompat.RatingBar.Indicator"
+            android:orientation="vertical"
             android:layout_gravity="center"
-            android:layout_marginBottom="10dp"/>
-        <TextView
-            android:id="@+id/newcarping_username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{eachnewcarpingviewmodel.review_username}"
-            android:textSize="15sp"
-            android:textColor="@color/purple_text"
-            android:textStyle="bold"
-            android:fontFamily="@font/spoqa_han_sans_neo_bold"
-            android:gravity="center"
-            android:layout_marginBottom="5dp"/>
-        <TextView
-            android:id="@+id/myreview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="이 차박지를 평가해주세요!"
-            android:fontFamily="@font/spoqa_han_sans_neo_regular"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginBottom="35dp"
-            android:clickable="true"/>
+            android:clickable="true">
+            <RatingBar
+                android:id="@+id/newcarping_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:rating="@{eachnewcarpingviewmodel.my_star_avg}"
+                android:stepSize="0.1"
+                android:progressTint="#5f51ef"
+                style="@style/Widget.AppCompat.RatingBar.Indicator"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"/>
+            <TextView
+                android:id="@+id/newcarping_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@{eachnewcarpingviewmodel.review_username}"
+                android:textSize="15sp"
+                android:textColor="@color/purple_text"
+                android:textStyle="bold"
+                android:fontFamily="@font/spoqa_han_sans_neo_bold"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"/>
+            <TextView
+                android:id="@+id/myreview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="이 차박지를 평가해주세요!"
+                android:fontFamily="@font/spoqa_han_sans_neo_regular"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="35dp"/>
+        </LinearLayout>
+
         <TextView
             android:id="@+id/newcarping_review_count"
             android:layout_width="match_parent"

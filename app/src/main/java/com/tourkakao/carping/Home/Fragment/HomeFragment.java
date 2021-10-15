@@ -20,6 +20,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.tourkakao.carping.Home.SearchAdapter.SearchAdapter;
 import com.tourkakao.carping.Home.SearchViewModel.SearchViewModel;
+import com.tourkakao.carping.Home.ShareDataClass.Share;
 import com.tourkakao.carping.MainSearch.Activity.MainSearchWith;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
@@ -55,7 +56,7 @@ public class HomeFragment extends Fragment {
         init_main_fragment();
         switch_main_tap();
         setting_images();
-        setting_sliding();
+        //setting_sliding();
         setting_searchadapter();
         starting_observe_change_popular();
         setting_search_text();
@@ -72,29 +73,36 @@ public class HomeFragment extends Fragment {
     }
     public void switch_main_tap(){
         getChildFragmentManager().beginTransaction().add(R.id.top_container, theme_top_fragment).commit();
+        getChildFragmentManager().beginTransaction().add(R.id.top_container, eco_top_fragment).commit();
         getChildFragmentManager().beginTransaction().add(R.id.container, theme_fragment).commit();
+        getChildFragmentManager().beginTransaction().hide(eco_top_fragment).commit();
 
+        System.out.println("switch_main");
         homebinding.tabs.addTab(homebinding.tabs.newTab().setText("테마카핑"));
         homebinding.tabs.addTab(homebinding.tabs.newTab().setText("에코카핑"));
         homebinding.tabs.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
-                Fragment top_selected=null;
+                //Fragment top_selected=null;
                 Fragment selected = null;
                 if(position == 0) {
                     SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("newcarping", 1);
                     SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("thisweekend", 1);
-                    top_selected = theme_top_fragment;
+                    getChildFragmentManager().beginTransaction().hide(eco_top_fragment).commit();
+                    getChildFragmentManager().beginTransaction().show(theme_top_fragment).commit();
+                    //top_selected = theme_top_fragment;
                     selected = theme_fragment;
                     can_see_popular=1;
                 }
                 else if(position == 1) {
-                    top_selected = eco_top_fragment;
+                    getChildFragmentManager().beginTransaction().hide(theme_top_fragment).commit();
+                    getChildFragmentManager().beginTransaction().show(eco_top_fragment).commit();
+                    //top_selected = eco_top_fragment;
                     selected = eco_fragment;
                     can_see_popular=0;
                 }
-                getChildFragmentManager().beginTransaction().replace(R.id.top_container, top_selected).commit();
+                //getChildFragmentManager().beginTransaction().show(top_selected).commit();
                 getChildFragmentManager().beginTransaction().replace(R.id.container, selected).commit();
                 if(can_see_popular==1){
                     searchViewModel.get_popularlist(region);
@@ -146,11 +154,28 @@ public class HomeFragment extends Fragment {
         Glide.with(context).load(R.drawable.junnam).into(homebinding.i14);
         Glide.with(context).load(R.drawable.junbuk).into(homebinding.i15);
         Glide.with(context).load(R.drawable.jeju).into(homebinding.i16);
-        homebinding.topContainer.setOnClickListener(v -> {
+        System.out.println("sliding");
+        theme_top_fragment.themebinding.searchArrow.setOnClickListener(v -> {
             if(can_see_popular==1) {
                 homebinding.slidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
             }
         });
+        theme_top_fragment.themebinding.changeContainer.setOnClickListener(v -> {
+            if(can_see_popular==1) {
+                homebinding.slidingLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+            }
+        });
+        changing_image();
+    }
+    public void changing_image(){
+        System.out.println("changing_image");
+        for(int i=0; i<16; i++){
+            if(i==city_select){
+                Glide.with(context).load(s_cities.get(i)).into(imageViews.get(i));
+            }else{
+                Glide.with(context).load(cities.get(i)).into(imageViews.get(i));
+            }
+        }
         homebinding.i1.setOnClickListener(v -> {
             city_select=0;
             region="서울";
@@ -164,6 +189,8 @@ public class HomeFragment extends Fragment {
             searchViewModel.get_popularlist(region);
             theme_fragment.setRegion(region);
             theme_fragment.themeViewModel.getPopularCarpingPlace(region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setString("region", region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("region_num", city_select);
         });
         homebinding.i2.setOnClickListener(v -> {
             city_select=1;
@@ -178,6 +205,8 @@ public class HomeFragment extends Fragment {
             searchViewModel.get_popularlist(region);
             theme_fragment.setRegion(region);
             theme_fragment.themeViewModel.getPopularCarpingPlace(region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setString("region", region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("region_num", city_select);
         });
         homebinding.i3.setOnClickListener(v -> {
             city_select=2;
@@ -192,6 +221,8 @@ public class HomeFragment extends Fragment {
             searchViewModel.get_popularlist(region);
             theme_fragment.setRegion(region);
             theme_fragment.themeViewModel.getPopularCarpingPlace(region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setString("region", region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("region_num", city_select);
         });
         homebinding.i4.setOnClickListener(v -> {
             city_select=3;
@@ -206,6 +237,8 @@ public class HomeFragment extends Fragment {
             searchViewModel.get_popularlist(region);
             theme_fragment.setRegion(region);
             theme_fragment.themeViewModel.getPopularCarpingPlace(region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setString("region", region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("region_num", city_select);
         });
         homebinding.i5.setOnClickListener(v -> {
             city_select=4;
@@ -220,6 +253,8 @@ public class HomeFragment extends Fragment {
             searchViewModel.get_popularlist(region);
             theme_fragment.setRegion(region);
             theme_fragment.themeViewModel.getPopularCarpingPlace(region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setString("region", region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("region_num", city_select);
         });
         homebinding.i6.setOnClickListener(v -> {
             city_select=5;
@@ -234,6 +269,8 @@ public class HomeFragment extends Fragment {
             searchViewModel.get_popularlist(region);
             theme_fragment.setRegion(region);
             theme_fragment.themeViewModel.getPopularCarpingPlace(region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setString("region", region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("region_num", city_select);
         });
         homebinding.i7.setOnClickListener(v -> {
             city_select=6;
@@ -248,6 +285,8 @@ public class HomeFragment extends Fragment {
             searchViewModel.get_popularlist(region);
             theme_fragment.setRegion(region);
             theme_fragment.themeViewModel.getPopularCarpingPlace(region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setString("region", region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("region_num", city_select);
         });
         homebinding.i8.setOnClickListener(v -> {
             city_select=7;
@@ -262,6 +301,8 @@ public class HomeFragment extends Fragment {
             searchViewModel.get_popularlist(region);
             theme_fragment.setRegion(region);
             theme_fragment.themeViewModel.getPopularCarpingPlace(region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setString("region", region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("region_num", city_select);
         });
         homebinding.i9.setOnClickListener(v -> {
             city_select=8;
@@ -276,6 +317,8 @@ public class HomeFragment extends Fragment {
             searchViewModel.get_popularlist(region);
             theme_fragment.setRegion(region);
             theme_fragment.themeViewModel.getPopularCarpingPlace(region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setString("region", region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("region_num", city_select);
         });
         homebinding.i10.setOnClickListener(v -> {
             city_select=9;
@@ -290,6 +333,8 @@ public class HomeFragment extends Fragment {
             searchViewModel.get_popularlist(region);
             theme_fragment.setRegion(region);
             theme_fragment.themeViewModel.getPopularCarpingPlace(region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setString("region", region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("region_num", city_select);
         });
         homebinding.i11.setOnClickListener(v -> {
             city_select=10;
@@ -304,6 +349,8 @@ public class HomeFragment extends Fragment {
             searchViewModel.get_popularlist(region);
             theme_fragment.setRegion(region);
             theme_fragment.themeViewModel.getPopularCarpingPlace(region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setString("region", region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("region_num", city_select);
         });
         homebinding.i12.setOnClickListener(v -> {
             city_select=11;
@@ -318,6 +365,8 @@ public class HomeFragment extends Fragment {
             searchViewModel.get_popularlist(region);
             theme_fragment.setRegion(region);
             theme_fragment.themeViewModel.getPopularCarpingPlace(region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setString("region", region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("region_num", city_select);
         });
         homebinding.i13.setOnClickListener(v -> {
             city_select=12;
@@ -332,6 +381,8 @@ public class HomeFragment extends Fragment {
             searchViewModel.get_popularlist(region);
             theme_fragment.setRegion(region);
             theme_fragment.themeViewModel.getPopularCarpingPlace(region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setString("region", region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("region_num", city_select);
         });
         homebinding.i14.setOnClickListener(v -> {
             city_select=13;
@@ -346,6 +397,8 @@ public class HomeFragment extends Fragment {
             searchViewModel.get_popularlist(region);
             theme_fragment.setRegion(region);
             theme_fragment.themeViewModel.getPopularCarpingPlace(region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setString("region", region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("region_num", city_select);
         });
         homebinding.i15.setOnClickListener(v -> {
             city_select=14;
@@ -360,6 +413,8 @@ public class HomeFragment extends Fragment {
             searchViewModel.get_popularlist(region);
             theme_fragment.setRegion(region);
             theme_fragment.themeViewModel.getPopularCarpingPlace(region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setString("region", region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("region_num", city_select);
         });
         homebinding.i16.setOnClickListener(v -> {
             city_select=15;
@@ -374,6 +429,8 @@ public class HomeFragment extends Fragment {
             searchViewModel.get_popularlist(region);
             theme_fragment.setRegion(region);
             theme_fragment.themeViewModel.getPopularCarpingPlace(region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setString("region", region);
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("region_num", city_select);
         });
     }
     public void setting_searchadapter(){
@@ -396,5 +453,15 @@ public class HomeFragment extends Fragment {
             Intent intent=new Intent(context, MainSearchWith.class);
             startActivity(intent);
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        region=SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).getString("region", "서울");
+        city_select=SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).getInt("region_num", 0);
+        System.out.println("onResume");
+        System.out.println(region+" "+city_select);
+        setting_sliding();
     }
 }

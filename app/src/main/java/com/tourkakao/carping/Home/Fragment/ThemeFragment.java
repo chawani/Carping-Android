@@ -59,6 +59,7 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
         setting_this_weekend_total_btn();
         setting_az_total_btn();
 
+        Glide.with(context).load(R.drawable.car).into(themebinding.car);
         return themebinding.getRoot();
     }
 
