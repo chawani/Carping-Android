@@ -96,6 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void setting_image_initial(){
         Glide.with(context).load(R.drawable.locate_img).into(registerBinding.locateImg);
         Glide.with(context).load(R.drawable.photo_insert_button).into(registerBinding.imageBtn);
+        Glide.with(context).load(R.drawable.write_add_img_button).into(registerBinding.addImage);
         registerBinding.imageBtn.setOnClickListener(v -> {
             if (Build.VERSION.SDK_INT >= 23) {
                 int permission_read = context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
@@ -279,6 +280,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void setting_initial_tags(){
         addtag=new TextView(context);
         addtag.setText("+");
+        addtag.setTextColor(Color.parseColor("#5f51ef"));
         addtag.setClickable(true);
         addtag.setBackgroundResource(R.drawable.purple_border_round);
         addtag.setPadding(60, 30, 60, 30);
@@ -361,6 +363,9 @@ public class RegisterActivity extends AppCompatActivity {
                 newtag.setBackgroundResource(R.drawable.purple_border_round);
                 newtag.setTextColor(Color.parseColor("#5f51ef"));
                 newtag.setPadding(60, 30, 60, 30);
+                LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.leftMargin=25;
+                newtag.setLayoutParams(params);
                 registerBinding.tagLayout.addView(newtag);
             }
         }else if(resultCode==RESULT_CANCELED && send_locate_ok){

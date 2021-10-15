@@ -94,7 +94,9 @@ public class ShareFragment extends Fragment {
         super.onResume();
         if(SharedPreferenceManager.getInstance(context).getInt("change_isshare", 0)==1){
             shareViewModel.get_share("recent", 10);
-            shareViewModel.my_share_count.setValue(shareViewModel.my_share_count.getValue()+1);
+            if(shareViewModel.my_share_count!=null && shareViewModel.my_share_count.getValue()!=null){
+                shareViewModel.my_share_count.setValue(shareViewModel.my_share_count.getValue()+1);
+            }
             SharedPreferenceManager.getInstance(context).setInt("change_isshare", 0);
         }
     }

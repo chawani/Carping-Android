@@ -21,6 +21,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -119,6 +120,9 @@ public class MainSearchWith extends AppCompatActivity {
                     popular.setBackgroundResource(R.drawable.purple_border_round);
                     popular.setPadding(60, 30, 60, 30);
                     popular.setTextColor(Color.parseColor("#5f51ef"));
+                    LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    params.rightMargin=25;
+                    popular.setLayoutParams(params);
                     popular.setClickable(true);
                     int finalI = i;
                     popular.setOnClickListener(v -> {

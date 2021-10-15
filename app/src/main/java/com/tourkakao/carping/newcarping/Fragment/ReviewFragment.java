@@ -76,7 +76,7 @@ public class ReviewFragment extends Fragment {
             public void onChanged(Integer integer) {
                 if(integer==0){
                     reviewFragmentBinding.newcarpingImagereviewRecyclerview.setVisibility(View.GONE);
-                    Glide.with(context).load(R.drawable.empty_newcarping_review_img).into(reviewFragmentBinding.noReviewImg);
+                    Glide.with(context).load(R.drawable.post_photo_empty).into(reviewFragmentBinding.noReviewImg);
                     reviewFragmentBinding.noReviewImg.setVisibility(View.VISIBLE);
                     reviewFragmentBinding.reviewStarLayout.setVisibility(View.GONE);
                     reviewFragmentBinding.newcarpingReviewRecyclerview.setVisibility(View.GONE);
@@ -90,7 +90,7 @@ public class ReviewFragment extends Fragment {
         });
     }
     public void setting_write_review(){
-        reviewFragmentBinding.myreview.setOnClickListener(v -> {
+        reviewFragmentBinding.reviewLayout.setOnClickListener(v -> {
             Intent intent=new Intent(context, Write_newcarping_reviewActivity.class);
             intent.putExtra("title", eachNewCarpingViewModel.title.getValue());
             intent.putExtra("pk", eachNewCarpingViewModel.pk);

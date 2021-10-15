@@ -15,10 +15,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -102,19 +105,23 @@ public class SearchNewCarpingActivity extends AppCompatActivity {
         mapView.addPOIItem(marker);
     }
     public void setting_searchview(){
-        searchNewCarpingBinding.searchview.setIconified(false);
-        searchNewCarpingBinding.searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchNewCarpingBinding.searchBar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                search_text=query;
-                searchKeyword(query);
-                return true;
-            }
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                search_text=null;
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId== EditorInfo.IME_ACTION_SEARCH){
+                    search_text=searchNewCarpingBinding.searchBar.getText().toString();
+                    searchKeyword(search_text);
+                    return true;
+                }
                 return false;
             }
+        });
+        Glide.with(context).load(R.drawable.search_remove_img).into(searchNewCarpingBinding.deleteText);
+        searchNewCarpingBinding.deleteText.setOnClickListener(v -> {
+            searchNewCarpingBinding.searchBar.setText("");
+            searchNewCarpingBinding.locationView.setAdapter(null);
+            search_text=null;
+            mapView.removePOIItem(marker);
         });
     }
     public void searchKeyword(String keyword){

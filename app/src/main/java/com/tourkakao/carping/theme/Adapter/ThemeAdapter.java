@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -85,10 +86,13 @@ public class ThemeAdapter extends RecyclerView.Adapter {
             for(int i=0; i<cat.length; i++){
                 TextView textView=new TextView(context);
                 textView.setText(cat[i]);
-                textView.setTextSize(10);
-                textView.setPadding(10, 10, 10, 10);
-                textView.setBackgroundColor(Color.parseColor("#FAFAFA"));
-                textView.setTextColor(Color.parseColor("#BDBDBD"));
+                textView.setTextSize(12);
+                textView.setPadding(15, 5, 15, 5);
+                textView.setBackgroundResource(R.drawable.border_round_tag);
+                textView.setTextColor(Color.parseColor("#a1a1a1"));
+                LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.rightMargin=15;
+                textView.setLayoutParams(params);
                 binding.categoryLayout.addView(textView);
             }
             binding.scrab.setText("스크랩 "+theme.getScrap_cnt());

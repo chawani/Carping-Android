@@ -4,66 +4,72 @@
     android:orientation="vertical"
     android:layout_marginTop="45dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <RelativeLayout
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/spoqa_han_sans_neo_bold"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:gravity="center_horizontal"
+        android:text="나누고 캠핑하고"/>
+    <LinearLayout
+        android:weightSum="2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="25dp">
+        <LinearLayout
+            android:layout_weight="0.7"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/spoqa_han_sans_neo_bold"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:textColor="#000000"
-            android:gravity="center_horizontal"
-            android:text="나누고 캠핑하고"/>
+            android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/share_check_mark"
-            android:layout_width="14.5dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="2.5dp"
-            android:layout_marginTop="56dp">
-        </ImageView>
-        <TextView
-            android:id="@+id/username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20.5dp"
-            android:layout_marginTop="50dp"
-            android:fontFamily="@font/spoqa_han_sans_neo_bold"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:textColor="#000000"
-            android:gravity="center_horizontal"
-            android:text="user_02"/>
-        <TextView
-            android:id="@+id/monthWrite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="0.5dp"
-            android:layout_marginTop="79dp"
-            android:fontFamily="@font/spoqa_han_sans_neo_regular"
-            android:textStyle="normal"
-            android:textSize="13sp"
-            android:textColor="#666666"
-            android:text="최근 1개월 간\n무료나눔 1개 작성"/>
-        <ImageView
-            android:id="@+id/share_write_button"
-            android:layout_width="92dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="1.5dp"
-            android:layout_marginTop="131dp"
-            android:clickable="true">
-        </ImageView>
-
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/share_check_mark"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center">
+                </ImageView>
+                <TextView
+                    android:layout_marginLeft="3.5dp"
+                    android:id="@+id/username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/spoqa_han_sans_neo_bold"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="#000000"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/monthWrite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/spoqa_han_sans_neo"
+                android:textStyle="normal"
+                android:textSize="13sp"
+                android:textColor="#666666"/>
+            <ImageView
+                android:id="@+id/share_write_button"
+                android:layout_width="92dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
+            </ImageView>
+        </LinearLayout>
         <ImageView
             android:id="@+id/share_image"
-            android:layout_width="222dp"
-            android:layout_height="182dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="75dp">
+            android:layout_width="0dp"
+            android:layout_weight="1.3"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            >
         </ImageView>
-    </RelativeLayout>
+    </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
