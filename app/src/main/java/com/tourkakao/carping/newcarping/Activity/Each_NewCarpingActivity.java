@@ -11,12 +11,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.tourkakao.carping.BuildConfig;
+import com.tourkakao.carping.EcoCarping.Activity.EcoCarpingEditActivity;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
@@ -162,65 +166,65 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
                 if(integer==1){
                     Glide.with(context).load(R.drawable.list_show_btn).into(eachNewCarpingBinding.listbtn);
                     eachNewCarpingBinding.listbtn.setVisibility(View.VISIBLE);
-                    eachNewCarpingBinding.listbtn.setOnClickListener(v -> {
-                        eachNewCarpingBinding.listLayout.setVisibility(View.VISIBLE);
-                        list_layout=true;
-                        eachNewCarpingBinding.newcarpingDelete.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                AlertDialog.Builder builder=new AlertDialog.Builder(Each_NewCarpingActivity.this);
-                                builder.setCancelable(false)
-                                        .setTitle("신규 차박지 삭제 알림")
-                                        .setMessage("차박지를 삭제 할까요?")
-                                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.dismiss();
-                                            }
-                                        })
-                                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                TotalApiClient.getApiService(context).delete_newcarping(post_pk)
-                                                        .subscribeOn(Schedulers.io())
-                                                        .observeOn(AndroidSchedulers.mainThread())
-                                                        .subscribe(
-                                                                res -> {
-                                                                    if(res.isSuccess()){
-                                                                        Toast.makeText(Each_NewCarpingActivity.this, "신규 차박지가 삭제되었어요", Toast.LENGTH_SHORT).show();
-                                                                        finish();
-                                                                    }
-                                                                },
-                                                                error -> {}
-                                                        );
-                                            }
-                                        }).create().show();
-
-                            }
-                        });
-                        eachNewCarpingBinding.newcarpingEdit.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                eachNewCarpingBinding.mapView.removeView(mapView);
-                                mapView=null;
-                                eachNewCarpingBinding.listLayout.setVisibility(View.GONE);
-                                to_edit=true;
-                                Intent fixintent=new Intent(context, Fix_newcarpingActivity.class);
-                                fixintent.putExtra("lat", eachNewCarpingViewModel.carpingplace_lat.getValue());
-                                fixintent.putExtra("lon", eachNewCarpingViewModel.carpingplace_lon.getValue());
-                                fixintent.putExtra("image1", eachNewCarpingViewModel.image1.getValue());
-                                fixintent.putExtra("image2", eachNewCarpingViewModel.image2.getValue());
-                                fixintent.putExtra("image3", eachNewCarpingViewModel.image3.getValue());
-                                fixintent.putExtra("image4", eachNewCarpingViewModel.image4.getValue());
-                                fixintent.putExtra("tags", eachNewCarpingViewModel.info_tags.getValue());
-                                fixintent.putExtra("title", eachNewCarpingViewModel.title.getValue());
-                                fixintent.putExtra("review", eachNewCarpingViewModel.info_review.getValue());
-                                fixintent.putExtra("postpk", eachNewCarpingViewModel.pk);
-                                fixintent.putExtra("userpk", eachNewCarpingViewModel.userpk);
-                                startActivityForResult(fixintent, 1001);
-                            }
-                        });
-                    });
+//                    eachNewCarpingBinding.listbtn.setOnClickListener(v -> {
+//                        eachNewCarpingBinding.listLayout.setVisibility(View.VISIBLE);
+//                        list_layout=true;
+//                        eachNewCarpingBinding.newcarpingDelete.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                AlertDialog.Builder builder=new AlertDialog.Builder(Each_NewCarpingActivity.this);
+//                                builder.setCancelable(false)
+//                                        .setTitle("신규 차박지 삭제 알림")
+//                                        .setMessage("차박지를 삭제 할까요?")
+//                                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(DialogInterface dialog, int which) {
+//                                                dialog.dismiss();
+//                                            }
+//                                        })
+//                                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(DialogInterface dialog, int which) {
+//                                                TotalApiClient.getApiService(context).delete_newcarping(post_pk)
+//                                                        .subscribeOn(Schedulers.io())
+//                                                        .observeOn(AndroidSchedulers.mainThread())
+//                                                        .subscribe(
+//                                                                res -> {
+//                                                                    if(res.isSuccess()){
+//                                                                        Toast.makeText(Each_NewCarpingActivity.this, "신규 차박지가 삭제되었어요", Toast.LENGTH_SHORT).show();
+//                                                                        finish();
+//                                                                    }
+//                                                                },
+//                                                                error -> {}
+//                                                        );
+//                                            }
+//                                        }).create().show();
+//
+//                            }
+//                        });
+//                        eachNewCarpingBinding.newcarpingEdit.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                eachNewCarpingBinding.mapView.removeView(mapView);
+//                                mapView=null;
+//                                eachNewCarpingBinding.listLayout.setVisibility(View.GONE);
+//                                to_edit=true;
+//                                Intent fixintent=new Intent(context, Fix_newcarpingActivity.class);
+//                                fixintent.putExtra("lat", eachNewCarpingViewModel.carpingplace_lat.getValue());
+//                                fixintent.putExtra("lon", eachNewCarpingViewModel.carpingplace_lon.getValue());
+//                                fixintent.putExtra("image1", eachNewCarpingViewModel.image1.getValue());
+//                                fixintent.putExtra("image2", eachNewCarpingViewModel.image2.getValue());
+//                                fixintent.putExtra("image3", eachNewCarpingViewModel.image3.getValue());
+//                                fixintent.putExtra("image4", eachNewCarpingViewModel.image4.getValue());
+//                                fixintent.putExtra("tags", eachNewCarpingViewModel.info_tags.getValue());
+//                                fixintent.putExtra("title", eachNewCarpingViewModel.title.getValue());
+//                                fixintent.putExtra("review", eachNewCarpingViewModel.info_review.getValue());
+//                                fixintent.putExtra("postpk", eachNewCarpingViewModel.pk);
+//                                fixintent.putExtra("userpk", eachNewCarpingViewModel.userpk);
+//                                startActivityForResult(fixintent, 1001);
+//                            }
+//                        });
+//                    });
                     /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         eachNewCarpingBinding.newcarpingFrame.setOnScrollChangeListener(new View.OnScrollChangeListener() {
                             @Override
@@ -253,20 +257,93 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
                             eachNewCarpingBinding.listLayout.setVisibility(View.GONE);
                         }
                     });*/
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        eachNewCarpingBinding.parentLayout.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-                            @Override
-                            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                                eachNewCarpingBinding.listLayout.setVisibility(View.GONE);
-                            }
-                        });
-                    }
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                        eachNewCarpingBinding.parentLayout.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+//                            @Override
+//                            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//                                eachNewCarpingBinding.listLayout.setVisibility(View.GONE);
+//                            }
+//                        });
+//                    }
                 }else if(integer==0){
                     eachNewCarpingBinding.listbtn.setVisibility(View.GONE);
                 }
             }
         });
+        eachNewCarpingBinding.listbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                registerForContextMenu(view);
+                view.showContextMenu();
+                unregisterForContextMenu(view);
+            }
+        });
     }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.detail_page_menu, menu);
+    }
+
+    public boolean onContextItemSelected(MenuItem item)
+    {
+        switch(item.getItemId())
+        {
+            case R.id.edit:
+                eachNewCarpingBinding.mapView.removeView(mapView);
+                mapView=null;
+                eachNewCarpingBinding.listLayout.setVisibility(View.GONE);
+                to_edit=true;
+                Intent fixintent=new Intent(context, Fix_newcarpingActivity.class);
+                fixintent.putExtra("lat", eachNewCarpingViewModel.carpingplace_lat.getValue());
+                fixintent.putExtra("lon", eachNewCarpingViewModel.carpingplace_lon.getValue());
+                fixintent.putExtra("image1", eachNewCarpingViewModel.image1.getValue());
+                fixintent.putExtra("image2", eachNewCarpingViewModel.image2.getValue());
+                fixintent.putExtra("image3", eachNewCarpingViewModel.image3.getValue());
+                fixintent.putExtra("image4", eachNewCarpingViewModel.image4.getValue());
+                fixintent.putExtra("tags", eachNewCarpingViewModel.info_tags.getValue());
+                fixintent.putExtra("title", eachNewCarpingViewModel.title.getValue());
+                fixintent.putExtra("review", eachNewCarpingViewModel.info_review.getValue());
+                fixintent.putExtra("postpk", eachNewCarpingViewModel.pk);
+                fixintent.putExtra("userpk", eachNewCarpingViewModel.userpk);
+                startActivityForResult(fixintent, 1001);
+                return true;
+            case R.id.delete:
+                AlertDialog.Builder builder=new AlertDialog.Builder(Each_NewCarpingActivity.this);
+                builder.setCancelable(false)
+                        .setTitle("신규 차박지 삭제 알림")
+                        .setMessage("차박지를 삭제 할까요?")
+                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                TotalApiClient.getApiService(context).delete_newcarping(post_pk)
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(
+                                                res -> {
+                                                    if(res.isSuccess()){
+                                                        Toast.makeText(Each_NewCarpingActivity.this, "신규 차박지가 삭제되었어요", Toast.LENGTH_SHORT).show();
+                                                        finish();
+                                                    }
+                                                },
+                                                error -> {}
+                                        );
+                            }
+                        }).create().show();
+                return true;
+        }
+
+        return super.onContextItemSelected(item);
+    }
+
     public void starting_observe_delete_review(){
         eachNewCarpingViewModel.delete_review_ok.observe(this, new Observer<Integer>() {
             @Override

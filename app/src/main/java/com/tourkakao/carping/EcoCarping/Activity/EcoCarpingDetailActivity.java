@@ -68,6 +68,7 @@ public class EcoCarpingDetailActivity extends AppCompatActivity {
     private int commentCount;
     private int imageCount;
     private boolean commentCheck=false;
+    private int writer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,8 +84,8 @@ public class EcoCarpingDetailActivity extends AppCompatActivity {
         ecoDetailViewModel.getPost().observe(this, new Observer<EcoPost>() {
             @Override
             public void onChanged(EcoPost ecoPost) {
-                int id=(int)Double.parseDouble(ecoPost.getUser());
-                if(current_user!=id){
+                writer=(int)Double.parseDouble(ecoPost.getUser());
+                if(current_user!=writer){
                     binding.menu.setVisibility(View.GONE);
                 }
                 binding.username.setText(ecoPost.getUsername());
@@ -167,7 +168,7 @@ public class EcoCarpingDetailActivity extends AppCompatActivity {
             public void onChanged(ArrayList<Comment> comments) {
                 if(comments!=null) {
                     commentAdapter =
-                            new CommentAdapter(getApplicationContext(), comments,ecoDetailViewModel,EcoCarpingDetailActivity.this);
+                            new CommentAdapter(getApplicationContext(),comments,ecoDetailViewModel,EcoCarpingDetailActivity.this,writer);
                     binding.commentView.setAdapter(commentAdapter);
                 }
             }

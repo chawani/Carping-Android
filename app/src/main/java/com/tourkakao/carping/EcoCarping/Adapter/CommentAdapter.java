@@ -39,7 +39,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private ArrayList<Comment> comments;
     private EcoDetailViewModel viewModel;
     private EcoCarpingDetailActivity activity;
-    private int current_user;
+    private int writer;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private CommentItemBinding binding;
@@ -67,19 +67,19 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             binding.content.setText(comment.getText());
             binding.pk.setText(comment.getId());
             int user=(int)Double.parseDouble(comment.getUser());
-            if(current_user!=user)
+            if(writer!=user)
                 binding.privateDeleteButton.setVisibility(View.GONE);
-            if(current_user==user)
+            if(writer==user)
                 binding.writerCheck.setVisibility(View.VISIBLE);
         }
     }
 
-    public CommentAdapter(Context context, ArrayList<Comment> comments, EcoDetailViewModel viewModel,EcoCarpingDetailActivity activity){
+    public CommentAdapter(Context context, ArrayList<Comment> comments, EcoDetailViewModel viewModel,EcoCarpingDetailActivity activity, int writer){
         this.context=context;
         this.comments=comments;
         this.viewModel=viewModel;
         this.activity=activity;
-        current_user=SharedPreferenceManager.getInstance(context).getInt("id",0);
+        this.writer=writer;
     }
 
     @NonNull
