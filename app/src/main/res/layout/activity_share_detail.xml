@@ -49,31 +49,24 @@
                 android:orientation="vertical"
                 android:layout_marginTop="46dp"
                 android:clickable="true">
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="47dp"
-                    android:orientation="horizontal"
-                    android:weightSum="375"
+                    android:layout_height="wrap_content"
                     android:clickable="false">
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="47">
-                        <ImageView
-                            android:id="@+id/profile"
-                            android:layout_width="33dp"
-                            android:layout_height="33dp"
-                            android:scaleType="centerCrop"
-                            android:clickable="false"
-                            android:layout_margin="3dp"
-                            android:layout_centerInParent="true"/>
-                    </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/profile"
+                        android:layout_width="47dp"
+                        android:layout_height="47dp"
+                        android:scaleType="centerCrop"
+                        android:clickable="false"
+                        android:layout_margin="3dp"/>
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_weight="320"
                         android:layout_marginLeft="10dp"
+                        android:layout_centerInParent="true"
+                        android:layout_toRightOf="@+id/profile"
                         android:clickable="false">
                         <TextView
                             android:id="@+id/username"
@@ -99,12 +92,14 @@
                     </LinearLayout>
                     <ImageView
                         android:id="@+id/list_btn"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="25dp"
                         android:layout_weight="7"
                         android:clickable="true"
+                        android:layout_centerInParent="true"
+                        android:layout_alignParentRight="true"
                         android:layout_marginRight="5dp"/>
-                </LinearLayout>
+                </RelativeLayout>
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/image_view_pager"
                     android:layout_width="match_parent"
