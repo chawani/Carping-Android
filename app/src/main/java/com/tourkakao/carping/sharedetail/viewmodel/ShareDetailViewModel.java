@@ -31,6 +31,7 @@ public class ShareDetailViewModel extends ViewModel {
     ArrayList<Comment> comments=null;
     ArrayList<Share> shares=null;
     int userpk;
+    public int post_user;
     private MutableLiveData<ArrayList<String>> images=new MutableLiveData<>();
     private MutableLiveData<ArrayList<String>> tags=new MutableLiveData<>();
     private MutableLiveData<ShareDetail> detail=new MutableLiveData<>();
@@ -68,7 +69,7 @@ public class ShareDetailViewModel extends ViewModel {
     }
     public CommentAdapter setting_comment_adapter(){
         comments=new ArrayList<>();
-        commentAdapter=new CommentAdapter(context, comments, userpk);
+        commentAdapter=new CommentAdapter(context, comments, userpk, post_user);
         return commentAdapter;
     }
     public void get_total_share(String sort, int count){
@@ -211,8 +212,10 @@ public class ShareDetailViewModel extends ViewModel {
         }else{
             share_complete.setValue(0);
         }
+        post_user=shareDetail.getUser();
         tags.setValue(tagarr);
         comments=shareDetail.getComment();
+        commentAdapter.setPost_user(post_user);
         commentAdapter.updateItem(comments);
     }
     public MutableLiveData<ArrayList<String>> getImages() {
