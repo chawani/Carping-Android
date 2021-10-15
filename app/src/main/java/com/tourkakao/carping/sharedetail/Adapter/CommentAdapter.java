@@ -28,11 +28,18 @@ public class CommentAdapter extends RecyclerView.Adapter {
     ArrayList<Comment> comments;
     CommentItemBinding commentItemBinding;
     public int userpk;
-    public CommentAdapter(Context context, ArrayList<Comment> comments, int userpk){
+    public int post_user;
+    public CommentAdapter(Context context, ArrayList<Comment> comments, int userpk, int post_user){
         this.context=context;
         this.comments=comments;
         this.userpk=userpk;
+        this.post_user=post_user;
     }
+
+    public void setPost_user(int post_user) {
+        this.post_user = post_user;
+    }
+
     public class CommentViewHolder extends RecyclerView.ViewHolder{
         CommentItemBinding binding;
         public CommentViewHolder(CommentItemBinding binding){
@@ -42,12 +49,19 @@ public class CommentAdapter extends RecyclerView.Adapter {
         public void setItem(Comment comment, int pos){
             binding.content.setText(comment.getText());
             binding.level.setText("LV."+(int)Float.parseFloat(comment.getLevel()));
+            System.out.println(post_user+" "+comment.getUser());
+            if(post_user==comment.getUser()){
+                binding.writerCheck.setVisibility(View.VISIBLE);
+            }else{
+                binding.writerCheck.setVisibility(View.GONE);
+            }
             binding.name.setText(comment.getUsername());
-            Glide.with(context).load(comment.getBadge()).transform(new RoundedCorners(100)).into(binding.badge);
-            Glide.with(context).load(comment.getProfile()).transform(new RoundedCorners(100)).into(binding.image);
+            Glide.with(context).load(comment.getBadge()).transform(new CenterCrop(), new RoundedCorners(100)).into(binding.badge);
+            Glide.with(context).load(comment.getProfile()).transform(new CenterCrop(), new RoundedCorners(100)).into(binding.image);
             binding.time.setText(comment.getCreated_at());
             if(comment.getUser()==userpk){
                 binding.privateDeleteButton.setVisibility(View.VISIBLE);
+
                 binding.privateDeleteButton.setOnClickListener(v -> {
                     AlertDialog.Builder builder=new AlertDialog.Builder(context);
                     builder.setTitle("댓글 삭제")

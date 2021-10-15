@@ -1,5 +1,6 @@
 package com.tourkakao.carping.sharedetail.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
@@ -120,62 +125,12 @@ public class ShareDetailActivity extends AppCompatActivity {
                 if(userpk==shareDetail.getUser()){
                     Glide.with(context).load(R.drawable.list_show_btn).into(shareDetailBinding.listBtn);
                     shareDetailBinding.listBtn.setOnClickListener(v -> {
-                        shareDetailBinding.listLayout.setVisibility(View.VISIBLE);
-                    });
-                    shareDetailBinding.shareDelete.setOnClickListener(v -> {
-                        AlertDialog.Builder builder=new AlertDialog.Builder(context);
-                        builder.setTitle("무료나눔 삭제")
-                                .setMessage("무료나눔을 삭제할까요?")
-                                .setNegativeButton("아니요", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                })
-                                .setPositiveButton("네", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        SharedPreferenceManager.getInstance(getApplicationContext()).setInt("change_isshare", 1);
-                                        detailViewModel.share_delete(postpk);
-                                        shareDetailBinding.listLayout.setVisibility(View.GONE);
-                                    }
-                                }).create().show();
-                    });
-                    shareDetailBinding.shareFix.setOnClickListener(v -> {
-                        SharedPreferenceManager.getInstance(getApplicationContext()).setInt("change_isshare", 1);
-                        shareDetailBinding.listLayout.setVisibility(View.GONE);
-                        Intent fixintent=new Intent(context, FixShareActivity.class);
-                        fixintent.putExtra("pk", postpk);
-                        startActivityForResult(fixintent, 1001);
+                        registerForContextMenu(v);
+                        v.showContextMenu();
+                        unregisterForContextMenu(v);
                     });
                     isshare=shareDetail.isIs_shared();
                     firstshare=isshare;
-                    shareDetailBinding.shareComplete.setOnClickListener(v -> {
-                        SharedPreferenceManager.getInstance(getApplicationContext()).setInt("change_isshare", 1);
-                        if(isshare==true){
-                            detailViewModel.share_cancel_complete(postpk);
-                        }else{
-                            detailViewModel.share_complete(postpk);
-                        }
-                        shareDetailBinding.listLayout.setVisibility(View.GONE);
-                    });
-                    shareDetailBinding.toolbar.setOnClickListener(v -> {
-                        shareDetailBinding.listLayout.setVisibility(View.GONE);
-                    });
-                    shareDetailBinding.middleLayout.setOnClickListener(v -> {
-                        shareDetailBinding.listLayout.setVisibility(View.GONE);
-                    });
-                    shareDetailBinding.imageViewPager.setOnClickListener(v -> {
-                        shareDetailBinding.listLayout.setVisibility(View.GONE);
-                    });
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        shareDetailBinding.scrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-                            @Override
-                            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                                shareDetailBinding.listLayout.setVisibility(View.GONE);
-                            }
-                        });
-                    }
                 }
                 shareDetailBinding.username.setText(shareDetail.getUsername());
                 shareDetailBinding.hour.setText(shareDetail.getCreated_at());
@@ -185,7 +140,7 @@ public class ShareDetailActivity extends AppCompatActivity {
                 comment=shareDetail.getComment().size();
                 shareDetailBinding.likeComment.setText("좋아요"+like+" · 댓글"+comment);
                 chat_url=shareDetail.getChat_addr();
-                Glide.with(context).load(shareDetail.getProfile()).transform(new RoundedCorners(100)).into(shareDetailBinding.profile);
+                Glide.with(context).load(shareDetail.getProfile()).transform(new CenterCrop(), new RoundedCorners(100)).into(shareDetailBinding.profile);
                 shareDetailBinding.location.setText(shareDetail.getRegion());
                 islike=shareDetail.isIs_liked();
                 if(islike==true){
@@ -199,6 +154,54 @@ public class ShareDetailActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        MenuInflater inflater=getMenuInflater();
+        if(isshare==true){
+            inflater.inflate(R.menu.detail_share_yes_menu, menu);
+        }else{
+            inflater.inflate(R.menu.detail_share_not_menu, menu);
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.edit:
+                SharedPreferenceManager.getInstance(getApplicationContext()).setInt("change_isshare", 1);
+                Intent fixintent=new Intent(context, FixShareActivity.class);
+                fixintent.putExtra("pk", postpk);
+                startActivityForResult(fixintent, 1001);
+                break;
+            case R.id.delete:
+                AlertDialog.Builder builder=new AlertDialog.Builder(context);
+                builder.setTitle("무료나눔 삭제")
+                        .setMessage("무료나눔을 삭제할까요?")
+                        .setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setPositiveButton("네", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                SharedPreferenceManager.getInstance(getApplicationContext()).setInt("change_isshare", 1);
+                                detailViewModel.share_delete(postpk);
+                            }
+                        }).create().show();
+                break;
+            case R.id.clear:
+                SharedPreferenceManager.getInstance(getApplicationContext()).setInt("change_isshare", 1);
+                if(isshare==true){
+                    detailViewModel.share_cancel_complete(postpk);
+                }else{
+                    detailViewModel.share_complete(postpk);
+                }
+                break;
+        }
+        return true;
+    }
 
     public void setting_like_btn(){
         shareDetailBinding.likeMark.setOnClickListener(v -> {
@@ -242,11 +245,9 @@ public class ShareDetailActivity extends AppCompatActivity {
             public void onChanged(Integer integer) {
                 if(integer==0){
                     isshare=false;
-                    shareDetailBinding.shareComplete.setText("거래완료");
 
                 }else if(integer==1){
                     isshare=true;
-                    shareDetailBinding.shareComplete.setText("거래취소");
                 }
             }
         });
