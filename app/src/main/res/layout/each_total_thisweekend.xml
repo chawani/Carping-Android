@@ -21,7 +21,7 @@
         android:id="@+id/thisweekend_tags"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
+        android:textStyle="normal"
         android:textSize="10sp"
         android:fontFamily="@font/spoqa_han_sans_neo_medium"
         android:textColor="#6651e9"

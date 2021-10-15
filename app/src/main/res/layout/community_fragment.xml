@@ -8,16 +8,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="67dp"
+        android:layout_height="wrap_content"
         android:text="커뮤니티"
         android:gravity="center"
         android:textStyle="bold"
         android:textColor="#000000"
         android:fontFamily="@font/spoqa_han_sans_neo_bold"
         android:textSize="18sp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="16.5dp"
         android:layout_marginBottom="10dp"/>
     <com.google.android.material.tabs.TabLayout
+        app:tabTextAppearance="@style/tab_text"
+        app:tabIndicatorHeight="3dp"
         android:id="@+id/community_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

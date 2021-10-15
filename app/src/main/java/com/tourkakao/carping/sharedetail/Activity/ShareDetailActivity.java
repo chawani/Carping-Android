@@ -19,10 +19,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -97,8 +101,12 @@ public class ShareDetailActivity extends AppCompatActivity {
                 for(String t:strings){
                     TextView tag=new TextView(context);
                     tag.setText("#"+t);
+                    LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    params.rightMargin= convertDp(5);
+                    tag.setLayoutParams(params);
                     tag.setBackgroundResource(R.drawable.purple_border_round);
-                    tag.setPadding(60, 30, 60, 30);
+                    tag.setPadding(convertDp(10),convertDp(5),convertDp(10),convertDp(5));
+                    tag.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
                     tag.setTextColor(Color.parseColor("#5f51ef"));
                     shareDetailBinding.tagArea.addView(tag);
                 }
@@ -298,5 +306,10 @@ public class ShareDetailActivity extends AppCompatActivity {
                 detailViewModel.get_share_detail(postpk);
             }
         }
+    }
+
+    public int convertDp(int dp) {
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, metrics);
     }
 }

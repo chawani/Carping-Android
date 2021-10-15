@@ -194,7 +194,7 @@
     </RelativeLayout>
     <ImageView
         android:layout_marginBottom="35dp"
-        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/banner"/>

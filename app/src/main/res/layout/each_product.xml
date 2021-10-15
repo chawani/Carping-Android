@@ -27,7 +27,7 @@
         android:fontFamily="@font/spoqa_han_sans_neo_medium"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:layout_marginBottom="12dp"/>
+        android:layout_marginBottom="14dp"/>
     <ImageView
         android:id="@+id/to_kakaopage_btn"
         android:layout_width="89dp"

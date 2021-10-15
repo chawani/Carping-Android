@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.tourkakao.carping.EcoCarping.Adapter.EcoTotalReviewAdapter;
+import com.tourkakao.carping.Loading.CustomLoadingDialog;
 import com.tourkakao.carping.NetworkwithToken.CommonClass;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.Post.DTO.PriceInfo;
@@ -338,6 +339,7 @@ public class PostSettingActivity extends AppCompatActivity {
     }
 
     void post(){
+        CustomLoadingDialog.getInstance(PostSettingActivity.this, "등록 중입니다..").show();
         HashMap<String,String> post=(HashMap<String, String>) getIntent().getSerializableExtra("map");
         String[] uriList=getIntent().getStringArrayExtra("image");
         HashMap<String,RequestBody> requestBodyHashMap=new HashMap<>();
@@ -437,8 +439,7 @@ public class PostSettingActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(@NonNull CommonClass commonClass) {
                         if(commonClass.getCode()==200) {
-//                            myToast = Toast.makeText(getApplicationContext(),"작성 성공", Toast.LENGTH_SHORT);
-//                            myToast.show();
+                            CustomLoadingDialog.getInstance(PostSettingActivity.this, null).dismiss();
                             completeDialog();
                         }
                         else{

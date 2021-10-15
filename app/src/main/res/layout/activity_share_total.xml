@@ -37,6 +37,8 @@
             android:clickable="true"/>
     </RelativeLayout>
     <Spinner
+        android:popupBackground="@drawable/spinner_dropdown_background"
+        android:popupElevation="0.5dp"
         android:id="@+id/share_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

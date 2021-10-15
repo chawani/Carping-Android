@@ -155,8 +155,8 @@
                 <ImageView
                     android:id="@+id/ask_btn"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:scaleType="fitXY"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
                     android:layout_marginTop="26dp"
                     android:clickable="true"/>
                 <TextView

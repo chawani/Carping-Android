@@ -42,6 +42,7 @@ import com.tourkakao.carping.BuildConfig;
 import com.tourkakao.carping.EcoCarping.DTO.EcoPost;
 import com.tourkakao.carping.EcoCarping.ViewModel.EcoDetailViewModel;
 import com.tourkakao.carping.Gallerypermission.Gallery_setting;
+import com.tourkakao.carping.Loading.CustomLoadingDialog;
 import com.tourkakao.carping.NetworkwithToken.CommonClass;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.R;
@@ -449,6 +450,7 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
     }
 
     public void post(){
+        CustomLoadingDialog.getInstance(EcoCarpingEditActivity.this, "등록 중입니다..").show();
         HashMap<String, RequestBody> map=new HashMap<>();
         int userPk= SharedPreferenceManager.getInstance(getApplicationContext()).getInt("id",0);
         String tagString="[";
@@ -516,6 +518,7 @@ public class EcoCarpingEditActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(@NonNull CommonClass commonClass) {
                         if(commonClass.getCode()==200) {
+                            CustomLoadingDialog.getInstance(EcoCarpingEditActivity.this, null).dismiss();
                             Toast myToast = Toast.makeText(getApplicationContext(),"수정 완료", Toast.LENGTH_SHORT);
                             myToast.show();
                             finish();

@@ -18,9 +18,9 @@
         android:weightSum="2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="25dp">
+        android:orientation="horizontal">
         <LinearLayout
+            android:layout_marginTop="25dp"
             android:layout_weight="0.7"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -66,9 +66,7 @@
             android:id="@+id/main_eco_image"
             android:layout_width="0dp"
             android:layout_weight="1.3"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            >
+            android:layout_height="wrap_content">
         </ImageView>
     </LinearLayout>
 

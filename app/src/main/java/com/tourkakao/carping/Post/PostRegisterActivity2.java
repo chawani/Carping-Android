@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -45,6 +46,7 @@ public class PostRegisterActivity2 extends AppCompatActivity {
     private Gson gson=new Gson();
     private String channel_introduce;
     private String openchat;
+    private Toast myToast;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,12 +68,17 @@ public class PostRegisterActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(!check_channel){
-                    Toast myToast = Toast.makeText(getApplicationContext(),"채널 소개를 작성해주세요", Toast.LENGTH_SHORT);
+                    myToast = Toast.makeText(getApplicationContext(),"채널 소개를 작성해주세요", Toast.LENGTH_SHORT);
                     myToast.show();
                     return;
                 }
                 if(!check_openchat){
-                    Toast myToast = Toast.makeText(getApplicationContext(),"오픈 채팅방 주소를 작성해주세요", Toast.LENGTH_SHORT);
+                    myToast = Toast.makeText(getApplicationContext(),"오픈 채팅방 주소를 작성해주세요", Toast.LENGTH_SHORT);
+                    myToast.show();
+                    return;
+                }
+                if(!checkUri(binding.openchat.getText().toString())){
+                    myToast = Toast.makeText(getApplicationContext(),"오픈 채팅방 주소를 정확히 입력해주세요", Toast.LENGTH_SHORT);
                     myToast.show();
                     return;
                 }
@@ -243,5 +250,14 @@ public class PostRegisterActivity2 extends AppCompatActivity {
 //                changeButtonColor(checkAll());
 //            }
 //        });
+    }
+
+    boolean checkUri(String url){
+        Uri uri = Uri.parse(url);
+        if (uri.getScheme() == null || uri.getScheme().isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

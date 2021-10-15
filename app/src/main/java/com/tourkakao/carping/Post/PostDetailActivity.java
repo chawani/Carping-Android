@@ -219,9 +219,9 @@ public class PostDetailActivity extends AppCompatActivity {
                 binding.channelIntroduce.setText(postDetail.getAuthor_comment());
                 otherPostId=postDetail.getOther_post().getId();
                 Glide.with(context).load(postDetail.getOther_post().getThumbnail())
-                        .transform(new CenterCrop(), new RoundedCorners(8))
+                        .transform(new CenterCrop(), new RoundedCorners(4))
                         .into(binding.recommend);
-                binding.recommend.setColorFilter(Color.parseColor("#595959"), PorterDuff.Mode.MULTIPLY);
+                binding.recommend.setColorFilter(Color.parseColor("#75000000"));
                 if(postDetail.getOther_post().getPay_type()==0){
                     Glide.with(context).load(R.drawable.free_mark).into(binding.payTypeImg);
                 }

@@ -13,7 +13,7 @@
     android:layout_height="wrap_content"
     card_view:cardBackgroundColor="#ffffff"
     card_view:cardCornerRadius="12dp"
-    card_view:cardElevation="3dp">
+    card_view:cardElevation="2dp">
     <TextView
         android:id="@+id/pk"
         android:layout_width="0dp"

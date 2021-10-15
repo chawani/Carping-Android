@@ -68,7 +68,7 @@ public class Az_Adapter extends RecyclerView.Adapter {
             if(post.getPay_type().equals("1.0")){
                 Glide.with(context).load(R.drawable.premium_mark).into(binding.premiumImage);
             }
-            binding.azBackgroundImg.setColorFilter(Color.parseColor("#3E3E3E"), PorterDuff.Mode.MULTIPLY);
+            binding.azBackgroundImg.setColorFilter(Color.parseColor("#75000000"));
             binding.azTitleText.setText(post.getTitle());
             binding.star.setText("★ "+post.getTotal_star_avg());
         }

@@ -32,6 +32,8 @@ import com.google.gson.Gson;
 import com.tourkakao.carping.EcoCarping.Activity.EcoCarpingWriteActivity;
 import com.tourkakao.carping.Gallerypermission.Gallery_setting;
 import com.tourkakao.carping.Home.HomeViewModel.MypageViewModel;
+import com.tourkakao.carping.Login.GoogleLogout;
+import com.tourkakao.carping.Login.KakaoLogout;
 import com.tourkakao.carping.Login.LoginActivity;
 import com.tourkakao.carping.Mypage.DTO.Profile;
 import com.tourkakao.carping.NetworkwithToken.CommonClass;
@@ -154,7 +156,15 @@ public class ProfileEditActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(@NonNull CommonClass commonClass) {
                                         if(commonClass.getCode()==200) {
-                                            finishActivities();
+                                            String loginType=SharedPreferenceManager.getInstance(context).getString("login","");
+                                            if(loginType.equals("kakao")){
+                                                KakaoLogout kakaoLogout=new KakaoLogout(context,ProfileEditActivity.this);
+                                                kakaoLogout.signOut();
+                                            }
+                                            if(loginType.equals("google")) {
+                                                GoogleLogout googleLogout = new GoogleLogout(context, ProfileEditActivity.this);
+                                                googleLogout.signOut();
+                                            }
                                         }
                                         else {
                                             System.out.println("탈퇴 오류"+commonClass.getCode()+commonClass.getError_message());
@@ -184,16 +194,6 @@ public class ProfileEditActivity extends AppCompatActivity {
             }
         });
         msgDlg.show();
-    }
-
-    void finishActivities(){
-        SharedPreferences pref = getSharedPreferences("carping", MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.clear();
-        editor.commit();
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
     }
 
     public void updateProfileImg(List datas){

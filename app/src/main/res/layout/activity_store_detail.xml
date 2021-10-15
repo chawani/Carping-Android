@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:layout_marginBottom="17dp">
+            android:layout_marginBottom="9dp">
             <TextView
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
@@ -86,12 +86,19 @@
             android:text="문의"
             android:fontFamily="@font/spoqa_han_sans_neo_bold"
             android:layout_marginLeft="27dp"
-            android:layout_marginBottom="17dp"/>
+            android:layout_marginBottom="5.5dp"/>
+        <View
+            android:layout_marginLeft="22dp"
+            android:layout_width="36dp"
+            android:layout_height="3dp"
+            android:background="#000000"
+            android:layout_marginBottom="18.5dp">
+        </View>
         <ImageView
             android:id="@+id/explain"
             android:layout_width="match_parent"
             android:layout_height="122dp"
-            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="50dp"/>

@@ -22,6 +22,12 @@
                     android:layout_height="406dp"
                     android:scaleType="fitXY"/>
                 <ImageView
+                    android:id="@+id/gradient"
+                    android:layout_width="match_parent"
+                    android:layout_height="406dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/gradient"/>
+                <ImageView
                     android:id="@+id/back"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
@@ -40,7 +46,7 @@
                     android:textStyle="bold"/>
                 <TextView
                     android:id="@+id/title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="281dp"
                     android:layout_height="wrap_content"
                     android:text="@{eachThisWeekendViewModel.title}"
                     android:textSize="30sp"
@@ -63,6 +69,7 @@
                     android:paddingBottom="33dp"/>
             </RelativeLayout>
             <LinearLayout
+                android:layout_marginTop="5dp"
                 android:id="@+id/campsite1_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,6 +82,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
+                        android:layout_gravity="center_vertical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="No.1"
@@ -95,14 +103,15 @@
                         android:text="@{eachThisWeekendViewModel.name1}"
                         android:textStyle="bold"
                         android:textSize="24sp"
-                        android:textColor="#000000"
-                        android:layout_marginBottom="20dp"/>
+                        android:textColor="#000000"/>
                 </LinearLayout>
 
                 <androidx.cardview.widget.CardView
+                    android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="224dp"
                     app:cardCornerRadius="5dp"
+                    app:cardElevation="0dp"
                     android:layout_marginBottom="8dp">
                     <ImageView
                         android:id="@+id/image1"
@@ -130,6 +139,7 @@
                     android:textSize="20sp"
                     android:layout_marginBottom="20dp"/>
                 <TextView
+                    android:lineSpacingExtra="12sp"
                     android:id="@+id/body1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -307,10 +317,11 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginBottom="70dp">
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
+                        android:layout_gravity="center_vertical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="No.2"
@@ -331,14 +342,15 @@
                         android:textStyle="bold"
                         android:fontFamily="@font/spoqa_han_sans_neo_bold"
                         android:textSize="24sp"
-                        android:textColor="#000000"
-                        android:layout_marginBottom="20dp"/>
+                        android:textColor="#000000"/>
                 </LinearLayout>
 
                 <androidx.cardview.widget.CardView
+                    android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="224dp"
                     app:cardCornerRadius="5dp"
+                    app:cardElevation="0dp"
                     android:layout_marginBottom="8dp">
                     <ImageView
                         android:id="@+id/image2"
@@ -366,6 +378,7 @@
                     android:textSize="20sp"
                     android:layout_marginBottom="20dp"/>
                 <TextView
+                    android:lineSpacingExtra="12sp"
                     android:id="@+id/body2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -544,10 +557,11 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginBottom="114dp">
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
+                        android:layout_gravity="center_vertical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="No.3"
@@ -568,14 +582,15 @@
                         android:textStyle="bold"
                         android:fontFamily="@font/spoqa_han_sans_neo_bold"
                         android:textSize="24sp"
-                        android:textColor="#000000"
-                        android:layout_marginBottom="20dp"/>
+                        android:textColor="#000000"/>
                 </LinearLayout>
 
                 <androidx.cardview.widget.CardView
+                    android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="224dp"
                     app:cardCornerRadius="5dp"
+                    app:cardElevation="0dp"
                     android:layout_marginBottom="8dp">
                     <ImageView
                         android:id="@+id/image3"
@@ -603,6 +618,7 @@
                     android:textSize="20sp"
                     android:layout_marginBottom="20dp"/>
                 <TextView
+                    android:lineSpacingExtra="12sp"
                     android:id="@+id/body3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

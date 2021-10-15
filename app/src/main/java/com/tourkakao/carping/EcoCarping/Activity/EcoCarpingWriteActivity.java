@@ -39,6 +39,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.tourkakao.carping.BuildConfig;
 import com.tourkakao.carping.Gallerypermission.Gallery_setting;
+import com.tourkakao.carping.Loading.CustomLoadingDialog;
 import com.tourkakao.carping.NetworkwithToken.CommonClass;
 import com.tourkakao.carping.NetworkwithToken.TotalApiClient;
 import com.tourkakao.carping.R;
@@ -437,6 +438,7 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
     }
 
     public void post(){
+        CustomLoadingDialog.getInstance(EcoCarpingWriteActivity.this, "등록 중입니다..").show();
         HashMap<String, RequestBody> map=new HashMap<>();
         int userId=SharedPreferenceManager.getInstance(getApplicationContext()).getInt("id",0);
         RadioGroup rdgGroup = ecobinding.radioGroup;
@@ -502,6 +504,7 @@ public class EcoCarpingWriteActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(@NonNull CommonClass commonClass) {
                         if(commonClass.getCode()==200) {
+                            CustomLoadingDialog.getInstance(EcoCarpingWriteActivity.this, null).dismiss();
                             myToast = Toast.makeText(getApplicationContext(),"작성 완료", Toast.LENGTH_SHORT);
                             myToast.show();
                             finish();
