@@ -62,4 +62,11 @@ public class CommunityFragment extends Fragment {
             }
         });
     }
+
+    public void from_banner(){
+        getChildFragmentManager().beginTransaction().hide(shareFragment).commit();
+        getChildFragmentManager().beginTransaction().show(storeFragment).commit();
+        TabLayout.Tab tab=communitybinding.communityTabs.getTabAt(1);
+        tab.select();
+    }
 }

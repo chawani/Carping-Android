@@ -119,8 +119,15 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
-
-
+    public void banner_click_to_store(){
+        choose=3;
+        getSupportFragmentManager().beginTransaction().hide(homeFragment).commit();
+        getSupportFragmentManager().beginTransaction().hide(mapFragment).commit();
+        getSupportFragmentManager().beginTransaction().show(communityFragment).commit();
+        getSupportFragmentManager().beginTransaction().hide(mypageFragment).commit();
+        bottomNavigationView.setSelectedItemId(R.id.community);
+        communityFragment.from_banner();
+    }
 
     public void init_bottomnavigationview(){
         bottomNavigationView=findViewById(R.id.bottomnavigationview);
