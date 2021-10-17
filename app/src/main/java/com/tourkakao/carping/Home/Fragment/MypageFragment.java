@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity;
 import com.tourkakao.carping.Home.HomeViewModel.MypageViewModel;
 import com.tourkakao.carping.Login.GoogleLogin;
 import com.tourkakao.carping.Login.GoogleLogout;
@@ -110,6 +111,13 @@ public class MypageFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(context, HelpListActivity.class);
+                startActivity(intent);
+            }
+        });
+        mypagebinding.license.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context, OssLicensesMenuActivity.class);
                 startActivity(intent);
             }
         });
