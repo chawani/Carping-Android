@@ -29,11 +29,11 @@ public interface MypageInterface {
     Single<CommonClass> getMypageInfo(@Path("id")int id);
 
     @Multipart
-    @PATCH("mypage/profile/{id}")
+    @PATCH("mypage/profile/{id}/")
     Single<CommonClass> postProfileImg(@Path("id")String id,@Part MultipartBody.Part image);
 
     @Multipart
-    @PATCH("mypage/profile/{id}")
+    @PATCH("mypage/profile/{id}/")
     Single<CommonClass> postUserInfo(@Path("id")String id,@PartMap HashMap<String, RequestBody> data);
 
     @POST("/accounts/send-sms")

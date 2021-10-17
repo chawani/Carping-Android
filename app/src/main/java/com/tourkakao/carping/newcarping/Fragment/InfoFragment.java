@@ -56,7 +56,7 @@ public class InfoFragment extends Fragment {
                     EachNewcarpingDetailImageBinding binding= EachNewcarpingDetailImageBinding.inflate(getLayoutInflater());
                     ImageView img=binding.newcarpingInfoImg;
                     img.setScaleType(ImageView.ScaleType.FIT_XY);
-                    Glide.with(context).load(s).transform(new RoundedCorners(30)).into(img);
+                    Glide.with(context).load(s).transform(new CenterCrop(), new RoundedCorners(30)).into(img);
                     infoFragmentBinding.imageLayout.addView(binding.getRoot());
                 }
             }

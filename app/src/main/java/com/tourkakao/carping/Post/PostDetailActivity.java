@@ -217,19 +217,24 @@ public class PostDetailActivity extends AppCompatActivity {
                         .into(binding.bottomProfile);
                 binding.bottomName.setText(postDetail.getAuthor_name());
                 binding.channelIntroduce.setText(postDetail.getAuthor_comment());
-                otherPostId=postDetail.getOther_post().getId();
-                Glide.with(context).load(postDetail.getOther_post().getThumbnail())
-                        .transform(new CenterCrop(), new RoundedCorners(4))
-                        .into(binding.recommend);
-                binding.recommend.setColorFilter(Color.parseColor("#75000000"));
-                if(postDetail.getOther_post().getPay_type()==0){
-                    Glide.with(context).load(R.drawable.free_mark).into(binding.payTypeImg);
+                if(postDetail.getOther_post()==null){
+                    binding.other.setVisibility(View.GONE);
                 }
-                if(postDetail.getOther_post().getPay_type()==1){
-                    Glide.with(context).load(R.drawable.premium_mark).into(binding.payTypeImg);
+                else {
+                    otherPostId = postDetail.getOther_post().getId();
+                    Glide.with(context).load(postDetail.getOther_post().getThumbnail())
+                            .transform(new CenterCrop(), new RoundedCorners(4))
+                            .into(binding.recommend);
+                    binding.recommend.setColorFilter(Color.parseColor("#75000000"));
+                    if (postDetail.getOther_post().getPay_type() == 0) {
+                        Glide.with(context).load(R.drawable.free_mark).into(binding.payTypeImg);
+                    }
+                    if (postDetail.getOther_post().getPay_type() == 1) {
+                        Glide.with(context).load(R.drawable.premium_mark).into(binding.payTypeImg);
+                    }
+                    binding.recommendTitle.setText(postDetail.getOther_post().getTitle());
+                    Glide.with(context).load(R.drawable.writer_mark).into(binding.writerImg);
                 }
-                binding.recommendTitle.setText(postDetail.getOther_post().getTitle());
-                Glide.with(context).load(R.drawable.writer_mark).into(binding.writerImg);
             }
         });
     }

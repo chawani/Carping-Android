@@ -17,6 +17,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.tourkakao.carping.MypageMainActivities.DTO.MyCarpingPost;
 import com.tourkakao.carping.MypageMainActivities.DTO.Post;
 import com.tourkakao.carping.Post.DTO.PostListItem;
+import com.tourkakao.carping.Post.PostDetailActivity;
 import com.tourkakao.carping.Post.PostInfoActivity;
 import com.tourkakao.carping.R;
 import com.tourkakao.carping.databinding.MypageCarpingApiListItemBinding;
@@ -38,6 +39,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
                 @Override
                 public void onClick(View v) {
                     if(binding.pk.getText().toString().equals("is_not_approved")){
+                        return;
+                    }
+                    if(pageType==1&&binding.name.getText().toString().contains("탈퇴유저")) {
+                        Intent intent=new Intent(context, PostDetailActivity.class);
+                        int pk=Integer.parseInt(binding.pk.getText().toString());
+                        intent.putExtra("pk",pk);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
                         return;
                     }
                     Intent intent=new Intent(context, PostInfoActivity.class);

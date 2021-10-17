@@ -54,6 +54,11 @@ public class PersonalInformationActivity extends AppCompatActivity implements Co
         binding.completionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(binding.nickname.getText().toString().contains("탈퇴유저")){
+                    myToast = Toast.makeText(getApplicationContext(),"닉네임에 \'탈퇴유저\'라는 단어를 포함 할 수 없습니다", Toast.LENGTH_SHORT);
+                    myToast.show();
+                    return;
+                }
                 if(!checkAll()){
                     myToast = Toast.makeText(getApplicationContext(),"모두 입력해주세요", Toast.LENGTH_SHORT);
                     myToast.show();
