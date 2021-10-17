@@ -107,6 +107,9 @@ public class InfoFragment extends Fragment {
                     tag.setBackgroundResource(R.drawable.purple_border_round);
                     tag.setPadding(60, 30, 60, 30);
                     tag.setTextColor(Color.parseColor("#5f51ef"));
+                    LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    params.rightMargin=25;
+                    tag.setLayoutParams(params);
                     infoFragmentBinding.tagsLayout.addView(tag);
                 }
             }
