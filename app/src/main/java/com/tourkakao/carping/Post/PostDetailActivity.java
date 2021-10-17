@@ -131,9 +131,9 @@ public class PostDetailActivity extends AppCompatActivity {
             public void onChanged(PostDetail postDetail) {
                 post_id=postDetail.getId();
                 author_id =getIntent().getIntExtra("author_id",-1);
-                if(current_user== author_id){
-                    binding.privateDeleteButton.setVisibility(View.VISIBLE);
-                }
+//                if(current_user== author_id){
+//                    binding.privateDeleteButton.setVisibility(View.VISIBLE);
+//                }
                 Glide.with(context).load(postDetail.getThumbnail()).into(binding.thumbnail);
                 binding.thumbnail.setColorFilter(Color.parseColor("#595959"), PorterDuff.Mode.MULTIPLY);
                 binding.title.setText(postDetail.getTitle());
