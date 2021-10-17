@@ -25,15 +25,15 @@ public interface MypageInterface {
     @POST("mypage/sort")
     Single<CommonClass> getScrap(@Field("sort")String sort,@Field("subsort")String subsort,@Field("lat")String lat,@Field("lon")String lon);
 
-    @GET("mypage/profile/{id}/")
+    @GET("mypage/profile/{id}")
     Single<CommonClass> getMypageInfo(@Path("id")int id);
 
     @Multipart
-    @PATCH("mypage/profile/{id}/")
+    @PATCH("mypage/profile/{id}")
     Single<CommonClass> postProfileImg(@Path("id")String id,@Part MultipartBody.Part image);
 
     @Multipart
-    @PATCH("mypage/profile/{id}/")
+    @PATCH("mypage/profile/{id}")
     Single<CommonClass> postUserInfo(@Path("id")String id,@PartMap HashMap<String, RequestBody> data);
 
     @POST("/accounts/send-sms")

@@ -3,6 +3,9 @@ package com.tourkakao.carping.Post;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,7 +24,6 @@ import java.util.ArrayList;
 
 public class PostCategoryActivity extends AppCompatActivity {
     private ActivityPostCategoryBinding binding;
-    private GridView gridView;
     private PostCategoryAdapter adapter;
     private PostListViewModel viewModel;
     private String category;
@@ -35,11 +37,12 @@ public class PostCategoryActivity extends AppCompatActivity {
         viewModel.setContext(this);
 
         initLayout();
-        clickItem();
+//        clickItem();
     }
 
     public void initLayout(){
-        gridView=binding.gridview;
+        GridLayoutManager gridLayoutManager=new GridLayoutManager(this,2);
+        binding.gridview.setLayoutManager(gridLayoutManager);
         Intent intent=getIntent();
         category=intent.getStringExtra("category");
         if(category.equals("beginner")){
@@ -68,7 +71,7 @@ public class PostCategoryActivity extends AppCompatActivity {
             public void onChanged(ArrayList<PostListItem> postListItems) {
                 binding.postCount.setText("전체포스트 "+postListItems.size()+"개");
                 adapter=new PostCategoryAdapter(getApplicationContext(),postListItems);
-                gridView.setAdapter(adapter);
+                binding.gridview.setAdapter(adapter);
                 clickLike();
             }
         });
@@ -81,7 +84,7 @@ public class PostCategoryActivity extends AppCompatActivity {
             public void onChanged(ArrayList<PostListItem> postListItems) {
                 binding.postCount.setText("전체포스트 "+postListItems.size()+"개");
                 adapter = new PostCategoryAdapter(getApplicationContext(), postListItems);
-                gridView.setAdapter(adapter);
+                binding.gridview.setAdapter(adapter);
                 clickLike();
             }
         });
@@ -94,23 +97,23 @@ public class PostCategoryActivity extends AppCompatActivity {
             public void onChanged(ArrayList<PostListItem> postListItems) {
                 binding.postCount.setText("전체포스트 "+postListItems.size()+"개");
                 adapter = new PostCategoryAdapter(getApplicationContext(), postListItems);
-                gridView.setAdapter(adapter);
+                binding.gridview.setAdapter(adapter);
                 clickLike();
             }
         });
     }
-    public void clickItem(){
-        binding.gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> a_parent, View a_view, int a_position, long a_id) {
-                PostListItem item = (PostListItem) adapter.getItem(a_position);
-                Intent intent=new Intent(getApplicationContext(), PostInfoActivity.class);
-                intent.putExtra("pk",item.getId());
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
-        });
-    }
+//    public void clickItem(){
+//        binding.gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> a_parent, View a_view, int a_position, long a_id) {
+//                PostListItem item = (PostListItem) adapter.getItem(a_position);
+//                Intent intent=new Intent(getApplicationContext(), PostInfoActivity.class);
+//                intent.putExtra("pk",item.getId());
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(intent);
+//            }
+//        });
+//    }
 
     public void clickLike(){
         adapter.setOnItemClickListener(new PostCategoryAdapter.OnLikeItemClickListener() {

@@ -42,14 +42,13 @@
             android:textSize="13sp"
             android:textColor="#ffffff"/>
     </RelativeLayout>
-    <GridView
+    <androidx.recyclerview.widget.RecyclerView
         android:scrollbars="none"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginHorizontal="8.5dp"
+        android:layout_marginTop="15dp"
         android:horizontalSpacing="15dp"
         android:verticalSpacing="30dp"
         android:id="@+id/gridview"
-        android:numColumns="2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="35dp"/>

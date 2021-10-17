@@ -3,6 +3,7 @@ package com.tourkakao.carping.Post;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Activity;
@@ -59,6 +60,8 @@ public class PostSearchActivity extends AppCompatActivity {
     }
 
     public void initLayout(){
+        GridLayoutManager gridLayoutManager=new GridLayoutManager(this,2);
+        binding.searchResult.setLayoutManager(gridLayoutManager);
         binding.searchResult.setVisibility(View.GONE);
         binding.deleteText.setVisibility(View.GONE);
         Glide.with(context).load(R.drawable.back).into(binding.back);
@@ -112,23 +115,22 @@ public class PostSearchActivity extends AppCompatActivity {
         searchViewModel.getSearchList().observe(this, new Observer<ArrayList<PostListItem>>() {
             @Override
             public void onChanged(ArrayList<PostListItem> postListItems) {
-                gridView=binding.searchResult;
                 postAdapter=new PostCategoryAdapter(getApplicationContext(),postListItems);
-                gridView.setAdapter(postAdapter);
+                binding.searchResult.setAdapter(postAdapter);
                 clickLike();
             }
         });
-        binding.searchResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> a_parent, View a_view, int a_position, long a_id) {
-                PostListItem item = (PostListItem) postAdapter.getItem(a_position);
-                searchViewModel.completeSearch(binding.searchText.getText().toString(),item.getTitle());
-                Intent intent=new Intent(context, PostInfoActivity.class);
-                intent.putExtra("pk",item.getId());
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-            }
-        });
+//        binding.searchResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> a_parent, View a_view, int a_position, long a_id) {
+//                PostListItem item = (PostListItem) postAdapter.getItem(a_position);
+//                searchViewModel.completeSearch(binding.searchText.getText().toString(),item.getTitle());
+//                Intent intent=new Intent(context, PostInfoActivity.class);
+//                intent.putExtra("pk",item.getId());
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                context.startActivity(intent);
+//            }
+//        });
         binding.searchText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {

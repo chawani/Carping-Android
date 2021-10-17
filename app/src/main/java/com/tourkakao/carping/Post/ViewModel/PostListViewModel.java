@@ -84,6 +84,7 @@ public class PostListViewModel extends ViewModel {
         String total=gson.toJson(data);
         ArrayList<PostListItem> listItems=gson.fromJson(total, new TypeToken<ArrayList<PostListItem>>(){}.getType());
         categoryData.setValue(listItems);
+        System.out.println(total);
     }
 
     public void loadTotalList(){

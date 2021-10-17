@@ -51,7 +51,13 @@ public class KakaoLogin implements LoginContract.Kakaologin{
                     kakao_login.enqueue(new Callback<Kakao_Token_and_User_Info>() {
                         @Override
                         public void onResponse(Call<Kakao_Token_and_User_Info> call, Response<Kakao_Token_and_User_Info> response) {
-                            if(response.isSuccessful()){
+                            if(response.body()==null&&response.code()==400){
+                                Toast myToast = Toast.makeText(loginActivity,"동일한 이메일의 계정이 이미 존재합니다. 다른 계정을 이용해주세요", Toast.LENGTH_LONG);
+                                myToast.show();
+                                KakaoLogout kakaoLogout=new KakaoLogout(context, loginActivity);
+                                kakaoLogout.signOut();
+                            }
+                            else if(response.isSuccessful()){
                                 //서버 액세스 토큰, 리프레쉬 토큰은 받았으니
                                 //그걸 사용하고 카카오 api 서버는 로그아웃 되도록 하는 방법 고민 필요
                                 SharedPreferenceManager.getInstance(context).setString("access_token", response.body().access_token);

@@ -3,6 +3,7 @@ package com.tourkakao.carping.Login;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -109,8 +110,11 @@ public class GoogleLogin implements LoginContract.GoogleLogin{
         google_login.enqueue(new Callback<Google_Token_and_User_Info>() {
             @Override
             public void onResponse(Call<Google_Token_and_User_Info> call, Response<Google_Token_and_User_Info> response) {
-                if(response.body()==null){
-                    System.out.println("값 없음:"+response.code());
+                if(response.body()==null&&response.code()==400){
+                    Toast myToast = Toast.makeText(loginActivity,"동일한 이메일의 계정이 이미 존재합니다. 다른 계정을 이용해주세요", Toast.LENGTH_LONG);
+                    myToast.show();
+                    GoogleLogout googleLogout = new GoogleLogout(context, loginActivity);
+                    googleLogout.signOut();
                 }
                 else if(response.isSuccessful()){
                     SharedPreferenceManager.getInstance(context).setString("access_token", response.body().getAccess_token());
@@ -123,12 +127,14 @@ public class GoogleLogin implements LoginContract.GoogleLogin{
                     loginActivity.finish();
                     context.startActivity(new Intent(context, MainActivity.class));
                 }else{
-                    System.out.println("응답 코드:"+response.code());
+                    Toast myToast = Toast.makeText(loginActivity,"서버 통신이 불안정합니다. 다시 시도해주세요.", Toast.LENGTH_SHORT);
+                    myToast.show();
                 }
             }
             @Override
             public void onFailure(Call<Google_Token_and_User_Info> call, Throwable t) {
-                Log.getStackTraceString(t);
+                Toast myToast = Toast.makeText(loginActivity,"서버 통신이 불안정합니다. 다시 시도해주세요.", Toast.LENGTH_SHORT);
+                myToast.show();
             }
         });
     }

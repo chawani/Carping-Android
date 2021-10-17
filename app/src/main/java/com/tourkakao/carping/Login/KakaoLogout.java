@@ -7,13 +7,9 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.kakao.network.ErrorResult;
 import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.user.UserApi;
 import com.kakao.sdk.user.UserApiClient;
-import com.kakao.usermgmt.UserManagement;
-import com.kakao.usermgmt.callback.LogoutResponseCallback;
-import com.kakao.usermgmt.callback.UnLinkResponseCallback;
 
 import java.nio.file.attribute.UserPrincipal;
 
@@ -37,7 +33,6 @@ public class KakaoLogout {
                 Toast.makeText(activity, "로그아웃에 실패하였습니다.", Toast.LENGTH_SHORT).show();
             }
             else {
-                Toast.makeText(activity, "로그아웃 되었습니다", Toast.LENGTH_SHORT).show();
                 finishActivities();
             }
             return null;
