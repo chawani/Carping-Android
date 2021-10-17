@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.tourkakao.carping.Home.HomeContract;
 import com.tourkakao.carping.Home.HomeViewModel.ThemeViewModel;
+import com.tourkakao.carping.Home.MainActivity;
 import com.tourkakao.carping.Location_setting.Location_setting;
 import com.tourkakao.carping.Post.PostTotalActivity;
 import com.tourkakao.carping.R;
@@ -58,6 +59,8 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
 
         setting_this_weekend_total_btn();
         setting_az_total_btn();
+
+        to_store();
 
         Glide.with(context).load(R.drawable.car).into(themebinding.car);
         return themebinding.getRoot();
@@ -172,6 +175,11 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
                     themebinding.popularCarpingRecyclerview.setVisibility(View.VISIBLE);
                 }
             }
+        });
+    }
+    public void to_store(){
+        themebinding.banner.setOnClickListener(v -> {
+            ((MainActivity)getActivity()).banner_click_to_store();
         });
     }
 

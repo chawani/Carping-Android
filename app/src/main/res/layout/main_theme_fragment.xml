@@ -208,11 +208,13 @@
             android:visibility="gone"/>
     </RelativeLayout>
     <ImageView
+        android:id="@+id/banner"
         android:layout_marginBottom="35dp"
         android:adjustViewBounds="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/banner"/>
+        android:src="@drawable/banner"
+        android:clickable="true"/>
     <LinearLayout
         android:layout_marginHorizontal="16dp"
         android:layout_width="match_parent"

@@ -159,7 +159,7 @@ public class ProfileEditActivity extends AppCompatActivity {
                                             String loginType=SharedPreferenceManager.getInstance(context).getString("login","");
                                             if(loginType.equals("kakao")){
                                                 KakaoLogout kakaoLogout=new KakaoLogout(context,ProfileEditActivity.this);
-                                                kakaoLogout.signOut();
+                                                kakaoLogout.revokeAccess();
                                             }
                                             if(loginType.equals("google")) {
                                                 GoogleLogout googleLogout = new GoogleLogout(context, ProfileEditActivity.this);

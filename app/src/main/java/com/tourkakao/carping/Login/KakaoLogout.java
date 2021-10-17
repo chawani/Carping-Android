@@ -45,6 +45,7 @@ public class KakaoLogout {
 
             }else{
                 Toast.makeText(activity, "카카오 계정 연결이 끊어졌습니다", Toast.LENGTH_SHORT).show();
+                finishActivities();
             }
             return null;
         });
