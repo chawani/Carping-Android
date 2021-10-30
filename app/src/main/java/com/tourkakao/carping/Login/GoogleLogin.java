@@ -110,16 +110,22 @@ public class GoogleLogin implements LoginContract.GoogleLogin{
         google_login.enqueue(new Callback<Google_Token_and_User_Info>() {
             @Override
             public void onResponse(Call<Google_Token_and_User_Info> call, Response<Google_Token_and_User_Info> response) {
-                if(response.body()==null&&response.code()==400){
+                if(response.code()==403){
                     Toast myToast = Toast.makeText(loginActivity,"동일한 이메일의 계정이 이미 존재합니다. 다른 계정을 이용해주세요", Toast.LENGTH_LONG);
                     myToast.show();
                     GoogleLogout googleLogout = new GoogleLogout(context, loginActivity);
                     googleLogout.signOut();
+                    return;
+                }else if(response.code()==400){
+                    Toast.makeText(context, "유저 생성 중 에러가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                    GoogleLogout googleLogout = new GoogleLogout(context, loginActivity);
+                    googleLogout.signOut();
+                    return;
                 }
                 else if(response.isSuccessful()){
                     SharedPreferenceManager.getInstance(context).setString("access_token", response.body().getAccess_token());
                     SharedPreferenceManager.getInstance(context).setString("refresh_token", response.body().getRefresh_token());
-                    SharedPreferenceManager.getInstance(context).setInt("id",response.body().getUser().getPk());
+                    SharedPreferenceManager.getInstance(context).setInt("id", response.body().getUser().getPk());
                     SharedPreferenceManager.getInstance(context).setString("profile", response.body().getUser().getProfile().getImage());
                     SharedPreferenceManager.getInstance(context).setString("email", response.body().getUser().getEmail());
                     SharedPreferenceManager.getInstance(context).setString("username", response.body().getUser().getUsername());
@@ -127,8 +133,10 @@ public class GoogleLogin implements LoginContract.GoogleLogin{
                     loginActivity.finish();
                     context.startActivity(new Intent(context, MainActivity.class));
                 }else{
-                    Toast myToast = Toast.makeText(loginActivity,"서버 통신이 불안정합니다. 다시 시도해주세요.", Toast.LENGTH_SHORT);
+                    Toast myToast = Toast.makeText(loginActivity,"로그인에 실패하였습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT);
                     myToast.show();
+                    GoogleLogout googleLogout = new GoogleLogout(context, loginActivity);
+                    googleLogout.signOut();
                 }
             }
             @Override

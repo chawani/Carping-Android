@@ -15,6 +15,10 @@ gen/
 /local.properties
 local.properties
 
+#keystore file
+/keystore.properties
+keystore.properties
+
 #Mac OS X clutter
 .DS_Store
 

@@ -23,8 +23,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.tourkakao.carping.BuildConfig;
 import com.tourkakao.carping.GpsLocation.GpsTracker;
+import com.tourkakao.carping.Home.ShareDataClass.Share;
 import com.tourkakao.carping.NetworkwithToken.ThemeInterface;
 import com.tourkakao.carping.R;
+import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 import com.tourkakao.carping.theme.Activity.ThemeDetailActivity;
 import com.tourkakao.carping.theme.Adapter.BlogAdapter;
 import com.tourkakao.carping.theme.Dataclass.DaumBlog;
@@ -55,6 +57,7 @@ public class ThemeInfoFragment extends Fragment {
     String name; int pk;
     private BlogAdapter blogAdapter;
     ArrayList<DaumBlog.Blog> blogs=new ArrayList<>();
+    float lan, lon;
 
     public MapView mapView;
     MapPoint mapPoint=null;
@@ -138,6 +141,7 @@ public class ThemeInfoFragment extends Fragment {
             @Override
             public void OnSelectItemClick(View v, int pos) {
                 if(blogs.get(pos).getUrl()!=null) {
+                    SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("to_daum", 1);
                     Intent intentUrl = new Intent(Intent.ACTION_VIEW, Uri.parse(blogs.get(pos).getUrl()));
                     startActivity(intentUrl);
                 }
@@ -149,8 +153,8 @@ public class ThemeInfoFragment extends Fragment {
         detailViewModel.carping_lon.observe(this, new Observer<Float>() {
             @Override
             public void onChanged(Float aFloat) {
-                float lan=detailViewModel.carping_lat.getValue();
-                float lon=aFloat;
+                lan=detailViewModel.carping_lat.getValue();
+                lon=aFloat;
                 MapPoint mapPoint=MapPoint.mapPointWithGeoCoord(lan, lon);
                 mapView.setMapCenterPointAndZoomLevel(mapPoint, 3, true);
                 MapPOIItem marker=new MapPOIItem();
@@ -165,5 +169,36 @@ public class ThemeInfoFragment extends Fragment {
         });
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).getInt("to_daum", 0)==1){
+            setting_map();
+            MapPoint mapPoint=MapPoint.mapPointWithGeoCoord(lan, lon);
+            mapView.setMapCenterPointAndZoomLevel(mapPoint, 3, true);
+            MapPOIItem marker=new MapPOIItem();
+            marker.setItemName(name);
+            marker.setMapPoint(mapPoint);
+            marker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+            marker.setCustomImageResourceId(R.drawable.nowmarker);
+            marker.setCustomImageAutoscale(false);
+            mapView.addPOIItem(marker);
+            mapView.clearFocus();
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("to_daum", 0);
+        }
+        if(SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).getInt("to_request", 0)==1){
+            setting_map();
+            MapPoint mapPoint=MapPoint.mapPointWithGeoCoord(lan, lon);
+            mapView.setMapCenterPointAndZoomLevel(mapPoint, 3, true);
+            MapPOIItem marker=new MapPOIItem();
+            marker.setItemName(name);
+            marker.setMapPoint(mapPoint);
+            marker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+            marker.setCustomImageResourceId(R.drawable.nowmarker);
+            marker.setCustomImageAutoscale(false);
+            mapView.addPOIItem(marker);
+            mapView.clearFocus();
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("to_request", 0);
+        }
+    }
 }

@@ -253,7 +253,11 @@ public class ThemeFragment extends Fragment implements HomeContract.ThemeFragmen
             themeViewModel.getNewCarpingPlace();
             SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("newcarping", 0);
         }
-        if(SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).getInt("thisweekend", 1)==1){
+        if(SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).getInt("newcarping_delete", 0)==1){
+            themeViewModel.getNewCarpingPlace();
+            SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("newcarping_delete", 0);
+        }
+        if(SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).getInt("thisweekend", 1)==1) {
             themeViewModel.getMain_thisweekends();
             SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("thisweekend", 0);
         }

@@ -51,11 +51,17 @@ public class KakaoLogin implements LoginContract.Kakaologin{
                     kakao_login.enqueue(new Callback<Kakao_Token_and_User_Info>() {
                         @Override
                         public void onResponse(Call<Kakao_Token_and_User_Info> call, Response<Kakao_Token_and_User_Info> response) {
-                            if(response.body()==null&&response.code()==400){
+                            if(response.code()==403){
                                 Toast myToast = Toast.makeText(loginActivity,"동일한 이메일의 계정이 이미 존재합니다. 다른 계정을 이용해주세요", Toast.LENGTH_LONG);
                                 myToast.show();
                                 KakaoLogout kakaoLogout=new KakaoLogout(context, loginActivity);
                                 kakaoLogout.signOut();
+                                return;
+                            }else if(response.code()==400){
+                                Toast.makeText(context, "유저 생성 중 에러가 발생했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                                KakaoLogout kakaoLogout=new KakaoLogout(context, loginActivity);
+                                kakaoLogout.signOut();
+                                return;
                             }
                             else if(response.isSuccessful()){
                                 //서버 액세스 토큰, 리프레쉬 토큰은 받았으니
@@ -71,8 +77,10 @@ public class KakaoLogin implements LoginContract.Kakaologin{
                                 context.startActivity(new Intent(context, MainActivity.class));
                             }else{
                                 Log.e("login error", response.message());
-                                //Toast.makeText(context, "로그인에 실패하였습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
-                                Toast.makeText(context, "login error"+response.message(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "로그인에 실패하였습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(context, "login error"+response.message(), Toast.LENGTH_SHORT).show();
+                                KakaoLogout kakaoLogout=new KakaoLogout(context, loginActivity);
+                                kakaoLogout.signOut();
                             }
                         }
                         @Override
@@ -83,7 +91,7 @@ public class KakaoLogin implements LoginContract.Kakaologin{
                         }
                     });
                 }else{
-                    Toast.makeText(context, "oAuthToken null", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "다시 시도해주세요", Toast.LENGTH_SHORT).show();
                 }
                 return null;
             }
