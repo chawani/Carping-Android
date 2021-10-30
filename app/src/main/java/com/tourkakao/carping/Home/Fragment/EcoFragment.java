@@ -93,7 +93,7 @@ public class EcoFragment extends Fragment {
     Observer<ArrayList<EcoReview>> echoReviewObserver=new Observer<ArrayList<EcoReview>>() {
         @Override
         public void onChanged(ArrayList<EcoReview> ecoReviews) {
-            if(ecoReviews==null){
+            if(ecoReviews.size()==0){
                 ecobinding.noReviewImg.setVisibility(View.VISIBLE);
                 ecobinding.ecoCarpingReview.setVisibility(View.GONE);
             }else{
@@ -113,7 +113,7 @@ public class EcoFragment extends Fragment {
     Observer<ArrayList<EcoRanking>> echoRankingObserver=new Observer<ArrayList<EcoRanking>>() {
         @Override
         public void onChanged(ArrayList<EcoRanking> ecoRankings) {
-            if(ecoRankings==null){
+            if(ecoRankings.size()==0){
                 ecobinding.noRankingImg.setVisibility(View.VISIBLE);
                 ecobinding.ecoRanking.setVisibility(View.GONE);
             }else{

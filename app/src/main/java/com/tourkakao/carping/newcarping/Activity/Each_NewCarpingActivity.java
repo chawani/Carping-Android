@@ -331,6 +331,7 @@ public class Each_NewCarpingActivity extends AppCompatActivity implements MapRev
                                                 res -> {
                                                     if(res.isSuccess()){
                                                         Toast.makeText(Each_NewCarpingActivity.this, "신규 차박지가 삭제되었어요", Toast.LENGTH_SHORT).show();
+                                                        SharedPreferenceManager.getInstance(getApplicationContext()).setInt("newcarping_delete", 1);
                                                         finish();
                                                     }
                                                 },

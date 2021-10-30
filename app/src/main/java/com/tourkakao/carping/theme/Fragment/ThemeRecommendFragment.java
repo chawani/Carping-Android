@@ -21,6 +21,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.tourkakao.carping.BuildConfig;
 import com.tourkakao.carping.NetworkwithToken.ThemeInterface;
+import com.tourkakao.carping.SharedPreferenceManager.SharedPreferenceManager;
 import com.tourkakao.carping.databinding.ThemeRecommendFragmentBinding;
 import com.tourkakao.carping.theme.Activity.ThemeDetailActivity;
 import com.tourkakao.carping.theme.Adapter.RecommendAdapter;
@@ -76,6 +77,7 @@ public class ThemeRecommendFragment extends Fragment {
             @Override
             public void OnSelectItemClick(View v, int pos) {
                 String url=list.get(pos).getPlace_url();
+                SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).setInt("to_request", 1);
                 Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 startActivity(intent);
             }

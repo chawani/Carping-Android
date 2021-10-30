@@ -176,6 +176,10 @@ public class HomeFragment extends Fragment {
                 Glide.with(context).load(cities.get(i)).into(imageViews.get(i));
             }
         }
+        region=SharedPreferenceManager.getInstance(getActivity().getApplicationContext()).getString("region", "서울");
+        searchViewModel.get_popularlist(region);
+        theme_fragment.setRegion(region);
+        theme_fragment.themeViewModel.getPopularCarpingPlace(region);
         homebinding.i1.setOnClickListener(v -> {
             city_select=0;
             region="서울";
