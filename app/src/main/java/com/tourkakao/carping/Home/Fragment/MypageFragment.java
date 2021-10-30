@@ -152,6 +152,7 @@ public class MypageFragment extends Fragment {
                 if(profile.getBio()==null){
                     mypagebinding.introduce.setVisibility(View.GONE);
                 }else {
+                    mypagebinding.introduce.setVisibility(View.VISIBLE);
                     mypagebinding.introduce.setText(profile.getBio());
                 }
                 String interest=profile.getInterest().toString();
@@ -161,6 +162,7 @@ public class MypageFragment extends Fragment {
                 if(interest.length()==0){
                     mypagebinding.tag.setVisibility(View.GONE);
                 }else {
+                    mypagebinding.tag.setVisibility(View.VISIBLE);
                     String[] tags=interest.split(",");
                     mypagebinding.tag.removeAllViews();
                     for (String tag : tags) {

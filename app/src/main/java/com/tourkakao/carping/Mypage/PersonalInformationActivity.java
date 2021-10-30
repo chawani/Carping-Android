@@ -237,8 +237,9 @@ public class PersonalInformationActivity extends AppCompatActivity implements Co
             checked+=("7,");
         }
         if(binding.interest9.isChecked()){
-            checked+=("8");
+            checked+=("8,");
         }
+        checked = checked.substring(0, checked.length()-1);
         return checked;
     }
 }
